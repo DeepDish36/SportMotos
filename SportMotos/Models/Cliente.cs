@@ -1,18 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace SportMotos.Models;
 
 public partial class Cliente
 {
+    [Key]  // Define como chave primária
     public int IdCliente { get; set; }
 
+    [Required(ErrorMessage = "O nome é obrigatório")]
     public string Nome { get; set; } = null!;
 
     public string? Sobrenome { get; set; }
 
-    public string Email { get; set; } = null!;
+    [Required(ErrorMessage = "O email é obrigatório")]
+    [EmailAddress(ErrorMessage = "Digite um email válido")]
+    public string Email { get; set; }= null!;
 
+    [Required(ErrorMessage = "A senha é obrigatória")]
+    [MinLength(6, ErrorMessage = "A senha deve ter pelo menos 6 caracteres")]
     public string Password { get; set; } = null!;
 
     public string? Telefone { get; set; }
