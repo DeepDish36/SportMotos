@@ -1,30 +1,25 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
 
-namespace SportMotos.Models
+namespace SportMotos.Models;
+
+public partial class Admin
 {
-    public class Admin
-    {
-        [Key]
+    public int IdAdmin { get; set; }
 
-        [Required]
-        public int ID_Admin { get; set; }
+    public string Nome { get; set; } = null!;
 
-        [Required]
-        public string Nome { get; set; }
+    public string Email { get; set; } = null!;
 
-        [Required]
-        public string Email { get; set; }
+    public string Password { get; set; } = null!;
 
-        [Required]
-        public string Password { get; set; }
+    public string Telefone { get; set; } = null!;
 
-        [Required]
-        public string Telefone { get; set; }
+    public DateTime? DataCriacao { get; set; }
 
-        public DateTime Data_Criacao { get; set; } = DateTime.Now;
+    public DateTime? DataEdicao { get; set; }
 
-        public DateTime Data_Edicao { get; set; } = DateTime.Now;
+    public DateTime? ApagadoEm { get; set; }
 
-        public DateTime Apagado_Em { get; set; } = DateTime.Now;
-    }
+    public virtual User NomeNavigation { get; set; } = null!;
 }
