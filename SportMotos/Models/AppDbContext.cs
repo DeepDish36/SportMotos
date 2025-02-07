@@ -4,14 +4,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace SportMotos.Models;
 
-public partial class CUsersGomesDesktopSportmotosSportmotosBinDebugNet80SportmotosMdfContext : DbContext
+public partial class AppDbContext : DbContext
 {
-    public CUsersGomesDesktopSportmotosSportmotosBinDebugNet80SportmotosMdfContext()
+    public AppDbContext()
     {
     }
 
-    public CUsersGomesDesktopSportmotosSportmotosBinDebugNet80SportmotosMdfContext(DbContextOptions<CUsersGomesDesktopSportmotosSportmotosBinDebugNet80SportmotosMdfContext> options)
-        : base(options)
+    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
     {
     }
 
@@ -38,8 +37,8 @@ public partial class CUsersGomesDesktopSportmotosSportmotosBinDebugNet80Sportmot
     public virtual DbSet<User> Users { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Gomes\\Desktop\\SportMotos\\SportMotos\\bin\\Debug\\net8.0\\SportMotos.mdf;Integrated Security=True;Connect Timeout=30;Encrypt=True");
+    {
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

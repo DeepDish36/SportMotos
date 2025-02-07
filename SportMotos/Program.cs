@@ -1,4 +1,13 @@
+using Microsoft.EntityFrameworkCore;
+using SportMotos.Models;
+
 var builder = WebApplication.CreateBuilder(args);
+
+// Adicionando o DbContext e lendo a conexão do appsettings.json
+var connectionString = builder.Configuration.GetConnectionString("BaseDados");
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlServer(connectionString));
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
