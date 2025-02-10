@@ -27,7 +27,7 @@ Este site será desenvolvido para um stand de motos, combinando design intuitivo
 
 Este projeto representa o meu esforço e dedicação para criar um site funcional, esteticamente agradável e útil para qualquer stand de motos.
 
-Se gostaste, não te esqueças de deixar⭐ no repositório!
+Se gostaste, não te esqueças de deixar ⭐ no repositório!
 
 <b>Tens dúvidas? Contacta-me através das issues ou pelo meu email: `andredeepgomes@gmail.com`</b>
 <div align="right">Made by: André Gomes, 12ºH | On GPSI 2022/2025</div>
