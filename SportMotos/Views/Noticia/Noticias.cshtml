@@ -1,0 +1,70 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model IEnumerable<SportMotos.Models.Noticium>
+<div class="container mt-5">
+    <!-- Breadcrumb -->
+    <div>
+        <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a style="color:black; text-decoration:none" asp-controller="Home" asp-action="Index">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-fill mb-1" viewBox="0 0 16 16">
+                            <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L8 2.207l6.646 6.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293z" />
+                            <path d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293z" />
+                        </svg> SportMotos
+                    </a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">Notícias</li>
+            </ol>
+        </nav>
+    </div>
+
+    <h3 style="font-weight:bold" class="mb-4">Notícias</h3>
+
+    <h4 style="margin-bottom:2.5%">
+        <span>Notícias fresquinhas escolhidas para si!</span>
+    </h4>
+    <!-- Lista de notícias -->
+    <div class="row row-cols-1 row-cols-md-4 g-4">
+        @foreach (var noticia in Model)
+        {
+            // Calcular a diferença de dias entre a data de publicação e a data atual
+            var diasPublicacao = (DateTime.Now - noticia.DataPublicacao).TotalDays;
+
+            <div class="col">
+                <div class="card shadow-sm">
+                    <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
+                        <title>@noticia.Titulo</title>
+                        <rect width="100%" height="100%" fill="#55595c"></rect>
+                        <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
+                    </svg>
+                    <div class="card-body">
+                        <h5 class="card-title">@noticia.Titulo</h5>
+                        <p class="card-text">@noticia.Descricao</p>
+
+                        <!-- Badge "Novidades" -->
+                        @if (diasPublicacao <= 30)
+                        {
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success">Nova!</span>
+                        }
+
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                                <a asp-controller="Noticia" asp-action="Detalhe" asp-route-id="@noticia.IdNoticia" class="btn btn-sm btn-outline-secondary">
+                                    Ver
+                                </a>
+                            </div>
+                            <small class="text-body-secondary">
+                                Publicado: @noticia.DataPublicacao.ToString("dd/MM/yyyy")
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

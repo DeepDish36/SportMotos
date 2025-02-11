@@ -79,6 +79,15 @@
                             <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success">Novo!</span>
                         }
 
+                        @if (ViewBag.TipoAnuncio == "motos")
+                        {
+                            <!-- Badge "Vendida!" -->
+                            @if (anuncio.IdMotoNavigation != null && anuncio.IdMotoNavigation.Vendido)
+                            {
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">Vendida!</span>
+                            }
+                        }
+
                         @if(ViewBag.TipoAnuncio=="pecas"){
                             <!-- Badge "A esgotar!" -->
                             @if (anuncio.IdPecaNavigation != null && anuncio.IdPecaNavigation.Stock <= 10)
@@ -89,7 +98,13 @@
 
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">
-                                <button type="button" class="btn btn-sm btn-outline-secondary">Ver</button>
+                                <a asp-controller="DetalhesAnuncios" asp-action="DetalheAnuncio"
+                                   asp-route-id="@(ViewBag.TipoAnuncio == "motos" ? anuncio.IdAnuncioMoto : anuncio.IdAnuncioPeca)"
+                                   asp-route-tipo="@ViewBag.TipoAnuncio"
+                                   class="btn btn-sm btn-outline-secondary">
+                                    Ver
+                                </a>
+
                                 <button type="button" hidden class="btn btn-sm btn-outline-secondary">Editar</button>
                             </div>
                             <small class="text-body-secondary">

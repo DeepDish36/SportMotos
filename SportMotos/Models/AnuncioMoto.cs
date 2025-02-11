@@ -5,7 +5,7 @@ namespace SportMotos.Models;
 
 public partial class AnuncioMoto
 {
-    public int IdAnuncio { get; set; }
+    public int IdAnuncioMoto { get; set; }
 
     public int IdMoto { get; set; }
 

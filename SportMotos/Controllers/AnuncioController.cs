@@ -31,7 +31,6 @@ namespace SportMotos.Controllers
                     .Where(a => a.ApagadoEm == null) // Apenas anúncios ativos
                     .Include(a => a.IdPecaNavigation) // Inclui a tabela Peca para obter o Stock
                     .ToListAsync();
-
                 ViewBag.TipoAnuncio = "pecas";
                 // Passa os dados para a View
                 return View(anunciosPecas);

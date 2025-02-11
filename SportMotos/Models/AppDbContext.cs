@@ -79,11 +79,11 @@ public partial class AppDbContext : DbContext
 
         modelBuilder.Entity<AnuncioMoto>(entity =>
         {
-            entity.HasKey(e => e.IdAnuncio).HasName("PK__Anuncio___D8875FB6B9698F13");
+            entity.HasKey(e => e.IdAnuncioMoto).HasName("PK__Anuncio___D8875FB6B9698F13");
 
             entity.ToTable("Anuncio_Moto");
 
-            entity.Property(e => e.IdAnuncio).HasColumnName("ID_Anuncio");
+            entity.Property(e => e.IdAnuncioMoto).HasColumnName("ID_Anuncio");
             entity.Property(e => e.ApagadoEm)
                 .HasColumnType("datetime")
                 .HasColumnName("Apagado_Em");
@@ -111,11 +111,11 @@ public partial class AppDbContext : DbContext
 
         modelBuilder.Entity<AnuncioPeca>(entity =>
         {
-            entity.HasKey(e => e.IdAnuncio).HasName("PK__Anuncio___D8875FB67FD7777D");
+            entity.HasKey(e => e.IdAnuncioPeca).HasName("PK__Anuncio___D8875FB67FD7777D");
 
             entity.ToTable("Anuncio_Peca");
 
-            entity.Property(e => e.IdAnuncio).HasColumnName("ID_Anuncio");
+            entity.Property(e => e.IdAnuncioPeca).HasColumnName("ID_Anuncio");
             entity.Property(e => e.ApagadoEm)
                 .HasColumnType("datetime")
                 .HasColumnName("Apagado_Em");

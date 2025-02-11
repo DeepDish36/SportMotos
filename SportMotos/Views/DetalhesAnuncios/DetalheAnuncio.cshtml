@@ -1,0 +1,30 @@
+﻿@model dynamic
+
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = @Model.Titulo;
+}
+
+<div class="container mt-5">
+    <h2 class="mb-4">Detalhes do Anúncio</h2>
+
+    <div class="card shadow-sm">
+        <svg class="bd-placeholder-img card-img-top" width="100%" height="300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
+            <title>@Model.Titulo</title>
+            <rect width="100%" height="100%" fill="#55595c"></rect>
+            <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
+        </svg>
+        <div class="card-body">
+            <h3>@Model.Titulo</h3>
+            <p><strong>Publicado em:</strong> @Model.DataPublicacao.ToString("dd/MM/yyyy")</p>
+            <p><strong>Preço:</strong> €@Model.Preco.ToString("F2")</p>
+            @if (ViewBag.TipoAnuncio == "pecas" && Model.IdPecaNavigation != null)
+            {
+                <p><strong>Stock:</strong> @Model.IdPecaNavigation.Stock.ToString()</p>
+            }
+            <a href="@Url.Action("Anuncio", "Anuncio", new { tipo = ViewBag.TipoAnuncio })" class="btn btn-secondary">Voltar</a>
+        </div>
+    </div>
+</div>
