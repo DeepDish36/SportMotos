@@ -1,0 +1,41 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model IEnumerable<SportMotos.Models.Moto>
+
+<h2>Lista de Motos</h2>
+<a asp-controller="Moto" asp-action="AdicionarMoto" class="btn btn-primary">Adicionar Nova Moto</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Marca</th>
+            <th>Modelo</th>
+            <th>Ano</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var moto in Model)
+        {
+            <tr>
+                <td>@moto.Marca</td>
+                <td>@moto.Modelo</td>
+                <td>@moto.Ano</td>
+                <td>
+                    <!--Botão para abrir detalhes da moto-->
+                    <a asp-controller="Moto" asp-action="DetalhesMotos" asp-route-id="@moto.IdMoto" class="btn btn-info">Ver</a>
+
+                    <!--Botão para editar a moto-->
+                    <a asp-controller="Moto" asp-action="EditarMoto" asp-route-id="@moto.IdMoto" class="btn btn-warning">Editar</a>
+                    
+                    <!--Botão para apagar a moto-->
+                    <a asp-controller="Moto" asp-action="ExcluirMoto" asp-route-id="@moto.IdMoto" class="btn btn-danger">Excluir</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Gomes\\Desktop\\DeepDish36\\SportMotos\\SportMotos\\SportMotos.csproj": {}
+    "C:\\Users\\g0mes\\Desktop\\DeepDish36\\SportMotos\\SportMotos\\SportMotos.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Gomes\\Desktop\\DeepDish36\\SportMotos\\SportMotos\\SportMotos.csproj": {
+    "C:\\Users\\g0mes\\Desktop\\DeepDish36\\SportMotos\\SportMotos\\SportMotos.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Gomes\\Desktop\\DeepDish36\\SportMotos\\SportMotos\\SportMotos.csproj",
+        "projectUniqueName": "C:\\Users\\g0mes\\Desktop\\DeepDish36\\SportMotos\\SportMotos\\SportMotos.csproj",
         "projectName": "SportMotos",
-        "projectPath": "C:\\Users\\Gomes\\Desktop\\DeepDish36\\SportMotos\\SportMotos\\SportMotos.csproj",
-        "packagesPath": "C:\\Users\\Gomes\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Gomes\\Desktop\\DeepDish36\\SportMotos\\SportMotos\\obj\\",
+        "projectPath": "C:\\Users\\g0mes\\Desktop\\DeepDish36\\SportMotos\\SportMotos\\SportMotos.csproj",
+        "packagesPath": "C:\\Users\\g0mes\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\g0mes\\Desktop\\DeepDish36\\SportMotos\\SportMotos\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Gomes\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\g0mes\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -45,7 +45,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.100"
+        "SdkAnalysisLevel": "9.0.200"
       },
       "frameworks": {
         "net8.0": {
@@ -93,7 +93,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.102/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.200/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

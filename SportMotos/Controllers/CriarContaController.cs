@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SportMotos.Models;
 
 namespace SportMotos.Controllers
@@ -19,22 +20,34 @@ namespace SportMotos.Controllers
             return View();
         }
 
-        // Processa o formulário de registro (POST)
+        // Registra um novo cliente (POST)
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register(Cliente model)
+        public async Task<IActionResult> Register(Cliente cliente)
         {
             if (ModelState.IsValid)
             {
-                // Adiciona o novo cliente ao banco de dados
-                model.DataCriacao = DateTime.Now;
-                _context.Clientes.Add(model);
+                // Verifica se o nome já existe na tabela Users
+                var usuarioExistente = await _context.Users.FindAsync(cliente.Nome);
+
+                if (usuarioExistente == null) // Se o nome não existe, cria um novo usuário
+                {
+                    var novoUser = new User { Username = cliente.Nome };
+                    _context.Users.Add(novoUser);
+                    await _context.SaveChangesAsync();
+                }
+
+                // Agora adiciona o cliente, vinculando ao nome que já está na tabela Users
+                _context.Clientes.Add(cliente);
                 await _context.SaveChangesAsync();
 
-                return RedirectToAction("Index", "Home"); // Redireciona após o cadastro
+                return RedirectToAction("Login", "Login");
             }
 
-            return View(model);
+            // Adiciona os erros de validação ao ViewBag para exibição
+            ViewBag.Errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
+
+            return View(cliente);
         }
     }
 }

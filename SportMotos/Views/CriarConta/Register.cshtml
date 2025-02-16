@@ -53,6 +53,17 @@
                     Ao criares a tua conta, estás a aceitar os nossos <a asp-area="" asp-controller="Home" asp-action="Privacy">Termos e Condições</a>.
                 </div>
             </form>
+            @if (ViewBag.Errors != null && ViewBag.Errors.Count > 0)
+            {
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach (var error in ViewBag.Errors)
+                        {
+                            <li>@error</li>
+                        }
+                    </ul>
+                </div>
+            }
         </div>
         <div class="col">
         </div>
