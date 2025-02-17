@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\g0mes\\Desktop\\DeepDish36\\SportMotos\\SportMotos\\SportMotos.csproj": {}
+    "C:\\Users\\Gomes\\Desktop\\DeepDish36\\SportMotos\\SportMotos\\SportMotos.csproj": {}
   },
   "projects": {
-    "C:\\Users\\g0mes\\Desktop\\DeepDish36\\SportMotos\\SportMotos\\SportMotos.csproj": {
+    "C:\\Users\\Gomes\\Desktop\\DeepDish36\\SportMotos\\SportMotos\\SportMotos.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\g0mes\\Desktop\\DeepDish36\\SportMotos\\SportMotos\\SportMotos.csproj",
+        "projectUniqueName": "C:\\Users\\Gomes\\Desktop\\DeepDish36\\SportMotos\\SportMotos\\SportMotos.csproj",
         "projectName": "SportMotos",
-        "projectPath": "C:\\Users\\g0mes\\Desktop\\DeepDish36\\SportMotos\\SportMotos\\SportMotos.csproj",
-        "packagesPath": "C:\\Users\\g0mes\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\g0mes\\Desktop\\DeepDish36\\SportMotos\\SportMotos\\obj\\",
+        "projectPath": "C:\\Users\\Gomes\\Desktop\\DeepDish36\\SportMotos\\SportMotos\\SportMotos.csproj",
+        "packagesPath": "C:\\Users\\Gomes\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Gomes\\Desktop\\DeepDish36\\SportMotos\\SportMotos\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\g0mes\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Gomes\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],

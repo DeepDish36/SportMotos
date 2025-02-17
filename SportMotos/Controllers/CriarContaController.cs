@@ -27,25 +27,31 @@ namespace SportMotos.Controllers
         {
             if (ModelState.IsValid)
             {
-                // Verifica se o nome já existe na tabela Users
-                var usuarioExistente = await _context.Users.FindAsync(cliente.Nome);
+                // Verifica se o usuário já existe na tabela Users
+                var usuarioExistente = await _context.Users.FirstOrDefaultAsync(u => u.Username == cliente.Nome);
 
-                if (usuarioExistente == null) // Se o nome não existe, cria um novo usuário
+                if (usuarioExistente == null) // Se não existe, cria um novo
                 {
-                    var novoUser = new User { Username = cliente.Nome };
-                    _context.Users.Add(novoUser);
+                    usuarioExistente = new User { Username = cliente.Nome };
+                    _context.Users.Add(usuarioExistente);
                     await _context.SaveChangesAsync();
                 }
 
-                // Agora adiciona o cliente, vinculando ao nome que já está na tabela Users
+                // 🔥 Corrigindo o erro - Vinculando corretamente a FK
+                cliente.NomeNavigation = usuarioExistente;
+
                 _context.Clientes.Add(cliente);
                 await _context.SaveChangesAsync();
 
                 return RedirectToAction("Login", "Login");
             }
 
-            // Adiciona os erros de validação ao ViewBag para exibição
-            ViewBag.Errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
+            // Log de erros de validação
+            var errors = ModelState.Values.SelectMany(v => v.Errors);
+            foreach (var error in errors)
+            {
+                Console.WriteLine(error.ErrorMessage);
+            }
 
             return View(cliente);
         }

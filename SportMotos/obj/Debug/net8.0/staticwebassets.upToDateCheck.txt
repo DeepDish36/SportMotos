@@ -1,8 +1,12 @@
+wwwroot\css\dashboard.css
+wwwroot\css\dashboard.rtl.css
+wwwroot\css\headers.css
 wwwroot\css\site.css
 wwwroot\favicon.ico
 wwwroot\Imagens\bg.png
 wwwroot\Imagens\bglogin.jpg
 wwwroot\Imagens\logo.png
+wwwroot\js\dashboard.js
 wwwroot\js\site.js
 wwwroot\lib\bootstrap\dist\css\bootstrap.css
 wwwroot\lib\bootstrap\dist\css\bootstrap.css.map
