@@ -38,13 +38,39 @@ namespace SportMotos.Controllers
         //Adicionar moto ao sistema (POST)
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AdicionarMoto(Moto moto)
+        public async Task<IActionResult> AdicionarMoto(Moto moto, IFormFile Imagem)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(moto);
+                if (Imagem != null && Imagem.Length > 0)
+                {
+                    var fileName = Guid.NewGuid().ToString() + Path.GetExtension(Imagem.FileName);
+                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Imagens", fileName);
+
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await Imagem.CopyToAsync(stream);
+                    }
+
+                    // Criar um objeto Imagem
+                    var novaImagem = new Imagem
+                    {
+                        NomeArquivo= fileName,
+                        Caminho = "/Motos/" + fileName
+                    };
+
+                    // Adiciona a imagem ao banco
+                    _context.Imagens.Add(novaImagem);
+                    await _context.SaveChangesAsync();
+
+                    // Associa a imagem à moto
+                    moto.IdMoto = novaImagem.Id;
+                }
+
+                _context.Motos.Add(moto);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(ListarMotos));
+
+                return RedirectToAction("Index");
             }
             return View(moto);
         }

@@ -96,6 +96,18 @@
       <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"tgpzva6cjn"},{"Name":"integrity","Value":"sha256-rbISgMPnWHJx7Q3vq/eHs/ro6IEY5D44\u002BzBZbFTE9NQ="},{"Name":"label","Value":"_content/SportMotos/Imagens/logo.png"}]]]></EndpointProperties>
       <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"4649"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022rbISgMPnWHJx7Q3vq/eHs/ro6IEY5D44\u002BzBZbFTE9NQ=\u0022"},{"Name":"Last-Modified","Value":"Mon, 17 Feb 2025 08:32:32 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/SportMotos/Imagens/Motos/12-34-AB.i4ldgtabs2.jpg">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Imagens\Motos\12-34-AB.jpg'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"i4ldgtabs2"},{"Name":"integrity","Value":"sha256-zk8AqxChKc3TeTPiW3495ZiLLwisQeWJfxuGkwwhXXQ="},{"Name":"label","Value":"_content/SportMotos/Imagens/Motos/12-34-AB.jpg"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"151684"},{"Name":"Content-Type","Value":"image/jpeg"},{"Name":"ETag","Value":"\u0022zk8AqxChKc3TeTPiW3495ZiLLwisQeWJfxuGkwwhXXQ=\u0022"},{"Name":"Last-Modified","Value":"Tue, 18 Feb 2025 10:35:10 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/SportMotos/Imagens/Motos/12-34-AB.jpg">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Imagens\Motos\12-34-AB.jpg'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-zk8AqxChKc3TeTPiW3495ZiLLwisQeWJfxuGkwwhXXQ="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"151684"},{"Name":"Content-Type","Value":"image/jpeg"},{"Name":"ETag","Value":"\u0022zk8AqxChKc3TeTPiW3495ZiLLwisQeWJfxuGkwwhXXQ=\u0022"},{"Name":"Last-Modified","Value":"Tue, 18 Feb 2025 10:35:10 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/SportMotos/js/dashboard.8acweaztwa.js">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\dashboard.js'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>

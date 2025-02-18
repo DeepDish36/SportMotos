@@ -24,7 +24,7 @@ public partial class AppDbContext : DbContext
 
     public virtual DbSet<Forum> Forums { get; set; }
 
-    public virtual DbSet<Imagen> Imagens { get; set; }
+    public virtual DbSet<Imagem> Imagens { get; set; }
 
     public virtual DbSet<Moto> Motos { get; set; }
 
@@ -229,14 +229,14 @@ public partial class AppDbContext : DbContext
                 .HasConstraintName("FK__Forum__ID_Client__5EBF139D");
         });
 
-        modelBuilder.Entity<Imagen>(entity =>
+        modelBuilder.Entity<Imagem>(entity =>
         {
-            entity.HasKey(e => e.NomeImagem).HasName("PK__Imagens__7CCD9D8E31372040");
+            entity.HasKey(e => e.NomeArquivo).HasName("PK__Imagens__7CCD9D8E31372040");
 
-            entity.Property(e => e.NomeImagem)
+            entity.Property(e => e.NomeArquivo)
                 .HasMaxLength(255)
                 .IsUnicode(false)
-                .HasColumnName("Nome_Imagem");
+                .HasColumnName("NomeArquivo");
         });
 
         modelBuilder.Entity<Moto>(entity =>

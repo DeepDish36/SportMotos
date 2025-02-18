@@ -6,6 +6,7 @@ wwwroot\favicon.ico
 wwwroot\Imagens\bg.png
 wwwroot\Imagens\bglogin.jpg
 wwwroot\Imagens\logo.png
+wwwroot\Imagens\Motos\12-34-AB.jpg
 wwwroot\js\dashboard.js
 wwwroot\js\site.js
 wwwroot\lib\bootstrap\dist\css\bootstrap.css

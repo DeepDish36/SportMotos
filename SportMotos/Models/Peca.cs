@@ -31,5 +31,7 @@ public partial class Peca
 
     public byte? Garantia { get; set; }
 
+    public virtual Imagem NomeArquivo { get; set; } = null!; 
+
     public virtual ICollection<AnuncioPeca> AnuncioPecas { get; set; } = new List<AnuncioPeca>();
 }

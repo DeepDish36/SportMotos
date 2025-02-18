@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "toKMK1MexNIgyqecKxEyeUuWyjYweV2JhQrkxYVU9+A=",
+  "Hash": "DOtAKES0KXIIMkJMG+ga4xx/kxrLe5dUEm+EDV8vBIw=",
   "Source": "SportMotos",
   "BasePath": "_content/SportMotos",
   "Mode": "Default",
@@ -1485,6 +1485,27 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Imagens\\logo.png"
+    },
+    {
+      "Identity": "C:\\Users\\Gomes\\Desktop\\DeepDish36\\SportMotos\\SportMotos\\wwwroot\\Imagens\\Motos\\12-34-AB.jpg",
+      "SourceId": "SportMotos",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Gomes\\Desktop\\DeepDish36\\SportMotos\\SportMotos\\wwwroot\\",
+      "BasePath": "_content/SportMotos",
+      "RelativePath": "Imagens/Motos/12-34-AB#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "i4ldgtabs2",
+      "Integrity": "zk8AqxChKc3TeTPiW3495ZiLLwisQeWJfxuGkwwhXXQ=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Imagens\\Motos\\12-34-AB.jpg"
     },
     {
       "Identity": "C:\\Users\\Gomes\\Desktop\\DeepDish36\\SportMotos\\SportMotos\\wwwroot\\js\\dashboard.js",
@@ -5600,6 +5621,88 @@
         {
           "Name": "integrity",
           "Value": "sha256-rbISgMPnWHJx7Q3vq/eHs/ro6IEY5D44+zBZbFTE9NQ="
+        }
+      ]
+    },
+    {
+      "Route": "Imagens/Motos/12-34-AB.i4ldgtabs2.jpg",
+      "AssetFile": "C:\\Users\\Gomes\\Desktop\\DeepDish36\\SportMotos\\SportMotos\\wwwroot\\Imagens\\Motos\\12-34-AB.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "151684"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"zk8AqxChKc3TeTPiW3495ZiLLwisQeWJfxuGkwwhXXQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 18 Feb 2025 10:35:10 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "i4ldgtabs2"
+        },
+        {
+          "Name": "label",
+          "Value": "Imagens/Motos/12-34-AB.jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-zk8AqxChKc3TeTPiW3495ZiLLwisQeWJfxuGkwwhXXQ="
+        }
+      ]
+    },
+    {
+      "Route": "Imagens/Motos/12-34-AB.jpg",
+      "AssetFile": "C:\\Users\\Gomes\\Desktop\\DeepDish36\\SportMotos\\SportMotos\\wwwroot\\Imagens\\Motos\\12-34-AB.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "151684"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"zk8AqxChKc3TeTPiW3495ZiLLwisQeWJfxuGkwwhXXQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 18 Feb 2025 10:35:10 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-zk8AqxChKc3TeTPiW3495ZiLLwisQeWJfxuGkwwhXXQ="
         }
       ]
     },

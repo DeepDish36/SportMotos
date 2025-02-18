@@ -19,6 +19,7 @@ namespace SportMotos.Controllers
             {
                 var anuncio = await _context.AnuncioMotos
                 .Include(a=>a.IdMotoNavigation)
+                .ThenInclude(a=>a.NomeArquivo)
                 .Where(a => a.IdMoto == id && a.ApagadoEm == null)
                 .FirstOrDefaultAsync();
 
@@ -35,6 +36,7 @@ namespace SportMotos.Controllers
             {
                 var anuncio = await _context.AnuncioPecas
                 .Include(a => a.IdPecaNavigation)
+                .ThenInclude(a=>a.NomeArquivo)
                 .Where(a => a.IdPeca == id && a.ApagadoEm == null)
                 .FirstOrDefaultAsync();
 
