@@ -14,9 +14,14 @@
             <div class="col-md-5">
                 @if (ViewBag.TipoAnuncio=="motos")
                 {
-                    @if (Model.IdMotoNavigation != null && Model.IdMotoNavigation.NomeArquivo != null)
+                    @if (Model.IdMotoNavigation != null && Model.IdMotoNavigation.Imagens != null)
                     {
-                        <img src="@Model.IdMotoNavigation.Imagem.Caminho" alt="Imagem da Moto" class="img-fluid rounded">
+                        @foreach (var imagem in Model.IdMotoNavigation.Imagens)
+                        {
+                            <img src="@Url.Content("~/Imagens/Motos/" + imagem.NomeArquivo)"
+                                 alt="Imagem da Moto @Model.IdMotoNavigation.Matricula"
+                                 class="img-fluid rounded">
+                        }
                     }
                     else
                     {
@@ -44,17 +49,17 @@
                     <p><strong>Preço:</strong> €@Model.Preco.ToString("F2")</p>
                     @if (ViewBag.TipoAnuncio == "motos" && Model.IdMotoNavigation != null)
                     {
+                        <p><strong>Publicado em:</strong> @Model.DataPublicacao.ToString("dd/MM/yyyy")</p>
+                        <p><strong>Preço:</strong> €@Model.Preco.ToString("F2")</p>
                         <p><strong>Marca:</strong> @Model.IdMotoNavigation.Marca</p>
                         <p><strong>Modelo:</strong> @Model.IdMotoNavigation.Modelo</p>
                         <p><strong>Ano:</strong> @Model.IdMotoNavigation.Ano</p>
-                        <p><strong>Quilometros:</strong> @Model.IdMotoNavigation.Quilometragem</p>
-                        <p><strong>Cilindrada:</strong> @Model.IdMotoNavigation.Cilindrada</p>
-                        <p><strong>Cor:</strong> @Model.IdMotoNavigation.Cor</p>
-                        <p><strong>Caixa:</strong> @Model.IdMotoNavigation.Caixa</p>
-                        <p><strong>ABS:</strong> @Model.IdMotoNavigation.Abs</p>
-                        <p><strong>Carta:</strong> @Model.IdMotoNavigation.Carta</p>
-                        <p><strong>Condicao:</strong> @Model.Condicao</p>
+                        <p><strong>Quilometragem:</strong> @Model.IdMotoNavigation.Quilometragem Km</p>
+                        <p><strong>Condição:</strong> @Model.Condicao</p>
                         <p><strong>Descrição:</strong> @Model.Descricao</p>
+                        <p><strong>Visualizações:</strong> @Model.Visualizacoes</p>
+                        <p><strong>Favoritos:</strong> @Model.Favoritos</p>
+                        <p><strong>Última edição:</strong> @(Model.DataEdicao?.ToString("dd/MM/yyyy") ?? "Nunca editado")</p>
                     }
 
                     @if (ViewBag.TipoAnuncio == "pecas" && Model.IdPecaNavigation != null)

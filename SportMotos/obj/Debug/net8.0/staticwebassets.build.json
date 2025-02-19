@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "DOtAKES0KXIIMkJMG+ga4xx/kxrLe5dUEm+EDV8vBIw=",
+  "Hash": "zr+pzfZp5dPz263Sq5ciLx+fPeLpD+VN1CZa+xs8zsc=",
   "Source": "SportMotos",
   "BasePath": "_content/SportMotos",
   "Mode": "Default",
@@ -1487,12 +1487,12 @@
       "OriginalItemSpec": "wwwroot\\Imagens\\logo.png"
     },
     {
-      "Identity": "C:\\Users\\Gomes\\Desktop\\DeepDish36\\SportMotos\\SportMotos\\wwwroot\\Imagens\\Motos\\12-34-AB.jpg",
+      "Identity": "C:\\Users\\Gomes\\Desktop\\DeepDish36\\SportMotos\\SportMotos\\wwwroot\\Imagens\\Motos\\12-34-AB_1.jpg",
       "SourceId": "SportMotos",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Gomes\\Desktop\\DeepDish36\\SportMotos\\SportMotos\\wwwroot\\",
       "BasePath": "_content/SportMotos",
-      "RelativePath": "Imagens/Motos/12-34-AB#[.{fingerprint}]?.jpg",
+      "RelativePath": "Imagens/Motos/12-34-AB_1#[.{fingerprint}]?.jpg",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -1505,7 +1505,7 @@
       "Integrity": "zk8AqxChKc3TeTPiW3495ZiLLwisQeWJfxuGkwwhXXQ=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\Imagens\\Motos\\12-34-AB.jpg"
+      "OriginalItemSpec": "wwwroot\\Imagens\\Motos\\12-34-AB_1.jpg"
     },
     {
       "Identity": "C:\\Users\\Gomes\\Desktop\\DeepDish36\\SportMotos\\SportMotos\\wwwroot\\js\\dashboard.js",
@@ -5625,8 +5625,8 @@
       ]
     },
     {
-      "Route": "Imagens/Motos/12-34-AB.i4ldgtabs2.jpg",
-      "AssetFile": "C:\\Users\\Gomes\\Desktop\\DeepDish36\\SportMotos\\SportMotos\\wwwroot\\Imagens\\Motos\\12-34-AB.jpg",
+      "Route": "Imagens/Motos/12-34-AB_1.i4ldgtabs2.jpg",
+      "AssetFile": "C:\\Users\\Gomes\\Desktop\\DeepDish36\\SportMotos\\SportMotos\\wwwroot\\Imagens\\Motos\\12-34-AB_1.jpg",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -5661,7 +5661,7 @@
         },
         {
           "Name": "label",
-          "Value": "Imagens/Motos/12-34-AB.jpg"
+          "Value": "Imagens/Motos/12-34-AB_1.jpg"
         },
         {
           "Name": "integrity",
@@ -5670,8 +5670,8 @@
       ]
     },
     {
-      "Route": "Imagens/Motos/12-34-AB.jpg",
-      "AssetFile": "C:\\Users\\Gomes\\Desktop\\DeepDish36\\SportMotos\\SportMotos\\wwwroot\\Imagens\\Motos\\12-34-AB.jpg",
+      "Route": "Imagens/Motos/12-34-AB_1.jpg",
+      "AssetFile": "C:\\Users\\Gomes\\Desktop\\DeepDish36\\SportMotos\\SportMotos\\wwwroot\\Imagens\\Motos\\12-34-AB_1.jpg",
       "Selectors": [],
       "ResponseHeaders": [
         {

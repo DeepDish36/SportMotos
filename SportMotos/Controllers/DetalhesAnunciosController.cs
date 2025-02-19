@@ -19,9 +19,9 @@ namespace SportMotos.Controllers
             {
                 var anuncio = await _context.AnuncioMotos
                 .Include(a=>a.IdMotoNavigation)
-                .ThenInclude(a=>a.NomeArquivo)
+                .ThenInclude(a=>a.Imagens)
                 .Where(a => a.IdMoto == id && a.ApagadoEm == null)
-                .FirstOrDefaultAsync();
+                .FirstOrDefaultAsync(a=>a.IdAnuncioMoto==id);
 
                 ViewBag.TipoAnuncio = "motos";
 

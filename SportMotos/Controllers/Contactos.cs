@@ -4,7 +4,7 @@ namespace SportMotos.Controllers
 {
     public class Contactos : Controller
     {
-        public IActionResult Index()
+        public IActionResult MostrarContactos()
         {
             return View();
         }
