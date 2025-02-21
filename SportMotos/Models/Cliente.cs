@@ -34,11 +34,11 @@ public partial class Cliente
 
     public byte? Idade { get; set; }
 
-    public DateTime? UltimoLogin { get; set; }
+    public DateTime? UltimoLogin { get; set; } = DateTime.Now;
 
-    public DateTime? DataCriacao { get; set; }
+    public DateTime? DataCriacao { get; set; } = DateTime.Now;
 
-    public DateTime? DataEdicao { get; set; }
+    public DateTime? DataEdicao { get; set; } = DateTime.Now;
 
     public DateTime? ApagadoEm { get; set; }
 
@@ -46,9 +46,13 @@ public partial class Cliente
 
     public bool? ReceberNewsletter { get; set; }
 
+    public string? ResetToken { get; set; }
+
+    public DateTime? ResetTokenExpiration { get; set; }
+
     public virtual ICollection<Forum> Forums { get; set; } = new List<Forum>();
 
-    public virtual User NomeNavigation { get; set; } = null!;
+    public virtual User? NomeNavigation { get; set; } = null!;
 
     public virtual ICollection<Orcamento> Orcamentos { get; set; } = new List<Orcamento>();
 }

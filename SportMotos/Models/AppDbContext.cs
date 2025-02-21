@@ -36,6 +36,7 @@ public partial class AppDbContext : DbContext
 
     public virtual DbSet<User> Users { get; set; }
 
+    public virtual DbSet<PasswordResets> PasswordResets { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -354,20 +355,45 @@ public partial class AppDbContext : DbContext
             entity.Property(e => e.Username)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.DataCriacao)
+            entity.Property(e => e.Data_Criacao)
                 .HasColumnType("datetime")
                 .HasColumnName("Data_Criacao");
             entity.Property(e => e.Password)
                 .HasMaxLength(150)
                 .IsUnicode(false);
-            entity.Property(e => e.TipoUtilizador)
+            entity.Property(e => e.Tipo_Utilizador)
                 .HasMaxLength(20)
                 .IsUnicode(false)
                 .HasColumnName("Tipo_Utilizador");
-            entity.Property(e => e.UltimoLogin)
+            entity.Property(e => e.Ultimo_Login)
                 .HasColumnType("datetime")
                 .HasColumnName("Ultimo_Login");
         });
+
+        modelBuilder.Entity<PasswordResets>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK_PasswordResets");
+
+            entity.ToTable("PasswordResets");
+
+            entity.Property(e => e.Id)
+                .HasColumnName("Id")
+                .ValueGeneratedOnAdd();
+
+            entity.Property(e => e.Token)
+                .IsRequired()
+                .HasMaxLength(255)
+                .IsUnicode(false);
+
+            entity.Property(e => e.Expiration)
+                .HasColumnType("datetime");
+
+            entity.Property(e => e.IDCliente)
+                .HasColumnName("ID_Cliente")
+                .IsRequired();
+        });
+
+
 
         OnModelCreatingPartial(modelBuilder);
     }

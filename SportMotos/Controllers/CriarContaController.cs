@@ -1,6 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SportMotos.Models;
+using System.Linq;
+using System.Threading.Tasks;
+using System;
+using Microsoft.CodeAnalysis.Scripting;
 
 namespace SportMotos.Controllers
 {
@@ -25,35 +29,41 @@ namespace SportMotos.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(Cliente cliente)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                // Verifica se o usuário já existe na tabela Users
-                var usuarioExistente = await _context.Users.FirstOrDefaultAsync(u => u.Username == cliente.Nome);
-
-                if (usuarioExistente == null) // Se não existe, cria um novo
-                {
-                    usuarioExistente = new User { Username = cliente.Nome };
-                    _context.Users.Add(usuarioExistente);
-                    await _context.SaveChangesAsync();
-                }
-
-                // 🔥 Corrigindo o erro - Vinculando corretamente a FK
-                cliente.NomeNavigation = usuarioExistente;
-
-                _context.Clientes.Add(cliente);
-                await _context.SaveChangesAsync();
-
-                return RedirectToAction("Login", "Login");
+                ViewBag.Errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
+                return View(cliente);
             }
 
-            // Log de erros de validação
-            var errors = ModelState.Values.SelectMany(v => v.Errors);
-            foreach (var error in errors)
+            // Verifica se o user já existe na tabela Users
+            var userExiste = await _context.Users.AnyAsync(u => u.Username == cliente.Nome);
+
+            if (userExiste)
             {
-                Console.WriteLine(error.ErrorMessage);
+                ViewBag.Error = "Esse nome já está a ser utilizado!";
+                return View(cliente);
             }
 
-            return View(cliente);
+            var novoUser = new User
+            {
+                Username = cliente.Nome,
+                Password = cliente.Password, // 🔥 Senha segura
+                Tipo_Utilizador = "Cliente",  // Corrigido para o nome correto do banco
+                Data_Criacao = DateTime.Now,  // Garante data válida
+                Ultimo_Login = DateTime.Now
+            };
+
+            _context.Users.Add(novoUser);
+            await _context.SaveChangesAsync();
+
+            // Associa o cliente ao user criado
+            cliente.NomeNavigation = novoUser;
+
+            _context.Clientes.Add(cliente);
+            await _context.SaveChangesAsync();
+
+            TempData["Success"] = "Conta criada com sucesso!";
+            return RedirectToAction("Login", "Login");
         }
     }
 }

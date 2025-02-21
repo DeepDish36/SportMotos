@@ -12,8 +12,8 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>qc82pskj0g</Fingerprint>
-      <Integrity>NsC3Piz6vqrGgWABzes/Gxxq9DUePVCSuNgkACepmx0=</Integrity>
+      <Fingerprint>pd9jw6g7yt</Fingerprint>
+      <Integrity>w5FDdUp59QSv9DlVb6fhPFNna+F9I1A365oNcCJYDHc=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\dashboard.css'))</OriginalItemSpec>
@@ -30,8 +30,8 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>8rul5e3bii</Fingerprint>
-      <Integrity>DGQHUkRw5sGz43yqE9TN1PLpYX2FGq4SpobVapff/r0=</Integrity>
+      <Fingerprint>lsa12csan3</Fingerprint>
+      <Integrity>5R7LaHjzu9Qlh91ChI+hQIXoyi+Vq/3CfYPJyOb/qeQ=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\dashboard.rtl.css'))</OriginalItemSpec>
@@ -48,8 +48,8 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>ix5lauo84k</Fingerprint>
-      <Integrity>uuzxY+iXooP2YN5W41+UFU3dCXviu278w+a8n/Iplf8=</Integrity>
+      <Fingerprint>08j06y61er</Fingerprint>
+      <Integrity>UI9WSqPp4nMmYiYd7TNyketXDiiuZDhim5wvAzkyBMs=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\headers.css'))</OriginalItemSpec>
@@ -162,24 +162,6 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Imagens\Motos\12-34-AB_1.jpg'))</OriginalItemSpec>
     </StaticWebAsset>
-    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\dashboard.js'))">
-      <SourceType>Package</SourceType>
-      <SourceId>SportMotos</SourceId>
-      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
-      <BasePath>_content/SportMotos</BasePath>
-      <RelativePath>js/dashboard.js</RelativePath>
-      <AssetKind>All</AssetKind>
-      <AssetMode>All</AssetMode>
-      <AssetRole>Primary</AssetRole>
-      <RelatedAsset></RelatedAsset>
-      <AssetTraitName></AssetTraitName>
-      <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>8acweaztwa</Fingerprint>
-      <Integrity>0FOzQ9ZurrHUUKk9DF/AcWfzSJgnh9yB6RnzbJ7EKC8=</Integrity>
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\dashboard.js'))</OriginalItemSpec>
-    </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\site.js'))">
       <SourceType>Package</SourceType>
       <SourceId>SportMotos</SourceId>
@@ -192,8 +174,8 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>cilv2rb3x9</Fingerprint>
-      <Integrity>XIMxUkC1ow/3jDCDWRLHPVTQA35xO6y3cJOUC1qppws=</Integrity>
+      <Fingerprint>raqevbcv72</Fingerprint>
+      <Integrity>o4fH4X5jy0IjKUuBPPNN9BtdRTG/VRcivgLrKkIGHYY=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\site.js'))</OriginalItemSpec>

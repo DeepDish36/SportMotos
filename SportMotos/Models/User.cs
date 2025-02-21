@@ -9,11 +9,11 @@ public partial class User
 
     public string Password { get; set; } = null!;
 
-    public string TipoUtilizador { get; set; } = null!;
+    public string Tipo_Utilizador { get; set; } = null!;
 
-    public DateTime DataCriacao { get; set; }
+    public DateTime Data_Criacao { get; set; }
 
-    public DateTime UltimoLogin { get; set; }
+    public DateTime Ultimo_Login { get; set; }
 
     public virtual Admin? Admin { get; set; }
 

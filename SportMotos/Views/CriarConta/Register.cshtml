@@ -2,75 +2,121 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+
 }
 
 <style>
-    body {
+    .register-page {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh; /* Cobre a tela inteira */
+        min-height: 100vh; /* Evita cortes */
         background-image: url('/Imagens/bglogin.jpg');
         background-size: cover;
-        background-repeat: no-repeat;
         background-position: center;
+        background-repeat: no-repeat;
+        margin: 0;
+        padding: 0;
+    }
+
+    .register-container {
+        background-color: rgba(255, 255, 255, 0.5);
+        padding: 40px;
+        border-radius: 12px;
+        width: 400px;
+        text-align: center;
+        backdrop-filter: blur(8px);
+    }
+
+    .form-control {
+        height: 40px;
+        padding-left: 12px;
+        border-radius: 6px;
+        border: none;
+    }
+
+    .btn-register {
+        width: 100%;
+        height: 40px;
+        background-color: #323232;
+        color: white;
+        border-radius: 20px;
+        border: none;
+    }
+
+    .terms a {
+        color: black !important;
+        text-decoration: none;
     }
 </style>
 
-<div class="container text-center">
-    <div class="row align-items-center">
-        <div class="col">
-        </div>
-        <div class="col" style="background-color: rgba(255, 255, 255, 0.5);">
-            <h2 style="margin-bottom:9%">Iniciar Sessão</h2>
-            <form asp-action="Register" method="post">
-                <div id="nome" style="display:flex; gap:9px;">
-                    <input id="Nome" name="Nome" class="rounded border-0" type="text" style="height:40px; padding-left:12px" placeholder="Nome*" />
-                    <input id="Sobrenome" name="Sobrenome" class="rounded border-0" style="height:40px; padding-left:12px" type="text" placeholder="Sobrenome" />
-                </div>
+<div class="register-page">
+    <div class="register-container">
+        <h2 style="margin-bottom: 9%;">Criar Conta</h2>
+        <form asp-action="Register" method="post" class="needs-validation" novalidate>
+            <div class="d-flex gap-2">
+                <input id="Nome" name="Nome" class="form-control" type="text" placeholder="Nome*" required />
+                <input id="Sobrenome" name="Sobrenome" class="form-control" type="text" placeholder="Sobrenome" />
+            </div>
+            <div class="invalid-feedback">
+                Nome obrigatório.
+            </div>
 
-                <div id="email" class="rounded" style="display:flex; margin-top:15px;">
-                    <input class="rounded border-0" style="margin-bottom: 3%; width:100%; height:40px; padding-left:12px" id="Email" name="Email" type="text" placeholder="Email*" />
-                </div>
+            <div class="mt-3">
+                <input id="Email" name="Email" class="form-control w-100" type="email" placeholder="Email*" required />
+            </div>
+            <div class="invalid-feedback">
+                Email obrigatório.
+            </div>
 
-                <div id="passwords" style="display:flex; gap:9px">
-                    <input style="width:100%; height:40px; padding-left:12px" class="rounded border-0" id="Password" name="Password" type="password" placeholder="Palavra-Passe*" />
-                    <input style="width:100%; height:40px; padding-left:12px" class="rounded border-0" id="ConfirmarPassword" name="ConfirmarPassword" type="password" placeholder="Confirmar Palavra-Passe*" />
-                </div>
+            <div class="d-flex gap-2 mt-3">
+                <input id="Password" name="Password" class="form-control" type="password" placeholder="Palavra-Passe*" required />
+                <input id="ConfirmarPassword" name="ConfirmarPassword" class="form-control" type="password" placeholder="Confirmar Palavra-Passe*" required />
+            </div>
+            <div class="invalid-feedback">
+                Palavras-passes não coincidem
+            </div>
 
-                <br />
+            <div class="mt-3">
+                <p>Já tens conta? <a style="color:black" asp-area="Login" asp-controller="Login" asp-action="Login"><b>Iniciar Sessão</b></a></p>
+            </div>
 
-                <div style="display:flex; gap:3px">
-                    <p>Já tens conta?</p><a asp-area="Login" asp-controller="Login" asp-action="Login" style="color:black"><b>Iniciar Sessão</b></a>
-                </div>
+            <button type="submit" class="btn-register">Criar Conta</button>
 
-                <button type="submit" style="width: 100%; height:40px; background-color:#323232; color:white; margin-bottom:8px" id="BotaoLogin" class="rounded-pill border-0">Criar Conta</button>
+            <div class="form-check mt-3">
+                <input class="form-check-input" type="checkbox" id="flexCheckChecked">
+                <label class="form-check-label" for="flexCheckChecked" style="font-size: 0.85em;">
+                    Autorizo o envio de comunicações comerciais e promocionais sobre produtos e serviços oferecidos pela SportMotos por e-mail ou telemóvel.
+                </label>
+            </div>
 
-                <div class="form-check">
-                    <input style="background-color:#323232;" class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-                    <label style="font-size: 0.65em" class="form-check-label" for="flexCheckChecked">
-                        Autorizo o envio de comunicações comerciais e promocionais sobre produtos e serviços oferecidos pela SportMotos por e-mail ou telemóvel.
-                    </label>
-                </div>
+            <div class="terms mt-2">
+                Ao criares a tua conta, estás a aceitar os nossos <a style="color:black; text-decoration:underline" asp-area="" asp-controller="Home" asp-action="Privacy"><b>Termos e Condições</b></a>.
+            </div>
+        </form>
 
-                <div class="terms">
-                    Ao criares a tua conta, estás a aceitar os nossos <a asp-area="" asp-controller="Home" asp-action="Privacy">Termos e Condições</a>.
-                </div>
-            </form>
-            @if (ViewBag.Errors != null && ViewBag.Errors.Count > 0)
-            {
-                <div class="alert alert-danger">
-                    <ul>
-                        @foreach (var error in ViewBag.Errors)
-                        {
-                            <li>@error</li>
-                        }
-                    </ul>
-                </div>
-            }
-        </div>
-        <div class="col">
-        </div>
+        @if (!string.IsNullOrEmpty(ViewBag.Error))
+        {
+            <div class="alert alert-danger mt-3">@ViewBag.Error</div>
+        }
+
+        @if (ViewBag.Errors != null && ViewBag.Errors.Count > 0)
+        {
+            <div class="alert alert-danger mt-3">
+                <ul>
+                    @foreach (var error in ViewBag.Errors)
+                    {
+                        <li>@error</li>
+                    }
+                </ul>
+            </div>
+        }
     </div>
 </div>
 @section Scripts {
     @{
+
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 }
