@@ -54,11 +54,15 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
             },
             {
               "$type": "Document",
@@ -70,8 +74,7 @@
               "RelativeToolTip": "SportMotos\\Views\\DetalhesAnuncios\\DetalheAnuncio.cshtml",
               "ViewState": "AgIAAAkAAAAAAAAAAAAmwBQAAABaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-02-19T14:19:35.556Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-19T14:19:35.556Z"
             },
             {
               "$type": "Document",
@@ -83,8 +86,7 @@
               "RelativeToolTip": "SportMotos\\Controllers\\AnuncioController.cs",
               "ViewState": "AgIAAA8AAAAAAAAAAAA5wAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-19T14:20:36.977Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-19T14:20:36.977Z"
             },
             {
               "$type": "Document",
@@ -96,8 +98,7 @@
               "RelativeToolTip": "SportMotos\\Controllers\\MotoController.cs",
               "ViewState": "AgIAABgAAAAAAAAAAAAqwDMAAAAqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-18T14:53:27.266Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-18T14:53:27.266Z"
             },
             {
               "$type": "Document",
@@ -122,8 +123,7 @@
               "RelativeToolTip": "SportMotos\\Controllers\\DetalhesAnunciosController.cs",
               "ViewState": "AgIAAA0AAAAAAAAAAAAgwBcAAAA7AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-19T14:47:58.418Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-19T14:47:58.418Z"
             },
             {
               "$type": "Document",
@@ -135,8 +135,7 @@
               "RelativeToolTip": "SportMotos\\Models\\AnuncioMoto.cs",
               "ViewState": "AgIAABkAAAAAAAAAAAAYwCAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-19T14:32:09.354Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-19T14:32:09.354Z"
             },
             {
               "$type": "Document",
@@ -148,8 +147,7 @@
               "RelativeToolTip": "SportMotos\\Controllers\\AnuncioMotoController.cs",
               "ViewState": "AgIAACMAAAAAAAAAAAAIwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-19T14:50:42.333Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-19T14:50:42.333Z"
             },
             {
               "$type": "Document",
@@ -161,8 +159,7 @@
               "RelativeToolTip": "SportMotos\\Models\\Moto.cs",
               "ViewState": "AgIAACEAAAAAAAAAAAA2wCcAAABLAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-19T14:23:15.014Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-19T14:23:15.014Z"
             },
             {
               "$type": "Document",
@@ -174,8 +171,7 @@
               "RelativeToolTip": "SportMotos\\Views\\Anuncio\\Anuncio.cshtml",
               "ViewState": "AgIAAF0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-02-19T14:21:27.829Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-19T14:21:27.829Z"
             },
             {
               "$type": "Document",
@@ -187,8 +183,7 @@
               "RelativeToolTip": "SportMotos\\Views\\Moto\\AdicionarMoto.cshtml",
               "ViewState": "AgIAABUAAAAAAAAAAAAAAAUAAAAoAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-02-18T15:43:42.715Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-18T15:43:42.715Z"
             },
             {
               "$type": "Document",
@@ -200,8 +195,7 @@
               "RelativeToolTip": "SportMotos\\Models\\AppDbContext.cs",
               "ViewState": "AgIAAI0AAAAAAAAAAAAiwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-18T11:16:02.009Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-18T11:16:02.009Z"
             }
           ]
         }
