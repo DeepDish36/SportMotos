@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 using SportMotos.Models;
+using System.Net;
+using System.Net.Mail;
 using System.Security.Cryptography;
 
 namespace SportMotos.Controllers
@@ -8,10 +10,18 @@ namespace SportMotos.Controllers
     public class RecuperarContaController : Controller
     {
         private readonly AppDbContext _context;
+        private readonly IConfiguration _config;
 
-        public RecuperarContaController(AppDbContext context)
+        public RecuperarContaController(AppDbContext context, IConfiguration config)
         {
             _context = context;
+            _config = config;
+        }
+
+        [HttpGet]
+        public IActionResult RecuperarSenha()
+        {
+            return View();
         }
 
         [HttpPost]
@@ -50,7 +60,11 @@ namespace SportMotos.Controllers
             _context.SaveChanges(); // Salva as alterações no banco
 
             // Criar o link de redefinição de senha
-            string resetLink = Url.Action("RedefinirSenha", "RecuperarConta", new { token = token }, Request.Scheme);
+            string? resetLink = Url.Action("RedefinirSenha", "RecuperarConta", new { token = token }, Request.Scheme);
+            if (string.IsNullOrEmpty(resetLink))
+            {
+                throw new Exception("Erro ao gerar o link de redefinição de senha.");
+            }
 
             // Enviar e-mail com o link
             EnviarEmail(cliente.Email, "Redefinição de Senha",
@@ -69,7 +83,7 @@ namespace SportMotos.Controllers
             if (resetEntry == null)
             {
                 ViewBag.Mensagem = "Token inválido ou expirado.";
-                return View("ErroToken"); // Retorna uma view informando que o token não é válido
+                return RedirectToAction("RecuperarSenha"); // Retorna uma view informando que o token não é válido
             }
 
             // Passa o token para a view
@@ -99,10 +113,10 @@ namespace SportMotos.Controllers
 
             // Busca o cliente e redefine a senha
             var cliente = _context.Clientes.FirstOrDefault(c => c.IdCliente == resetEntry.IDCliente);
-            if (cliente == null)
+            if (cliente == null || string.IsNullOrEmpty(cliente.Email))
             {
-                ViewBag.Mensagem = "Erro ao encontrar o cliente.";
-                return View("ErroToken");
+                TempData["Erro"] = "Erro ao processar a solicitação. Tente novamente.";
+                return RedirectToAction("RecuperarSenha");
             }
 
             cliente.Password = NovaSenha; // Aqui você pode fazer um hash da senha antes de salvar
@@ -112,6 +126,49 @@ namespace SportMotos.Controllers
 
             ViewBag.Mensagem = "Senha redefinida com sucesso! Agora podes fazer login.";
             return View("Login");
+        }
+
+        private void EnviarEmail(string destinatario, string assunto, string mensagem)
+        {
+            try
+            {
+                string? email = _config["SmtpSettings:Email"];
+                string? senha = _config["SmtpSettings:Senha"];
+                string? host = _config["SmtpSettings:Host"];
+                string? portaStr = _config["SmtpSettings:Porta"];
+
+                if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(senha) || string.IsNullOrEmpty(host) || string.IsNullOrEmpty(portaStr))
+                {
+                    throw new Exception("Configurações de SMTP ausentes ou inválidas.");
+                }
+
+                if (!int.TryParse(portaStr, out int porta))
+                {
+                    throw new Exception("A porta SMTP não é um número válido.");
+                }
+
+                SmtpClient client = new SmtpClient(host)
+                {
+                    Port = porta,
+                    Credentials = new NetworkCredential(email, senha),
+                    EnableSsl = true
+                };
+
+                MailMessage mailMessage = new MailMessage
+                {
+                    From = new MailAddress(email),
+                    Subject = assunto,
+                    Body = mensagem,
+                    IsBodyHtml = true
+                };
+
+                mailMessage.To.Add(destinatario);
+                client.Send(mailMessage);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Erro ao enviar e-mail: " + ex.Message);
+            }
         }
 
 

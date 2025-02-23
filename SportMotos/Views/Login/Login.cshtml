@@ -65,16 +65,16 @@
 <div class="login-page">
     <div class="login-container">
         <h2 style="margin-bottom: 9%;">Iniciar Sessão</h2>
-        <form class="needs-validation" novalidate>
+        <form asp-controller="Login" asp-action="Login" method="post" class="needs-validation" novalidate>
             <div class="form-check">
-                <input class="form-control" id="Email" type="email" placeholder="Email*" required />
+                <input class="form-control" name="Email" id="Email" type="email" placeholder="Email*" required />
                 <div class="invalid-feedback">
                     Email inválido ou não existe.
                 </div>
             </div>
 
             <div class="mt-3">
-                <input class="form-control" id="Password" type="password" placeholder="Palavra-Passe*" required />
+                <input class="form-control" name="password" id="Password" type="password" placeholder="Palavra-Passe*" required />
                 <div class="invalid-feedback">
                     Palavra-passe errada ou não existe.
                 </div>
@@ -82,7 +82,7 @@
 
             <div class="forgot-password">
                 <span>Esqueceste-te da palavra-passe?</span>
-                <a asp-action="">Recuperar</a>
+                <a asp-controller="RecuperarConta" asp-action="RecuperarSenha">Recuperar</a>
             </div>
 
             <button type="submit" class="btn-login">Entrar</button>

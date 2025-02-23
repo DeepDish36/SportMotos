@@ -11,54 +11,71 @@
 </head>
 <body style="background-color:#D9D9D9">
     <header>
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3" style="background-color: #323232; width: 100%;">
-        <div class="container-fluid">
-            <!-- Botão do menu lateral -->
-            <a class="btn" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
-                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="white" class="bi bi-list" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd"
-                          d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5" />
-                </svg>
-            </a>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3" style="background-color: #323232; width: 100%;">
+            <div class="container-fluid">
+                <!-- Botão do menu lateral -->
+                <a class="btn" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="white" class="bi bi-list" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd"
+                        d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5" />
+                    </svg>
+                </a>
 
-            <!-- Link para o Dashboard -->
-            <a asp-action="Dashboard" asp-area="" asp-controller="DashBoard" class="text-white text-decoration-none">Dashboard</a>
+                <!-- Link para o Dashboard -->
+                <a asp-action="Dashboard" asp-area="" asp-controller="DashBoard" class="text-white text-decoration-none">Dashboard</a>
 
-            <!-- Botão do menu responsivo -->
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+                <!-- Botão do menu responsivo -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
-            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                <ul class="navbar-nav flex-grow-1 align-items-center">
-                    <li class="nav-item">
-                        <a asp-area="" asp-controller="Home" asp-action="Index">
-                            <img src="~/Imagens/logo.png" alt="O nosso logotipo">
-                        </a>
-                    </li>
-                    <li class="nav-item flex-grow-1 d-flex justify-content-center">
-                        <div class="input-group w-50">
-                            <input type="text" class="form-control rounded-pill" placeholder="Pesquisar..." aria-label="Pesquisar" aria-describedby="button-search" style="border-top-right-radius: 0; border-bottom-right-radius: 0;">
-                            <button class="btn btn-outline-light rounded-pill" type="button" id="button-search" style="border-top-left-radius: 0; border-bottom-left-radius: 0;">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85zm-5.442 1.398a5.5 5.5 0 1 1 7.778-7.778 5.5 5.5 0 0 1-7.778 7.778z" />
-                                </svg>
-                            </button>
-                        </div>
-                    </li>
-                </ul>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1 align-items-center">
+                        <li class="nav-item">
+                            <a asp-area="" asp-controller="Home" asp-action="Index">
+                                <img src="~/Imagens/logo.png" alt="O nosso logotipo">
+                            </a>
+                        </li>
+                        <li class="nav-item flex-grow-1 d-flex justify-content-center">
+                            <div class="input-group w-50">
+                                <input type="text" class="form-control rounded-pill" placeholder="Pesquisar..." aria-label="Pesquisar" aria-describedby="button-search" style="border-top-right-radius: 0; border-bottom-right-radius: 0;">
+                                <button class="btn btn-outline-light rounded-pill" type="button" id="button-search" style="border-top-left-radius: 0; border-bottom-left-radius: 0;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85zm-5.442 1.398a5.5 5.5 0 1 1 7.778-7.778 5.5 5.5 0 0 1-7.778 7.778z" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </li>
+                    </ul>
 
-                <!-- Ícones de login e carrinho -->
-                <ul class="navbar-nav nav-right d-flex align-items-center">
-                    <li class="nav-item me-3">
-                        <a class="text-white text-decoration-none d-flex align-items-center" asp-area="Login" asp-controller="Login" asp-action="Login">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
-                                <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z" />
-                            </svg>
-                            <span class="ms-1">Iniciar Sessão</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
+                    <!-- Ícones de login e carrinho -->
+                    <ul class="navbar-nav nav-right d-flex align-items-center">
+                        @if(User?.Identity?.IsAuthenticated==true)
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    @User.Identity.Name <!-- Nome do usuário logado -->
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                                    <li><a class="dropdown-item" asp-controller="Conta" asp-action="Perfil">Perfil</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Conta" asp-action="AlterarSenha">Alterar Senha</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item text-danger" asp-controller="Conta" asp-action="Logout">Sair</a></li>
+                                </ul>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item me-3">
+                                <a class="text-white text-decoration-none d-flex align-items-center" asp-controller="Login" asp-action="Login">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
+                                        <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z" />
+                                    </svg>
+                                    <span class="ms-1">Iniciar Sessão</span>
+                                </a>
+                            </li>
+                        }
+                        <li class="nav-item">
                         <a class="text-white text-decoration-none d-flex align-items-center" asp-area="" asp-controller="Home" asp-action="Carrinho">
                             <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
                                 <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l1.313 7h8.17l1.313-7zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2" />

@@ -54,7 +54,7 @@
 <div class="register-page">
     <div class="register-container">
         <h2 style="margin-bottom: 9%;">Criar Conta</h2>
-        <form asp-action="Register" method="post" class="needs-validation" novalidate>
+        <form asp-controller="CriarConta" asp-action="Register" method="post" class="needs-validation" novalidate>
             <div class="d-flex gap-2">
                 <input id="Nome" name="Nome" class="form-control" type="text" placeholder="Nome*" required />
                 <input id="Sobrenome" name="Sobrenome" class="form-control" type="text" placeholder="Sobrenome" />
@@ -79,7 +79,7 @@
             </div>
 
             <div class="mt-3">
-                <p>Já tens conta? <a style="color:black" asp-area="Login" asp-controller="Login" asp-action="Login"><b>Iniciar Sessão</b></a></p>
+                <p>Já tens conta? <a style="color:black" asp-controller="Login" asp-action="Login"><b>Iniciar Sessão</b></a></p>
             </div>
 
             <button type="submit" class="btn-register">Criar Conta</button>
