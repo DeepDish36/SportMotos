@@ -1,5 +1,3 @@
-wwwroot\css\dashboard.css
-wwwroot\css\dashboard.rtl.css
 wwwroot\css\headers.css
 wwwroot\css\site.css
 wwwroot\favicon.ico

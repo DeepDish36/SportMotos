@@ -48,7 +48,7 @@ namespace SportMotos.Controllers
             {
                 Username = cliente.Nome,
                 Password = cliente.Password, // 🔥 Senha segura
-                Tipo_Utilizador = "Cliente",  // Corrigido para o nome correto do banco
+                Tipo_Utilizador = "Cliente", // Corrigido para o nome correto do banco
                 Data_Criacao = DateTime.Now,  // Garante data válida
                 Ultimo_Login = DateTime.Now
             };
@@ -58,6 +58,9 @@ namespace SportMotos.Controllers
 
             // Associa o cliente ao user criado
             cliente.NomeNavigation = novoUser;
+
+            // Define o status como "Ativo"
+            cliente.Status = "Ativo";
 
             _context.Clientes.Add(cliente);
             await _context.SaveChangesAsync();

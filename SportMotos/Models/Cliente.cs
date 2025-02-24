@@ -44,7 +44,7 @@ public partial class Cliente
 
     public string? Status { get; set; }
 
-    public bool? ReceberNewsletter { get; set; }
+    public bool ReceberNewsletter { get; set; } = false;
 
     public string? ResetToken { get; set; }
 

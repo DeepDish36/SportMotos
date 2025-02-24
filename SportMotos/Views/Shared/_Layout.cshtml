@@ -53,14 +53,14 @@
                         @if(User?.Identity?.IsAuthenticated==true)
                         {
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <a class="nav-link dropdown-toggle text-white" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     @User.Identity.Name <!-- Nome do usuário logado -->
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                                    <li><a class="dropdown-item" asp-controller="Conta" asp-action="Perfil">Perfil</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Perfil" asp-action="ShowPerfil">Perfil</a></li>
                                     <li><a class="dropdown-item" asp-controller="Conta" asp-action="AlterarSenha">Alterar Senha</a></li>
                                     <li><hr class="dropdown-divider"></li>
-                                    <li><a class="dropdown-item text-danger" asp-controller="Conta" asp-action="Logout">Sair</a></li>
+                                    <li><a class="dropdown-item text-danger" asp-controller="Login" asp-action="Logout">Sair</a></li>
                                 </ul>
                             </li>
                         }

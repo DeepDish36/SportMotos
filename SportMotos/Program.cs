@@ -30,8 +30,6 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-builder.Services.AddAuthorization();
-
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 

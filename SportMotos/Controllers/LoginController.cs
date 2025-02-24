@@ -25,19 +25,29 @@ namespace SportMotos.Controllers
         [HttpPost] // 🔥 Agora é POST, pois envia dados sensíveis
         public async Task<IActionResult> Login(string Email, string password)
         {
-            // Verifica se o e-mail existe na tabela Clientes
+            // Primeiro, tenta encontrar um Cliente com esse email
             var cliente = _context.Clientes.FirstOrDefault(c => c.Email == Email);
 
-            if (cliente == null)
+            // Verifica se há algum administrador com esse email (e se não é NULL)
+            var admin = _context.Admins.FirstOrDefault(a => a.Email != null && a.Email == Email);
+
+
+            if (admin == null)
+            {
+                System.Diagnostics.Debug.WriteLine("Erro");
+            }
+
+            if (cliente == null && admin == null)
             {
                 ViewBag.Mensagem = "E-mail ou senha inválidos!";
                 return View();
             }
 
-            // Verifica se o cliente tem um utilizador correspondente na tabela Users
-            var user = _context.Users.FirstOrDefault(u => u.Username == cliente.Nome);
+            // Verifica se o User correspondente ao Cliente/Admin existe na tabela Users
+            var username = cliente?.Nome ?? admin?.Nome; // Nome do utilizador (cliente ou admin)
+            var user = _context.Users.FirstOrDefault(u => u.Username == username);
 
-            if (user == null || user.Password != password) // 🔥 Lembrar de adicionar Hashing depois!
+            if (user == null || user.Password != password)
             {
                 ViewBag.Mensagem = "E-mail ou senha inválidos!";
                 return View();
@@ -47,7 +57,7 @@ namespace SportMotos.Controllers
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, user.Username),
-                new Claim("TipoUtilizador", user.Tipo_Utilizador) // Pode ser "Cliente" ou "Admin"
+                new Claim("Tipo_Utilizador", user.Tipo_Utilizador) // "Cliente" ou "Admin"
             };
 
             var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
@@ -67,11 +77,12 @@ namespace SportMotos.Controllers
             else
             {
                 System.Diagnostics.Debug.WriteLine($"A redirecionar dashboard");
-                return RedirectToAction("Dashboard", "Dashboard"); // Admin vai para dashboard
+                return RedirectToAction("DashBoard", "Dashboard"); // Admin vai para dashboard
             }
         }
 
-        [HttpPost]
+
+        [HttpGet]
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
