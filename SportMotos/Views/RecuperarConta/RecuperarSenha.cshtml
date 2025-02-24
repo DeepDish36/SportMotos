@@ -2,10 +2,10 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
-    ViewData["Title"] = "Redefinir Senha";
+    ViewData["Title"] = "Recuperar Senha";
 }
 
-<h2>Redefinir Senha</h2>
+<h2>Recuperar Senha</h2>
 
 @if (ViewBag.Mensagem != null)
 {
@@ -13,20 +13,12 @@
 }
 else
 {
-    <form method="post" asp-action="RedefinirSenha">
-        <input type="hidden" name="token" value="@ViewBag.Token" />
-
+    <form method="post" asp-action="EnviarToken">
         <div class="form-group">
-            <label>Nova Senha</label>
-            <input type="password" name="NovaSenha" class="form-control" required />
+            <label>Email</label>
+            <input type="email" name="Email" class="form-control" required />
         </div>
 
-        <div class="form-group">
-            <label>Confirmar Senha</label>
-            <input type="password" name="ConfirmarSenha" class="form-control" required />
-        </div>
-
-        <button type="submit" class="btn btn-primary">Redefinir Senha</button>
+        <button type="submit" class="btn btn-primary">Enviar Link de Redefinição</button>
     </form>
 }
-

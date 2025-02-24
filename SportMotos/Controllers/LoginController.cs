@@ -28,14 +28,10 @@ namespace SportMotos.Controllers
             // Primeiro, tenta encontrar um Cliente com esse email
             var cliente = _context.Clientes.FirstOrDefault(c => c.Email == Email);
 
-            // Verifica se há algum administrador com esse email (e se não é NULL)
-            var admin = _context.Admins.FirstOrDefault(a => a.Email != null && a.Email == Email);
+            // Verifica se há algum administrador com esse email
+            var admin = _context.Admins.FirstOrDefault(a => a.Email == Email);
 
-
-            if (admin == null)
-            {
-                System.Diagnostics.Debug.WriteLine("Erro");
-            }
+            System.Diagnostics.Debug.WriteLine($"Cliente: {cliente?.Nome}, Admin: {admin?.Nome}");
 
             if (cliente == null && admin == null)
             {
@@ -45,8 +41,13 @@ namespace SportMotos.Controllers
 
             // Verifica se o User correspondente ao Cliente/Admin existe na tabela Users
             var username = cliente?.Nome ?? admin?.Nome; // Nome do utilizador (cliente ou admin)
-            var user = _context.Users.FirstOrDefault(u => u.Username == username);
+            if (string.IsNullOrEmpty(username))
+            {
+                ViewBag.Mensagem = "E-mail ou senha inválidos!";
+                return View();
+            }
 
+            var user = _context.Users.FirstOrDefault(u => u.Username == username);
             if (user == null || user.Password != password)
             {
                 ViewBag.Mensagem = "E-mail ou senha inválidos!";
@@ -80,7 +81,6 @@ namespace SportMotos.Controllers
                 return RedirectToAction("DashBoard", "Dashboard"); // Admin vai para dashboard
             }
         }
-
 
         [HttpGet]
         public async Task<IActionResult> Logout()
