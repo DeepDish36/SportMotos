@@ -42,8 +42,7 @@ document.addEventListener("click", function (event) {
     let cartDropdown = document.getElementById("cartDropdown");
     let cartButton = document.getElementById("cartButton");
 
-    // Se o clique não for dentro do carrinho ou do botão, fecha o carrinho
-    if (!cartDropdown.contains(event.target) && !cartButton.contains(event.target)) {
+    if (cartDropdown && cartButton && !cartDropdown.contains(event.target) && !cartButton.contains(event.target)) {
         cartDropdown.style.display = "none";
     }
 });

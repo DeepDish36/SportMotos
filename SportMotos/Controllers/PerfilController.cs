@@ -19,36 +19,33 @@ namespace SportMotos.Controllers
         public IActionResult ShowPerfil()
         {
             var emailUsuario = User.FindFirstValue(ClaimTypes.Email);
+            var tipoUtilizador = User.FindFirstValue("Tipo_Utilizador");
 
-            // Se o email não estiver salvo nos claims, tenta buscar pelo Username
             if (emailUsuario == null)
             {
-                var username = User.Identity?.Name;
-                var user = _context.Users.FirstOrDefault(u => u.Username == username);
+                return RedirectToAction("Login", "Login");
+            }
 
-                if (user != null)
+            if (tipoUtilizador == "Admin")
+            {
+                var admin = _context.Admins.FirstOrDefault(a => a.Email == emailUsuario);
+                if (admin == null)
                 {
-                    emailUsuario = _context.Clientes
-                        .Where(c => c.Nome == user.Username)
-                        .Select(c => c.Email)
-                        .FirstOrDefault();
+                    return RedirectToAction("Login", "Login");
                 }
+                return View("PerfilAdmin", admin); // Criar uma view específica para Admins
             }
-
-            if (emailUsuario == null)
+            else
             {
-                return RedirectToAction("Login", "Login");
+                var cliente = _context.Clientes.FirstOrDefault(c => c.Email == emailUsuario);
+                if (cliente == null)
+                {
+                    return RedirectToAction("Login", "Login");
+                }
+                return View("Perfil", cliente);
             }
-
-            var cliente = _context.Clientes.FirstOrDefault(c => c.Email == emailUsuario);
-
-            if (cliente == null)
-            {
-                return RedirectToAction("Login", "Login");
-            }
-
-            return View("Perfil", cliente);
         }
+
 
         [HttpPost]
         public IActionResult AtualizarPerfil([FromForm] Cliente clienteAtualizado)
