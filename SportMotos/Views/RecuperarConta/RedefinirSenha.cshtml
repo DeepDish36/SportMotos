@@ -1,0 +1,35 @@
+﻿@{
+    ViewData["Title"] = "Redefinir Senha";
+}
+
+<div class="d-flex justify-content-center align-items-center vh-100">
+    <div class="card p-4 shadow-lg" style="width: 350px;">
+        <h3 class="text-center">Redefinir Senha</h3>
+
+        @if (ViewBag.Mensagem != null)
+        {
+            <div class="alert alert-danger text-center">@ViewBag.Mensagem</div>
+        }
+
+        <form method="post" asp-action="RedefinirSenha">
+            <input type="hidden" name="token" value="@ViewBag.Token" />
+
+            <div class="mb-3">
+                <label class="form-label">Email</label>
+                <input type="email" name="Email" class="form-control" required />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Nova Senha</label>
+                <input type="password" name="NovaSenha" class="form-control" required />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Confirmar Senha</label>
+                <input type="password" name="ConfirmarSenha" class="form-control" required />
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">Redefinir Senha</button>
+        </form>
+    </div>
+</div>

@@ -2,8 +2,12 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+    @if (ViewBag.Sucesso != null)
+    {
+        <div class="alert alert-success">@ViewBag.Sucesso</div>
+    }
 }
-<form asp-controller="Moto" asp-action="AdicionarMoto" method="post">
+<form asp-controller="Moto" asp-action="AdicionarMoto" method="post" enctype="multipart/form-data">
     <div class="mb-3">
         <label class="form-label">Marca</label>
         <input type="text" class="form-control" name="Marca" required>
@@ -53,7 +57,7 @@
 
     <div class="mb-3">
         <label class="form-label">Matrícula (XX-XX-XX)</label>
-        <input type="text" class="form-control" name="Matricula" pattern="\w{2}-\w{2}-\w{2}" required>
+        <input type="text" class="form-control" name="Matricula" pattern="([A-Z]{2}-\d{2}-[A-Z]{2}|\d{2}-[A-Z]{2}-\d{2}|\d{2}-\d{2}-[A-Z]{2})" required>
     </div>
 
     <div class="mb-3">
@@ -71,7 +75,7 @@
 
     <div class="mb-3">
         <label class="form-label">Carta de Condução (Opcional)</label>
-        <input type="text" class="form-control" name="Carta" pattern="A[12]?">
+        <input type="text" class="form-control" name="Carta" pattern="^(A|A1|A2)$">
     </div>
 
     <div class="mb-3">
@@ -85,13 +89,14 @@
     </div>
 
     <div class="mb-3 form-check">
-        <input type="checkbox" class="form-check-input" name="ABS">
+        <input type="hidden" name="Abs" value="false">
+        <input type="checkbox" class="form-check-input" name="Abs" value="true">
         <label class="form-check-label">Possui ABS?</label>
     </div>
 
     <div class="mb-3">
         <label class="form-label">Imagem da Moto</label>
-        <input type="file" class="form-control" name="ImagemFile" accept="image/*">
+        <input type="file" class="form-control" name="Imagem" accept="image/*">
     </div>
 
     <button type="submit" class="btn btn-primary">Adicionar Moto</button>

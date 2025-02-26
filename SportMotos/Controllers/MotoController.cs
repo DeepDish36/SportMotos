@@ -6,7 +6,7 @@ namespace SportMotos.Controllers
 {
     public class MotoController : Controller
     {
-
+        //Controller para criar uma moto
         private readonly AppDbContext _context;
 
         public MotoController(AppDbContext context)
@@ -35,45 +35,54 @@ namespace SportMotos.Controllers
             return View();
         }
 
-        //Adicionar moto ao sistema (POST)
+        // Adicionar moto ao sistema (POST)
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AdicionarMoto(Moto moto, IFormFile Imagem)
+        public async Task<IActionResult> AdicionarMoto(Moto moto, List<IFormFile> Imagens)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                if (Imagem != null && Imagem.Length > 0)
+                return View(moto);
+            }
+
+            _context.Motos.Add(moto);
+            await _context.SaveChangesAsync(); // Primeiro salva a moto para gerar o ID
+
+            // Processa cada imagem
+            if (Imagens != null && Imagens.Count > 0)
+            {
+                string uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/motos");
+
+                if (!Directory.Exists(uploadPath))
                 {
-                    var fileName = Guid.NewGuid().ToString() + Path.GetExtension(Imagem.FileName);
-                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Imagens", fileName);
+                    Directory.CreateDirectory(uploadPath);
+                }
+
+                foreach (var imagem in Imagens)
+                {
+                    string fileName = $"{moto.Matricula}_{Guid.NewGuid()}{Path.GetExtension(imagem.FileName)}";
+                    string filePath = Path.Combine(uploadPath, fileName);
 
                     using (var stream = new FileStream(filePath, FileMode.Create))
                     {
-                        await Imagem.CopyToAsync(stream);
+                        await imagem.CopyToAsync(stream);
                     }
 
-                    // Criar um objeto Imagem
-                    var novaImagem = new Imagem
+                    // Adiciona a imagem à lista de imagens da moto
+                    _context.Imagens.Add(new Imagem
                     {
-                        NomeArquivo= fileName,
-                        Caminho = "/Motos/" + fileName
-                    };
-
-                    // Adiciona a imagem ao banco
-                    _context.Imagens.Add(novaImagem);
-                    await _context.SaveChangesAsync();
-
-                    // Associa a imagem à moto
-                    moto.IdMoto = novaImagem.Id;
+                        NomeArquivo = fileName,
+                        MotoId = moto.IdMoto
+                    });
                 }
 
-                _context.Motos.Add(moto);
-                await _context.SaveChangesAsync();
-
-                return RedirectToAction("Index");
+                await _context.SaveChangesAsync(); // Salva as imagens no banco
             }
-            return View(moto);
+
+            ViewBag.Sucesso = "Moto adicionada com sucesso!";
+            return View();
         }
+
 
         //Formulário de edição da moto (GET)
         public async Task<IActionResult> EditarMoto(int id)

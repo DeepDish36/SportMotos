@@ -388,7 +388,7 @@ public partial class AppDbContext : DbContext
             entity.Property(e => e.Expiration)
                 .HasColumnType("datetime");
 
-            entity.Property(e => e.IDCliente)
+            entity.Property(e => e.IdCliente)
                 .HasColumnName("ID_Cliente")
                 .IsRequired();
         });

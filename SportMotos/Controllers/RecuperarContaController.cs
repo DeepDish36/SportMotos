@@ -36,7 +36,7 @@ namespace SportMotos.Controllers
             }
 
             // Verifica se já existe uma entrada para este cliente
-            var resetEntry = _context.PasswordResets.FirstOrDefault(r => r.IDCliente == cliente.IdCliente);
+            var resetEntry = _context.PasswordResets.FirstOrDefault(r => r.IdCliente== cliente.IdCliente);
 
             string token = Guid.NewGuid().ToString();
 
@@ -44,7 +44,7 @@ namespace SportMotos.Controllers
             {
                 resetEntry = new PasswordResets
                 {
-                    IDCliente = cliente.IdCliente,
+                    IdCliente = cliente.IdCliente,
                     Token = token,
                     Expiration = DateTime.UtcNow.AddHours(1)
                 };
@@ -112,21 +112,34 @@ namespace SportMotos.Controllers
             }
 
             // Busca o cliente e redefine a senha
-            var cliente = _context.Clientes.FirstOrDefault(c => c.IdCliente == resetEntry.IDCliente);
+            var cliente = _context.Clientes.FirstOrDefault(c => c.IdCliente == resetEntry.IdCliente);
             if (cliente == null || string.IsNullOrEmpty(cliente.Email))
             {
                 TempData["Erro"] = "Erro ao processar a solicitação. Tente novamente.";
                 return RedirectToAction("RecuperarSenha");
             }
 
+            // Atualiza a senha na tabela Clientes
             cliente.Password = NovaSenha; // Aqui você pode fazer um hash da senha antes de salvar
             _context.Clientes.Update(cliente);
-            _context.PasswordResets.Remove(resetEntry); // Remove o token após o uso
+
+            // 🔥 Agora também altera na tabela Users
+            var user = _context.Users.FirstOrDefault(u => u.Username == cliente.Nome); // Usa o Nome
+            if (user != null)
+            {
+                user.Password = NovaSenha; // Também faça hash da senha aqui!
+                _context.Users.Update(user);
+            }
+
+            // Remove o token após o uso
+            _context.PasswordResets.Remove(resetEntry);
             _context.SaveChanges();
 
             ViewBag.Mensagem = "Senha redefinida com sucesso! Agora podes fazer login.";
-            return View("Login");
+            return RedirectToAction("Login", "Login"); // Redireciona para a ação de login
         }
+
+
 
         private void EnviarEmail(string destinatario, string assunto, string mensagem)
         {

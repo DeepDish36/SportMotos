@@ -48,6 +48,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGV0YWxoZXNBbnVuY2lvc1xEZXRhbGhlQW51bmNpby5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Gomes/Desktop/SportMotos/SportMotos/Views/Foruns/Forum.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRm9ydW5zXEZvcnVtLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Gomes/Desktop/SportMotos/SportMotos/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -78,6 +82,14 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/Gomes/Desktop/SportMotos/SportMotos/Views/RecuperarConta/RecuperarSenha.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVjdXBlcmFyQ29udGFcUmVjdXBlcmFyU2VuaGEuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Gomes/Desktop/SportMotos/SportMotos/Views/RecuperarConta/RecuperarSenhaConfirmacao.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVjdXBlcmFyQ29udGFcUmVjdXBlcmFyU2VuaGFDb25maXJtYWNhby5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Gomes/Desktop/SportMotos/SportMotos/Views/RecuperarConta/RedefinirSenha.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVjdXBlcmFyQ29udGFcUmVkZWZpbmlyU2VuaGEuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Gomes/Desktop/SportMotos/SportMotos/Views/Shared/Error.cshtml]

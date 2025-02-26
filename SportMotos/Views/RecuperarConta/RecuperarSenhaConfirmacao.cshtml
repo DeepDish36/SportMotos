@@ -1,0 +1,12 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "E-mail de recuperação enviado";
+}
+
+<h2>E-mail enviado!</h2>
+<p>Se o e-mail estiver cadastrado, enviamos um link para redefinir a senha.</p>
+<p>Verifique sua caixa de entrada e clique no link para continuar.</p>
+
+<a href="@Url.Action("Login", "Conta")" class="btn btn-primary">Voltar ao Login</a>

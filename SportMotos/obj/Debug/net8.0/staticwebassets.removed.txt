@@ -1,2 +1,0 @@
-C:\Users\Gomes\Desktop\SportMotos\SportMotos\wwwroot\css\dashboard.css
-C:\Users\Gomes\Desktop\SportMotos\SportMotos\wwwroot\css\dashboard.rtl.css

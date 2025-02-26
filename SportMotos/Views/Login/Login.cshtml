@@ -64,12 +64,20 @@
 
 <div class="login-page">
     <div class="login-container">
+        @{
+            @if (ViewBag.Mensagem != null)
+            {
+                <div class="alert alert-danger">@ViewBag.Mensagem</div>
+            }
+        }
         <h2 style="margin-bottom: 9%;">Iniciar Sessão</h2>
         <form asp-controller="Login" asp-action="Login" method="post" class="needs-validation" novalidate>
             <div class="form-check">
-                <input class="form-control" name="Email" id="Email" type="email" placeholder="Email*" required />
-                <div class="invalid-feedback">
-                    Email inválido ou não existe.
+                <div class="mt-3">
+                    <input class="form-control" name="Email" id="Email" type="email" placeholder="Email*" required />
+                    <div class="invalid-feedback">
+                        Email inválido ou não existe.
+                    </div>
                 </div>
             </div>
 

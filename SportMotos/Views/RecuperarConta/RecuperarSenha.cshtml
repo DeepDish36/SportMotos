@@ -5,20 +5,24 @@
     ViewData["Title"] = "Recuperar Senha";
 }
 
-<h2>Recuperar Senha</h2>
+<div class="d-flex justify-content-center align-items-center vh-100">
+    <div class="card p-4 shadow-sm" style="max-width: 400px; width: 100%;">
+        <h3 class="text-center">Recuperar Senha</h3>
 
-@if (ViewBag.Mensagem != null)
-{
-    <div class="alert alert-danger">@ViewBag.Mensagem</div>
-}
-else
-{
-    <form method="post" asp-action="EnviarToken">
-        <div class="form-group">
-            <label>Email</label>
-            <input type="email" name="Email" class="form-control" required />
-        </div>
+        @if (ViewBag.Mensagem != null)
+        {
+            <div class="alert alert-danger text-center">@ViewBag.Mensagem</div>
+        }
+        else
+        {
+            <form method="post" asp-action="EnviarLinkRecuperacao">
+                <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <input type="email" name="Email" class="form-control" required />
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Enviar Link</button>
+            </form>
+        }
+    </div>
+</div>
 
-        <button type="submit" class="btn btn-primary">Enviar Link de Redefinição</button>
-    </form>
-}

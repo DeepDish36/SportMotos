@@ -39,6 +39,5 @@ public partial class Moto
 
     public virtual List<Imagem> Imagens { get; set; } = new List<Imagem>(); // Nome do arquivo da imagem (ex: "AA-12-BC.jpg")
 
-
     public virtual ICollection<AnuncioMoto> AnuncioMotos { get; set; } = new List<AnuncioMoto>();
 }
