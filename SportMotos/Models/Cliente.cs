@@ -54,5 +54,14 @@ public partial class Cliente
 
     public virtual User? NomeNavigation { get; set; } = null!;
 
+    // Relacionamento: Um Cliente pode ter vários Pedidos
+    public virtual List<Pedidos> Pedido { get; set; } = new List<Pedidos>();
+
+    // Adiciona esta linha:
+    public virtual ICollection<CarrinhoCompras> CarrinhoCompras { get; set; } = new List<CarrinhoCompras>();
+
+    // Relação 1:N - Cliente pode ter vários pedidos
+    public virtual ICollection<Pedidos> Pedidos { get; set; } = new List<Pedidos>();
+
     public virtual ICollection<Orcamento> Orcamentos { get; set; } = new List<Orcamento>();
 }

@@ -44,7 +44,7 @@ namespace SportMotos.Controllers
                 return View();
             }
 
-            // Verifica se o User correspondente ao Cliente/Admin existe na tabela Users
+            // Obtém o nome do usuário (Cliente ou Admin)
             var username = cliente?.Nome ?? admin?.Nome;
             if (string.IsNullOrEmpty(username))
             {
@@ -52,8 +52,9 @@ namespace SportMotos.Controllers
                 return View();
             }
 
+            // Buscar usuário na tabela Users
             var user = _context.Users.FirstOrDefault(u => u.Username == username);
-            if (user == null || user.Password != password)
+            if (user == null || !BCrypt.Net.BCrypt.Verify(password, user.Password)) // 🔥 Verifica senha encriptada
             {
                 ViewBag.Mensagem = "E-mail ou senha inválidos!";
                 return View();
@@ -74,7 +75,7 @@ namespace SportMotos.Controllers
             var authProperties = new AuthenticationProperties
             {
                 IsPersistent = true, // Mantém a sessão após fechar o navegador
-                ExpiresUtc = DateTime.UtcNow.AddHours(1) // Expira em 7 dias
+                ExpiresUtc = DateTime.UtcNow.AddHours(1) // Expira em 1 hora
             };
 
             await HttpContext.SignInAsync(
@@ -85,7 +86,7 @@ namespace SportMotos.Controllers
             // Redirecionar consoante o tipo de utilizador
             return user.Tipo_Utilizador == "Cliente"
                 ? RedirectToAction("Index", "Home")
-                : RedirectToAction("DashBoard", "Dashboard");
+                : RedirectToAction("Dashboard", "DashBoard");
         }
 
         [HttpGet]

@@ -38,6 +38,12 @@ public partial class AppDbContext : DbContext
 
     public virtual DbSet<PasswordResets> PasswordResets { get; set; }
 
+    public DbSet<Pedidos> Pedidos { get; set; }
+
+    public DbSet<InteresseMotos> InteresseMotos { get; set; }
+    
+    public DbSet<CarrinhoCompras> CarrinhoCompras { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Admin>(entity =>
@@ -393,7 +399,82 @@ public partial class AppDbContext : DbContext
                 .IsRequired();
         });
 
+        modelBuilder.Entity<InteresseMotos>(entity =>
+        {
+            entity.HasKey(e => e.IdInteresse).HasName("PK__InteresseMotos__ID_Interesse");
 
+            entity.ToTable("InteresseMotos");
+
+            entity.Property(e => e.IdInteresse).HasColumnName("ID_Interesse");
+            entity.Property(e => e.DataInteresse)
+                .HasColumnType("datetime")
+                .HasColumnName("Data_Interesse");
+        });
+
+        modelBuilder.Entity<ItensPedido>(entity =>
+        {
+            entity.HasKey(e => e.IdItemPedido);
+
+            entity.HasOne(e => e.Pedido)
+                .WithMany(p => p.Itens)
+                .HasForeignKey(e => e.IdPedido)
+                .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        modelBuilder.Entity<Pedidos>(entity =>
+        {
+            entity.HasKey(e => e.IdPedido).HasName("PK__Pedidos__ID_Pedido");
+
+            entity.ToTable("Pedidos");
+
+            entity.Property(e => e.IdPedido).HasColumnName("ID_Pedido");
+            entity.Property(e => e.DataCompra)
+                .HasColumnType("datetime")
+                .HasColumnName("DataCompra")
+                .HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.Total)
+                .HasColumnType("decimal(10,2)")
+                .IsRequired();
+            entity.Property(e => e.Status)
+                .HasMaxLength(20)
+                .IsUnicode(false)
+                .HasColumnName("Status")
+                .HasDefaultValue("Pendente");
+
+            entity.HasOne(d => d.Cliente)
+                .WithMany(p => p.Pedidos)
+                .HasForeignKey(d => d.IdCliente)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__Pedidos__ID_Cliente");
+        });
+
+        modelBuilder.Entity<CarrinhoCompras>(entity =>
+        {
+            entity.HasKey(e => e.IdCarrinho).HasName("PK__CarrinhoCompras__ID_Carrinho");
+
+            entity.ToTable("CarrinhoCompras");
+
+            entity.Property(e => e.IdCarrinho).HasColumnName("ID_Carrinho");
+            entity.Property(e => e.IdCliente).IsRequired();
+            entity.Property(e => e.IdProduto).IsRequired();
+            entity.Property(e => e.TipoProduto)
+                .HasMaxLength(10)
+                .IsUnicode(false)
+                .IsRequired();
+            entity.Property(e => e.Quantidade)
+                .IsRequired()
+                .HasDefaultValue(1);
+            entity.Property(e => e.DataAdicionado)
+                .HasColumnType("datetime")
+                .HasColumnName("Data_Adicionado")
+                .HasDefaultValueSql("(getdate())");
+
+            entity.HasOne(d => d.Cliente)
+                .WithMany(p => p.CarrinhoCompras)
+                .HasForeignKey(d => d.IdCliente)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__CarrinhoCompras__ID_Cliente");
+        });
 
         OnModelCreatingPartial(modelBuilder);
     }

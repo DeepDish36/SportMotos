@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SportMotos.Models;
+using BCrypt;
 using System.Linq;
 using System.Threading.Tasks;
 using System;
@@ -44,10 +45,12 @@ namespace SportMotos.Controllers
                 return View(cliente);
             }
 
+            string passwordCrypt=BCrypt.Net.BCrypt.HashPassword(cliente.Password);
+
             var novoUser = new User
             {
                 Username = cliente.Nome,
-                Password = cliente.Password, // 🔥 Senha segura
+                Password = passwordCrypt, // 🔥 Senha segura
                 Tipo_Utilizador = "Cliente", // Corrigido para o nome correto do banco
                 Data_Criacao = DateTime.Now,  // Garante data válida
                 Ultimo_Login = DateTime.Now

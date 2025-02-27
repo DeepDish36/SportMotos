@@ -131,14 +131,14 @@
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                                     <li><a class="dropdown-item" asp-controller="Perfil" asp-action="ShowPerfil">Perfil</a></li>
-                                    <li><a class="dropdown-item" asp-controller="Conta" asp-action="AlterarSenha">Alterar Senha</a></li>
+                                    <li><a class="dropdown-item" asp-controller="RecuperarConta" asp-action="RecuperarSenha">Alterar Senha</a></li>
                                     @{
                                         var tipoUtilizador = User.Claims.FirstOrDefault(c => c.Type == "Tipo_Utilizador")?.Value;
                                     }
                                     @if (tipoUtilizador == "Admin")
                                     {
                                         <li><hr class="dropdown-divider"></li>
-                                        <li><a class="dropdown-item fw-bold text-primary" asp-controller="Dashboard" asp-action="Index">Painel de Administração</a></li>
+                                        <li><a style="color:black" class="dropdown-item fw-bold text-primary" asp-controller="DashBoard" asp-action="Dashboard">Painel de Administração</a></li>
                                     }
                                     <li><hr class="dropdown-divider"></li>
                                     <li><a class="dropdown-item text-danger" asp-controller="Login" asp-action="Logout">Sair</a></li>

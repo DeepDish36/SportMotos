@@ -1,35 +1,68 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-    
+﻿@{
+    ViewData["Title"] = "Dashboard";
 }
-<h2>Dashboard</h2>
+
+<h2 class="mb-4">Painel de Administração</h2>
 
 <div class="row">
-    <div class="col-md-4">
-        <div class="card text-white bg-primary mb-3">
+    <!-- Total de Clientes -->
+    <div class="col-md-3">
+        <div class="card text-white bg-primary shadow-sm mb-3">
             <div class="card-header">Total de Clientes</div>
-            <div class="card-body">
-                <h4 class="card-title">@ViewBag.TotalClientes</h4>
+            <div class="card-body text-center">
+                <h3 class="card-title">@ViewBag.TotalClientes</h3>
             </div>
         </div>
     </div>
 
-    <div class="col-md-4">
-        <div class="card text-white bg-success mb-3">
+    <!-- Total de Usuários -->
+    <div class="col-md-3">
+        <div class="card text-white bg-success shadow-sm mb-3">
             <div class="card-header">Total de Usuários</div>
-            <div class="card-body">
-                <h4 class="card-title">@ViewBag.TotalUsuarios</h4>
+            <div class="card-body text-center">
+                <h3 class="card-title">@ViewBag.TotalUsuarios</h3>
             </div>
         </div>
     </div>
 
+    <!-- Total de Anúncios -->
+    <div class="col-md-3">
+        <div class="card text-white bg-warning shadow-sm mb-3">
+            <div class="card-header">Total de Anúncios de Motos</div>
+            <div class="card-body text-center">
+                <h3 class="card-title">@ViewBag.TotalAnunciosMoto</h3>
+            </div>
+        </div>
+    </div>
+
+    <!-- Vendas do Mês -->
+    <div class="col-md-3">
+        <div class="card text-white bg-info shadow-sm mb-3">
+            <div class="card-header">Vendas no Mês</div>
+            <div class="card-body text-center">
+                <h3 class="card-title">€@ViewBag.TotalVendasMes</h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Pedidos Pendentes -->
     <div class="col-md-4">
-        <div class="card text-white bg-warning mb-3">
-            <div class="card-header">Total de Anúncios</div>
-            <div class="card-body">
-                <h4 class="card-title">@ViewBag.TotalAnuncios</h4>
+        <div class="card text-white bg-danger shadow-sm mb-3">
+            <div class="card-header">Pedidos Pendentes</div>
+            <div class="card-body text-center">
+                <h3 class="card-title">@ViewBag.PedidosPendentes</h3>
+            </div>
+        </div>
+    </div>
+
+    <!-- Último Cliente Cadastrado -->
+    <div class="col-md-4">
+        <div class="card text-white bg-secondary shadow-sm mb-3">
+            <div class="card-header">Último Cliente Registrado</div>
+            <div class="card-body text-center">
+                <h5 class="card-title">@ViewBag.UltimoCliente</h5>
             </div>
         </div>
     </div>

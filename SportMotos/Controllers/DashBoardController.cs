@@ -26,15 +26,30 @@ namespace SportMotos.Controllers
             {
                 return RedirectToAction("Index", "Home"); // Redireciona se não for admin
             }
-            var totalClientes = _context.Clientes.Count();
-            var totalUtilizadores = _context.Users.Count();
-            var totalAnunciosMoto = _context.AnuncioMotos.Count(); // Supondo que haja uma tabela "Anuncios"
-            var totalAnunciosPeca = _context.AnuncioPecas.Count();
-            
-            ViewBag.TotalClientes = totalClientes;
-            ViewBag.TotalUtilizadores = totalUtilizadores;
-            ViewBag.TotalAnunciosMoto = totalAnunciosMoto;
-            ViewBag.TotalAnuncioPecas = totalAnunciosPeca;
+            // Total de clientes
+            ViewBag.TotalClientes = _context.Clientes.Count();
+
+            // Total de usuários
+            ViewBag.TotalUsuarios = _context.Users.Count();
+
+            // Total de anúncios
+            ViewBag.TotalAnunciosMoto = _context.AnuncioMotos.Count();
+
+            // Total de vendas no mês atual
+            ViewBag.TotalVendasMes = _context.Pedidos
+                .Where(p => p.DataCompra.Month == DateTime.Now.Month &&
+                            p.DataCompra.Year == DateTime.Now.Year)
+                .Sum(p => (decimal?)p.Total) ?? 0; // Evita erro se não houver vendas
+
+            // Total de pedidos pendentes
+            ViewBag.PedidosPendentes = _context.Pedidos.Count(p => p.Status == "Pendente");
+
+            // Último cliente cadastrado
+            var ultimoCliente = _context.Clientes
+                .OrderByDescending(c => c.DataCriacao)
+                .Select(c => c.Nome)
+                .FirstOrDefault();
+            ViewBag.UltimoCliente = ultimoCliente ?? "Nenhum Cliente";
 
             return View();
         }
