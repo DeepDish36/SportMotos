@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SportMotos.Models;
 
 public partial class Cliente
 {
     [Key]  // Define como chave primária
+    [Column("ID_Cliente")]
     public int IdCliente { get; set; }
 
     [Required(ErrorMessage = "O nome é obrigatório")]

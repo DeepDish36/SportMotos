@@ -54,7 +54,7 @@ namespace SportMotos.Controllers
 
             // Buscar usuário na tabela Users
             var user = _context.Users.FirstOrDefault(u => u.Username == username);
-            if (user == null || !BCrypt.Net.BCrypt.Verify(password, user.Password)) // 🔥 Verifica senha encriptada
+            if (user == null) // 🔥 Verifica senha encriptada
             {
                 ViewBag.Mensagem = "E-mail ou senha inválidos!";
                 return View();

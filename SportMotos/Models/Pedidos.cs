@@ -8,7 +8,8 @@ public class Pedidos
     [Key]
     public int IdPedido { get; set; }
 
-    [ForeignKey("IdCliente")]
+    [ForeignKey("Cliente")]
+    [Column("Id_Cliente")]
     public int IdCliente { get; set; }  // Chave estrangeira para Cliente
 
     [Column("DataCompra")]

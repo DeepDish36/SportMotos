@@ -5,6 +5,7 @@
 <h2 class="mb-4">Painel de Administração</h2>
 
 <div class="row">
+    <h3>Total de entidades no sistema</h3>
     <!-- Total de Clientes -->
     <div class="col-md-3">
         <div class="card text-white bg-primary shadow-sm mb-3">
@@ -67,3 +68,99 @@
         </div>
     </div>
 </div>
+
+<!-- Gráficos -->
+<div class="row">
+    <div class="col-md-6">
+        <div class="card shadow-sm mb-4">
+            <div class="card-header">Vendas nos Últimos 6 Meses</div>
+            <div class="card-body">
+                <canvas id="vendasChart"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card shadow-sm mb-4">
+            <div class="card-header">Distribuição dos Pedidos por Status</div>
+            <div class="card-body">
+                <canvas id="statusChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        var ctxVendas = document.getElementById("vendasChart").getContext("2d");
+        var vendasChart = new Chart(ctxVendas, {
+            type: "line",
+            data: {
+                labels: @Html.Raw(Json.Serialize(ViewBag.VendasUltimosMesesLabels)),
+                datasets: [{
+                    label: "Vendas (€)",
+                    data: @Html.Raw(Json.Serialize(ViewBag.VendasUltimosMesesData)),
+                    borderColor: "#007bff",
+                    backgroundColor: "rgba(0, 123, 255, 0.2)",
+                    fill: true
+                }]
+            }
+        });
+
+        var ctxStatus = document.getElementById("statusChart").getContext("2d");
+        var statusChart = new Chart(ctxStatus, {
+            type: "pie",
+            data: {
+                labels: @Html.Raw(Json.Serialize(ViewBag.PedidosStatusLabels)),
+                datasets: [{
+                    data: @Html.Raw(Json.Serialize(ViewBag.PedidosStatusData)),
+                    backgroundColor: ["#007bff", "#dc3545", "#ffc107", "#28a745"]
+                }]
+            }
+        });
+    </script>
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card shadow-sm mb-4">
+            <div class="card-header bg-dark text-white">
+                <h5 class="mb-0">Últimas Encomendas</h5>
+            </div>
+            <div class="card-body">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>ID Pedido</th>
+                            <th>Cliente</th>
+                            <th>Data</th>
+                            <th>Status</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var pedido in ViewBag.UltimosPedidos)
+                        {
+                            <tr>
+                                <td>@pedido.IdPedido</td>
+                                <td>@pedido.ClienteNome</td>
+                                <td>@pedido.DataCompra.ToString("dd/MM/yyyy HH:mm")</td>
+                                <td>
+                                    <span class="badge @(pedido.Status == "Pendente" ? "bg-warning" : "bg-success")">
+                                        @pedido.Status
+                                    </span>
+                                </td>
+                                <td>
+                                    <a href="@Url.Action("Detalhes", "Pedidos", new { id = pedido.IdPedido })" class="btn btn-sm btn-info">
+                                        Ver Detalhes
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
