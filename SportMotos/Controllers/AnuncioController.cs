@@ -4,6 +4,7 @@ using SportMotos.Models;
 
 namespace SportMotos.Controllers
 {
+    //Mostrar todos os anúncios
     public class AnuncioController : Controller
     {
         private readonly AppDbContext _context;
