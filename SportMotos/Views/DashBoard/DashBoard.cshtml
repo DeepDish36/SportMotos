@@ -26,12 +26,22 @@
         </div>
     </div>
 
-    <!-- Total de Anúncios -->
+    <!-- Total de Anúncios de Motos -->
     <div class="col-md-3">
         <div class="card text-white bg-warning shadow-sm mb-3">
             <div class="card-header">Total de Anúncios de Motos</div>
             <div class="card-body text-center">
                 <h3 class="card-title">@ViewBag.TotalAnunciosMoto</h3>
+            </div>
+        </div>
+    </div>
+
+    <!-- Total de Anúncios de Peças -->
+    <div class="col-md-3">
+        <div class="card text-white bg-warning shadow-sm mb-3">
+            <div class="card-header">Total de Anúncios de Peças</div>
+            <div class="card-body text-center">
+                <h3 class="card-title">@ViewBag.TotalAnunciosPeca</h3>
             </div>
         </div>
     </div>
@@ -164,3 +174,88 @@
     </div>
 </div>
 
+<div class="row">
+    <div class="col-md-6">
+        <div class="card shadow-sm mb-4">
+            <div class="card-header bg-dark text-white">
+                <h5 class="mb-0">Últimos Anúncios de Motos</h5>
+            </div>
+            <div class="card-body">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>ID Anúncio</th>
+                            <th>Título</th>
+                            <th>Data</th>
+                            <th>Preço</th>
+                            <th>Moto</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var anuncio in ViewBag.UltimosAnunciosMoto)
+                        {
+                            <tr>
+                                <td>@anuncio.IdAnuncioMoto</td>
+                                <td>@anuncio.Titulo</td>
+                                <td>@anuncio.DataPublicacao.ToString("dd/MM/yyyy")</td>
+                                <td>€@anuncio.Preco</td>
+                                <td>@anuncio.Moto</td>
+                                <td>
+                                    <a asp-controller="DetalhesAnuncios" asp-action="DetalheAnuncio"
+                                       asp-route-id="@anuncio.IdAnuncioMoto"
+                                       asp-route-tipo="motos"
+                                       class="btn btn-sm btn-info">
+                                        Ver Detalhes
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card shadow-sm mb-4">
+            <div class="card-header bg-dark text-white">
+                <h5 class="mb-0">Últimos Anúncios de Peças</h5>
+            </div>
+            <div class="card-body">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>ID Anúncio</th>
+                            <th>Título</th>
+                            <th>Data</th>
+                            <th>Preço</th>
+                            <th>Peça</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var anuncio in ViewBag.UltimosAnunciosPeca)
+                        {
+                            <tr>
+                                <td>@anuncio.IdAnuncioPeca</td>
+                                <td>@anuncio.Titulo</td>
+                                <td>@anuncio.DataPublicacao.ToString("dd/MM/yyyy")</td>
+                                <td>€@anuncio.Preco</td>
+                                <td>@anuncio.Peca</td>
+                                <td>
+                                    <a asp-controller="DetalhesAnuncios" asp-action="DetalheAnuncio"
+                                       asp-route-id="@anuncio.IdAnuncioPeca"
+                                       asp-route-tipo="pecas"
+                                       class="btn btn-sm btn-info">
+                                        Ver Detalhes
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

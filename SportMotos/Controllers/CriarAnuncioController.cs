@@ -19,7 +19,7 @@ namespace SportMotos.Controllers
         }
 
         // Listar anúncios
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> ShowAnuncios()
         {
             var anunciosMotos = await _context.AnuncioMotos.Include(a => a.IdMotoNavigation).ToListAsync();
             var anunciosPecas = await _context.AnuncioPecas.Include(a => a.IdPecaNavigation).ToListAsync();

@@ -28,6 +28,7 @@ namespace SportMotos.Controllers
             ViewBag.TotalClientes = _context.Clientes.Count();
             ViewBag.TotalUsuarios = _context.Users.Count();
             ViewBag.TotalAnunciosMoto = _context.AnuncioMotos.Count();
+            ViewBag.TotalAnunciosPeca = _context.AnuncioPecas.Count();
 
             ViewBag.TotalVendasMes = _context.Pedidos
                 .Where(p => p.DataCompra.Month == DateTime.Now.Month &&
@@ -53,6 +54,36 @@ namespace SportMotos.Controllers
                     ClienteNome = p.Cliente.Nome, // Obtém o nome do Cliente
                     p.DataCompra,
                     p.Status
+                })
+                .ToList();
+
+            // Buscar os 5 anúncios de motos mais recentes
+            ViewBag.UltimosAnunciosMoto = _context.AnuncioMotos
+                .Include(a => a.IdMotoNavigation)
+                .OrderByDescending(a => a.DataPublicacao)
+                .Take(5)
+                .Select(a => new
+                {
+                    a.IdAnuncioMoto,
+                    a.Titulo,
+                    a.DataPublicacao,
+                    a.Preco,
+                    Moto = a.IdMotoNavigation.Modelo
+                })
+                .ToList();
+
+            // Buscar os 5 anúncios de peças mais recentes
+            ViewBag.UltimosAnunciosPeca = _context.AnuncioPecas
+                .Include(a => a.IdPecaNavigation)
+                .OrderByDescending(a => a.DataPublicacao)
+                .Take(5)
+                .Select(a => new
+                {
+                    a.IdAnuncioPeca,
+                    a.Titulo,
+                    a.DataPublicacao,
+                    a.Preco,
+                    Peca = a.IdPecaNavigation.Nome
                 })
                 .ToList();
 
