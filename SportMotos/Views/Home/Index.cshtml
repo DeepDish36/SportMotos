@@ -2,22 +2,275 @@
     ViewData["Title"] = "SportMotos";
 }
 <style>
-    body{
+    body {
         background-image: url('/Imagens/bg.png');
         background-size: cover;
         background-repeat: no-repeat;
         background-position: center;
+        height: 100vh;
     }
+
+    .search-container {
+        background: rgba(255, 255, 255, 0.9); /* Fundo branco com opacidade */
+        padding: 30px;
+        border-radius: 10px;
+        width: 60%;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .search-title {
+        text-align: center;
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    .btn-toggle {
+        width: 48%;
+        font-size: 1.2rem;
+        font-weight: bold;
+    }
+
+    .filter-container {
+        margin-top: 20px;
+    }
+
+    .form-select, .form-control {
+        font-size: 1rem;
+    }
+
+    .btn-search {
+        width: 100%;
+        font-size: 1.2rem;
+        background-color: orange;
+        color: white;
+        border: none;
+        padding: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+        .btn-search:hover {
+            background-color: darkorange;
+        }
 </style>
-<div class="text-center">
-    <div class="container text-center">
-        <div class="row align-items-center">
-          <div class="col-7" style="background-color: blue;">
-            One of three columns
-          </div>
-          <div class="col-3" style="background-color: red;">
-            One of three columns
-          </div>
+
+<div class="search-container">
+    <h2 class="search-title">Encontre tudo o que quiser em segundos!</h2>
+
+    <div class="d-flex justify-content-between">
+        <button id="btnMotos" class="btn btn-outline-dark btn-toggle">Motos</button>
+        <button id="btnPecas" class="btn btn-outline-dark btn-toggle">Peças</button>
+    </div>
+
+    <div class="filter-container">
+        <div id="filtersMotos">
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Estilo</label>
+                    <select class="form-select">
+                        <option disabled hidden selected>Estilo</option>
+                        <!-- Adicionar opções aqui -->
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label>Marca</label>
+                    <select id="marcaSelect" class="form-select">
+                        <option disabled hidden selected>Marca</option>
+                        <!-- Marcas serão carregadas aqui -->
+                    </select>
+                </div>
+            </div>
+
+            <div class="row mt-2">
+                <div class="col-md-6">
+                    <label>Modelo</label>
+                    <select id="modeloSelect" class="form-select" disabled>
+                        <option disabled hidden selected>Modelo</option>
+                        <!-- Modelos serão carregados aqui -->
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label>Preço</label>
+                    <div class="d-flex">
+                        <select class="form-select me-2">
+                            <option disabled hidden selected>de</option>
+                            <option>0€</option>
+                            <option>1000€</option>
+                            <option>5000€</option>
+                            <option>10000€</option>
+                            <option>20000€</option>
+                            <option>50000€</option>
+                        </select>
+                        <select class="form-select">
+                            <option disabled hidden selected>até</option>
+                            <option>0€</option>
+                            <option>1000€</option>
+                            <option>5000€</option>
+                            <option>10000€</option>
+                            <option>20000€</option>
+                            <option>50000€</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-2">
+                <div class="col-md-6">
+                    <label>Ano</label>
+                    <div class="d-flex">
+                        <select class="form-select me-2">
+                            <option disabled hidden selected>de</option>
+                        </select>
+                        <select class="form-select">
+                            <option disabled hidden selected>até</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <label>Combustível</label>
+                    <select class="form-select">
+                        <option disabled hidden selected>Combustível</option>
+                        <option>Elétrico</option>
+                        <option>Gasolina</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row mt-2">
+                <div class="col-md-6">
+                    <label>Quilómetros</label>
+                    <div class="d-flex">
+                        <select class="form-select me-2">
+                            <option disabled hidden selected>de</option>
+                        </select>
+                        <select class="form-select">
+                            <option disabled hidden selected>até</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="filtersPecas" style="display: none;">
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Marca</label>
+                    <select id="pecaMarcaSelect" class="form-select">
+                        <option disabled hidden selected>Marca</option>
+                        <!-- Marcas serão carregadas aqui -->
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label>Modelo</label>
+                    <select id="pecaModeloSelect" class="form-select" disabled>
+                        <option disabled hidden selected>Modelo</option>
+                        <!-- Modelos serão carregados aqui -->
+                    </select>
+                </div>
+            </div>
+
+            <div class="row mt-2">
+                <div class="col-md-6">
+                    <label>Preço</label>
+                    <div class="d-flex">
+                        <select class="form-select me-2">
+                            <option disabled hidden selected>de</option>
+                        </select>
+                        <select class="form-select">
+                            <option disabled hidden selected>até</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-12">
+                <button class="btn-search">Ver resultados</button>
+            </div>
         </div>
     </div>
 </div>
+
+<script>
+    document.getElementById("btnMotos").addEventListener("click", function() {
+        document.getElementById("filtersMotos").style.display = "block";
+        document.getElementById("filtersPecas").style.display = "none";
+    });
+
+    document.getElementById("btnPecas").addEventListener("click", function() {
+        document.getElementById("filtersMotos").style.display = "none";
+        document.getElementById("filtersPecas").style.display = "block";
+    });
+
+    // Carregar marcas ao carregar a página
+    document.addEventListener("DOMContentLoaded", function() {
+        fetch('/Moto/GetMarcas')
+            .then(response => response.json())
+            .then(data => {
+                const marcaSelect = document.getElementById("marcaSelect");
+                data.forEach(marca => {
+                    const option = document.createElement("option");
+                    option.value = marca;
+                    option.text = marca;
+                    marcaSelect.appendChild(option);
+                });
+            });
+
+        fetch('/Moto/GetMarcasPecas')
+            .then(response => response.json())
+            .then(data => {
+                const pecaMarcaSelect = document.getElementById("pecaMarcaSelect");
+                data.forEach(marca => {
+                    const option = document.createElement("option");
+                    option.value = marca;
+                    option.text = marca;
+                    pecaMarcaSelect.appendChild(option);
+                });
+            });
+    });
+
+    // Ativar select de modelos quando uma marca de moto for selecionada
+    document.getElementById("marcaSelect").addEventListener("change", function() {
+        const modeloSelect = document.getElementById("modeloSelect");
+        modeloSelect.innerHTML = '<option disabled hidden selected>Modelo</option>'; // Limpar modelos anteriores
+        if (this.value !== "Marca") {
+            modeloSelect.disabled = false;
+            fetch(`/Moto/GetModelos?marca=${this.value}`)
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach(modelo => {
+                        const option = document.createElement("option");
+                        option.value = modelo;
+                        option.text = modelo;
+                        modeloSelect.appendChild(option);
+                    });
+                });
+        } else {
+            modeloSelect.disabled = true;
+        }
+    });
+
+    // Ativar select de modelos quando uma marca de peça for selecionada
+    document.getElementById("pecaMarcaSelect").addEventListener("change", function() {
+        const pecaModeloSelect = document.getElementById("pecaModeloSelect");
+        pecaModeloSelect.innerHTML = '<option disabled hidden selected>Modelo</option>'; // Limpar modelos anteriores
+        if (this.value !== "Marca") {
+            pecaModeloSelect.disabled = false;
+            fetch(`/Moto/GetModelosPecas?marca=${this.value}`)
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach(modelo => {
+                        const option = document.createElement("option");
+                        option.value = modelo;
+                        option.text = modelo;
+                        pecaModeloSelect.appendChild(option);
+                    });
+                });
+        } else {
+            pecaModeloSelect.disabled = true;
+        }
+    });
+</script>

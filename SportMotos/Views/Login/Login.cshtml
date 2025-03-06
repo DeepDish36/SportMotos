@@ -1,15 +1,12 @@
 ﻿<style>
-    .login-page {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 100vh;
+    body {
         background-image: url('/Imagens/bglogin.jpg');
         background-size: cover;
-        background-position: center;
         background-repeat: no-repeat;
-        margin: 0;
-        padding: 0;
+        background-position: center;
+        height: 100vh;
+        align-items:center;
+        justify-content: center;
     }
 
     .login-container {
@@ -60,24 +57,26 @@
             text-decoration: none;
             font-weight: bold;
         }
+
+    /* Garantir que os campos de email e senha tenham o mesmo tamanho */
+    .form-control {
+        width: 100%;
+        box-sizing: border-box;
+    }
 </style>
 
 <div class="login-page">
     <div class="login-container">
-        @{
-            @if (ViewBag.Mensagem != null)
-            {
-                <div class="alert alert-danger">@ViewBag.Mensagem</div>
-            }
+        @if (ViewBag.Mensagem != null)
+        {
+            <div class="alert alert-danger">@ViewBag.Mensagem</div>
         }
         <h2 style="margin-bottom: 9%;">Iniciar Sessão</h2>
         <form asp-controller="Login" asp-action="Login" method="post" class="needs-validation" novalidate>
-            <div class="form-check">
-                <div class="mt-3">
-                    <input class="form-control" name="Email" id="Email" type="text" placeholder="Email*" required />
-                    <div class="invalid-feedback">
-                        Email errado ou não existe.
-                    </div>
+            <div class="mt-3">
+                <input class="form-control" name="Email" id="Email" type="text" placeholder="Email*" required />
+                <div class="invalid-feedback">
+                    Email errado ou não existe.
                 </div>
             </div>
 

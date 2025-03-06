@@ -127,5 +127,21 @@ namespace SportMotos.Controllers
             }
             return RedirectToAction(nameof(ListarMotos));
         }
+
+        public async Task<IActionResult> GetMarcas()
+        {
+            var marcas = await _context.Motos.Select(m => m.Marca).Distinct().ToListAsync();
+            return Json(marcas);
+        }
+
+        public async Task<IActionResult> GetModelos(string marca)
+        {
+            var modelos = await _context.Motos
+                .Where(m => m.Marca == marca)
+                .Select(m => m.Modelo)
+                .Distinct()
+                .ToListAsync();
+            return Json(modelos);
+        }
     }
 }
