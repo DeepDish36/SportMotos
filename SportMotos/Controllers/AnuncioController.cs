@@ -16,6 +16,9 @@ namespace SportMotos.Controllers
 
         public async Task<IActionResult> Anuncio(string tipo)
         {
+            var tipoUtilizador = User.FindFirst("Tipo_Utilizador")?.Value;
+            ViewBag.TipoUtilizador = tipoUtilizador;
+
             if (tipo == "motos")
             {
                 // Busca anúncios de motos

@@ -31,5 +31,5 @@ public partial class AnuncioMoto
 
     public int? Avaliacoes { get; set; }
 
-    public virtual Moto IdMotoNavigation { get; set; } = null!;
+    public virtual Moto? IdMotoNavigation { get; set; } 
 }

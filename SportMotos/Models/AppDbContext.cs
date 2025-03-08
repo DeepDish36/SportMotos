@@ -476,6 +476,12 @@ public partial class AppDbContext : DbContext
                 .HasConstraintName("FK__CarrinhoCompras__ID_Cliente");
         });
 
+        modelBuilder.Entity<VendaPeca>()
+            .HasOne(v => v.AnuncioPeca)
+            .WithMany()
+            .HasForeignKey(v => v.IdAnuncio)
+            .OnDelete(DeleteBehavior.Cascade); // Apaga as vendas ao excluir um anúncio
+
         OnModelCreatingPartial(modelBuilder);
     }
 

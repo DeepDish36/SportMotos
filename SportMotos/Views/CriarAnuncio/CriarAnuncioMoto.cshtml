@@ -9,7 +9,27 @@
 
 <h2 class="mb-4">Criar Anúncio de Moto</h2>
 
-<form asp-action="CreateMoto" method="post">
+<form asp-action="CriarAnuncioMoto" asp-controller="CriarAnuncio" method="post">
+    @{
+        @if (ViewBag.Error != null && ViewBag.Error.Count > 0)
+        {
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach (var error in ViewBag.Error as List<string>)
+                    {
+                        <li>@error</li>
+                    }
+                </ul>
+            </div>
+        }
+        
+        @if (!string.IsNullOrEmpty(ViewBag.Success))
+        {
+            <div class="alert alert-success">
+                @ViewBag.Success
+            </div>
+        }
+    }
     <div class="form-group">
         <label for="IdMoto">Moto</label>
         <select asp-for="IdMoto" class="form-control" asp-items="ViewBag.MotosDisponiveis"></select>

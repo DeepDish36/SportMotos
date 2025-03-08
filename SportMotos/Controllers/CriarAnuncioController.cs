@@ -1,14 +1,16 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SportMotos.Models;
 using System;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace SportMotos.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize]
     public class CriarAnuncioController : Controller
     {
         private readonly AppDbContext _context;
@@ -19,8 +21,16 @@ namespace SportMotos.Controllers
         }
 
         // Listar anúncios
+        [HttpGet]
         public async Task<IActionResult> ShowAnuncios()
         {
+            var tipoUsuario = User.FindFirstValue("Tipo_Utilizador");
+
+            if (tipoUsuario != "Admin")
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             var anunciosMotos = await _context.AnuncioMotos.Include(a => a.IdMotoNavigation).ToListAsync();
             var anunciosPecas = await _context.AnuncioPecas.Include(a => a.IdPecaNavigation).ToListAsync();
 
@@ -30,8 +40,25 @@ namespace SportMotos.Controllers
         }
 
         // Criar anúncio de moto
+        [HttpGet]
         public IActionResult CriarAnuncioMoto()
         {
+            var tipoUsuario = User.FindFirstValue("Tipo_Utilizador");
+
+            if (tipoUsuario != "Admin")
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            // Buscar motos que não estão associadas a um anúncio
+            var motosDisponiveis = _context.Motos
+                .Where(m => !_context.AnuncioMotos.Any(a => a.IdMoto == m.IdMoto))
+                .Select(m => new { m.IdMoto, m.Marca, m.Modelo })
+                .ToList();
+
+            // Preencher a ViewBag com as motos disponíveis
+            ViewBag.MotosDisponiveis = new SelectList(motosDisponiveis, "IdMoto", "Marca");
+
             ViewBag.Motos = _context.Motos.ToList(); // Pega todas as motos cadastradas
             return View();
         }
@@ -39,17 +66,28 @@ namespace SportMotos.Controllers
         [HttpPost]
         public async Task<IActionResult> CriarAnuncioMoto(AnuncioMoto anuncio)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                anuncio.DataPublicacao = DateTime.Now;
-                _context.AnuncioMotos.Add(anuncio);
-                await _context.SaveChangesAsync();
-                return RedirectToAction("Index");
+                // Captura os erros do ModelState e exibe na ViewBag
+                ViewBag.Error = ModelState.Values.SelectMany(v => v.Errors)
+                                                 .Select(e => e.ErrorMessage)
+                                                 .ToList();
+                return View(anuncio);
             }
-            return View(anuncio);
+
+            anuncio.DataPublicacao = DateTime.Now;
+            _context.AnuncioMotos.Add(anuncio);
+            await _context.SaveChangesAsync();
+
+            // Define uma mensagem de sucesso na ViewBag
+            ViewBag.Success = "Anúncio publicado com sucesso!";
+
+            return View(anuncio); // Mantém o usuário na mesma página
         }
 
+
         // Criar anúncio de peça
+        [HttpGet]
         public IActionResult CriarAnuncioPeca()
         {
             ViewBag.Pecas = _context.Pecas.ToList(); // Pega todas as peças cadastradas

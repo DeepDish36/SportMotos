@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 using SportMotos.Models;
 using System.Net;
 using System.Net.Mail;
 using System.Security.Cryptography;
+using BCrypt.Net;
 
 namespace SportMotos.Controllers
 {
@@ -36,7 +38,7 @@ namespace SportMotos.Controllers
             }
 
             // Verifica se já existe uma entrada para este cliente
-            var resetEntry = _context.PasswordResets.FirstOrDefault(r => r.IdCliente== cliente.IdCliente);
+            var resetEntry = _context.PasswordResets.FirstOrDefault(r => r.IdCliente == cliente.IdCliente);
 
             string token = Guid.NewGuid().ToString();
 
@@ -91,6 +93,8 @@ namespace SportMotos.Controllers
             return View();
         }
 
+
+
         [HttpPost]
         public IActionResult RedefinirSenha(string token, string NovaSenha, string ConfirmarSenha)
         {
@@ -119,15 +123,18 @@ namespace SportMotos.Controllers
                 return RedirectToAction("RecuperarSenha");
             }
 
+            // 🔐 Gerar hash da nova senha
+            string senhaHash = BCrypt.Net.BCrypt.HashPassword(NovaSenha);
+
             // Atualiza a senha na tabela Clientes
-            cliente.Password = NovaSenha; // Aqui você pode fazer um hash da senha antes de salvar
+            cliente.Password = senhaHash;
             _context.Clientes.Update(cliente);
 
             // 🔥 Agora também altera na tabela Users
-            var user = _context.Users.FirstOrDefault(u => u.Username == cliente.Nome); // Usa o Nome
+            var user = _context.Users.FirstOrDefault(u => u.Username == cliente.Nome);
             if (user != null)
             {
-                user.Password = NovaSenha; // Também faça hash da senha aqui!
+                user.Password = senhaHash;
                 _context.Users.Update(user);
             }
 
@@ -136,9 +143,8 @@ namespace SportMotos.Controllers
             _context.SaveChanges();
 
             ViewBag.Mensagem = "Senha redefinida com sucesso! Agora podes fazer login.";
-            return RedirectToAction("Login", "Login"); // Redireciona para a ação de login
+            return RedirectToAction("Login", "Login");
         }
-
 
 
         private void EnviarEmail(string destinatario, string assunto, string mensagem)

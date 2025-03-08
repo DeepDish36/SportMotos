@@ -56,8 +56,8 @@
             <span>Encontre as peças que precisa!</span>
         }
     </h4>
-    <a asp-action="AdicionarMoto" asp-controller="Moto">Adicionar moto</a>
-    <a asp-action="ListarMotos" asp-controller="Moto">Listar anúncio</a>
+    <a asp-action="CriarAnuncioMoto" asp-controller="CriarAnuncio">Adicionar moto</a>
+    <a asp-action="ShowAnuncios" asp-controller="CriarAnuncio">Listar anúncio</a>
     <div class="row row-cols-1 row-cols-md-4 g-4">
         @foreach (var anuncio in Model)
         {
@@ -107,7 +107,14 @@
                                     Ver
                                 </a>
 
-                                <button type="button" hidden class="btn btn-sm btn-outline-secondary">Editar</button>
+                                @if (ViewBag.TipoUtilizador == "Admin")
+                                {
+                                    <a asp-controller="CriarAnuncio" asp-action="@(ViewBag.TipoAnuncio == "motos" ? "EditarAnuncioMoto" : "EditarAnuncioPeca")"
+                                       asp-route-id="@(ViewBag.TipoAnuncio == "motos" ? anuncio.IdAnuncioMoto : anuncio.IdAnuncioPeca)"
+                                       class="btn btn-sm btn-outline-secondary">
+                                        Editar
+                                    </a>
+                                }
                             </div>
                             <small class="text-body-secondary">
                                 Publicado: @anuncio.DataPublicacao.ToString("dd/MM/yyyy")

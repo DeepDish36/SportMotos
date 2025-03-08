@@ -4,104 +4,160 @@
 
 <h2 class="mb-4">Painel de Administração</h2>
 
-<div class="row">
-    <h3>Total de entidades no sistema</h3>
-    <!-- Total de Clientes -->
-    <div class="col-md-3">
-        <div class="card text-white bg-primary shadow-sm mb-3">
-            <div class="card-header">Total de Clientes</div>
-            <div class="card-body text-center">
-                <h3 class="card-title">@ViewBag.TotalClientes</h3>
-            </div>
-        </div>
+<!-- Notificações -->
+@if (ViewBag.PedidosPendentes > 0)
+{
+    <div class="alert alert-warning">
+        ⚠️ Existem @ViewBag.PedidosPendentes pedidos pendentes para aprovação!
     </div>
+}
 
-    <!-- Total de Usuários -->
-    <div class="col-md-3">
-        <div class="card text-white bg-success shadow-sm mb-3">
-            <div class="card-header">Total de Usuários</div>
-            <div class="card-body text-center">
-                <h3 class="card-title">@ViewBag.TotalUsuarios</h3>
-            </div>
-        </div>
+@if (ViewBag.AnunciosExpirados > 0)
+{
+    <div class="alert alert-danger">
+        ❌ Existem @ViewBag.AnunciosExpirados anúncios expirados que precisam ser renovados!
     </div>
+}
 
-    <!-- Total de Anúncios de Motos -->
-    <div class="col-md-3">
-        <div class="card text-white bg-warning shadow-sm mb-3">
-            <div class="card-header">Total de Anúncios de Motos</div>
-            <div class="card-body text-center">
-                <h3 class="card-title">@ViewBag.TotalAnunciosMoto</h3>
-            </div>
-        </div>
-    </div>
-
-    <!-- Total de Anúncios de Peças -->
-    <div class="col-md-3">
-        <div class="card text-white bg-warning shadow-sm mb-3">
-            <div class="card-header">Total de Anúncios de Peças</div>
-            <div class="card-body text-center">
-                <h3 class="card-title">@ViewBag.TotalAnunciosPeca</h3>
-            </div>
-        </div>
-    </div>
-
-    <!-- Vendas do Mês -->
-    <div class="col-md-3">
-        <div class="card text-white bg-info shadow-sm mb-3">
-            <div class="card-header">Vendas no Mês</div>
-            <div class="card-body text-center">
-                <h3 class="card-title">€@ViewBag.TotalVendasMes</h3>
-            </div>
-        </div>
-    </div>
+<!-- Botões de Navegação -->
+<div class="btn-group mb-3">
+    <button class="btn btn-primary" onclick="showSection('estatisticas')">📊 Estatísticas</button>
+    <button class="btn btn-success" onclick="showSection('motos')">🏍️ Anúncios de Motos</button>
+    <button class="btn btn-warning" onclick="showSection('pecas')">🔩 Anúncios de Peças</button>
+    <button class="btn btn-info" onclick="showSection('pedidos')">📦 Pedidos</button>
 </div>
 
-<div class="row">
-    <!-- Pedidos Pendentes -->
-    <div class="col-md-4">
-        <div class="card text-white bg-danger shadow-sm mb-3">
-            <div class="card-header">Pedidos Pendentes</div>
-            <div class="card-body text-center">
-                <h3 class="card-title">@ViewBag.PedidosPendentes</h3>
+<!-- Estatísticas -->
+<div id="estatisticas" class="dashboard-section">
+    <h3>📊 Estatísticas Gerais</h3>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card bg-primary text-white shadow-sm mb-3">
+                <div class="card-header">Total de Clientes</div>
+                <div class="card-body text-center">
+                    <h3>@ViewBag.TotalClientes</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-success text-white shadow-sm mb-3">
+                <div class="card-header">Total de Usuários</div>
+                <div class="card-body text-center">
+                    <h3>@ViewBag.TotalUsuarios</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-dark text-white shadow-sm mb-3">
+                <div class="card-header">Faturamento Total</div>
+                <div class="card-body text-center">
+                    <h3>€@ViewBag.FaturamentoTotal</h3>
+                </div>
             </div>
         </div>
     </div>
-
-    <!-- Último Cliente Cadastrado -->
-    <div class="col-md-4">
-        <div class="card text-white bg-secondary shadow-sm mb-3">
-            <div class="card-header">Último Cliente Registrado</div>
-            <div class="card-body text-center">
-                <h5 class="card-title">@ViewBag.UltimoCliente</h5>
-            </div>
-        </div>
-    </div>
+    <canvas id="vendasChart"></canvas>
 </div>
 
-<!-- Gráficos -->
-<div class="row">
-    <div class="col-md-6">
-        <div class="card shadow-sm mb-4">
-            <div class="card-header">Vendas nos Últimos 6 Meses</div>
-            <div class="card-body">
-                <canvas id="vendasChart"></canvas>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="card shadow-sm mb-4">
-            <div class="card-header">Distribuição dos Pedidos por Status</div>
-            <div class="card-body">
-                <canvas id="statusChart"></canvas>
-            </div>
-        </div>
-    </div>
+<!-- Anúncios de Motos -->
+<div id="motos" class="dashboard-section" style="display: none;">
+    <h3>🏍️ Anúncios de Motos</h3>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Título</th>
+                <th>Preço</th>
+                <th>Data</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var anuncio in ViewBag.UltimosAnunciosMoto)
+            {
+                <tr>
+                    <td>@anuncio.IdAnuncioMoto</td>
+                    <td>@anuncio.Titulo</td>
+                    <td>€@anuncio.Preco</td>
+                    <td>@anuncio.DataPublicacao.ToString("dd/MM/yyyy")</td>
+                    <td><a href="#" class="btn btn-info btn-sm">Ver</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<!-- Anúncios de Peças -->
+<div id="pecas" class="dashboard-section" style="display: none;">
+    <h3>🔩 Anúncios de Peças</h3>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Título</th>
+                <th>Preço</th>
+                <th>Data</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var anuncio in ViewBag.UltimosAnunciosPeca)
+            {
+                <tr>
+                    <td>@anuncio.IdAnuncioPeca</td>
+                    <td>@anuncio.Titulo</td>
+                    <td>€@anuncio.Preco</td>
+                    <td>@anuncio.DataPublicacao.ToString("dd/MM/yyyy")</td>
+                    <td><a href="#" class="btn btn-info btn-sm">Ver</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<!-- Pedidos -->
+<div id="pedidos" class="dashboard-section" style="display: none;">
+    <h3>📦 Pedidos Recentes</h3>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Cliente</th>
+                <th>Data</th>
+                <th>Status</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var pedido in ViewBag.UltimosPedidos)
+            {
+                <tr>
+                    <td>@pedido.IdPedido</td>
+                    <td>@pedido.ClienteNome</td>
+                    <td>@pedido.DataCompra.ToString("dd/MM/yyyy HH:mm")</td>
+                    <td>
+                        <span class="badge @(pedido.Status == "Pendente" ? "bg-warning" : "bg-success")">
+                            @pedido.Status
+                        </span>
+                    </td>
+                    <td><a href="#" class="btn btn-info btn-sm">Ver</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>
 
 @section Scripts {
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
+        function showSection(sectionId) {
+            var sections = document.querySelectorAll(".dashboard-section");
+            sections.forEach(section => {
+                section.style.display = "none";
+            });
+            document.getElementById(sectionId).style.display = "block";
+        }
+
         var ctxVendas = document.getElementById("vendasChart").getContext("2d");
         var vendasChart = new Chart(ctxVendas, {
             type: "line",
@@ -116,146 +172,5 @@
                 }]
             }
         });
-
-        var ctxStatus = document.getElementById("statusChart").getContext("2d");
-        var statusChart = new Chart(ctxStatus, {
-            type: "pie",
-            data: {
-                labels: @Html.Raw(Json.Serialize(ViewBag.PedidosStatusLabels)),
-                datasets: [{
-                    data: @Html.Raw(Json.Serialize(ViewBag.PedidosStatusData)),
-                    backgroundColor: ["#007bff", "#dc3545", "#ffc107", "#28a745"]
-                }]
-            }
-        });
     </script>
 }
-
-<div class="row">
-    <div class="col-md-12">
-        <div class="card shadow-sm mb-4">
-            <div class="card-header bg-dark text-white">
-                <h5 class="mb-0">Últimas Encomendas</h5>
-            </div>
-            <div class="card-body">
-                <table class="table table-striped table-hover">
-                    <thead>
-                        <tr>
-                            <th>ID Pedido</th>
-                            <th>Cliente</th>
-                            <th>Data</th>
-                            <th>Status</th>
-                            <th>Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var pedido in ViewBag.UltimosPedidos)
-                        {
-                            <tr>
-                                <td>@pedido.IdPedido</td>
-                                <td>@pedido.ClienteNome</td>
-                                <td>@pedido.DataCompra.ToString("dd/MM/yyyy HH:mm")</td>
-                                <td>
-                                    <span class="badge @(pedido.Status == "Pendente" ? "bg-warning" : "bg-success")">
-                                        @pedido.Status
-                                    </span>
-                                </td>
-                                <td>
-                                    <a href="@Url.Action("Detalhes", "Pedidos", new { id = pedido.IdPedido })" class="btn btn-sm btn-info">
-                                        Ver Detalhes
-                                    </a>
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-md-6">
-        <div class="card shadow-sm mb-4">
-            <div class="card-header bg-dark text-white">
-                <h5 class="mb-0">Últimos Anúncios de Motos</h5>
-            </div>
-            <div class="card-body">
-                <table class="table table-striped table-hover">
-                    <thead>
-                        <tr>
-                            <th>ID Anúncio</th>
-                            <th>Título</th>
-                            <th>Data</th>
-                            <th>Preço</th>
-                            <th>Moto</th>
-                            <th>Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var anuncio in ViewBag.UltimosAnunciosMoto)
-                        {
-                            <tr>
-                                <td>@anuncio.IdAnuncioMoto</td>
-                                <td>@anuncio.Titulo</td>
-                                <td>@anuncio.DataPublicacao.ToString("dd/MM/yyyy")</td>
-                                <td>€@anuncio.Preco</td>
-                                <td>@anuncio.Moto</td>
-                                <td>
-                                    <a asp-controller="DetalhesAnuncios" asp-action="DetalheAnuncio"
-                                       asp-route-id="@anuncio.IdAnuncioMoto"
-                                       asp-route-tipo="motos"
-                                       class="btn btn-sm btn-info">
-                                        Ver Detalhes
-                                    </a>
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-6">
-        <div class="card shadow-sm mb-4">
-            <div class="card-header bg-dark text-white">
-                <h5 class="mb-0">Últimos Anúncios de Peças</h5>
-            </div>
-            <div class="card-body">
-                <table class="table table-striped table-hover">
-                    <thead>
-                        <tr>
-                            <th>ID Anúncio</th>
-                            <th>Título</th>
-                            <th>Data</th>
-                            <th>Preço</th>
-                            <th>Peça</th>
-                            <th>Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var anuncio in ViewBag.UltimosAnunciosPeca)
-                        {
-                            <tr>
-                                <td>@anuncio.IdAnuncioPeca</td>
-                                <td>@anuncio.Titulo</td>
-                                <td>@anuncio.DataPublicacao.ToString("dd/MM/yyyy")</td>
-                                <td>€@anuncio.Preco</td>
-                                <td>@anuncio.Peca</td>
-                                <td>
-                                    <a asp-controller="DetalhesAnuncios" asp-action="DetalheAnuncio"
-                                       asp-route-id="@anuncio.IdAnuncioPeca"
-                                       asp-route-tipo="pecas"
-                                       class="btn btn-sm btn-info">
-                                        Ver Detalhes
-                                    </a>
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</div>

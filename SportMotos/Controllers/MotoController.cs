@@ -143,5 +143,15 @@ namespace SportMotos.Controllers
                 .ToListAsync();
             return Json(modelos);
         }
+
+        public async Task<IActionResult> GetEstilo(string estilo)
+        {
+            var estilos = await _context.Motos
+                .Where(m=>m.Segmento == estilo)
+                .Select(m => m.Segmento)
+                .Distinct()
+                .ToListAsync();
+            return Json(estilos);
+        }
     }
 }

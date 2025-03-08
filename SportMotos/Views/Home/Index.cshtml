@@ -115,7 +115,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="row mt-2">
                 <div class="col-md-6">
                     <label>Ano</label>
@@ -218,18 +217,17 @@
                     marcaSelect.appendChild(option);
                 });
             });
-
-        fetch('/Moto/GetMarcasPecas')
-            .then(response => response.json())
-            .then(data => {
-                const pecaMarcaSelect = document.getElementById("pecaMarcaSelect");
-                data.forEach(marca => {
-                    const option = document.createElement("option");
-                    option.value = marca;
-                    option.text = marca;
-                    pecaMarcaSelect.appendChild(option);
-                });
-            });
+        // fetch('/Moto/GetMarcasPecas')
+        //     .then(response => response.json())
+        //     .then(data => {
+        //         const pecaMarcaSelect = document.getElementById("pecaMarcaSelect");
+        //         data.forEach(marca => {
+        //             const option = document.createElement("option");
+        //             option.value = marca;
+        //             option.text = marca;
+        //             pecaMarcaSelect.appendChild(option);
+        //         });
+        //     });
     });
 
     // Ativar select de modelos quando uma marca de moto for selecionada
@@ -254,23 +252,23 @@
     });
 
     // Ativar select de modelos quando uma marca de peça for selecionada
-    document.getElementById("pecaMarcaSelect").addEventListener("change", function() {
-        const pecaModeloSelect = document.getElementById("pecaModeloSelect");
-        pecaModeloSelect.innerHTML = '<option disabled hidden selected>Modelo</option>'; // Limpar modelos anteriores
-        if (this.value !== "Marca") {
-            pecaModeloSelect.disabled = false;
-            fetch(`/Moto/GetModelosPecas?marca=${this.value}`)
-                .then(response => response.json())
-                .then(data => {
-                    data.forEach(modelo => {
-                        const option = document.createElement("option");
-                        option.value = modelo;
-                        option.text = modelo;
-                        pecaModeloSelect.appendChild(option);
-                    });
-                });
-        } else {
-            pecaModeloSelect.disabled = true;
-        }
-    });
+    // document.getElementById("pecaMarcaSelect").addEventListener("change", function() {
+    //     const pecaModeloSelect = document.getElementById("pecaModeloSelect");
+    //     pecaModeloSelect.innerHTML = '<option disabled hidden selected>Modelo</option>'; Limpar modelos anteriores
+    //     if (this.value !== "Marca") {
+    //         pecaModeloSelect.disabled = false;
+    //         fetch(`/Moto/GetModelosPecas?marca=${this.value}`)
+    //             .then(response => response.json())
+    //             .then(data => {
+    //                 data.forEach(modelo => {
+    //                     const option = document.createElement("option");
+    //                     option.value = modelo;
+    //                     option.text = modelo;
+    //                     pecaModeloSelect.appendChild(option);
+    //                 });
+    //             });
+    //     } else {
+    //         pecaModeloSelect.disabled = true;
+    //     }
+    // });
 </script>

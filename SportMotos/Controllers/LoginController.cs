@@ -21,6 +21,7 @@ namespace SportMotos.Controllers
             return View();
         }
 
+
         [HttpPost] // 🔥 Agora é POST, pois envia dados sensíveis
         public async Task<IActionResult> Login(string Email, string password)
         {
@@ -54,7 +55,15 @@ namespace SportMotos.Controllers
 
             // Buscar usuário na tabela Users
             var user = _context.Users.FirstOrDefault(u => u.Username == username);
-            if (user == null) // 🔥 Verifica senha encriptada
+            if (user == null)
+            {
+                ViewBag.Mensagem = "E-mail ou senha inválidos!";
+                return View();
+            }
+
+            // 🔐 Verifica se a senha está correta usando BCrypt
+            bool senhaValida = BCrypt.Net.BCrypt.Verify(password, user.Password);
+            if (!senhaValida)
             {
                 ViewBag.Mensagem = "E-mail ou senha inválidos!";
                 return View();

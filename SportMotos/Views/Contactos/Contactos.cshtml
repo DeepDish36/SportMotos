@@ -1,44 +1,76 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
+    ViewData["Title"] = "Contactos";
 }
+
+<style>
+    .info-box {
+        border: 1px solid #dee2e6; /* Cor da borda padrão do Bootstrap */
+        height: 100%; /* Garante que todas as caixas tenham a mesma altura */
+        display: flex;
+        flex-direction: column;
+        justify-content: center; /* Alinha o conteúdo verticalmente */
+    }
+
+        .info-box h5 {
+            font-size: 1.25rem; /* Ajuste o tamanho da fonte conforme necessário */
+            margin-bottom: 0.75rem;
+        }
+
+        .info-box p {
+            margin-bottom: 0.5rem;
+        }
+
+    .btn-light {
+        color: #212529;
+        background-color: #f8f9fa;
+        border-color: #f8f9fa;
+    }
+
+        .btn-light:hover {
+            color: #212529;
+            background-color: #dae0e5;
+            border-color: #d3d9df;
+        }
+</style>
 <div class="container mt-4">
-    <h3 class="mb-3">Informações</h3>
-    <div class="row text-center">
-        <!-- Horário de Funcionamento -->
-        <div class="col-md-3">
-            <div class="info-box">
-                <h5>Horário de funcionamento</h5>
-                <p><strong>Seg. a Sex.:</strong> 9:00 às 18:00</p>
-                <p><strong>Sáb.:</strong> 9:00 às 17:00</p>
-                <p><strong>Dom.:</strong> Encerrados</p>
-            </div>
-        </div>
+    <div class="bg-white p-4" style="width: 100%; margin: 0 auto; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+        <h3 class="mb-3 text-left">Informações</h3>
+        <div class="row text-center">
 
-        <!-- Contactos -->
-        <div class="col-md-3">
-            <div class="info-box">
-                <h5>Contactos</h5>
-                <p><strong>Tlm:</strong> 922333444</p>
-                <p><strong>Tlf:</strong> 232876554</p>
-                <p><strong>Email:</strong> sportmotos@gmail.com</p>
+            <!-- Horário de Funcionamento -->
+            <div class="col-md-3">
+                <div class="info-box p-3">
+                    <h5 style="color: #FF7A00">Horário de funcionamento</h5>
+                    <p><strong>Seg. a Sex.:</strong> 9:00 às 18:00</p>
+                    <p><strong>Sáb.:</strong> 9:00 às 17:00</p>
+                    <p><strong>Dom.:</strong> Encerrados</p>
+                </div>
             </div>
-        </div>
 
-        <!-- Endereço -->
-        <div class="col-md-3">
-            <div class="info-box">
-                <h5>Endereço</h5>
-                <p><strong>&lt;&lt;Por definir&gt;&gt;</strong></p>
+            <!-- Contactos -->
+            <div class="col-md-3">
+                <div class="info-box p-3">
+                    <h5 style="color: #FF7A00">Contactos</h5>
+                    <p><strong>Tlm:</strong> 922333444</p>
+                    <p><strong>Tlf:</strong> 232876554</p>
+                    <p><strong>Email:</strong> sportmotos@gmail.com</p>
+                </div>
             </div>
-        </div>
 
-        <!-- Orçamento -->
-        <div class="col-md-3">
-            <div class="info-box highlight-box">
-                <h5>Precisa de um Orçamento?</h5>
-                <a href="#">Formulário</a>
+            <!-- Endereço -->
+            <div class="col-md-3">
+                <div class="info-box p-3">
+                    <h5 style="color: #FF7A00">Endereço</h5>
+                    <p><strong>&lt;&lt;Por definir&gt;&gt;</strong></p>
+                </div>
+            </div>
+
+            <!-- Orçamento -->
+            <div class="col-md-3">
+                <div class="info-box p-3" style="background-color: #FF7A00; color: white;">
+                    <h5>Precisa de um Orçamento?</h5>
+                    <a href="#" class="btn bg-white" style="color:#FF7A00"><b>Formulário</b></a>
+                </div>
             </div>
         </div>
     </div>
