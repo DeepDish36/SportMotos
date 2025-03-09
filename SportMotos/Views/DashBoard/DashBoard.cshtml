@@ -79,6 +79,7 @@
 <!--Motos -->
 <div id="motos" class="dashboard-section" style="display: none;">
     <h3>🏍️ Motos</h3>
+    <a asp-action="AdicionarMoto" asp-controller="Moto" class="btn btn-success btn-sm">Adicionar Moto</a>
     <table class="table table-striped">
         <thead>
             <tr>
@@ -102,12 +103,15 @@
                     <td>@anuncio.Matricula</td>
                     <td>@anuncio.Condicao</td>
                     <td>
-                        <a asp-controller="CriarAnuncio" asp-action="EditarMoto"
+                        <a asp-controller="Moto" asp-action="VerMoto"
                            asp-route-id="@anuncio.IdMoto" class="btn btn-info btn-sm">
                             Ver
                         </a>
-                        <a href="#" class="btn btn-success btn-sm">Editar</a>
-                        <a href="#" class="btn btn-danger btn-sm">Excluir</a>
+                        <a asp-controller="Moto" asp-action="EditarMoto"
+                           asp-route-id="@anuncio.IdMoto" class="btn btn-success btn-sm">
+                            Editar
+                        </a>
+                        <a href="#" class="btn btn-danger btn-sm" onclick="showDeleteModal('@anuncio.IdMoto', 'moto')">Excluir</a>
                     </td>
                 </tr>
             }
@@ -118,6 +122,7 @@
 <!--Peças-->
 <div id="pecas" class="dashboard-section" style="display: none;">
     <h3>🔩 Peças</h3>
+    <a asp-action="AdicionarPeca" asp-controller="Peca" class="btn btn-success btn-sm">Adicionar Peça</a>
     <table class="table table-striped">
         <thead>
             <tr>
@@ -154,6 +159,7 @@
 <!-- Anúncios de Motos -->
 <div id="anuncioMotos" class="dashboard-section" style="display: none;">
     <h3>🏍️ Anúncios de Motos</h3>
+    <a asp-action="CriarAnuncioMoto" asp-controller="CriarAnuncio" class="btn btn-success btn-sm">Adicionar Anúncio de Moto</a>
     <table class="table table-striped">
         <thead>
             <tr>
@@ -182,6 +188,7 @@
 <!-- Anúncios de Peças -->
 <div id="anuncioPecas" class="dashboard-section" style="display: none;">
     <h3>🔩 Anúncios de Peças</h3>
+    <a asp-action="CriarAnuncioPeca" asp-controller="CriarAnuncio" class="btn btn-success btn-sm">Adicionar Anúncio de Peça</a>
     <table class="table table-striped">
         <thead>
             <tr>
@@ -239,9 +246,68 @@
     </table>
 </div>
 
+
+<!-- Modal de Confirmação de Exclusão -->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar Exclusão</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p id="deleteMessage"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-danger" id="confirmDeleteButton">Excluir</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 @section Scripts {
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
+        //Modal
+            function showDeleteModal(id, tipo) {
+            let mensagem = "";
+            let url = "";
+
+            // Define a mensagem e a URL com base no tipo
+            switch (tipo) {
+                case "moto":
+                    mensagem = "Tem certeza de que deseja excluir esta moto?";
+                    url = `/CriarAnuncio/ExcluirMoto/${id}`;
+                    break;
+                case "peca":
+                    mensagem = "Tem certeza de que deseja excluir esta peça?";
+                    url = `/Pecas/ExcluirPeca/${id}`;
+                    break;
+                case "anuncioMoto":
+                    mensagem = "Tem certeza de que deseja excluir este anúncio de moto?";
+                    url = `/Anuncios/ExcluirAnuncioMoto/${id}`;
+                    break;
+                case "anuncioPeca":
+                    mensagem = "Tem certeza de que deseja excluir este anúncio de peça?";
+                    url = `/Anuncios/ExcluirAnuncioPeca/${id}`;
+                    break;
+            }
+
+            // Atualiza a modal com a mensagem correta
+            document.getElementById("deleteMessage").innerText = mensagem;
+
+            // Define a ação do botão de confirmação
+            document.getElementById("confirmDeleteButton").onclick = function () {
+                window.location.href = url; // Redireciona para a exclusão
+            };
+
+            // Exibe a modal
+            var deleteModal = new bootstrap.Modal(document.getElementById("confirmDeleteModal"));
+            deleteModal.show();
+        }
 
         //Gráfico de Estatísticas 
         document.getElementById("mes").addEventListener("change", function () {

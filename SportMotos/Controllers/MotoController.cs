@@ -85,6 +85,7 @@ namespace SportMotos.Controllers
 
 
         //Formulário de edição da moto (GET)
+        [HttpGet]
         public async Task<IActionResult> EditarMoto(int id)
         {
             var moto = await _context.Motos.FindAsync(id);
@@ -129,6 +130,15 @@ namespace SportMotos.Controllers
             return RedirectToAction(nameof(ListarMotos));
         }
 
+        //VerMoto
+        [HttpGet]
+        public async Task<IActionResult> VerMoto(int id)
+        {
+            var moto = await _context.Motos.FindAsync(id);
+            if (moto == null) return NotFound();
+            return View(moto);
+        }
+
         //Excluir moto (GET)
         public async Task<IActionResult> ExcluirMoto(int id)
         {
@@ -167,12 +177,22 @@ namespace SportMotos.Controllers
             return Json(modelos);
         }
 
+        public async Task<IActionResult> GetAnos()
+        {
+            var anos = await _context.Motos
+                .Select(m => m.Ano)
+                .Distinct()
+                .OrderBy(a => a)
+                .ToListAsync();
+            return Json(anos);
+        }
+
         public async Task<IActionResult> GetEstilo(string estilo)
         {
             var estilos = await _context.Motos
-                .Where(m=>m.Segmento == estilo)
-                .Select(m => m.Segmento)
+                .Select(m=> m.Segmento)
                 .Distinct()
+                .OrderBy(m => m)
                 .ToListAsync();
             return Json(estilos);
         }

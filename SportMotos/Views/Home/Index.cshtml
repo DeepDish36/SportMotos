@@ -143,9 +143,31 @@
                     <div class="d-flex">
                         <select class="form-select me-2">
                             <option disabled hidden selected>de</option>
+                            <option>0</option>
+                            <option>5000</option>
+                            <option>10000</option>
+                            <option>15000</option>
+                            <option>20000</option>
+                            <option>25000</option>
+                            <option>30000</option>
+                            <option>35000</option>
+                            <option>40000</option>
+                            <option>45000</option>
+                            <option>50000</option>
                         </select>
                         <select class="form-select">
                             <option disabled hidden selected>até</option>
+                            <option>0</option>
+                            <option>5000</option>
+                            <option>10000</option>
+                            <option>15000</option>
+                            <option>20000</option>
+                            <option>25000</option>
+                            <option>30000</option>
+                            <option>35000</option>
+                            <option>40000</option>
+                            <option>45000</option>
+                            <option>50000</option>
                         </select>
                     </div>
                 </div>
@@ -194,7 +216,7 @@
 </div>
 
 <script>
-    document.getElementById("btnMotos").addEventListener("click", function() {
+     document.getElementById("btnMotos").addEventListener("click", function() {
         document.getElementById("filtersMotos").style.display = "block";
         document.getElementById("filtersPecas").style.display = "none";
     });
@@ -204,7 +226,7 @@
         document.getElementById("filtersPecas").style.display = "block";
     });
 
-    // Carregar marcas ao carregar a página
+    // Carregar marcas, estilos, anos e quilómetros ao carregar a página
     document.addEventListener("DOMContentLoaded", function() {
         fetch('/Moto/GetMarcas')
             .then(response => response.json())
@@ -217,18 +239,60 @@
                     marcaSelect.appendChild(option);
                 });
             });
-        // fetch('/Moto/GetMarcasPecas')
-        //     .then(response => response.json())
-        //     .then(data => {
-        //         const pecaMarcaSelect = document.getElementById("pecaMarcaSelect");
-        //         data.forEach(marca => {
-        //             const option = document.createElement("option");
-        //             option.value = marca;
-        //             option.text = marca;
-        //             pecaMarcaSelect.appendChild(option);
-        //         });
-        //     });
+
+        fetch('/Moto/GetEstilos')
+            .then(response => response.json())
+            .then(data => {
+                const estiloSelect = document.getElementById("estiloSelect");
+                data.forEach(estilo => {
+                    const option = document.createElement("option");
+                    option.value = estilo;
+                    option.text = estilo;
+                    estiloSelect.appendChild(option);
+                });
+            });
+
+        fetch('/Moto/GetAnos')
+            .then(response => response.json())
+            .then(data => {
+                const anoDeSelect = document.getElementById("anoDeSelect");
+                const anoAteSelect = document.getElementById("anoAteSelect");
+                data.forEach(ano => {
+                    const optionDe = document.createElement("option");
+                    optionDe.value = ano;
+                    optionDe.text = ano;
+                    anoDeSelect.appendChild(optionDe);
+
+                    const optionAte = document.createElement("option");
+                    optionAte.value = ano;
+                    optionAte.text = ano;
+                    anoAteSelect.appendChild(optionAte);
+                });
+            });
     });
+
+            document.addEventListener("DOMContentLoaded", function() {
+        // Função para preencher os anos
+        function preencherAnos(selectElement, startYear, endYear, step = 1) {
+            for (let year = startYear; year <= endYear; year += step) {
+                const option = document.createElement("option");
+                option.value = year;
+                option.text = year;
+                selectElement.appendChild(option);
+            }
+        }
+
+        // Preencher anos de 1900 a 1990, de 10 em 10
+        const anoDeSelect = document.querySelector("select[name='anoDe']");
+        preencherAnos(anoDeSelect, 1900, 1990, 10);
+
+        // Preencher anos de 1990 até o ano atual, de 1 em 1
+        const anoAteSelect = document.querySelector("select[name='anoAte']");
+        const currentYear = new Date().getFullYear();
+        preencherAnos(anoAteSelect, 1990, currentYear);
+    });
+
+
 
     // Ativar select de modelos quando uma marca de moto for selecionada
     document.getElementById("marcaSelect").addEventListener("change", function() {
