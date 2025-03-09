@@ -30,6 +30,9 @@ namespace SportMotos.Controllers
             ViewBag.TotalAnunciosMoto = _context.AnuncioMotos.Count();
             ViewBag.TotalAnunciosPeca = _context.AnuncioPecas.Count();
 
+            ViewBag.Motos = _context.Motos;
+            ViewBag.Pecas = _context.Pecas;
+
             ViewBag.TotalVendasMes = _context.Pedidos
                 .Where(p => p.DataCompra.Month == DateTime.Now.Month &&
                             p.DataCompra.Year == DateTime.Now.Year)
@@ -89,5 +92,16 @@ namespace SportMotos.Controllers
 
             return View();
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetEstatisticas(int mes)
+        {
+            int clientes = await _context.Users.Where(u => u.Data_Criacao.Month == mes).CountAsync();
+            int anunciosMotoVendidos = await _context.AnuncioMotos.Where(a => a.DataVenda.Month == mes).CountAsync();
+            int anuncioPecasVendidos = await _context.AnuncioPecas.Where(p=> p.DataVenda.Month == mes).CountAsync();
+
+            return Json(new { mes, clientes, anunciosMotoVendidos, anuncioPecasVendidos });
+        }
+
     }
 }

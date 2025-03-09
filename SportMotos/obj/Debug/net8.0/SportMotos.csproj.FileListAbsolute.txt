@@ -1187,3 +1187,4 @@ C:\Users\Gomes\Desktop\SportMotos\SportMotos\bin\Debug\net8.0\runtimes\win\lib\n
 C:\Users\Gomes\Desktop\SportMotos\SportMotos\obj\Debug\net8.0\SportMotos.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\Gomes\Desktop\SportMotos\SportMotos\bin\Debug\net8.0\BCrypt.Net-Next.dll
 C:\Users\g0mes\Desktop\SportMotos\SportMotos\bin\Debug\net8.0\BCrypt.Net-Next.dll
+C:\Users\g0mes\Desktop\SportMotos\SportMotos\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt

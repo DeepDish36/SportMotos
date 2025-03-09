@@ -22,8 +22,10 @@
 <!-- Botões de Navegação -->
 <div class="btn-group mb-3">
     <button class="btn btn-primary" onclick="showSection('estatisticas')">📊 Estatísticas</button>
-    <button class="btn btn-success" onclick="showSection('motos')">🏍️ Anúncios de Motos</button>
-    <button class="btn btn-warning" onclick="showSection('pecas')">🔩 Anúncios de Peças</button>
+    <button class="btn btn-success" onclick="showSection('motos')">🏍️ Motos</button>
+    <button class="btn btn-warning" onclick="showSection('pecas')">🔩 Peças</button>
+    <button class="btn btn-success" onclick="showSection('anuncioMotos')">🏍️ Anúncios de Motos</button>
+    <button class="btn btn-warning" onclick="showSection('anuncioPecas')">🔩 Anúncios de Peças</button>
     <button class="btn btn-info" onclick="showSection('pedidos')">📦 Pedidos</button>
 </div>
 
@@ -55,12 +57,102 @@
                 </div>
             </div>
         </div>
+        <label for="mes">Selecione um mês:</label>
+        <select id="mes" class="form-control">
+            <option value="1">Janeiro</option>
+            <option value="2">Fevereiro</option>
+            <option value="3">Março</option>
+            <option value="4">Abril</option>
+            <option value="5">Maio</option>
+            <option value="6">Junho</option>
+            <option value="7">Julho</option>
+            <option value="8">Agosto</option>
+            <option value="9">Setembro</option>
+            <option value="10">Outubro</option>
+            <option value="11">Novembro</option>
+            <option value="12">Dezembro</option>
+        </select>
     </div>
     <canvas id="vendasChart"></canvas>
 </div>
 
-<!-- Anúncios de Motos -->
+<!--Motos -->
 <div id="motos" class="dashboard-section" style="display: none;">
+    <h3>🏍️ Motos</h3>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Marca</th>
+                <th>Modelo</th>
+                <th>Preço</th>
+                <th>Matrícula</th>
+                <th>Condição</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var anuncio in ViewBag.Motos)
+            {
+                <tr>
+                    <td>@anuncio.IdMoto</td>
+                    <td>@anuncio.Marca</td>
+                    <td>@anuncio.Modelo</td>
+                    <td>@anuncio.Preco</td>
+                    <td>@anuncio.Matricula</td>
+                    <td>@anuncio.Condicao</td>
+                    <td>
+                        <a asp-controller="CriarAnuncio" asp-action="EditarMoto"
+                           asp-route-id="@anuncio.IdMoto" class="btn btn-info btn-sm">
+                            Ver
+                        </a>
+                        <a href="#" class="btn btn-success btn-sm">Editar</a>
+                        <a href="#" class="btn btn-danger btn-sm">Excluir</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<!--Peças-->
+<div id="pecas" class="dashboard-section" style="display: none;">
+    <h3>🔩 Peças</h3>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Marca</th>
+                <th>Modelo</th>
+                <th>Compatibilidade</th>
+                <th>Preço</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var anuncio in ViewBag.Pecas)
+            {
+                <tr>
+                    <td>@anuncio.IdPeca</td>
+                    <td>@anuncio.Nome</td>
+                    <td>@anuncio.Marca</td>
+                    <td>@anuncio.Modelo</td>
+                    <td>@anuncio.Compatibilidade</td>
+                    <td>@anuncio.Preco</td>
+                    <td>
+                        <a href="#" class="btn btn-info btn-sm">Ver</a>
+                        <a href="#" class="btn btn-success btn-sm">Editar</a>
+                        <a href="#" class="btn btn-danger btn-sm">Excluir</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<!-- Anúncios de Motos -->
+<div id="anuncioMotos" class="dashboard-section" style="display: none;">
     <h3>🏍️ Anúncios de Motos</h3>
     <table class="table table-striped">
         <thead>
@@ -88,7 +180,7 @@
 </div>
 
 <!-- Anúncios de Peças -->
-<div id="pecas" class="dashboard-section" style="display: none;">
+<div id="anuncioPecas" class="dashboard-section" style="display: none;">
     <h3>🔩 Anúncios de Peças</h3>
     <table class="table table-striped">
         <thead>
@@ -150,6 +242,33 @@
 @section Scripts {
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
+
+        //Gráfico de Estatísticas 
+        document.getElementById("mes").addEventListener("change", function () {
+        let mesSelecionado = this.value;
+        fetch(`/Dashboard/GetEstatisticas?mes=${mesSelecionado}`)
+            .then(response => response.json())
+            .then(data => {
+                atualizarGrafico(data);
+            });
+        });
+
+        function atualizarGrafico(data) {
+            let ctx = document.getElementById("vendasChart").getContext("2d");
+            new Chart(ctx, {
+                type: "bar", // ou "line"
+                data: {
+                    labels: ["Clientes", "Anúncios Vendidos"],
+                    datasets: [{
+                        label: `Dados de ${data.mes}`,
+                        data: [data.clientes, data.anunciosVendidos],
+                        backgroundColor: ["blue", "green"]
+                    }]
+                }
+            });
+        }
+
+        //Mostrar Secções
         function showSection(sectionId) {
             var sections = document.querySelectorAll(".dashboard-section");
             sections.forEach(section => {

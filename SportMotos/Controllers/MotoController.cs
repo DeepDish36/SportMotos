@@ -97,13 +97,36 @@ namespace SportMotos.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditarMoto(Moto moto)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                _context.Update(moto);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(ListarMotos));
+                return View(moto);
             }
-            return View(moto);
+
+            var motoExistente = await _context.Motos.FindAsync(moto.IdMoto);
+            if (motoExistente == null) return NotFound();
+
+            // Atualiza os campos editáveis manualmente
+            motoExistente.Marca = moto.Marca;
+            motoExistente.Modelo = moto.Modelo;
+            motoExistente.Ano = moto.Ano;
+            motoExistente.Quilometragem = moto.Quilometragem;
+            motoExistente.Preco = moto.Preco;
+            motoExistente.Condicao = moto.Condicao;
+            motoExistente.Cilindrada = moto.Cilindrada;
+            motoExistente.Caixa = moto.Caixa;
+            motoExistente.Matricula = moto.Matricula;
+            motoExistente.Segmento = moto.Segmento;
+            motoExistente.Combustivel = moto.Combustivel;
+            motoExistente.Carta = moto.Carta;
+            motoExistente.Cor = moto.Cor;
+            motoExistente.Descricao = moto.Descricao;
+            motoExistente.Abs = moto.Abs;
+
+            _context.Motos.Update(motoExistente);
+            await _context.SaveChangesAsync();
+
+            ViewBag.Sucesso = "Moto editada com sucesso!";
+            return RedirectToAction(nameof(ListarMotos));
         }
 
         //Excluir moto (GET)
