@@ -15,19 +15,23 @@ namespace SportMotos.Controllers
 
         public async Task<IActionResult> DetalheAnuncio(int id, string tipo)
         {
+            if (id <= 0)
+            {
+                return NotFound(); // Se ID for inválido, retorna erro 404
+            }
+
             if (tipo == "motos")
             {
                 var anuncio = await _context.AnuncioMotos
-                .Include(a=>a.IdMotoNavigation)
-                .ThenInclude(a=>a.Imagens)
-                .Where(a => a.IdMoto == id && a.ApagadoEm == null)
-                .FirstOrDefaultAsync(a=>a.IdAnuncioMoto==id);
+                    .Include(a => a.IdMotoNavigation)
+                    .ThenInclude(a => a.Imagens)
+                    .FirstOrDefaultAsync(a => a.IdAnuncioMoto == id && a.ApagadoEm == null);
 
                 ViewBag.TipoAnuncio = "motos";
 
                 if (anuncio == null)
                 {
-                    return NotFound();
+                    return NotFound(); // Retorna erro 404 se não encontrar
                 }
 
                 return View(anuncio);
@@ -35,10 +39,8 @@ namespace SportMotos.Controllers
             else if (tipo == "pecas")
             {
                 var anuncio = await _context.AnuncioPecas
-                .Include(a => a.IdPecaNavigation)
-                .ThenInclude(a=>a.NomeArquivo)
-                .Where(a => a.IdPeca == id && a.ApagadoEm == null)
-                .FirstOrDefaultAsync();
+                    .Include(a => a.IdPecaNavigation)
+                    .FirstOrDefaultAsync(a => a.IdAnuncioPeca == id && a.ApagadoEm == null);
 
                 ViewBag.TipoAnuncio = "pecas";
 
@@ -50,7 +52,7 @@ namespace SportMotos.Controllers
                 return View(anuncio);
             }
 
-            return BadRequest("Anúncio Inválido");
+            return BadRequest("Anúncio Inválido"); // Redireciona para uma página de erro personalizada
         }
     }
 }

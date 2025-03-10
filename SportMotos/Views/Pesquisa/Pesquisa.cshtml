@@ -15,111 +15,69 @@
     }
     else
     {
-        <div class="row row-cols-1 row-cols-md-4 g-4">
+        <div>
             @if (Model.Motos.Any())
             {
                 <h3>Motos</h3>
-                @foreach (var moto in Model.Motos)
-                {
-                    <div class="col">
-                        <div class="card shadow-sm">
-                            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
-                                <title>@moto.Marca @moto.Modelo</title>
-                                <rect width="100%" height="100%" fill="#55595c"></rect>
-                                <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
-                            </svg>
-                            <div class="card-body">
-                                <p class="card-text">@moto.Marca - @moto.Modelo</p>
-                                <p class="text-muted">Preço: €@moto.Preco.ToString("F2")</p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="btn-group">
-                                        <a asp-controller="DetalhesAnuncios" asp-action="DetalheAnuncio" asp-route-id="@moto.IdMoto" class="btn btn-sm btn-outline-secondary">Ver</a>
-                                    </div>
-                                    <small class="text-body-secondary">Publicado: @moto..ToString("dd/MM/yyyy")</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                }
+                <ul>
+                    @foreach (var moto in Model.Motos)
+                    {
+                        <li>
+                            <strong>@moto.Marca - @moto.Modelo</strong> -
+                            <span class="text-muted">Preço: €@moto.Preco.ToString("F2")</span> |
+                            <a asp-controller="DetalhesAnuncios" asp-action="DetalheAnuncio" asp-route-id="@moto.IdMoto">Ver detalhes</a>
+                            <br />
+                        </li>
+                    }
+                </ul>
             }
 
             @if (Model.Pecas.Any())
             {
                 <h3>Peças</h3>
-                @foreach (var peca in Model.Pecas)
-                {
-                    <div class="col">
-                        <div class="card shadow-sm">
-                            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
-                                <title>@peca.Nome</title>
-                                <rect width="100%" height="100%" fill="#55595c"></rect>
-                                <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
-                            </svg>
-                            <div class="card-body">
-                                <p class="card-text">@peca.Nome - @peca.Marca</p>
-                                <p class="text-muted">Preço: €@peca.Preco.ToString("F2")</p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="btn-group">
-                                        <a asp-controller="DetalhesAnuncios" asp-action="DetalheAnuncio" asp-route-id="@peca.IdPeca" class="btn btn-sm btn-outline-secondary">Ver</a>
-                                    </div>
-                                    <small class="text-body-secondary">Publicado: @peca.DataFabricacao.ToString("dd/MM/yyyy")</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                }
+                <ul>
+                    @foreach (var peca in Model.Pecas)
+                    {
+                        <li>
+                            <strong>@peca.Marca (@peca.Modelo)</strong> -
+                            <span class="text-muted">Preço: €@peca.Preco.ToString("F2")</span> |
+                            <a asp-controller="DetalhesAnuncios" asp-action="DetalheAnuncio" asp-route-id="@peca.IdPeca">Ver detalhes</a>
+                            <br />
+                        </li>
+                    }
+                </ul>
             }
 
             @if (Model.Noticias.Any())
             {
                 <h3>Notícias</h3>
-                @foreach (var noticia in Model.Noticias)
-                {
-                    <div class="col">
-                        <div class="card shadow-sm">
-                            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
-                                <title>@noticia.Titulo</title>
-                                <rect width="100%" height="100%" fill="#55595c"></rect>
-                                <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
-                            </svg>
-                            <div class="card-body">
-                                <p class="card-text">@noticia.Titulo</p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="btn-group">
-                                        <a asp-controller="Noticia" asp-action="DetalheNoticia" asp-route-id="@noticia.IdNoticia" class="btn btn-sm btn-outline-secondary">Ver</a>
-                                    </div>
-                                    <small class="text-body-secondary">Publicado: @noticia.DataPublicacao.ToString("dd/MM/yyyy")</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                }
+                <ul>
+                    @foreach (var noticia in Model.Noticias)
+                    {
+                        <li>
+                            <strong>@noticia.Titulo</strong> -
+                            <a asp-controller="Noticia" asp-action="DetalheNoticia" asp-route-id="@noticia.IdNoticia">Ler mais</a>
+                            <br />
+                            <small>Publicado: @noticia.DataPublicacao.ToString("dd/MM/yyyy")</small>
+                        </li>
+                    }
+                </ul>
             }
 
             @if (Model.Foruns.Any())
             {
                 <h3>Fóruns</h3>
-                @foreach (var forum in Model.Foruns)
-                {
-                    <div class="col">
-                        <div class="card shadow-sm">
-                            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
-                                <title>@forum.Titulo</title>
-                                <rect width="100%" height="100%" fill="#55595c"></rect>
-                                <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
-                            </svg>
-                            <div class="card-body">
-                                <p class="card-text">@forum.Titulo</p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="btn-group">
-                                        <a asp-controller="Foruns" asp-action="DetalheForum" asp-route-id="@forum.IdForum" class="btn btn-sm btn-outline-secondary">Ver</a>
-                                    </div>
-                                    <small class="text-body-secondary">Publicado: @forum.DataCriacao.ToString("dd/MM/yyyy")</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                }
+                <ul>
+                    @foreach (var forum in Model.Foruns)
+                    {
+                        <li>
+                            <strong>@forum.Titulo</strong> -
+                            <a asp-controller="Foruns" asp-action="DetalheForum" asp-route-id="@forum.IdForum">Ver discussão</a>
+                            <br />
+                            <small>Publicado: @forum.DataCriacao.ToString("dd/MM/yyyy")</small>
+                        </li>
+                    }
+                </ul>
             }
         </div>
     }

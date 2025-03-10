@@ -188,35 +188,35 @@
                 });
             });
 
-        fetch('/Moto/GetEstilos')
-            .then(response => response.json())
-            .then(data => {
-                const estiloSelect = document.getElementById("estiloSelect");
-                data.forEach(estilo => {
-                    const option = document.createElement("option");
-                    option.value = estilo;
-                    option.text = estilo;
-                    estiloSelect.appendChild(option);
-                });
-            });
+        // fetch('/Moto/GetEstilos')
+        //     .then(response => response.json())
+        //     .then(data => {
+        //         const estiloSelect = document.getElementById("estiloSelect");
+        //         data.forEach(estilo => {
+        //             const option = document.createElement("option");
+        //             option.value = estilo;
+        //             option.text = estilo;
+        //             estiloSelect.appendChild(option);
+        //         });
+        //     });
 
-        fetch('/Moto/GetAnos')
-            .then(response => response.json())
-            .then(data => {
-                const anoDeSelect = document.getElementById("anoDeSelect");
-                const anoAteSelect = document.getElementById("anoAteSelect");
-                data.forEach(ano => {
-                    const optionDe = document.createElement("option");
-                    optionDe.value = ano;
-                    optionDe.text = ano;
-                    anoDeSelect.appendChild(optionDe);
+        // fetch('/Moto/GetAnos')
+        //     .then(response => response.json())
+        //     .then(data => {
+        //         const anoDeSelect = document.getElementById("anoDeSelect");
+        //         const anoAteSelect = document.getElementById("anoAteSelect");
+        //         data.forEach(ano => {
+        //             const optionDe = document.createElement("option");
+        //             optionDe.value = ano;
+        //             optionDe.text = ano;
+        //             anoDeSelect.appendChild(optionDe);
 
-                    const optionAte = document.createElement("option");
-                    optionAte.value = ano;
-                    optionAte.text = ano;
-                    anoAteSelect.appendChild(optionAte);
-                });
-            });
+        //             const optionAte = document.createElement("option");
+        //             optionAte.value = ano;
+        //             optionAte.text = ano;
+        //             anoAteSelect.appendChild(optionAte);
+        //         });
+        //     });
     });
 
     // Ativar select de modelos quando uma marca de moto for selecionada

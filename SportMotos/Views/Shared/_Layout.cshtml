@@ -84,8 +84,8 @@
                             </a>
                         </li>
                         <li class="nav-item flex-grow-1 d-flex justify-content-center">
-                            <div class="input-group w-50">
-                                <form asp-action="Pesquisa" asp-controller="Pesquisa" method="get" class="d-flex" width="355px">
+                            <div class="input-group" style="width: 355px;">
+                                <form asp-action="Pesquisa" asp-controller="Pesquisa" method="get" class="d-flex w-100">
                                     <input type="text" name="termo" class="form-control rounded-pill" placeholder="Pesquisar..." aria-label="Pesquisar" aria-describedby="button-search" style="border-top-right-radius: 0; border-bottom-right-radius: 0;">
                                     <button type="submit" class="btn btn-outline-light rounded-pill" id="button-search"
                                             style="border-top-left-radius: 0; border-bottom-left-radius: 0;">
@@ -96,6 +96,7 @@
                                 </form>
                             </div>
                         </li>
+
                     </ul>
                     <!-- Carrinho Dropdown -->
                     <div id="cartDropdown" class="cart-dropdown">
