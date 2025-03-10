@@ -1,0 +1,52 @@
+﻿body {
+    background-image: url('/Imagens/bg.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 100vh;
+}
+
+.search-container {
+    background: rgba(255, 255, 255, 0.9); /* Fundo branco com opacidade */
+    padding: 30px;
+    border-radius: 10px;
+    width: 60%;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.search-title {
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.btn-toggle {
+    width: 48%;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.filter-container {
+    margin-top: 20px;
+}
+
+.form-select, .form-control {
+    font-size: 1rem;
+}
+
+.btn-search {
+    width: 100%;
+    font-size: 1.2rem;
+    background-color: orange;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+    .btn-search:hover {
+        background-color: darkorange;
+    }

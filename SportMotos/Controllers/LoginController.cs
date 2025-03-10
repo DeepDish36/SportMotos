@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using SportMotos.Models;
 using System.Security.Claims;
+using BCrypt.Net;
 
 namespace SportMotos.Controllers
 {
@@ -20,7 +21,6 @@ namespace SportMotos.Controllers
         {
             return View();
         }
-
 
         [HttpPost] // 🔥 Agora é POST, pois envia dados sensíveis
         public async Task<IActionResult> Login(string Email, string password)
@@ -62,7 +62,17 @@ namespace SportMotos.Controllers
             }
 
             // 🔐 Verifica se a senha está correta usando BCrypt
-            bool senhaValida = BCrypt.Net.BCrypt.Verify(password, user.Password);
+            bool senhaValida;
+            try
+            {
+                senhaValida = BCrypt.Net.BCrypt.Verify(password, user.Password);
+            }
+            catch (SaltParseException)
+            {
+                ViewBag.Mensagem = "Erro ao verificar a senha. Por favor, tente novamente.";
+                return View();
+            }
+
             if (!senhaValida)
             {
                 ViewBag.Mensagem = "E-mail ou senha inválidos!";
@@ -71,11 +81,11 @@ namespace SportMotos.Controllers
 
             // Criar os Claims (dados da sessão)
             var claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.Name, user.Username),
-                new Claim("Tipo_Utilizador", user.Tipo_Utilizador), // "Cliente" ou "Admin"
-                new Claim(ClaimTypes.Email, emailNormalizado) // Garante que o email está nos claims
-            };
+    {
+        new Claim(ClaimTypes.Name, user.Username),
+        new Claim("Tipo_Utilizador", user.Tipo_Utilizador), // "Cliente" ou "Admin"
+        new Claim(ClaimTypes.Email, emailNormalizado) // Garante que o email está nos claims
+    };
 
             var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
             var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
@@ -96,7 +106,7 @@ namespace SportMotos.Controllers
             return user.Tipo_Utilizador == "Cliente"
                 ? RedirectToAction("Index", "Home")
                 : RedirectToAction("Dashboard", "DashBoard");
-        }
+        }        
 
         [HttpGet]
         public async Task<IActionResult> Logout()

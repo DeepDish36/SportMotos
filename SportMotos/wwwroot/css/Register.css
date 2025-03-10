@@ -1,0 +1,46 @@
+﻿body {
+    background-image: url('/Imagens/bglogin.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.register-page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh; /* Cobre a tela inteira */
+    min-height: 100vh; /* Evita cortes */
+    margin: 0;
+    padding: 0;
+}
+
+.register-container {
+    background-color: rgba(255, 255, 255, 0.5);
+    padding: 40px;
+    border-radius: 12px;
+    width: 400px;
+    text-align: center;
+    backdrop-filter: blur(8px);
+}
+
+.form-control {
+    height: 40px;
+    padding-left: 12px;
+    border-radius: 6px;
+    border: none;
+}
+
+.btn-register {
+    width: 100%;
+    height: 40px;
+    background-color: #323232;
+    color: white;
+    border-radius: 20px;
+    border: none;
+}
+
+.terms a {
+    color: black !important;
+    text-decoration: none;
+}

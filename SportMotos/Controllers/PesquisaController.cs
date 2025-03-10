@@ -17,9 +17,8 @@ namespace SportMotos.Controllers
         {
             if (string.IsNullOrWhiteSpace(termo))
             {
-                return View(new PesquisaViewModel()); // Se não houver termo, retorna vazio
+                return View(new PesquisaViewModel()); // Retorna um ViewModel vazio se não houver termo
             }
-
 
             var anunciosMotos = await _context.Motos
                 .Where(m => m.Marca.Contains(termo) || m.Modelo.Contains(termo))
@@ -47,5 +46,6 @@ namespace SportMotos.Controllers
 
             return View(resultadoPesquisa);
         }
+
     }
 }

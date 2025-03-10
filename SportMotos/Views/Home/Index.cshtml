@@ -1,60 +1,8 @@
 ﻿@{
     ViewData["Title"] = "SportMotos";
 }
-<style>
-    body {
-        background-image: url('/Imagens/bg.png');
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-position: center;
-        height: 100vh;
-    }
 
-    .search-container {
-        background: rgba(255, 255, 255, 0.9); /* Fundo branco com opacidade */
-        padding: 30px;
-        border-radius: 10px;
-        width: 60%;
-        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-    }
-
-    .search-title {
-        text-align: center;
-        font-size: 1.5rem;
-        font-weight: bold;
-        margin-bottom: 20px;
-    }
-
-    .btn-toggle {
-        width: 48%;
-        font-size: 1.2rem;
-        font-weight: bold;
-    }
-
-    .filter-container {
-        margin-top: 20px;
-    }
-
-    .form-select, .form-control {
-        font-size: 1rem;
-    }
-
-    .btn-search {
-        width: 100%;
-        font-size: 1.2rem;
-        background-color: orange;
-        color: white;
-        border: none;
-        padding: 10px;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: 0.3s;
-    }
-
-        .btn-search:hover {
-            background-color: darkorange;
-        }
-</style>
+<link rel="stylesheet" href="~/css/Index.css" />
 
 <div class="search-container">
     <h2 class="search-title">Encontre tudo o que quiser em segundos!</h2>
@@ -270,29 +218,6 @@
                 });
             });
     });
-
-            document.addEventListener("DOMContentLoaded", function() {
-        // Função para preencher os anos
-        function preencherAnos(selectElement, startYear, endYear, step = 1) {
-            for (let year = startYear; year <= endYear; year += step) {
-                const option = document.createElement("option");
-                option.value = year;
-                option.text = year;
-                selectElement.appendChild(option);
-            }
-        }
-
-        // Preencher anos de 1900 a 1990, de 10 em 10
-        const anoDeSelect = document.querySelector("select[name='anoDe']");
-        preencherAnos(anoDeSelect, 1900, 1990, 10);
-
-        // Preencher anos de 1990 até o ano atual, de 1 em 1
-        const anoAteSelect = document.querySelector("select[name='anoAte']");
-        const currentYear = new Date().getFullYear();
-        preencherAnos(anoAteSelect, 1990, currentYear);
-    });
-
-
 
     // Ativar select de modelos quando uma marca de moto for selecionada
     document.getElementById("marcaSelect").addEventListener("change", function() {

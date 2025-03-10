@@ -13,6 +13,10 @@
       "PackagePath": "staticwebassets\\Imagens\\bg.png"
     },
     {
+      "Id": "C:\\Users\\Gomes\\Desktop\\SportMotos\\SportMotos\\wwwroot\\Imagens\\bg2.jpg",
+      "PackagePath": "staticwebassets\\Imagens\\bg2.jpg"
+    },
+    {
       "Id": "C:\\Users\\Gomes\\Desktop\\SportMotos\\SportMotos\\wwwroot\\Imagens\\bglogin.jpg",
       "PackagePath": "staticwebassets\\Imagens\\bglogin.jpg"
     },
@@ -21,8 +25,16 @@
       "PackagePath": "staticwebassets\\Imagens\\logo.png"
     },
     {
-      "Id": "C:\\Users\\Gomes\\Desktop\\SportMotos\\SportMotos\\wwwroot\\css\\headers.css",
-      "PackagePath": "staticwebassets\\css\\headers.css"
+      "Id": "C:\\Users\\Gomes\\Desktop\\SportMotos\\SportMotos\\wwwroot\\css\\Index.css",
+      "PackagePath": "staticwebassets\\css\\Index.css"
+    },
+    {
+      "Id": "C:\\Users\\Gomes\\Desktop\\SportMotos\\SportMotos\\wwwroot\\css\\Login.css",
+      "PackagePath": "staticwebassets\\css\\Login.css"
+    },
+    {
+      "Id": "C:\\Users\\Gomes\\Desktop\\SportMotos\\SportMotos\\wwwroot\\css\\Register.css",
+      "PackagePath": "staticwebassets\\css\\Register.css"
     },
     {
       "Id": "C:\\Users\\Gomes\\Desktop\\SportMotos\\SportMotos\\wwwroot\\css\\site.css",

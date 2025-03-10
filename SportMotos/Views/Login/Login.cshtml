@@ -1,73 +1,15 @@
-﻿<style>
-    body {
-        background-image: url('/Imagens/bglogin.jpg');
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-position: center;
-        height: 100vh;
-        align-items:center;
-        justify-content: center;
-    }
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "SportMotos - Iniciar Sessão";
+}
 
-    .login-container {
-        background-color: rgba(255, 255, 255, 0.5); /* Igual à página de criar conta */
-        padding: 40px;
-        border-radius: 12px;
-        width: 400px;
-        text-align: center;
-        backdrop-filter: blur(8px);
-    }
-
-    .forgot-password {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 10px;
-        font-size: 0.9em;
-    }
-
-        .forgot-password a {
-            text-decoration: none;
-            font-weight: bold;
-            color: black;
-        }
-
-    .btn-login {
-        width: 100%;
-        height: 40px;
-        background-color: #323232;
-        color: white;
-        border: none;
-        border-radius: 20px;
-        font-size: 1em;
-        margin-top: 10px;
-        cursor: pointer;
-    }
-
-        .btn-login:hover {
-            background-color: #232323;
-        }
-
-    .terms {
-        font-size: 0.85em;
-        margin-top: 10px;
-    }
-
-        .terms a {
-            color: black;
-            text-decoration: underline;
-            font-weight: bold;
-        }
-
-    /* Garantir que os campos de email e senha tenham o mesmo tamanho */
-    .form-control {
-        width: 100%;
-        box-sizing: border-box;
-    }
-</style>
+<link rel="stylesheet" href="~/css/Login.css" />
 
 <div class="login-page">
     <div class="login-container">
-        @if (ViewBag.Mensagem != null)
+        @if (!string.IsNullOrEmpty(ViewBag.Mensagem))
         {
             <div class="alert alert-danger">@ViewBag.Mensagem</div>
         }
