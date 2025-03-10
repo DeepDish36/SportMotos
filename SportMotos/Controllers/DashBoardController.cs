@@ -48,7 +48,7 @@ namespace SportMotos.Controllers
 
             // 🔥 Buscar os 5 pedidos mais recentes
             ViewBag.UltimosPedidos = _context.Pedidos
-                .Include(p=>p.Cliente)
+                .Include(p => p.Cliente)
                 .OrderByDescending(p => p.DataCompra)
                 .Take(5)
                 .Select(p => new
@@ -97,8 +97,11 @@ namespace SportMotos.Controllers
         public async Task<IActionResult> GetEstatisticas(int mes)
         {
             int clientes = await _context.Users.Where(u => u.Data_Criacao.Month == mes).CountAsync();
-            int anunciosMotoVendidos = await _context.AnuncioMotos.Where(a => a.DataVenda.Month == mes).CountAsync();
-            int anuncioPecasVendidos = await _context.AnuncioPecas.Where(p=> p.DataVenda.Month == mes).CountAsync();
+            int anunciosMotoVendidos = await _context.AnuncioMotos
+            .Where(a => a.DataVenda.HasValue && a.DataVenda.Value.Month == mes)
+            .CountAsync();
+
+            int anuncioPecasVendidos = await _context.AnuncioPecas.Where(p => p.DataVenda.Month == mes).CountAsync();
 
             return Json(new { mes, clientes, anunciosMotoVendidos, anuncioPecasVendidos });
         }

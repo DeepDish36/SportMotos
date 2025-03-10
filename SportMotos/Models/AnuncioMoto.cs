@@ -25,7 +25,7 @@ public partial class AnuncioMoto
 
     public DateTime? ApagadoEm { get; set; }
 
-    public DateTime DataVenda { get; set; } // Novo campo
+    public DateTime? DataVenda { get; set; } // Novo campo
 
     public int? Visualizacoes { get; set; }
 

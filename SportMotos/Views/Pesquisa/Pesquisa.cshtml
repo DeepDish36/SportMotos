@@ -1,0 +1,72 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model PesquisaViewModel
+
+<h3 class="mt-4">Resultados da Pesquisa</h3>
+
+@if (!Model.Motos.Any() && !Model.Pecas.Any() && !Model.Noticias.Any() && !Model.Foruns.Any())
+{
+    <p>Nenhum resultado encontrado para sua pesquisa.</p>
+}
+else
+{
+    <div class="row">
+        @foreach (var moto in Model.Motos)
+        {
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <img src="@moto.Imagens" class="card-img-top" alt="Imagem da Moto">
+                    <div class="card-body">
+                        <h5 class="card-title">@moto.Marca @moto.Modelo</h5>
+                        <p class="card-text">Preço: @moto.Preco €</p>
+                        <a asp-action="DetalhesMoto" asp-controller="Anuncios" asp-route-id="@moto.IdMoto" class="btn btn-primary">Ver Mais</a>
+                    </div>
+                </div>
+            </div>
+        }
+
+        @foreach (var peca in Model.Pecas)
+        {
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <img src="@peca.NomeArquivo" class="card-img-top" alt="Imagem da Peça">
+                    <div class="card-body">
+                        <h5 class="card-title">@peca.Nome</h5>
+                        <p class="card-text">Marca: @peca.Marca</p>
+                        <a asp-action="DetalhesPeca" asp-controller="Anuncios" asp-route-id="@peca.IdPeca" class="btn btn-primary">Ver Mais</a>
+                    </div>
+                </div>
+            </div>
+        }
+
+        @foreach (var noticia in Model.Noticias)
+        {
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">@noticia.Titulo</h5>
+                        <p class="card-text">@noticia.Descricao.Substring(0, Math.Min(noticia.Descricao.Length, 100))...</p>
+                        <a asp-action="DetalhesNoticia" asp-controller="Noticias" asp-route-id="@noticia.IdNoticia" class="btn btn-primary">Ler Mais</a>
+                    </div>
+                </div>
+            </div>
+        }
+
+        @foreach (var forum in Model.Foruns)
+        {
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">@forum.Titulo</h5>
+                        <p class="card-text">@forum.Descricao.Substring(0, Math.Min(forum.Descricao.Length, 100))...</p>
+                        <a asp-action="DetalhesForum" asp-controller="Forum" asp-route-id="@forum.IdForum" class="btn btn-primary">Ver Discussão</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}

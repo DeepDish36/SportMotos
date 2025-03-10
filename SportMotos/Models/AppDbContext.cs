@@ -104,6 +104,9 @@ public partial class AppDbContext : DbContext
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime")
                 .HasColumnName("Data_Publicacao");
+            entity.Property(e=>e.DataVenda)
+                .HasColumnType("datetime")
+                .HasColumnName("Data_Venda");   
             entity.Property(e => e.Descricao).IsUnicode(false);
             entity.Property(e => e.IdMoto).HasColumnName("ID_Moto");
             entity.Property(e => e.Titulo)
@@ -136,6 +139,9 @@ public partial class AppDbContext : DbContext
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime")
                 .HasColumnName("Data_Publicacao");
+            entity.Property(e => e.DataVenda)
+                .HasColumnType("datetime")
+                .HasColumnName("Data_Venda");
             entity.Property(e => e.Descricao).IsUnicode(false);
             entity.Property(e => e.IdPeca).HasColumnName("ID_Peca");
             entity.Property(e => e.Titulo)
