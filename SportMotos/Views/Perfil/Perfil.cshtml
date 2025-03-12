@@ -1,28 +1,30 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@model SportMotos.Models.Cliente
+﻿@model SportMotos.Models.Cliente
 
 @{
-    ViewData["Title"] = "Meu Perfil";
+    ViewData["Title"] = "Perfil";
 }
 
-<h2>Meu Perfil</h2>
+<h2>O meu Perfil</h2>
 
-@if (ViewBag.Mensagem != null)
+@if (ViewBag.Error != null)
 {
-    <div class="alert alert-success">@ViewBag.Mensagem</div>
+    <div class="alert alert-danger">@ViewBag.Error</div>
 }
 
 <form asp-action="AtualizarPerfil" method="post">
-    <div class="form-group">
-        <label>Nome</label>
-        <input asp-for="Nome" class="form-control" required />
-    </div>
-
-    <div class="form-group">
-        <label>Sobrenome</label>
-        <input asp-for="Sobrenome" class="form-control" />
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Nome</label>
+                <input asp-for="Nome" class="form-control" required />
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Sobrenome</label>
+                <input asp-for="Sobrenome" class="form-control" />
+            </div>
+        </div>
     </div>
 
     <div class="form-group">
@@ -30,41 +32,56 @@
         <input asp-for="Email" class="form-control" readonly />
     </div>
 
-    <div class="form-group">
-        <label>Telefone</label>
-        <input asp-for="Telefone" class="form-control form-control-sm" style="width: 200px;" />
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Telefone</label>
+                <input asp-for="Telefone" class="form-control form-control-sm" />
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Idade</label>
+                <input asp-for="Idade" type="number" class="form-control form-control-sm" />
+            </div>
+        </div>
     </div>
 
-    <div class="form-group">
-        <label>Rua</label>
-        <input asp-for="Rua" class="form-control" />
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Rua</label>
+                <input asp-for="Rua" class="form-control" />
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Morada</label>
+                <input asp-for="Morada" class="form-control" />
+            </div>
+        </div>
     </div>
 
-    <div class="form-group">
-        <label>Morada</label>
-        <input asp-for="Morada" class="form-control" />
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Código Postal</label>
+                <input asp-for="CodPostal" class="form-control form-control-sm" />
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Género</label>
+                <select asp-for="Genero" class="form-control">
+                    <option value="Masculino">Masculino</option>
+                    <option value="Feminino">Feminino</option>
+                    <option value="Outro">Outro</option>
+                </select>
+            </div>
+        </div>
     </div>
 
-    <div class="form-group">
-        <label>Código Postal</label>
-        <input asp-for="CodPostal" class="form-control form-control-sm" style="width: 150px;" />
-    </div>
-
-    <div class="form-group">
-        <label>Género</label>
-        <select asp-for="Genero" class="form-control" style="width: 200px;">
-            <option value="Masculino">Masculino</option>
-            <option value="Feminino">Feminino</option>
-            <option value="Outro">Outro</option>
-        </select>
-    </div>
-
-    <div class="form-group">
-        <label>Idade</label>
-        <input asp-for="Idade" type="number" class="form-control form-control-sm" style="width: 100px;" />
-    </div>
-
-    <div class="form-group">
+    <div class="form-group mt-2">
         <label>
             <input type="checkbox" asp-for="ReceberNewsletter" />
             Desejo receber a Newsletter
@@ -73,4 +90,3 @@
 
     <button type="submit" class="btn btn-primary">Salvar Alterações</button>
 </form>
-
