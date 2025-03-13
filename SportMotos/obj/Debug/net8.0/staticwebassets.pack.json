@@ -41,6 +41,22 @@
       "PackagePath": "staticwebassets\\css\\site.css"
     },
     {
+      "Id": "C:\\Users\\Gomes\\Desktop\\SportMotos\\SportMotos\\wwwroot\\datatable\\datatables.css",
+      "PackagePath": "staticwebassets\\datatable\\datatables.css"
+    },
+    {
+      "Id": "C:\\Users\\Gomes\\Desktop\\SportMotos\\SportMotos\\wwwroot\\datatable\\datatables.js",
+      "PackagePath": "staticwebassets\\datatable\\datatables.js"
+    },
+    {
+      "Id": "C:\\Users\\Gomes\\Desktop\\SportMotos\\SportMotos\\wwwroot\\datatable\\datatables.min.css",
+      "PackagePath": "staticwebassets\\datatable\\datatables.min.css"
+    },
+    {
+      "Id": "C:\\Users\\Gomes\\Desktop\\SportMotos\\SportMotos\\wwwroot\\datatable\\datatables.min.js",
+      "PackagePath": "staticwebassets\\datatable\\datatables.min.js"
+    },
+    {
       "Id": "C:\\Users\\Gomes\\Desktop\\SportMotos\\SportMotos\\wwwroot\\favicon.ico",
       "PackagePath": "staticwebassets\\favicon.ico"
     },

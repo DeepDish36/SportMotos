@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "MAyXNVBBH/MofZVmxpDfg8ZYS3K4zldvAh+si+UUifY=",
+  "Hash": "lEkzMmC9broxWCr3K/gkhiS1rPIuTyPM1aC+nIssUq8=",
   "Source": "SportMotos",
   "BasePath": "_content/SportMotos",
   "Mode": "Default",
@@ -1401,6 +1401,90 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\site.css"
+    },
+    {
+      "Identity": "C:\\Users\\Gomes\\Desktop\\SportMotos\\SportMotos\\wwwroot\\datatable\\datatables.css",
+      "SourceId": "SportMotos",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Gomes\\Desktop\\SportMotos\\SportMotos\\wwwroot\\",
+      "BasePath": "_content/SportMotos",
+      "RelativePath": "datatable/datatables#[.{fingerprint}]?.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "suh98nwf2a",
+      "Integrity": "pEa6Zp8EPJdHuhqKmZg35+mRgo7lXG7Gttc9ESNH5BM=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\datatable\\datatables.css"
+    },
+    {
+      "Identity": "C:\\Users\\Gomes\\Desktop\\SportMotos\\SportMotos\\wwwroot\\datatable\\datatables.js",
+      "SourceId": "SportMotos",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Gomes\\Desktop\\SportMotos\\SportMotos\\wwwroot\\",
+      "BasePath": "_content/SportMotos",
+      "RelativePath": "datatable/datatables#[.{fingerprint}]?.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "xzedd49jsk",
+      "Integrity": "02WMS2PfZ46e1LwppXAtRBr6JVqh5pdVJ/nsKWugV+c=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\datatable\\datatables.js"
+    },
+    {
+      "Identity": "C:\\Users\\Gomes\\Desktop\\SportMotos\\SportMotos\\wwwroot\\datatable\\datatables.min.css",
+      "SourceId": "SportMotos",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Gomes\\Desktop\\SportMotos\\SportMotos\\wwwroot\\",
+      "BasePath": "_content/SportMotos",
+      "RelativePath": "datatable/datatables.min#[.{fingerprint}]?.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "mu0a2v5pov",
+      "Integrity": "ztDH7D/R38obY9aNf5u0dZpYAt031A+FvJiEm+/DBrk=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\datatable\\datatables.min.css"
+    },
+    {
+      "Identity": "C:\\Users\\Gomes\\Desktop\\SportMotos\\SportMotos\\wwwroot\\datatable\\datatables.min.js",
+      "SourceId": "SportMotos",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Gomes\\Desktop\\SportMotos\\SportMotos\\wwwroot\\",
+      "BasePath": "_content/SportMotos",
+      "RelativePath": "datatable/datatables.min#[.{fingerprint}]?.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "rbtf5delh3",
+      "Integrity": "N9tQuJt0K9B3sDG2Q8CnDwaXlOWEH5obdvt38ckZh48=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\datatable\\datatables.min.js"
     },
     {
       "Identity": "C:\\Users\\Gomes\\Desktop\\SportMotos\\SportMotos\\wwwroot\\favicon.ico",
@@ -3073,6 +3157,334 @@
         {
           "Name": "integrity",
           "Value": "sha256-pAGv4ietcJNk/EwsQZ5BN9+K4MuNYS2a9wl4Jw+q9D0="
+        }
+      ]
+    },
+    {
+      "Route": "datatable/datatables.css",
+      "AssetFile": "C:\\Users\\Gomes\\Desktop\\SportMotos\\SportMotos\\wwwroot\\datatable\\datatables.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "26843"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"pEa6Zp8EPJdHuhqKmZg35+mRgo7lXG7Gttc9ESNH5BM=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 12 Mar 2025 15:49:26 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-pEa6Zp8EPJdHuhqKmZg35+mRgo7lXG7Gttc9ESNH5BM="
+        }
+      ]
+    },
+    {
+      "Route": "datatable/datatables.js",
+      "AssetFile": "C:\\Users\\Gomes\\Desktop\\SportMotos\\SportMotos\\wwwroot\\datatable\\datatables.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "505012"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"02WMS2PfZ46e1LwppXAtRBr6JVqh5pdVJ/nsKWugV+c=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 12 Mar 2025 15:49:26 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-02WMS2PfZ46e1LwppXAtRBr6JVqh5pdVJ/nsKWugV+c="
+        }
+      ]
+    },
+    {
+      "Route": "datatable/datatables.min.css",
+      "AssetFile": "C:\\Users\\Gomes\\Desktop\\SportMotos\\SportMotos\\wwwroot\\datatable\\datatables.min.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "23613"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"ztDH7D/R38obY9aNf5u0dZpYAt031A+FvJiEm+/DBrk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 12 Mar 2025 15:49:26 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-ztDH7D/R38obY9aNf5u0dZpYAt031A+FvJiEm+/DBrk="
+        }
+      ]
+    },
+    {
+      "Route": "datatable/datatables.min.js",
+      "AssetFile": "C:\\Users\\Gomes\\Desktop\\SportMotos\\SportMotos\\wwwroot\\datatable\\datatables.min.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "153214"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"N9tQuJt0K9B3sDG2Q8CnDwaXlOWEH5obdvt38ckZh48=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 12 Mar 2025 15:49:26 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-N9tQuJt0K9B3sDG2Q8CnDwaXlOWEH5obdvt38ckZh48="
+        }
+      ]
+    },
+    {
+      "Route": "datatable/datatables.min.mu0a2v5pov.css",
+      "AssetFile": "C:\\Users\\Gomes\\Desktop\\SportMotos\\SportMotos\\wwwroot\\datatable\\datatables.min.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "23613"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"ztDH7D/R38obY9aNf5u0dZpYAt031A+FvJiEm+/DBrk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 12 Mar 2025 15:49:26 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "mu0a2v5pov"
+        },
+        {
+          "Name": "label",
+          "Value": "datatable/datatables.min.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-ztDH7D/R38obY9aNf5u0dZpYAt031A+FvJiEm+/DBrk="
+        }
+      ]
+    },
+    {
+      "Route": "datatable/datatables.min.rbtf5delh3.js",
+      "AssetFile": "C:\\Users\\Gomes\\Desktop\\SportMotos\\SportMotos\\wwwroot\\datatable\\datatables.min.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "153214"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"N9tQuJt0K9B3sDG2Q8CnDwaXlOWEH5obdvt38ckZh48=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 12 Mar 2025 15:49:26 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "rbtf5delh3"
+        },
+        {
+          "Name": "label",
+          "Value": "datatable/datatables.min.js"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-N9tQuJt0K9B3sDG2Q8CnDwaXlOWEH5obdvt38ckZh48="
+        }
+      ]
+    },
+    {
+      "Route": "datatable/datatables.suh98nwf2a.css",
+      "AssetFile": "C:\\Users\\Gomes\\Desktop\\SportMotos\\SportMotos\\wwwroot\\datatable\\datatables.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "26843"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"pEa6Zp8EPJdHuhqKmZg35+mRgo7lXG7Gttc9ESNH5BM=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 12 Mar 2025 15:49:26 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "suh98nwf2a"
+        },
+        {
+          "Name": "label",
+          "Value": "datatable/datatables.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-pEa6Zp8EPJdHuhqKmZg35+mRgo7lXG7Gttc9ESNH5BM="
+        }
+      ]
+    },
+    {
+      "Route": "datatable/datatables.xzedd49jsk.js",
+      "AssetFile": "C:\\Users\\Gomes\\Desktop\\SportMotos\\SportMotos\\wwwroot\\datatable\\datatables.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "505012"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"02WMS2PfZ46e1LwppXAtRBr6JVqh5pdVJ/nsKWugV+c=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 12 Mar 2025 15:49:26 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "xzedd49jsk"
+        },
+        {
+          "Name": "label",
+          "Value": "datatable/datatables.js"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-02WMS2PfZ46e1LwppXAtRBr6JVqh5pdVJ/nsKWugV+c="
         }
       ]
     },
