@@ -1,6 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Dashboard";
 }
+<link rel="stylesheet" href="~/datatable/datatables.css" />
 
 <h2 class="mb-4">Painel de Administração</h2>
 
@@ -20,13 +21,13 @@
 }
 
 <!-- Botões de Navegação -->
-<div class="btn-group mb-3">
-    <button class="btn btn-primary" onclick="showSection('estatisticas')">📊 Estatísticas</button>
-    <button class="btn btn-success" onclick="showSection('motos')">🏍️ Motos</button>
-    <button class="btn btn-warning" onclick="showSection('pecas')">🔩 Peças</button>
-    <button class="btn btn-success" onclick="showSection('anuncioMotos')">🏍️ Anúncios de Motos</button>
-    <button class="btn btn-warning" onclick="showSection('anuncioPecas')">🔩 Anúncios de Peças</button>
-    <button class="btn btn-info" onclick="showSection('pedidos')">📦 Pedidos</button>
+<div class="btn-group mb-3" style="width: 100%;">
+    <button class="btn btn-primary btn-block mr-2" style="flex: 1;" onclick="showSection('estatisticas')">📊 Estatísticas</button>
+    <button class="btn btn-success btn-block mr-2" style="flex: 1;" onclick="showSection('motos')">🏍️ Motos</button>
+    <button class="btn btn-warning btn-block mr-2" style="flex: 1;" onclick="showSection('pecas')">🔩 Peças</button>
+    <button class="btn btn-success btn-block mr-2" style="flex: 1;" onclick="showSection('anuncioMotos')">🏍️ Anúncios de Motos</button>
+    <button class="btn btn-warning btn-block mr-2" style="flex: 1;" onclick="showSection('anuncioPecas')">🔩 Anúncios de Peças</button>
+    <button class="btn btn-info btn-block" style="flex: 1;" onclick="showSection('pedidos')">📦 Pedidos</button>
 </div>
 
 <!-- Estatísticas -->
@@ -43,7 +44,7 @@
         </div>
         <div class="col-md-3">
             <div class="card bg-success text-white shadow-sm mb-3">
-                <div class="card-header">Total de Usuários</div>
+                <div class="card-header">Total de Utilizadores</div>
                 <div class="card-body text-center">
                     <h3>@ViewBag.TotalUsuarios</h3>
                 </div>
@@ -79,11 +80,11 @@
 <!--Motos -->
 <div id="motos" class="dashboard-section" style="display: none;">
     <h3>🏍️ Motos</h3>
-    <a asp-action="AdicionarMoto" asp-controller="Moto" class="btn btn-success btn-sm">Adicionar Moto</a>
-    <table class="table table-striped">
+    <a asp-action="AdicionarMoto" asp-controller="Moto" class="btn btn-success btn-sm" style="margin-bottom:20px">Adicionar Moto</a>
+    <hr />
+    <table id="motosTable" class="table table-striped">
         <thead>
             <tr>
-                <th>ID</th>
                 <th>Marca</th>
                 <th>Modelo</th>
                 <th>Preço</th>
@@ -96,17 +97,12 @@
             @foreach (var anuncio in ViewBag.Motos)
             {
                 <tr>
-                    <td>@anuncio.IdMoto</td>
                     <td>@anuncio.Marca</td>
                     <td>@anuncio.Modelo</td>
                     <td>€@anuncio.Preco</td>
                     <td>@anuncio.Matricula</td>
                     <td>@anuncio.Condicao</td>
                     <td>
-                        <a asp-controller="Moto" asp-action="VerMoto"
-                           asp-route-id="@anuncio.IdMoto" class="btn btn-info btn-sm">
-                            Ver
-                        </a>
                         <a asp-controller="Moto" asp-action="EditarMoto"
                            asp-route-id="@anuncio.IdMoto" class="btn btn-success btn-sm">
                             Editar
@@ -122,11 +118,11 @@
 <!--Peças-->
 <div id="pecas" class="dashboard-section" style="display: none;">
     <h3>🔩 Peças</h3>
-    <a asp-action="AdicionarPeca" asp-controller="Peca" class="btn btn-success btn-sm">Adicionar Peça</a>
-    <table class="table table-striped">
+    <a asp-action="AdicionarPeca" asp-controller="Peca" class="btn btn-success btn-sm" style="margin-bottom:20px">Adicionar Peça</a>
+    <hr />
+    <table id="pecasTable" class="table table-striped">
         <thead>
             <tr>
-                <th>ID</th>
                 <th>Nome</th>
                 <th>Marca</th>
                 <th>Modelo</th>
@@ -139,7 +135,6 @@
             @foreach (var anuncio in ViewBag.Pecas)
             {
                 <tr>
-                    <td>@anuncio.IdPeca</td>
                     <td>@anuncio.Nome</td>
                     <td>@anuncio.Marca</td>
                     <td>@anuncio.Modelo</td>
@@ -159,11 +154,11 @@
 <!-- Anúncios de Motos -->
 <div id="anuncioMotos" class="dashboard-section" style="display: none;">
     <h3>🏍️ Anúncios de Motos</h3>
-    <a asp-action="CriarAnuncioMoto" asp-controller="CriarAnuncio" class="btn btn-success btn-sm">Adicionar Anúncio de Moto</a>
-    <table class="table table-striped">
+    <a asp-action="CriarAnuncioMoto" asp-controller="CriarAnuncio" class="btn btn-success btn-sm" style="margin-bottom:20px">Adicionar Anúncio de Moto</a>
+    <hr />
+    <table id="anuncioMotosTable" class="table table-striped">
         <thead>
             <tr>
-                <th>ID</th>
                 <th>Título</th>
                 <th>Preço</th>
                 <th>Data</th>
@@ -174,7 +169,6 @@
             @foreach (var anuncio in ViewBag.UltimosAnunciosMoto)
             {
                 <tr>
-                    <td>@anuncio.IdAnuncioMoto</td>
                     <td>@anuncio.Titulo</td>
                     <td>€@anuncio.Preco</td>
                     <td>@anuncio.DataPublicacao.ToString("dd/MM/yyyy")</td>
@@ -188,11 +182,11 @@
 <!-- Anúncios de Peças -->
 <div id="anuncioPecas" class="dashboard-section" style="display: none;">
     <h3>🔩 Anúncios de Peças</h3>
-    <a asp-action="CriarAnuncioPeca" asp-controller="CriarAnuncio" class="btn btn-success btn-sm">Adicionar Anúncio de Peça</a>
-    <table class="table table-striped">
+    <a asp-action="CriarAnuncioPeca" asp-controller="CriarAnuncio" class="btn btn-success btn-sm" style="margin-bottom:20px">Adicionar Anúncio de Peça</a>
+    <hr />
+    <table id="anuncioPecasTable" class="table table-striped">
         <thead>
             <tr>
-                <th>ID</th>
                 <th>Título</th>
                 <th>Preço</th>
                 <th>Data</th>
@@ -203,7 +197,6 @@
             @foreach (var anuncio in ViewBag.UltimosAnunciosPeca)
             {
                 <tr>
-                    <td>@anuncio.IdAnuncioPeca</td>
                     <td>@anuncio.Titulo</td>
                     <td>€@anuncio.Preco</td>
                     <td>@anuncio.DataPublicacao.ToString("dd/MM/yyyy")</td>
@@ -217,10 +210,9 @@
 <!-- Pedidos -->
 <div id="pedidos" class="dashboard-section" style="display: none;">
     <h3>📦 Pedidos Recentes</h3>
-    <table class="table table-striped">
+    <table id="pedidosTable" class="table table-striped">
         <thead>
             <tr>
-                <th>ID</th>
                 <th>Cliente</th>
                 <th>Data</th>
                 <th>Status</th>
@@ -231,7 +223,6 @@
             @foreach (var pedido in ViewBag.UltimosPedidos)
             {
                 <tr>
-                    <td>@pedido.IdPedido</td>
                     <td>@pedido.ClienteNome</td>
                     <td>@pedido.DataCompra.ToString("dd/MM/yyyy HH:mm")</td>
                     <td>
@@ -245,7 +236,6 @@
         </tbody>
     </table>
 </div>
-
 
 <!-- Modal de Confirmação de Exclusão -->
 <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
@@ -266,13 +256,21 @@
     </div>
 </div>
 
-
-
 @section Scripts {
+    <script src="~/datatable/datatables.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
+        // Inicializar DataTables
+        $(document).ready(function() {
+            $('#motosTable').DataTable();
+            $('#pecasTable').DataTable();
+            $('#anuncioMotosTable').DataTable();
+            $('#anuncioPecasTable').DataTable();
+            $('#pedidosTable').DataTable();
+        });
+
         //Modal
-            function showDeleteModal(id, tipo) {
+        function showDeleteModal(id, tipo) {
             let mensagem = "";
             let url = "";
 
@@ -309,7 +307,7 @@
             deleteModal.show();
         }
 
-        //Gráfico de Estatísticas 
+        //Gráfico de Estatísticas
         document.getElementById("mes").addEventListener("change", function () {
         let mesSelecionado = this.value;
         fetch(`/Dashboard/GetEstatisticas?mes=${mesSelecionado}`)

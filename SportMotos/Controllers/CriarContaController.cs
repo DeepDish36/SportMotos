@@ -65,6 +65,9 @@ namespace SportMotos.Controllers
             // Define o status como "Ativo"
             cliente.Status = "Ativo";
 
+            // Garante que o campo ReceberNewsletter seja true se a checkbox foi marcada
+            cliente.ReceberNewsletter = cliente.ReceberNewsletter ? true : false;
+
             _context.Clientes.Add(cliente);
             await _context.SaveChangesAsync();
 

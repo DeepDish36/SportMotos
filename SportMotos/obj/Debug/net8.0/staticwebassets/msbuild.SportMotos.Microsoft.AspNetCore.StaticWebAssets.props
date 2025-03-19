@@ -84,8 +84,8 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>suh98nwf2a</Fingerprint>
-      <Integrity>pEa6Zp8EPJdHuhqKmZg35+mRgo7lXG7Gttc9ESNH5BM=</Integrity>
+      <Fingerprint>8z05hx12rl</Fingerprint>
+      <Integrity>NPkgavuIrLBMxxDrSYbR7n/UnZZBenb1iLo/8ue8+X8=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\datatable\datatables.css'))</OriginalItemSpec>
@@ -102,8 +102,8 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>xzedd49jsk</Fingerprint>
-      <Integrity>02WMS2PfZ46e1LwppXAtRBr6JVqh5pdVJ/nsKWugV+c=</Integrity>
+      <Fingerprint>wzb5v8ggnb</Fingerprint>
+      <Integrity>BJWUJVyxnlz5I3Fr1lxj9Vr/47ZuuJXrfh3/1vipVAM=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\datatable\datatables.js'))</OriginalItemSpec>
@@ -120,8 +120,8 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>mu0a2v5pov</Fingerprint>
-      <Integrity>ztDH7D/R38obY9aNf5u0dZpYAt031A+FvJiEm+/DBrk=</Integrity>
+      <Fingerprint>pdjwvknnto</Fingerprint>
+      <Integrity>HanVuHYpuNFyBLGvrrD8hTEGffD0PN6iH4/hLXIEHfw=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\datatable\datatables.min.css'))</OriginalItemSpec>
@@ -138,8 +138,8 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>rbtf5delh3</Fingerprint>
-      <Integrity>N9tQuJt0K9B3sDG2Q8CnDwaXlOWEH5obdvt38ckZh48=</Integrity>
+      <Fingerprint>ne09m9qdsc</Fingerprint>
+      <Integrity>sRt5g/FrJpKI2TSphL1CbZdaLeBsftE91jqhUIXMJGA=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\datatable\datatables.min.js'))</OriginalItemSpec>

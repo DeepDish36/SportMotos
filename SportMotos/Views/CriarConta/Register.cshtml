@@ -8,6 +8,22 @@
 
 <div class="register-page">
     <div class="register-container">
+        @if (!string.IsNullOrEmpty(ViewBag.Error))
+        {
+            <div class="alert alert-danger mt-3">@ViewBag.Error</div>
+        }
+
+        @if (ViewBag.Errors != null && ViewBag.Errors.Count > 0)
+        {
+            <div class="alert alert-danger mt-3">
+                <ul>
+                    @foreach (var error in ViewBag.Errors)
+                    {
+                        <li>@error</li>
+                    }
+                </ul>
+            </div>
+        }
         <h2 style="margin-bottom: 9%;">Criar Conta</h2>
         <form asp-controller="CriarConta" asp-action="Register" method="post" class="needs-validation" novalidate>
             <div class="d-flex gap-2">
@@ -40,8 +56,9 @@
             <button type="submit" class="btn-register">Criar Conta</button>
 
             <div class="form-check mt-3">
-                <input class="form-check-input" type="checkbox" id="flexCheckChecked">
-                <label class="form-check-label" for="flexCheckChecked" style="font-size: 0.85em;">
+                <input type="hidden" name="ReceberNewsletter" value="false"> <!-- Garante que false seja enviado se a checkbox não for marcada -->
+                <input type="checkbox" id="ReceberNewsletter" name="ReceberNewsletter" value="true" class="form-check-input">
+                <label for="ReceberNewsletter" class="form-check-label" style="font-size: 0.85em;">
                     Autorizo o envio de comunicações comerciais e promocionais sobre produtos e serviços oferecidos pela SportMotos por e-mail ou telemóvel.
                 </label>
             </div>
@@ -50,23 +67,6 @@
                 Ao criares a tua conta, estás a aceitar os nossos <a style="color:black" asp-area="" asp-controller="Home" asp-action="Privacy"><b>Termos e Condições</b></a>.
             </div>
         </form>
-
-        @if (!string.IsNullOrEmpty(ViewBag.Error))
-        {
-            <div class="alert alert-danger mt-3">@ViewBag.Error</div>
-        }
-
-        @if (ViewBag.Errors != null && ViewBag.Errors.Count > 0)
-        {
-            <div class="alert alert-danger mt-3">
-                <ul>
-                    @foreach (var error in ViewBag.Errors)
-                    {
-                        <li>@error</li>
-                    }
-                </ul>
-            </div>
-        }
     </div>
 </div>
 @section Scripts {
