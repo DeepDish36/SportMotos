@@ -1,7 +1,4 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
     ViewData["Title"] = @Model.Titulo;
 }
 
@@ -12,13 +9,13 @@
         <div class="row g-4 align-items-center">
             <!-- Coluna da Imagem -->
             <div class="col-md-5">
-                @if (ViewBag.TipoAnuncio=="motos")
+                @if (ViewBag.TipoAnuncio == "motos")
                 {
                     @if (Model.IdMotoNavigation != null && Model.IdMotoNavigation.Imagens != null)
                     {
                         @foreach (var imagem in Model.IdMotoNavigation.Imagens)
                         {
-                            <img src="@Url.Content("~/Imagens/Motos/" + imagem.NomeArquivo)"
+                            <img src="@Url.Content("~/images/motos/" + imagem.NomeArquivo)"
                                  alt="Imagem da Moto @Model.IdMotoNavigation.Matricula"
                                  class="img-fluid rounded">
                         }
@@ -28,11 +25,13 @@
                         <p>Sem imagem disponível</p>
                     }
                 }
-                else if (ViewBag.TipoAnuncio=="pecas")
+                else if (ViewBag.TipoAnuncio == "pecas")
                 {
                     if (Model.IdPecaNavigation != null && Model.IdPecaNavigation.NomeArquivo != null)
                     {
-                        <img src="@Model.IdPecaNavigation.Imagem.Caminho" alt="Imagem da Peça" class="img-fluid rounded">
+                        <img src="@Url.Content("~/images/pecas/" + Model.IdPecaNavigation.NomeArquivo)"
+                             alt="Imagem da Peça"
+                             class="img-fluid rounded">
                     }
                     else
                     {
@@ -45,35 +44,49 @@
             <div class="col-md-7">
                 <div class="card-body">
                     <h3>@Model.Titulo</h3>
-                    <p>
-                        <strong>Publicado em:</strong> @Model.DataPublicacao.ToString("dd/MM/yyyy"),
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
-                            <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A32 32 0 0 1 8 14.58a32 32 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10" />
-                            <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4m0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
-                        </svg> Stand SportMotos, Viseu
-                    </p>
                     <p><strong>Preço:</strong> €@Model.Preco.ToString("F2")</p>
                     @if (ViewBag.TipoAnuncio == "motos" && Model.IdMotoNavigation != null)
                     {
                         <p><strong>Marca:</strong> @Model.IdMotoNavigation.Marca</p>
                         <p><strong>Modelo:</strong> @Model.IdMotoNavigation.Modelo</p>
                         <p><strong>Ano:</strong> @Model.IdMotoNavigation.Ano</p>
-                        <p><strong>Quilometragem:</strong> @Model.IdMotoNavigation.Quilometragem Km</p>
-                        <p><strong>Condição:</strong> @Model.Condicao</p>
-                        <p><strong>Descrição:</strong> @Model.Descricao</p>
-                        <p><strong>Visualizações:</strong> @Model.Visualizacoes</p>
-                        <p><strong>Favoritos:</strong> @Model.Favoritos</p>
-                        <p><strong>Última edição:</strong> @(Model.DataEdicao?.ToString("dd/MM/yyyy") ?? "Nunca editado")</p>
                     }
 
                     @if (ViewBag.TipoAnuncio == "pecas" && Model.IdPecaNavigation != null)
                     {
                         <p><strong>Categoria:</strong> @Model.IdPecaNavigation.Categoria</p>
-                        <p><strong>Descrição:</strong> @Model.Descricao</p>
-                        <p><strong>Stock:</strong> @Model.IdPecaNavigation.Stock.ToString()</p>
                     }
 
-                    <a href="@Url.Action("Anuncio", "Anuncio", new { tipo = ViewBag.TipoAnuncio })" class="btn btn-secondary mt-3">Voltar</a>
+                    <!-- Botão de Ver outros detalhes -->
+                    <button class="btn dropdown-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#outrosDetalhes" aria-expanded="false">
+                        Ver outros detalhes
+                    </button>
+
+                    <!-- Seção de detalhes ocultáveis -->
+                    <div class="collapse mt-3" id="outrosDetalhes">
+                        <div class="card card-body">
+                            @if (ViewBag.TipoAnuncio == "motos" && Model.IdMotoNavigation != null)
+                            {
+                                <p><strong>Quilometragem:</strong> @Model.IdMotoNavigation.Quilometragem Km</p>
+                                <p><strong>Condição:</strong> @Model.Condicao</p>
+                                <p><strong>Descrição:</strong> @Model.Descricao</p>
+                                <p><strong>Visualizações:</strong> @Model.Visualizacoes</p>
+                                <p><strong>Favoritos:</strong> @Model.Favoritos</p>
+                                <p><strong>Última edição:</strong> @(Model.DataEdicao?.ToString("dd/MM/yyyy") ?? "Nunca editado")</p>
+                            }
+
+                            @if (ViewBag.TipoAnuncio == "pecas" && Model.IdPecaNavigation != null)
+                            {
+                                <p><strong>Descrição:</strong> @Model.Descricao</p>
+                                <p><strong>Stock:</strong> @Model.IdPecaNavigation.Stock.ToString()</p>
+                            }
+                        </div>
+                    </div>
+
+                    <!-- Botão Voltar (sempre abaixo da dropdown) -->
+                    <div class="mt-3">
+                        <a href="@Url.Action("Anuncio", "Anuncio", new { tipo = ViewBag.TipoAnuncio })" class="btn btn-secondary">Voltar</a>
+                    </div>
                 </div>
             </div>
         </div>

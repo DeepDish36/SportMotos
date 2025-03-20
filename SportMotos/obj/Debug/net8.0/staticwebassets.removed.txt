@@ -1,0 +1,5 @@
+C:\Users\g0mes\Desktop\SportMotos\SportMotos\wwwroot\Imagens\bg.png
+C:\Users\g0mes\Desktop\SportMotos\SportMotos\wwwroot\Imagens\bg2.jpg
+C:\Users\g0mes\Desktop\SportMotos\SportMotos\wwwroot\Imagens\bglogin.jpg
+C:\Users\g0mes\Desktop\SportMotos\SportMotos\wwwroot\Imagens\logo.png
+C:\Users\g0mes\Desktop\SportMotos\SportMotos\wwwroot\Imagens\Motos\12-34-AB_1.jpg

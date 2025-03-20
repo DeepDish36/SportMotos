@@ -59,9 +59,9 @@
         </div>
         <div class="col-md-6">
             <label class="form-label">Estado</label>
-            <select class="form-control" name="Estado" required>
-                <option value="Novo" @(Model.Estado == "Novo" ? "selected" : "")>Novo</option>
-                <option value="Usado" @(Model.Estado == "Usado" ? "selected" : "")>Usado</option>
+            <select class="form-control" name="Estado" value="@Model.Estado" required>
+                <option value="Novo">Novo</option>
+                <option value="Usado">Usado</option>
             </select>
         </div>
     </div>

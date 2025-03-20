@@ -1,8 +1,6 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-    @if(ViewBag.TipoAnuncio=="motos"){
+﻿@{
+    @if (ViewBag.TipoAnuncio == "motos")
+    {
         ViewData["Title"] = "SportMotos - Motos";
     }
     else if (ViewBag.TipoAnuncio == "pecas")
@@ -12,6 +10,7 @@
 }
 
 @model IEnumerable<dynamic> //Dynamic porque muda entre motos e peças
+
 <div class="container mt-5">
     <div>
         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
@@ -56,73 +55,252 @@
             <span>Encontre as peças que precisa!</span>
         }
     </h4>
-    <a asp-action="CriarAnuncioMoto" asp-controller="CriarAnuncio">Adicionar moto</a>
-    <a asp-action="ShowAnuncios" asp-controller="CriarAnuncio">Listar anúncio</a>
-    <div class="row row-cols-1 row-cols-md-4 g-4">
-        @foreach (var anuncio in Model)
+    <div class="row mb-4">
+        @if (ViewBag.TipoAnuncio == "motos")
         {
-            // Calcular a diferença de dias entre a data de publicação e a data atual
-            var diasPublicacao = (DateTime.Now - anuncio.DataPublicacao).TotalDays;
-
-            <div class="col">
-                <div class="card shadow-sm">
-                    <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
-                        <title>@anuncio.Titulo</title>
-                        <rect width="100%" height="100%" fill="#55595c"></rect>
-                        <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
-                    </svg>
-                    <div class="card-body">
-                        <p class="card-text">@anuncio.Titulo</p>
-                        <p class="text-muted">Preço: €@anuncio.Preco.ToString("F2")</p>
-
-                        @if (ViewBag.TipoAnuncio == "motos")
-                        {
-                            <!-- Badge "Vendida!" -->
-                            @if (anuncio.IdMotoNavigation != null && anuncio.IdMotoNavigation.Vendido)
+            <div class="col-md-9">
+                <div class="row">
+                    <div class="col">
+                        <select id="marcaDropdown" class="form-select" onchange="filterAnuncios()">
+                            <option value="">Marca</option>
+                            @if (ViewBag.Marca != null) // Evita NullReferenceException
                             {
-                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">Vendida!</span>
-                            }
-                            else if (diasPublicacao <= 30)
-                            {
-                                <!-- Badge "Novidades" -->
-                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success">Novo!</span>
-                            }
-                        }
-
-                        @if (ViewBag.TipoAnuncio == "pecas")
-                        {
-                            <!-- Badge "A esgotar!" -->
-                            @if (anuncio.IdPecaNavigation != null && anuncio.IdPecaNavigation.Stock <= 10)
-                            {
-                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">A esgotar!</span>
-                            }
-                        }
-
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="btn-group">
-                                <a asp-controller="DetalhesAnuncios" asp-action="DetalheAnuncio"
-                                   asp-route-id="@(ViewBag.TipoAnuncio == "motos" ? anuncio.IdAnuncioMoto : anuncio.IdAnuncioPeca)"
-                                   asp-route-tipo="@ViewBag.TipoAnuncio"
-                                   class="btn btn-sm btn-outline-secondary">
-                                    Ver
-                                </a>
-
-                                @if (ViewBag.TipoUtilizador == "Admin")
+                                foreach (var marca in ViewBag.Marca)
                                 {
-                                    <a asp-controller="CriarAnuncio" asp-action="@(ViewBag.TipoAnuncio == "motos" ? "EditarAnuncioMoto" : "EditarAnuncioPeca")"
-                                       asp-route-id="@(ViewBag.TipoAnuncio == "motos" ? anuncio.IdAnuncioMoto : anuncio.IdAnuncioPeca)"
-                                       class="btn btn-sm btn-outline-secondary">
-                                        Editar
-                                    </a>
+                                    <option value="@marca">@marca</option>
                                 }
-                            </div>
-                            <small class="text-body-secondary">
-                                Publicado: @anuncio.DataPublicacao.ToString("dd/MM/yyyy")
-                            </small>
-                        </div>
+                            }
+                        </select>
+                    </div>
+                    <div class="col">
+                        <select id="modeloDropdown" class="form-select" disabled onchange="filterAnuncios()">
+                            <option value="">Modelo</option>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <select id="precoDropdown" class="form-select" onchange="filterAnuncios()">
+                            <option value="">Preço</option>
+                            <option value="0-5000">0 - 5000</option>
+                            <option value="5000-10000">5000 - 10000</option>
+                            <option value="10000-20000">10000 - 20000</option>
+                            <option value="20000+">20000+</option>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <select id="generoDropdown" class="form-select" onchange="filterAnuncios()">
+                            <option value="">Género</option>
+                            @if (ViewBag.Generos != null) // Evita NullReferenceException
+                            {
+                                foreach (var genero in ViewBag.Generos)
+                                {
+                                    <option value="@genero">@genero</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="col">
+                        <select id="corDropdown" class="form-select" onchange="filterAnuncios()">
+                            <option value="">Cor</option>
+                            @if (ViewBag.Cores != null) // Evita NullReferenceException
+                            {
+                                foreach (var cor in ViewBag.Cores)
+                                {
+                                    <option value="@cor">@cor</option>
+                                }
+                            }
+                        </select>
                     </div>
                 </div>
             </div>
         }
     </div>
+    <div class="col-md-3 text-end">
+        <div class="row">
+            <div class="col">
+                <select id="verMaisFiltrosDropdown" class="form-select">
+                    <option value="">Ver mais filtros</option>
+                    <!-- Adicione mais opções de filtro aqui -->
+                </select>
+            </div>
+            <div class="col">
+                <select id="ordenarPorDropdown" class="form-select" onchange="sortAnuncios()">
+                    <option value="novo">Ordenar por</option>
+                    <option value="precoAsc">Preço: Menor para Maior</option>
+                    <option value="precoDesc">Preço: Maior para Menor</option>
+                    <option value="data">Data de Publicação</option>
+                </select>
+            </div>
+        </div>
+    </div>
 </div>
+<a asp-action="CriarAnuncioMoto" asp-controller="CriarAnuncio">Adicionar moto</a>
+<a asp-action="ShowAnuncios" asp-controller="CriarAnuncio">Listar anúncio</a>
+<div class="row row-cols-1 row-cols-md-4 g-4" id="anunciosContainer">
+    @foreach (var anuncio in Model.OrderByDescending(a => a.DataPublicacao))
+    {
+        // Calcular a diferença de dias entre a data de publicação e a data atual
+        var diasPublicacao = (DateTime.Now - anuncio.DataPublicacao).TotalDays;
+
+        <div class="col anuncio-card" data-marca="@anuncio.IdMotoNavigation?.Marca" data-modelo="@anuncio.IdMotoNavigation?.Modelo" data-preco="@anuncio.Preco" data-genero="@anuncio.IdMotoNavigation?.Genero" data-cor="@anuncio.IdMotoNavigation?.Cor">
+            <div class="card shadow-sm card-fixed-height">
+                @if (ViewBag.TipoAnuncio == "motos" && anuncio.IdMotoNavigation != null && anuncio.IdMotoNavigation.Imagens != null)
+                {
+                    <img src="@Url.Content("~/images/motos/" + anuncio.IdMotoNavigation.Imagens.FirstOrDefault()?.NomeArquivo)"
+                         alt="Imagem da Moto @anuncio.IdMotoNavigation.Matricula"
+                         class="img-fluid rounded card-img-top">
+                }
+                else if (ViewBag.TipoAnuncio == "pecas" && anuncio.IdPecaNavigation != null && anuncio.IdPecaNavigation.NomeArquivo != null)
+                {
+                    <img src="@Url.Content("~/images/pecas/" + anuncio.IdPecaNavigation.NomeArquivo)"
+                         alt="Imagem da Peça"
+                         class="img-fluid rounded card-img-top">
+                }
+                else
+                {
+                    <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
+                        <title>@anuncio.Titulo</title>
+                        <rect width="100%" height="100%" fill="#55595c"></rect>
+                        <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
+                    </svg>
+                }
+
+                <div class="card-body card-body-fixed-height">
+                    <p class="card-text">@anuncio.Titulo</p>
+                    <p class="text-muted">Preço: €@anuncio.Preco.ToString("F2")</p>
+
+                    @if (ViewBag.TipoAnuncio == "motos")
+                    {
+                        <!-- Badge "Vendida!" -->
+                        @if (anuncio.Vendido)
+                        {
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">Vendida!</span>
+                        }
+                        else if (diasPublicacao <= 30)
+                        {
+                            <!-- Badge "Novidades" -->
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success">Novo!</span>
+                        }
+                    }
+
+                    @if (ViewBag.TipoAnuncio == "pecas")
+                    {
+                        <!-- Badge "A esgotar!" -->
+                        @if (anuncio.IdPecaNavigation != null && anuncio.IdPecaNavigation.Stock <= 10)
+                        {
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">A esgotar!</span>
+                        }
+                    }
+
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="btn-group">
+                            <a asp-controller="DetalhesAnuncios" asp-action="DetalheAnuncio"
+                               asp-route-id="@(ViewBag.TipoAnuncio == "motos" ? anuncio.IdAnuncioMoto : anuncio.IdAnuncioPeca)"
+                               asp-route-tipo="@ViewBag.TipoAnuncio"
+                               class="btn btn-sm btn-outline-secondary">
+                                Ver
+                            </a>
+
+                            @if (ViewBag.TipoUtilizador == "Admin")
+                            {
+                                <a asp-controller="CriarAnuncio" asp-action="@(ViewBag.TipoAnuncio == "motos" ? "EditarAnuncioMoto" : "EditarAnuncioPeca")"
+                                   asp-route-id="@(ViewBag.TipoAnuncio == "motos" ? anuncio.IdAnuncioMoto : anuncio.IdAnuncioPeca)"
+                                   class="btn btn-sm btn-outline-secondary">
+                                    Editar
+                                </a>
+                            }
+                        </div>
+                        <small class="text-body-secondary">
+                            Publicado: @anuncio.DataPublicacao.ToString("dd/MM/yyyy")
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#marcaDropdown').change(function () {
+            var marcaSelecionada = $(this).val();
+            if (marcaSelecionada) {
+                $('#modeloDropdown').prop('disabled', false);
+                // Carregar modelos com base na marca selecionada
+                // Exemplo: $('#modeloDropdown').html('<option value="Modelo1">Modelo1</option><option value="Modelo2">Modelo2</option>');
+            } else {
+                $('#modeloDropdown').prop('disabled', true).val('');
+            }
+        });
+    });
+
+    function filterAnuncios() {
+        var marca = $('#marcaDropdown').val();
+        var modelo = $('#modeloDropdown').val();
+        var preco = $('#precoDropdown').val();
+        var genero = $('#generoDropdown').val();
+        var cor = $('#corDropdown').val();
+
+        $('.anuncio-card').each(function () {
+            var card = $(this);
+            var cardMarca = card.data('marca');
+            var cardModelo = card.data('modelo');
+            var cardPreco = card.data('preco');
+            var cardGenero = card.data('genero');
+            var cardCor = card.data('cor');
+
+            var showCard = true;
+
+            if (marca && cardMarca !== marca) {
+                showCard = false;
+            }
+            if (modelo && cardModelo !== modelo) {
+                showCard = false;
+            }
+            if (preco) {
+                var precoRange = preco.split('-');
+                var precoMin = parseFloat(precoRange[0]);
+                var precoMax = precoRange[1] ? parseFloat(precoRange[1]) : Infinity;
+                if (cardPreco < precoMin || cardPreco > precoMax) {
+                    showCard = false;
+                }
+            }
+            if (genero && cardGenero !== genero) {
+                showCard = false;
+            }
+            if (cor && cardCor !== cor) {
+                showCard = false;
+            }
+
+            if (showCard) {
+                card.show();
+            } else {
+                card.hide();
+            }
+        });
+    }
+
+    function sortAnuncios() {
+        var sortBy = $('#ordenarPorDropdown').val();
+        var anunciosContainer = $('#anunciosContainer');
+        var anuncios = $('.anuncio-card').get();
+
+        anuncios.sort(function (a, b) {
+            var aData = $(a).data();
+            var bData = $(b).data();
+
+            if (sortBy === 'precoAsc') {
+                return aData.preco - bData.preco;
+            } else if (sortBy === 'precoDesc') {
+                return bData.preco - aData.preco;
+            } else if (sortBy === 'data') {
+                return new Date(bData.dataPublicacao) - new Date(aData.dataPublicacao);
+            } else {
+                return 0;
+            }
+        });
+
+        $.each(anuncios, function (index, anuncio) {
+            anunciosContainer.append(anuncio);
+        });
+    }
+</script>
