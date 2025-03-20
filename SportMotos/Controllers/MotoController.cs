@@ -130,15 +130,6 @@ namespace SportMotos.Controllers
             return RedirectToAction(nameof(ListarMotos));
         }
 
-        //VerMoto
-        [HttpGet]
-        public async Task<IActionResult> VerMoto(int id)
-        {
-            var moto = await _context.Motos.FindAsync(id);
-            if (moto == null) return NotFound();
-            return View(moto);
-        }
-
         //Excluir moto (GET)
         public async Task<IActionResult> ExcluirMoto(int id)
         {
