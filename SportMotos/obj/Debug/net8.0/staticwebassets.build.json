@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "4ieYHXS0mR81ZeLusQNi/or3TYgdaZkB/1y+T5iS9wg=",
+  "Hash": "Yn1tVvxCE9qyblb2T+4lRcpdpCayvGw/Dft0zL+di0U=",
   "Source": "SportMotos",
   "BasePath": "_content/SportMotos",
   "Mode": "Default",
@@ -1611,6 +1611,27 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\motos\\12-34-AB_1.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\g0mes\\Desktop\\SportMotos\\SportMotos\\wwwroot\\js\\index.js",
+      "SourceId": "SportMotos",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\g0mes\\Desktop\\SportMotos\\SportMotos\\wwwroot\\",
+      "BasePath": "_content/SportMotos",
+      "RelativePath": "js/index#[.{fingerprint}]?.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "ch8j3q6ws9",
+      "Integrity": "UGMuQG28o4vWWHEtm/V/T2mOvSesPoyyJcx8XRXWIxI=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\index.js"
     },
     {
       "Identity": "C:\\Users\\g0mes\\Desktop\\SportMotos\\SportMotos\\wwwroot\\js\\site.js",
@@ -6197,6 +6218,88 @@
         {
           "Name": "integrity",
           "Value": "sha256-zk8AqxChKc3TeTPiW3495ZiLLwisQeWJfxuGkwwhXXQ="
+        }
+      ]
+    },
+    {
+      "Route": "js/index.ch8j3q6ws9.js",
+      "AssetFile": "C:\\Users\\g0mes\\Desktop\\SportMotos\\SportMotos\\wwwroot\\js\\index.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "6537"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"UGMuQG28o4vWWHEtm/V/T2mOvSesPoyyJcx8XRXWIxI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 21 Mar 2025 18:38:18 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "ch8j3q6ws9"
+        },
+        {
+          "Name": "label",
+          "Value": "js/index.js"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-UGMuQG28o4vWWHEtm/V/T2mOvSesPoyyJcx8XRXWIxI="
+        }
+      ]
+    },
+    {
+      "Route": "js/index.js",
+      "AssetFile": "C:\\Users\\g0mes\\Desktop\\SportMotos\\SportMotos\\wwwroot\\js\\index.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "6537"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"UGMuQG28o4vWWHEtm/V/T2mOvSesPoyyJcx8XRXWIxI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 21 Mar 2025 18:38:18 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-UGMuQG28o4vWWHEtm/V/T2mOvSesPoyyJcx8XRXWIxI="
         }
       ]
     },

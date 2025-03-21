@@ -144,7 +144,7 @@ namespace SportMotos.Controllers
         public async Task<IActionResult> ConfirmarExclusaoMoto(int id)
         {
             var moto = await _context.Motos.FindAsync(id);
-            if(moto!=null)
+            if (moto != null)
             {
                 _context.Motos.Remove(moto);
                 await _context.SaveChangesAsync();
@@ -152,12 +152,14 @@ namespace SportMotos.Controllers
             return RedirectToAction(nameof(ListarMotos));
         }
 
+        //Retorna as marcas das motos
         public async Task<IActionResult> GetMarcas()
         {
             var marcas = await _context.Motos.Select(m => m.Marca).Distinct().ToListAsync();
             return Json(marcas);
         }
 
+        //Retorna os modelos das motos
         public async Task<IActionResult> GetModelos(string marca)
         {
             var modelos = await _context.Motos
@@ -168,6 +170,7 @@ namespace SportMotos.Controllers
             return Json(modelos);
         }
 
+        //Retorna os anos das motos
         public async Task<IActionResult> GetAnos()
         {
             var anos = await _context.Motos
@@ -178,14 +181,74 @@ namespace SportMotos.Controllers
             return Json(anos);
         }
 
-        public async Task<IActionResult> GetEstilo(string estilo)
+        //Retorna os estilos das motos
+        public async Task<IActionResult> GetEstilos(string estilo)
         {
             var estilos = await _context.Motos
-                .Select(m=> m.Segmento)
+                .Select(m => m.Segmento)
                 .Distinct()
                 .OrderBy(m => m)
                 .ToListAsync();
             return Json(estilos);
+        }
+
+        // Retorna todos os anuncios com os filtros aplicados no index.cshtml
+        [HttpGet]
+        public async Task<IActionResult> GetAnuncios(
+            string estilo = null, string marca = null, string modelo = null,
+            int? precoDe = null, int? precoAte = null,
+            int? anoDe = null, int? anoAte = null,
+            string combustivel = null, int? kmDe = null, int? kmAte = null)
+        {
+            // Consulta inicial sem filtros
+            var anuncios = _context.AnuncioMotos
+                .Include(a => a.IdMotoNavigation)
+                .AsQueryable();
+
+            // Aplicar os filtros um por um, se forem fornecidos
+            if (!string.IsNullOrEmpty(estilo))
+                anuncios = anuncios.Where(a => a.IdMotoNavigation.Segmento == estilo);
+
+            if (!string.IsNullOrEmpty(marca))
+                anuncios = anuncios.Where(a => a.IdMotoNavigation.Marca == marca);
+
+            if (!string.IsNullOrEmpty(modelo))
+                anuncios = anuncios.Where(a => a.IdMotoNavigation.Modelo == modelo);
+
+            if (precoDe.HasValue)
+                anuncios = anuncios.Where(a => a.Preco >= precoDe);
+
+            if (precoAte.HasValue)
+                anuncios = anuncios.Where(a => a.Preco <= precoAte);
+
+            if (anoDe.HasValue)
+                anuncios = anuncios.Where(a => a.IdMotoNavigation.Ano >= anoDe);
+
+            if (anoAte.HasValue)
+                anuncios = anuncios.Where(a => a.IdMotoNavigation.Ano <= anoAte);
+
+            if (!string.IsNullOrEmpty(combustivel))
+                anuncios = anuncios.Where(a => a.IdMotoNavigation.Combustivel == combustivel);
+
+            if (kmDe.HasValue)
+                anuncios = anuncios.Where(a => a.IdMotoNavigation.Quilometragem >= kmDe);
+
+            if (kmAte.HasValue)
+                anuncios = anuncios.Where(a => a.IdMotoNavigation.Quilometragem <= kmAte);
+
+            // Retornar os resultados filtrados como JSON
+            var result = await anuncios.Select(a => new
+            {
+                a.Titulo,
+                a.Preco,
+                Marca = a.IdMotoNavigation.Marca,
+                Modelo = a.IdMotoNavigation.Modelo,
+                Ano = a.IdMotoNavigation.Ano,
+                Combustivel = a.IdMotoNavigation.Combustivel,
+                Quilometragem = a.IdMotoNavigation.Quilometragem
+            }).ToListAsync();
+
+            return Json(result);
         }
     }
 }

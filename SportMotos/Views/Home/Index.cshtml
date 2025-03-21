@@ -17,9 +17,9 @@
             <div class="row">
                 <div class="col-md-6">
                     <label>Estilo</label>
-                    <select class="form-select">
+                    <select id="estiloSelect" class="form-select">
                         <option disabled hidden selected>Estilo</option>
-                        <!-- Adicionar opções aqui -->
+                        <!-- Estilos serão carregados aqui -->
                     </select>
                 </div>
                 <div class="col-md-6">
@@ -42,7 +42,7 @@
                 <div class="col-md-6">
                     <label>Preço</label>
                     <div class="d-flex">
-                        <select class="form-select me-2">
+                        <select id="precoDeSelect" class="form-select me-2">
                             <option disabled hidden selected>de</option>
                             <option>0€</option>
                             <option>1000€</option>
@@ -51,7 +51,7 @@
                             <option>20000€</option>
                             <option>50000€</option>
                         </select>
-                        <select class="form-select">
+                        <select id="precoAteSelect" class="form-select">
                             <option disabled hidden selected>até</option>
                             <option>0€</option>
                             <option>1000€</option>
@@ -67,17 +67,19 @@
                 <div class="col-md-6">
                     <label>Ano</label>
                     <div class="d-flex">
-                        <select class="form-select me-2">
+                        <select id="anoDeSelect" class="form-select me-2">
                             <option disabled hidden selected>de</option>
+                            <!-- Anos serão carregados aqui -->
                         </select>
-                        <select class="form-select">
+                        <select id="anoAteSelect" class="form-select">
                             <option disabled hidden selected>até</option>
+                            <!-- Anos serão carregados aqui -->
                         </select>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <label>Combustível</label>
-                    <select class="form-select">
+                    <select id="combustivelSelect" class="form-select">
                         <option disabled hidden selected>Combustível</option>
                         <option>Elétrico</option>
                         <option>Gasolina</option>
@@ -89,7 +91,7 @@
                 <div class="col-md-6">
                     <label>Quilómetros</label>
                     <div class="d-flex">
-                        <select class="form-select me-2">
+                        <select id="kmDeSelect" class="form-select me-2">
                             <option disabled hidden selected>de</option>
                             <option>0</option>
                             <option>5000</option>
@@ -103,7 +105,7 @@
                             <option>45000</option>
                             <option>50000</option>
                         </select>
-                        <select class="form-select">
+                        <select id="kmAteSelect" class="form-select">
                             <option disabled hidden selected>até</option>
                             <option>0</option>
                             <option>5000</option>
@@ -157,107 +159,15 @@
 
         <div class="row mt-3">
             <div class="col-12">
-                <button class="btn-search">Ver resultados</button>
+                <button id="btnVerResultados" class="btn-search">Ver resultados</button>
+                <span id="resultadosCount"></span>
             </div>
         </div>
     </div>
 </div>
 
-<script>
-     document.getElementById("btnMotos").addEventListener("click", function() {
-        document.getElementById("filtersMotos").style.display = "block";
-        document.getElementById("filtersPecas").style.display = "none";
-    });
+<div id="anunciosContainer" class="mt-4">
+    <!-- Anúncios serão carregados aqui -->
+</div>
 
-    document.getElementById("btnPecas").addEventListener("click", function() {
-        document.getElementById("filtersMotos").style.display = "none";
-        document.getElementById("filtersPecas").style.display = "block";
-    });
-
-    // Carregar marcas, estilos, anos e quilómetros ao carregar a página
-    document.addEventListener("DOMContentLoaded", function() {
-        fetch('/Moto/GetMarcas')
-            .then(response => response.json())
-            .then(data => {
-                const marcaSelect = document.getElementById("marcaSelect");
-                data.forEach(marca => {
-                    const option = document.createElement("option");
-                    option.value = marca;
-                    option.text = marca;
-                    marcaSelect.appendChild(option);
-                });
-            });
-
-        // fetch('/Moto/GetEstilos')
-        //     .then(response => response.json())
-        //     .then(data => {
-        //         const estiloSelect = document.getElementById("estiloSelect");
-        //         data.forEach(estilo => {
-        //             const option = document.createElement("option");
-        //             option.value = estilo;
-        //             option.text = estilo;
-        //             estiloSelect.appendChild(option);
-        //         });
-        //     });
-
-        // fetch('/Moto/GetAnos')
-        //     .then(response => response.json())
-        //     .then(data => {
-        //         const anoDeSelect = document.getElementById("anoDeSelect");
-        //         const anoAteSelect = document.getElementById("anoAteSelect");
-        //         data.forEach(ano => {
-        //             const optionDe = document.createElement("option");
-        //             optionDe.value = ano;
-        //             optionDe.text = ano;
-        //             anoDeSelect.appendChild(optionDe);
-
-        //             const optionAte = document.createElement("option");
-        //             optionAte.value = ano;
-        //             optionAte.text = ano;
-        //             anoAteSelect.appendChild(optionAte);
-        //         });
-        //     });
-    });
-
-    // Ativar select de modelos quando uma marca de moto for selecionada
-    document.getElementById("marcaSelect").addEventListener("change", function() {
-        const modeloSelect = document.getElementById("modeloSelect");
-        modeloSelect.innerHTML = '<option disabled hidden selected>Modelo</option>'; // Limpar modelos anteriores
-        if (this.value !== "Marca") {
-            modeloSelect.disabled = false;
-            fetch(`/Moto/GetModelos?marca=${this.value}`)
-                .then(response => response.json())
-                .then(data => {
-                    data.forEach(modelo => {
-                        const option = document.createElement("option");
-                        option.value = modelo;
-                        option.text = modelo;
-                        modeloSelect.appendChild(option);
-                    });
-                });
-        } else {
-            modeloSelect.disabled = true;
-        }
-    });
-
-    // Ativar select de modelos quando uma marca de peça for selecionada
-    // document.getElementById("pecaMarcaSelect").addEventListener("change", function() {
-    //     const pecaModeloSelect = document.getElementById("pecaModeloSelect");
-    //     pecaModeloSelect.innerHTML = '<option disabled hidden selected>Modelo</option>'; Limpar modelos anteriores
-    //     if (this.value !== "Marca") {
-    //         pecaModeloSelect.disabled = false;
-    //         fetch(`/Moto/GetModelosPecas?marca=${this.value}`)
-    //             .then(response => response.json())
-    //             .then(data => {
-    //                 data.forEach(modelo => {
-    //                     const option = document.createElement("option");
-    //                     option.value = modelo;
-    //                     option.text = modelo;
-    //                     pecaModeloSelect.appendChild(option);
-    //                 });
-    //             });
-    //     } else {
-    //         pecaModeloSelect.disabled = true;
-    //     }
-    // });
-</script>
+<script src="~/js/index.js"></script>
