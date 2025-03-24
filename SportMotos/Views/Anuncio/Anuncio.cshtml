@@ -1,15 +1,4 @@
-﻿@{
-    @if (ViewBag.TipoAnuncio == "motos")
-    {
-        ViewData["Title"] = "SportMotos - Motos";
-    }
-    else if (ViewBag.TipoAnuncio == "pecas")
-    {
-        ViewData["Title"] = "SportMotos - Peças";
-    }
-}
-
-@model IEnumerable<dynamic> //Dynamic porque muda entre motos e peças
+﻿@model IEnumerable<dynamic> // Dynamic porque muda entre motos e peças
 
 <div class="container mt-5">
     <div>
@@ -23,47 +12,30 @@
                         </svg> SportMotos
                     </a>
                 </li>
-                @if (ViewBag.TipoAnuncio == "motos")
-                {
-                    <li class="breadcrumb-item active" aria-current="page">Motos</li>
-                }
-                else if (ViewBag.TipoAnuncio == "pecas")
-                {
-                    <li class="breadcrumb-item active" aria-current="page">Peças</li>
-                }
+                <li class="breadcrumb-item active" aria-current="page">
+                    @(ViewBag.TipoAnuncio == "motos" ? "Motos" : "Peças")
+                </li>
             </ol>
         </nav>
     </div>
     <h3 style="font-weight:bold" class="mb-4">
-        Anúncios de
-        @if (ViewBag.TipoAnuncio == "motos")
-        {
-            <span style="font-weight:bold">Motos</span>
-        }
-        else if (ViewBag.TipoAnuncio == "pecas")
-        {
-            <span style="font-weight:bold">Peças</span>
-        }
+        Anúncios de <span style="font-weight:bold">
+            @(ViewBag.TipoAnuncio == "motos" ? "Motos" : "Peças")
+        </span>
     </h3>
     <h4 style="margin-bottom:2.5%">
-        @if (ViewBag.TipoAnuncio == "motos")
-        {
-            <span>Encontre a moto dos seus sonhos!</span>
-        }
-        else if (ViewBag.TipoAnuncio == "pecas")
-        {
-            <span>Encontre as peças que precisa!</span>
-        }
+        @(ViewBag.TipoAnuncio == "motos" ? "Encontre a moto dos seus sonhos!" : "Encontre as peças que precisa!")
     </h4>
-    <div class="row mb-4">
-        @if (ViewBag.TipoAnuncio == "motos")
-        {
+
+    @if (ViewBag.TipoAnuncio == "motos")
+    {
+        <div class="row mb-4">
             <div class="col-md-9">
                 <div class="row">
                     <div class="col">
                         <select id="marcaDropdown" class="form-select" onchange="filterAnuncios()">
                             <option value="">Marca</option>
-                            @if (ViewBag.Marca != null) // Evita NullReferenceException
+                            @if (ViewBag.Marca != null)
                             {
                                 foreach (var marca in ViewBag.Marca)
                                 {
@@ -89,7 +61,7 @@
                     <div class="col">
                         <select id="generoDropdown" class="form-select" onchange="filterAnuncios()">
                             <option value="">Género</option>
-                            @if (ViewBag.Generos != null) // Evita NullReferenceException
+                            @if (ViewBag.Generos != null)
                             {
                                 foreach (var genero in ViewBag.Generos)
                                 {
@@ -101,7 +73,7 @@
                     <div class="col">
                         <select id="corDropdown" class="form-select" onchange="filterAnuncios()">
                             <option value="">Cor</option>
-                            @if (ViewBag.Cores != null) // Evita NullReferenceException
+                            @if (ViewBag.Cores != null)
                             {
                                 foreach (var cor in ViewBag.Cores)
                                 {
@@ -112,44 +84,30 @@
                     </div>
                 </div>
             </div>
-        }
-    </div>
-    <div class="col-md-3 text-end">
-        <div class="row">
-            <div class="col">
-                <select id="verMaisFiltrosDropdown" class="form-select">
-                    <option value="">Ver mais filtros</option>
-                    <!-- Adicione mais opções de filtro aqui -->
-                </select>
-            </div>
-            <div class="col">
-                <select id="ordenarPorDropdown" class="form-select" onchange="sortAnuncios()">
-                    <option value="novo">Ordenar por</option>
-                    <option value="precoAsc">Preço: Menor para Maior</option>
-                    <option value="precoDesc">Preço: Maior para Menor</option>
-                    <option value="data">Data de Publicação</option>
-                </select>
-            </div>
         </div>
-    </div>
+    }
+
 </div>
-<a asp-action="CriarAnuncioMoto" asp-controller="CriarAnuncio">Adicionar moto</a>
-<a asp-action="ShowAnuncios" asp-controller="CriarAnuncio">Listar anúncio</a>
+
 <div class="row row-cols-1 row-cols-md-4 g-4" id="anunciosContainer">
     @foreach (var anuncio in Model.OrderByDescending(a => a.DataPublicacao))
     {
-        // Calcular a diferença de dias entre a data de publicação e a data atual
-        var diasPublicacao = (DateTime.Now - anuncio.DataPublicacao).TotalDays;
+        var diasPublicacao = (DateTime.Now - (anuncio.DataPublicacao ?? DateTime.Now)).TotalDays;
 
-        <div class="col anuncio-card" data-marca="@anuncio.IdMotoNavigation?.Marca" data-modelo="@anuncio.IdMotoNavigation?.Modelo" data-preco="@anuncio.Preco" data-genero="@anuncio.IdMotoNavigation?.Genero" data-cor="@anuncio.IdMotoNavigation?.Cor">
-            <div class="card shadow-sm card-fixed-height">
-                @if (ViewBag.TipoAnuncio == "motos" && anuncio.IdMotoNavigation != null && anuncio.IdMotoNavigation.Imagens != null)
+        <div class="col anuncio-card"
+             data-marca="@(ViewBag.TipoAnuncio == "motos" ? anuncio.IdMotoNavigation?.Marca : anuncio.IdPecaNavigation?.Marca)"
+             data-modelo="@(ViewBag.TipoAnuncio == "motos" ? anuncio.IdMotoNavigation?.Modelo : anuncio.IdPecaNavigation?.Modelo)"
+             data-preco="@anuncio.Preco"
+        @(ViewBag.TipoAnuncio == "motos" ? $"data-genero='{anuncio.IdMotoNavigation?.Genero}' data-cor='{anuncio.IdMotoNavigation?.Cor}'" : "")>
+
+            <div class="card shadow-sm card-fixed-height position-relative">
+                @if (ViewBag.TipoAnuncio == "motos" && anuncio.IdMotoNavigation != null && anuncio.IdMotoNavigation.Imagens != null && anuncio.IdMotoNavigation.Imagens.Any())
                 {
                     <img src="@Url.Content("~/images/motos/" + anuncio.IdMotoNavigation.Imagens.FirstOrDefault()?.NomeArquivo)"
                          alt="Imagem da Moto @anuncio.IdMotoNavigation.Matricula"
                          class="img-fluid rounded card-img-top">
                 }
-                else if (ViewBag.TipoAnuncio == "pecas" && anuncio.IdPecaNavigation != null && anuncio.IdPecaNavigation.NomeArquivo != null)
+                else if (ViewBag.TipoAnuncio == "pecas" && anuncio.IdPecaNavigation != null && !string.IsNullOrEmpty(anuncio.IdPecaNavigation.NomeArquivo))
                 {
                     <img src="@Url.Content("~/images/pecas/" + anuncio.IdPecaNavigation.NomeArquivo)"
                          alt="Imagem da Peça"
@@ -164,53 +122,33 @@
                     </svg>
                 }
 
+                @if (ViewBag.TipoAnuncio == "motos" && anuncio.Vendido)
+                {
+                    <span class="badge bg-danger position-absolute top-0 start-0 m-2">Vendida!</span>
+                }
+                else if (ViewBag.TipoAnuncio == "pecas" && anuncio.IdPecaNavigation?.Stock <= 10)
+                {
+                    <span class="badge bg-danger position-absolute top-0 start-0 m-2">A esgotar!</span>
+                }
+                else if (ViewBag.TipoAnuncio == "motos" && diasPublicacao <= 30)
+                {
+                    <span class="badge bg-success position-absolute top-0 start-0 m-2">Novo!</span>
+                }
+
                 <div class="card-body card-body-fixed-height">
                     <p class="card-text">@anuncio.Titulo</p>
                     <p class="text-muted">Preço: €@anuncio.Preco.ToString("F2")</p>
-
-                    @if (ViewBag.TipoAnuncio == "motos")
-                    {
-                        <!-- Badge "Vendida!" -->
-                        @if (anuncio.Vendido)
-                        {
-                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">Vendida!</span>
-                        }
-                        else if (diasPublicacao <= 30)
-                        {
-                            <!-- Badge "Novidades" -->
-                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success">Novo!</span>
-                        }
-                    }
-
-                    @if (ViewBag.TipoAnuncio == "pecas")
-                    {
-                        <!-- Badge "A esgotar!" -->
-                        @if (anuncio.IdPecaNavigation != null && anuncio.IdPecaNavigation.Stock <= 10)
-                        {
-                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">A esgotar!</span>
-                        }
-                    }
 
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="btn-group">
                             <a asp-controller="DetalhesAnuncios" asp-action="DetalheAnuncio"
                                asp-route-id="@(ViewBag.TipoAnuncio == "motos" ? anuncio.IdAnuncioMoto : anuncio.IdAnuncioPeca)"
-                               asp-route-tipo="@ViewBag.TipoAnuncio"
                                class="btn btn-sm btn-outline-secondary">
                                 Ver
                             </a>
-
-                            @if (ViewBag.TipoUtilizador == "Admin")
-                            {
-                                <a asp-controller="CriarAnuncio" asp-action="@(ViewBag.TipoAnuncio == "motos" ? "EditarAnuncioMoto" : "EditarAnuncioPeca")"
-                                   asp-route-id="@(ViewBag.TipoAnuncio == "motos" ? anuncio.IdAnuncioMoto : anuncio.IdAnuncioPeca)"
-                                   class="btn btn-sm btn-outline-secondary">
-                                    Editar
-                                </a>
-                            }
                         </div>
                         <small class="text-body-secondary">
-                            Publicado: @anuncio.DataPublicacao.ToString("dd/MM/yyyy")
+                            Publicado: @(anuncio.DataPublicacao?.ToString("dd/MM/yyyy") ?? "Data não disponível")
                         </small>
                     </div>
                 </div>
@@ -218,6 +156,7 @@
         </div>
     }
 </div>
+
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>

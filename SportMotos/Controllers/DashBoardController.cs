@@ -101,7 +101,9 @@ namespace SportMotos.Controllers
             .Where(a => a.DataVenda.HasValue && a.DataVenda.Value.Month == mes)
             .CountAsync();
 
-            int anuncioPecasVendidos = await _context.AnuncioPecas.Where(p => p.DataVenda.Month == mes).CountAsync();
+            int anuncioPecasVendidos = await _context.AnuncioPecas
+    .Where(p => p.DataVenda.HasValue && p.DataVenda.Value.Month == mes)
+    .CountAsync();
 
             return Json(new { mes, clientes, anunciosMotoVendidos, anuncioPecasVendidos });
         }

@@ -28,12 +28,13 @@ namespace SportMotos.Controllers
                 ViewBag.TipoAnuncio = "motos";
                 return View(anunciosMotos);
             }
+
             else if (tipo == "pecas")
             {
                 // Busca anúncios de peças
                 var anunciosPecas = await _context.AnuncioPecas
-                    .Where(a => a.ApagadoEm == null) // Apenas anúncios ativos
-                    .Include(a => a.IdPecaNavigation) // Inclui a tabela Peca para obter o Stock
+                    .Where(a => a.ApagadoEm == null) // Evita registros nulos
+                    .Include(a => a.IdPecaNavigation) // Carrega a peça associada
                     .ToListAsync();
                 ViewBag.TipoAnuncio = "pecas";
                 // Passa os dados para a View

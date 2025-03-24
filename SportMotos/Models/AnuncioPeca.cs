@@ -25,7 +25,7 @@ public partial class AnuncioPeca
 
     public DateTime? ApagadoEm { get; set; }
 
-    public DateTime DataVenda { get; set; } // Novo campo
+    public DateTime? DataVenda { get; set; } // Novo campo
 
     public int? Visualizacoes { get; set; }
 
@@ -33,5 +33,5 @@ public partial class AnuncioPeca
 
     public int? Avaliacoes { get; set; }
 
-    public virtual Peca IdPecaNavigation { get; set; } = null!;
+    public virtual Peca? IdPecaNavigation { get; set; }
 }
