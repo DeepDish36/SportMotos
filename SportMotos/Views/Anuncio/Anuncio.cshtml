@@ -143,6 +143,7 @@
                         <div class="btn-group">
                             <a asp-controller="DetalhesAnuncios" asp-action="DetalheAnuncio"
                                asp-route-id="@(ViewBag.TipoAnuncio == "motos" ? anuncio.IdAnuncioMoto : anuncio.IdAnuncioPeca)"
+                               asp-route-tipo="@ViewBag.TipoAnuncio"
                                class="btn btn-sm btn-outline-secondary">
                                 Ver
                             </a>
@@ -151,6 +152,7 @@
                             Publicado: @(anuncio.DataPublicacao?.ToString("dd/MM/yyyy") ?? "Data não disponível")
                         </small>
                     </div>
+
                 </div>
             </div>
         </div>

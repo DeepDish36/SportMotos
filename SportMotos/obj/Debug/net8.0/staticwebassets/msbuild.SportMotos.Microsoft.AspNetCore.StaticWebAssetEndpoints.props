@@ -156,6 +156,18 @@
       <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"tgpzva6cjn"},{"Name":"integrity","Value":"sha256-rbISgMPnWHJx7Q3vq/eHs/ro6IEY5D44\u002BzBZbFTE9NQ="},{"Name":"label","Value":"_content/SportMotos/images/logo.png"}]]]></EndpointProperties>
       <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"4649"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022rbISgMPnWHJx7Q3vq/eHs/ro6IEY5D44\u002BzBZbFTE9NQ=\u0022"},{"Name":"Last-Modified","Value":"Mon, 24 Mar 2025 10:35:00 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/SportMotos/images/motos/09-88-MV_1.jpg">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\motos\09-88-MV_1.jpg'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-J6E3wYtqaO4a1V2z3l0P/2iOVQ5H8H0JqNz8ErbJSSs="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"88751"},{"Name":"Content-Type","Value":"image/jpeg"},{"Name":"ETag","Value":"\u0022J6E3wYtqaO4a1V2z3l0P/2iOVQ5H8H0JqNz8ErbJSSs=\u0022"},{"Name":"Last-Modified","Value":"Tue, 25 Mar 2025 09:31:00 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/SportMotos/images/motos/09-88-MV_1.z9sc39mq0t.jpg">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\motos\09-88-MV_1.jpg'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"z9sc39mq0t"},{"Name":"integrity","Value":"sha256-J6E3wYtqaO4a1V2z3l0P/2iOVQ5H8H0JqNz8ErbJSSs="},{"Name":"label","Value":"_content/SportMotos/images/motos/09-88-MV_1.jpg"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"88751"},{"Name":"Content-Type","Value":"image/jpeg"},{"Name":"ETag","Value":"\u0022J6E3wYtqaO4a1V2z3l0P/2iOVQ5H8H0JqNz8ErbJSSs=\u0022"},{"Name":"Last-Modified","Value":"Tue, 25 Mar 2025 09:31:00 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/SportMotos/images/motos/12-34-AB_1.i4ldgtabs2.jpg">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\motos\12-34-AB_1.jpg'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
@@ -167,6 +179,18 @@
       <Selectors><![CDATA[[]]]></Selectors>
       <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-zk8AqxChKc3TeTPiW3495ZiLLwisQeWJfxuGkwwhXXQ="}]]]></EndpointProperties>
       <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"151684"},{"Name":"Content-Type","Value":"image/jpeg"},{"Name":"ETag","Value":"\u0022zk8AqxChKc3TeTPiW3495ZiLLwisQeWJfxuGkwwhXXQ=\u0022"},{"Name":"Last-Modified","Value":"Mon, 24 Mar 2025 10:35:00 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/SportMotos/images/motos/13-55-AA_1.g3rh97fjnd.jpg">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\motos\13-55-AA_1.jpg'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"g3rh97fjnd"},{"Name":"integrity","Value":"sha256-bHh5sBKQYqJNhj97erYR1zFXMrSuWSeuVYBzAyYpKHE="},{"Name":"label","Value":"_content/SportMotos/images/motos/13-55-AA_1.jpg"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"8654"},{"Name":"Content-Type","Value":"image/jpeg"},{"Name":"ETag","Value":"\u0022bHh5sBKQYqJNhj97erYR1zFXMrSuWSeuVYBzAyYpKHE=\u0022"},{"Name":"Last-Modified","Value":"Tue, 25 Mar 2025 09:19:56 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/SportMotos/images/motos/13-55-AA_1.jpg">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\motos\13-55-AA_1.jpg'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-bHh5sBKQYqJNhj97erYR1zFXMrSuWSeuVYBzAyYpKHE="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"8654"},{"Name":"Content-Type","Value":"image/jpeg"},{"Name":"ETag","Value":"\u0022bHh5sBKQYqJNhj97erYR1zFXMrSuWSeuVYBzAyYpKHE=\u0022"},{"Name":"Last-Modified","Value":"Tue, 25 Mar 2025 09:19:56 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/SportMotos/js/index.ch8j3q6ws9.js">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\index.js'))</AssetFile>

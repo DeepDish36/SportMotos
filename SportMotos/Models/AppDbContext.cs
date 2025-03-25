@@ -41,7 +41,7 @@ public partial class AppDbContext : DbContext
     public DbSet<Pedidos> Pedidos { get; set; }
 
     public DbSet<InteresseMotos> InteresseMotos { get; set; }
-    
+
     public DbSet<CarrinhoCompras> CarrinhoCompras { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -104,9 +104,9 @@ public partial class AppDbContext : DbContext
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime")
                 .HasColumnName("Data_Publicacao");
-            entity.Property(e=>e.DataVenda)
+            entity.Property(e => e.DataVenda)
                 .HasColumnType("datetime")
-                .HasColumnName("Data_Venda");   
+                .HasColumnName("Data_Venda");
             entity.Property(e => e.Descricao).IsUnicode(false);
             entity.Property(e => e.IdMoto).HasColumnName("ID_Moto");
             entity.Property(e => e.Titulo)
@@ -231,7 +231,6 @@ public partial class AppDbContext : DbContext
                 .HasColumnName("Data_Edicao");
             entity.Property(e => e.Descricao).IsUnicode(false);
             entity.Property(e => e.IdCliente).HasColumnName("ID_Cliente");
-            entity.Property(e => e.Resposta).IsUnicode(false);
             entity.Property(e => e.Titulo)
                 .HasMaxLength(150)
                 .IsUnicode(false);
@@ -480,6 +479,32 @@ public partial class AppDbContext : DbContext
                 .HasForeignKey(d => d.IdCliente)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__CarrinhoCompras__ID_Cliente");
+        });
+
+        modelBuilder.Entity<Resposta>(entity =>
+        {
+            entity.HasKey(e => e.IdResposta).HasName("PK__Resposta__69F567662E7796DA");
+
+            entity.ToTable("Resposta");
+
+            entity.Property(e => e.IdResposta).HasColumnName("ID_Resposta");
+            entity.Property(e => e.IdForum).HasColumnName("ID_Forum");
+            entity.Property(e => e.IdCliente).HasColumnName("ID_Cliente");
+            entity.Property(e => e.Conteudo).IsUnicode(false);
+            entity.Property(e => e.DataCriacao)
+                .HasColumnType("datetime")
+                .HasColumnName("Data_Criacao");
+
+            entity.HasOne(d => d.IdForumNavigation).WithMany(p => p.Respostas)
+                .HasForeignKey(d => d.IdForum)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__Resposta__ID_Forum");
+
+            entity.HasOne(d => d.IdClienteNavigation)
+                .WithMany()
+                .HasForeignKey(d => d.IdCliente)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__Resposta__ID_Cliente");
         });
 
         modelBuilder.Entity<VendaPeca>()

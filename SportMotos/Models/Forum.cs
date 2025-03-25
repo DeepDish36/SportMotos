@@ -19,7 +19,8 @@ public partial class Forum
 
     public DateTime? ApagadoEm { get; set; }
 
-    public string? Resposta { get; set; }
+    public virtual ICollection<Resposta>? Respostas { get; set; }
 
-    public virtual Cliente IdClienteNavigation { get; set; } = null!;
+    public virtual Cliente? IdClienteNavigation { get; set; } = null!;
 }
+

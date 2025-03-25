@@ -6,9 +6,109 @@
     {
         <div class="alert alert-success">@ViewBag.Sucesso</div>
     }
+    ViewData["Title"] = "Editar Moto";
 }
 
 @model Moto
+<form asp-controller="Moto" asp-action="EditarMoto" method="post" enctype="multipart/form-data">
+    <div class="row">
+        <div class="col-md-6">
+            <label class="form-label">Marca</label>
+            <input type="text" class="form-control" name="Marca" required>
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">Modelo</label>
+            <input type="text" class="form-control" name="Modelo" required>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <label class="form-label">Ano</label>
+            <input type="number" class="form-control" name="Ano" min="1900" max="@DateTime.Now.Year" required>
+        </div>
+        <div class="col-md-4">
+            <label class="form-label">Quilometragem</label>
+            <input type="number" class="form-control" name="Quilometragem" min="0" required>
+        </div>
+        <div class="col-md-4">
+            <label class="form-label">Preço (€)</label>
+            <input type="number" step="0.01" class="form-control" name="Preco" min="0" required>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <label class="form-label">Condição</label>
+            <select class="form-control" name="Condicao" required>
+                <option value="Nova">Nova</option>
+                <option value="Usada">Usada</option>
+            </select>
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">Cilindrada (cc)</label>
+            <input type="number" class="form-control" name="Cilindrada" min="1" required>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <label class="form-label">Caixa</label>
+            <select class="form-control" name="Caixa" required>
+                <option value="Automática">Automática</option>
+                <option value="Semi-Automática">Semi-Automática</option>
+                <option value="Manual">Manual</option>
+            </select>
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">Matrícula</label>
+            <input type="text" class="form-control" name="Matricula" pattern="([A-Z]{2}-\d{2}-[A-Z]{2}|\d{2}-[A-Z]{2}-\d{2}|\d{2}-\d{2}-[A-Z]{2})" required>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <label class="form-label">Segmento</label>
+            <input type="text" class="form-control" name="Segmento" required>
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">Combustível</label>
+            <select class="form-control" name="Combustivel" required>
+                <option value="Elétrico">Elétrico</option>
+                <option value="Gasolina">Gasolina</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <label class="form-label">Carta de Condução (Opcional)</label>
+            <input type="text" class="form-control" name="Carta" pattern="^(A|A1|A2)$">
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">Cor (Opcional)</label>
+            <input type="text" class="form-control" name="Cor">
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Descrição (Opcional)</label>
+        <textarea class="form-control" name="Descricao" rows="3"></textarea>
+    </div>
+
+    <div class="form-check">
+        <input type="hidden" name="Abs" value="false">
+        <input type="checkbox" class="form-check-input" name="Abs" value="true">
+        <label class="form-check-label">Possui ABS?</label>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Imagem da Moto</label>
+        <input type="file" class="form-control" name="Imagem" accept="image/*">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Adicionar Moto</button>
+</form>
 
 <form asp-controller="Moto" asp-action="EditarMoto" method="post" enctype="multipart/form-data">
     <input type="hidden" name="Id" value="@Model.IdMoto">

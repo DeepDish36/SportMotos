@@ -3371,6 +3371,88 @@
       ]
     },
     {
+      "Route": "images/motos/09-88-MV_1.jpg",
+      "AssetFile": "images/motos/09-88-MV_1.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "88751"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"J6E3wYtqaO4a1V2z3l0P/2iOVQ5H8H0JqNz8ErbJSSs=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 25 Mar 2025 09:31:00 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-J6E3wYtqaO4a1V2z3l0P/2iOVQ5H8H0JqNz8ErbJSSs="
+        }
+      ]
+    },
+    {
+      "Route": "images/motos/09-88-MV_1.z9sc39mq0t.jpg",
+      "AssetFile": "images/motos/09-88-MV_1.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "88751"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"J6E3wYtqaO4a1V2z3l0P/2iOVQ5H8H0JqNz8ErbJSSs=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 25 Mar 2025 09:31:00 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "z9sc39mq0t"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-J6E3wYtqaO4a1V2z3l0P/2iOVQ5H8H0JqNz8ErbJSSs="
+        },
+        {
+          "Name": "label",
+          "Value": "images/motos/09-88-MV_1.jpg"
+        }
+      ]
+    },
+    {
       "Route": "images/motos/12-34-AB_1.i4ldgtabs2.jpg",
       "AssetFile": "images/motos/12-34-AB_1.jpg",
       "Selectors": [],
@@ -3449,6 +3531,88 @@
         {
           "Name": "integrity",
           "Value": "sha256-zk8AqxChKc3TeTPiW3495ZiLLwisQeWJfxuGkwwhXXQ="
+        }
+      ]
+    },
+    {
+      "Route": "images/motos/13-55-AA_1.g3rh97fjnd.jpg",
+      "AssetFile": "images/motos/13-55-AA_1.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "8654"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"bHh5sBKQYqJNhj97erYR1zFXMrSuWSeuVYBzAyYpKHE=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 25 Mar 2025 09:19:56 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "g3rh97fjnd"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-bHh5sBKQYqJNhj97erYR1zFXMrSuWSeuVYBzAyYpKHE="
+        },
+        {
+          "Name": "label",
+          "Value": "images/motos/13-55-AA_1.jpg"
+        }
+      ]
+    },
+    {
+      "Route": "images/motos/13-55-AA_1.jpg",
+      "AssetFile": "images/motos/13-55-AA_1.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "8654"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"bHh5sBKQYqJNhj97erYR1zFXMrSuWSeuVYBzAyYpKHE=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 25 Mar 2025 09:19:56 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-bHh5sBKQYqJNhj97erYR1zFXMrSuWSeuVYBzAyYpKHE="
         }
       ]
     },

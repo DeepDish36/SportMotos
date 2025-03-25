@@ -1,0 +1,28 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model Forum
+
+<div class="container mt-4">
+    <h2><i class="fas fa-plus"></i> Criar Novo Fórum</h2>
+    <hr />
+
+    <form asp-action="Create" method="post">
+        <div class="mb-3">
+            <label asp-for="Titulo" class="form-label">Título</label>
+            <input asp-for="Titulo" class="form-control" placeholder="Digite o título do fórum" required>
+            <span asp-validation-for="Titulo" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Descricao" class="form-label">Descrição</label>
+            <textarea asp-for="Descricao" class="form-control" rows="3" placeholder="Descreva o assunto" required></textarea>
+            <span asp-validation-for="Descricao" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Criar Fórum</button>
+        <a asp-action="Index" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Cancelar</a>
+    </form>
+</div>
