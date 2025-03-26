@@ -128,7 +128,7 @@ namespace SportMotos.Controllers
             await _context.SaveChangesAsync();
 
             ViewBag.Sucesso = "Peça editada com sucesso!";
-            return View();
+            return View(pecaExistente);
         }
 
         //Excluir peça (GET)

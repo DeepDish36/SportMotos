@@ -83,7 +83,6 @@ namespace SportMotos.Controllers
             return View();
         }
 
-
         //Formulário de edição da moto (GET)
         [HttpGet]
         public async Task<IActionResult> EditarMoto(int id)
@@ -127,7 +126,7 @@ namespace SportMotos.Controllers
             await _context.SaveChangesAsync();
 
             ViewBag.Sucesso = "Moto editada com sucesso!";
-            return View();
+            return View(motoExistente);
         }
 
         //Excluir moto (GET)
