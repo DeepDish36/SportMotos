@@ -141,7 +141,7 @@
                     <td>@anuncio.Compatibilidade</td>
                     <td>€@anuncio.Preco</td>
                     <td>
-                        <a href="#" class="btn btn-success btn-sm">Editar</a>
+                        <a asp-controller="Peca" asp-action="EditarPeca" class="btn btn-success btn-sm">Editar</a>
                         <a href="#" class="btn btn-danger btn-sm">Excluir</a>
                     </td>
                 </tr>
@@ -154,6 +154,9 @@
 <div id="anuncioMotos" class="dashboard-section" style="display: none;">
     <h3>🏍️ Anúncios de Motos</h3>
     <a asp-action="CriarAnuncioMoto" asp-controller="CriarAnuncio" class="btn btn-success btn-sm" style="margin-bottom:20px">Adicionar Anúncio de Moto</a>
+    <a href="@Url.Action("Dashboard", new { mostrarTodos = !ViewBag.MostrarTodos })" class="btn btn-primary">
+        @(ViewBag.MostrarTodos ? "Mostrar Últimos 5" : "Mostrar Todos")
+    </a>
     <hr />
     <table id="anuncioMotosTable" class="table table-striped">
         <thead>
@@ -171,7 +174,11 @@
                     <td>@anuncio.Titulo</td>
                     <td>€@anuncio.Preco</td>
                     <td>@anuncio.DataPublicacao.ToString("dd/MM/yyyy")</td>
-                    <td><a href="#" class="btn btn-info btn-sm">Ver</a></td>
+                    <td>
+                        <a href="#" class="btn btn-info btn-sm">Ver</a>
+                        <a href="#" class="btn btn-success btn-sm">Editar</a>
+                        <a href="#" class="btn btn-danger btn-sm">Excluir</a>
+                    </td>
                 </tr>
             }
         </tbody>
@@ -182,6 +189,9 @@
 <div id="anuncioPecas" class="dashboard-section" style="display: none;">
     <h3>🔩 Anúncios de Peças</h3>
     <a asp-action="CriarAnuncioPeca" asp-controller="CriarAnuncio" class="btn btn-success btn-sm" style="margin-bottom:20px">Adicionar Anúncio de Peça</a>
+    <a href="@Url.Action("Dashboard", new { mostrarTodos = !ViewBag.MostrarTodos })" class="btn btn-primary" style="margin-bottom:20px">
+        @(ViewBag.MostrarTodos ? "Mostrar Últimos 5" : "Mostrar Todos")
+    </a>
     <hr />
     <table id="anuncioPecasTable" class="table table-striped">
         <thead>
@@ -199,7 +209,11 @@
                     <td>@anuncio.Titulo</td>
                     <td>€@anuncio.Preco</td>
                     <td>@anuncio.DataPublicacao.ToString("dd/MM/yyyy")</td>
-                    <td><a href="#" class="btn btn-info btn-sm">Ver</a></td>
+                    <td>
+                        <a href="#" class="btn btn-info btn-sm">Ver</a>
+                        <a href="#" class="btn btn-success btn-sm">Editar</a>
+                        <a href="#" class="btn btn-danger btn-sm">Excluir</a>
+                    </td>
                 </tr>
             }
         </tbody>

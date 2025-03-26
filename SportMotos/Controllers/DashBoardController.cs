@@ -16,7 +16,7 @@ namespace SportMotos.Controllers
             _context = context;
         }
 
-        public IActionResult Dashboard()
+        public IActionResult Dashboard(bool mostrarTodos = false)
         {
             var tipoUsuario = User.FindFirstValue("Tipo_Utilizador");
 
@@ -29,16 +29,14 @@ namespace SportMotos.Controllers
             ViewBag.TotalUsuarios = _context.Users.Count();
             ViewBag.TotalAnunciosMoto = _context.AnuncioMotos.Count();
             ViewBag.TotalAnunciosPeca = _context.AnuncioPecas.Count();
-
-            ViewBag.Motos = _context.Motos;
-            ViewBag.Pecas = _context.Pecas;
-
             ViewBag.TotalVendasMes = _context.Pedidos
                 .Where(p => p.DataCompra.Month == DateTime.Now.Month &&
                             p.DataCompra.Year == DateTime.Now.Year)
                 .Sum(p => (decimal?)p.Total) ?? 0;
-
             ViewBag.PedidosPendentes = _context.Pedidos.Count(p => p.Status == "Pendente");
+
+            ViewBag.Motos = _context.Motos;
+            ViewBag.Pecas = _context.Pecas;
 
             var ultimoCliente = _context.Clientes
                 .OrderByDescending(c => c.DataCriacao)
@@ -46,7 +44,7 @@ namespace SportMotos.Controllers
                 .FirstOrDefault();
             ViewBag.UltimoCliente = ultimoCliente ?? "Nenhum Cliente";
 
-            // 🔥 Buscar os 5 pedidos mais recentes
+            // 🔹 Buscar os pedidos recentes
             ViewBag.UltimosPedidos = _context.Pedidos
                 .Include(p => p.Cliente)
                 .OrderByDescending(p => p.DataCompra)
@@ -54,17 +52,23 @@ namespace SportMotos.Controllers
                 .Select(p => new
                 {
                     p.IdPedido,
-                    ClienteNome = p.Cliente.Nome, // Obtém o nome do Cliente
+                    ClienteNome = p.Cliente.Nome,
                     p.DataCompra,
                     p.Status
                 })
                 .ToList();
 
-            // Buscar os 5 anúncios de motos mais recentes
-            ViewBag.UltimosAnunciosMoto = _context.AnuncioMotos
+            // 🔹 Buscar anúncios de motos (5 ou todos)
+            var anunciosMotoQuery = _context.AnuncioMotos
                 .Include(a => a.IdMotoNavigation)
-                .OrderByDescending(a => a.DataPublicacao)
-                .Take(5)
+                .OrderByDescending(a => a.DataPublicacao);
+
+            if (!mostrarTodos)
+            {
+                anunciosMotoQuery = (IOrderedQueryable<AnuncioMoto>)anunciosMotoQuery.Take(5);
+            }
+
+            ViewBag.UltimosAnunciosMoto = anunciosMotoQuery
                 .Select(a => new
                 {
                     a.IdAnuncioMoto,
@@ -75,11 +79,17 @@ namespace SportMotos.Controllers
                 })
                 .ToList();
 
-            // Buscar os 5 anúncios de peças mais recentes
-            ViewBag.UltimosAnunciosPeca = _context.AnuncioPecas
+            // 🔹 Buscar anúncios de peças (5 ou todos)
+            var anunciosPecaQuery = _context.AnuncioPecas
                 .Include(a => a.IdPecaNavigation)
-                .OrderByDescending(a => a.DataPublicacao)
-                .Take(5)
+                .OrderByDescending(a => a.DataPublicacao);
+
+            if (!mostrarTodos)
+            {
+                anunciosPecaQuery = (IOrderedQueryable<AnuncioPeca>)anunciosPecaQuery.Take(5);
+            }
+
+            ViewBag.UltimosAnunciosPeca = anunciosPecaQuery
                 .Select(a => new
                 {
                     a.IdAnuncioPeca,
@@ -89,6 +99,8 @@ namespace SportMotos.Controllers
                     Peca = a.IdPecaNavigation.Nome
                 })
                 .ToList();
+
+            ViewBag.MostrarTodos = mostrarTodos; // Passamos essa variável para a View
 
             return View();
         }

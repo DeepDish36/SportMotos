@@ -80,12 +80,12 @@ namespace SportMotos.Controllers
                         });
                     }
                 }
-
+                
                 await _context.SaveChangesAsync(); // Salva as imagens no banco
             }
 
             ViewBag.Sucesso = "Peça adicionada com sucesso!";
-            return RedirectToAction(nameof(ListarPecas));
+            return View();
         }
 
         //Formulário de edição da peça (GET)

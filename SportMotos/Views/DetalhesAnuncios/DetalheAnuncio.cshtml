@@ -5,7 +5,7 @@
 <div class="container mt-5">
     <h2 class="mb-4">Detalhes do Anúncio</h2>
 
-    <div class="card shadow-sm p-4">
+    <div class="card shadow-sm p-4 mb-4">
         <div class="row g-4 align-items-center">
             <!-- Coluna da Imagem -->
             <div class="col-md-5">
@@ -16,8 +16,8 @@
                         @foreach (var imagem in Model.IdMotoNavigation.Imagens)
                         {
                             <img src="@Url.Content("~/images/motos/" + imagem.NomeArquivo)"
-                                 alt="Imagem da Moto @Model.IdMotoNavigation.Matricula"
-                                 class="img-fluid rounded">
+                            alt="Imagem da Moto @Model.IdMotoNavigation.Matricula"
+                            class="img-fluid rounded">
                         }
                     }
                     else
@@ -30,8 +30,8 @@
                     if (Model.IdPecaNavigation != null && Model.IdPecaNavigation.NomeArquivo != null)
                     {
                         <img src="@Url.Content("~/images/pecas/" + Model.IdPecaNavigation.NomeArquivo)"
-                             alt="Imagem da Peça"
-                             class="img-fluid rounded">
+                        alt="Imagem da Peça"
+                        class="img-fluid rounded">
                     }
                     else
                     {
@@ -87,6 +87,12 @@
                     <div class="mt-3">
                         <a href="@Url.Action("Anuncio", "Anuncio", new { tipo = ViewBag.TipoAnuncio })" class="btn btn-secondary">Voltar</a>
                     </div>
+                    @if (ViewBag.TipoAnuncio == "motos")
+                    {
+                        <div class="mt-3">
+                            <a href="" class="btn btn-primary">Estou interessado</a>
+                        </div>
+                    }
                 </div>
             </div>
         </div>
