@@ -37,6 +37,10 @@
       "PackagePath": "staticwebassets\\datatable\\datatables.min.js"
     },
     {
+      "Id": "C:\\Users\\Gomes\\Desktop\\SportMotos\\SportMotos\\wwwroot\\datatable\\langconfig.json",
+      "PackagePath": "staticwebassets\\datatable\\langconfig.json"
+    },
+    {
       "Id": "C:\\Users\\Gomes\\Desktop\\SportMotos\\SportMotos\\wwwroot\\favicon.ico",
       "PackagePath": "staticwebassets\\favicon.ico"
     },

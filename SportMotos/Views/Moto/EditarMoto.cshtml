@@ -9,7 +9,10 @@
     ViewData["Title"] = "Editar Moto";
 }
 
+<h2>Editar Moto</h2>
+
 @model Moto
+
 <form asp-controller="Moto" asp-action="EditarMoto" method="post" enctype="multipart/form-data">
     <div class="row">
         <input type="hidden" name="Id" value="@Model.IdMoto">
@@ -108,5 +111,5 @@
         <input type="file" class="form-control" name="Imagem" accept="image/*">
     </div>
 
-    <button type="submit" class="btn btn-primary">Adicionar Moto</button>
+    <button type="submit" class="btn btn-primary">Editar Moto</button>
 </form>

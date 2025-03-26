@@ -96,6 +96,18 @@
       <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"wzb5v8ggnb"},{"Name":"integrity","Value":"sha256-BJWUJVyxnlz5I3Fr1lxj9Vr/47ZuuJXrfh3/1vipVAM="},{"Name":"label","Value":"_content/SportMotos/datatable/datatables.js"}]]]></EndpointProperties>
       <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"523749"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022BJWUJVyxnlz5I3Fr1lxj9Vr/47ZuuJXrfh3/1vipVAM=\u0022"},{"Name":"Last-Modified","Value":"Mon, 24 Mar 2025 10:35:00 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/SportMotos/datatable/langconfig.0tn42dzp02.json">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\datatable\langconfig.json'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"0tn42dzp02"},{"Name":"integrity","Value":"sha256-fKiD7MUIrEqsAEtDF/EcQIt/Xljrlu1oa3IBszGafiY="},{"Name":"label","Value":"_content/SportMotos/datatable/langconfig.json"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"7124"},{"Name":"Content-Type","Value":"application/json"},{"Name":"ETag","Value":"\u0022fKiD7MUIrEqsAEtDF/EcQIt/Xljrlu1oa3IBszGafiY=\u0022"},{"Name":"Last-Modified","Value":"Wed, 26 Mar 2025 14:43:41 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/SportMotos/datatable/langconfig.json">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\datatable\langconfig.json'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-fKiD7MUIrEqsAEtDF/EcQIt/Xljrlu1oa3IBszGafiY="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"7124"},{"Name":"Content-Type","Value":"application/json"},{"Name":"ETag","Value":"\u0022fKiD7MUIrEqsAEtDF/EcQIt/Xljrlu1oa3IBszGafiY=\u0022"},{"Name":"Last-Modified","Value":"Wed, 26 Mar 2025 14:43:41 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/SportMotos/favicon.61n19gt1b8.ico">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\favicon.ico'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>

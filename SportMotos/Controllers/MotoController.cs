@@ -127,7 +127,7 @@ namespace SportMotos.Controllers
             await _context.SaveChangesAsync();
 
             ViewBag.Sucesso = "Moto editada com sucesso!";
-            return RedirectToAction(nameof(ListarMotos));
+            return View();
         }
 
         //Excluir moto (GET)

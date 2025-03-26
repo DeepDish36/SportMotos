@@ -141,7 +141,7 @@
                     <td>@anuncio.Compatibilidade</td>
                     <td>€@anuncio.Preco</td>
                     <td>
-                        <a asp-controller="Peca" asp-action="EditarPeca" class="btn btn-success btn-sm">Editar</a>
+                        <a asp-controller="Peca" asp-action="EditarPeca" asp-route-id="@anuncio.IdPeca" class="btn btn-success btn-sm">Editar</a>
                         <a href="#" class="btn btn-danger btn-sm">Excluir</a>
                     </td>
                 </tr>
@@ -275,11 +275,31 @@
     <script>
         // Inicializar DataTables
         $(document).ready(function() {
-            $('#motosTable').DataTable();
-            $('#pecasTable').DataTable();
-            $('#anuncioMotosTable').DataTable();
-            $('#anuncioPecasTable').DataTable();
-            $('#pedidosTable').DataTable();
+            $('#motosTable').DataTable({
+                language:{
+                    url:"/datatable/langconfig.json"
+                }
+            });
+            $('#pecasTable').DataTable({
+                language:{
+                    url:"/datatable/langconfig.json"
+                }
+            });
+            $('#anuncioMotosTable').DataTable({
+                language:{
+                    url:"/datatable/langconfig.json"
+                }
+            });
+            $('#anuncioPecasTable').DataTable({
+                language:{
+                    url:"/datatable/langconfig.json"
+                }
+            });
+            $('#pedidosTable').DataTable({
+                language:{
+                    url:"/datatable/langconfig.json"
+                }
+            });
         });
 
         //Modal

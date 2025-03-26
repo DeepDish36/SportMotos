@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "tPzCJdj2ZkSJfo9ZcMuHtePkJx0YKEwRTIdqUFtUwz4=",
+  "Hash": "REEhqFsEZFoPC8eSSM+qC8xeleMY+nBcn71jhU+nMhk=",
   "Source": "SportMotos",
   "BasePath": "_content/SportMotos",
   "Mode": "Default",
@@ -1485,6 +1485,27 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\datatable\\datatables.min.js"
+    },
+    {
+      "Identity": "C:\\Users\\Gomes\\Desktop\\SportMotos\\SportMotos\\wwwroot\\datatable\\langconfig.json",
+      "SourceId": "SportMotos",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Gomes\\Desktop\\SportMotos\\SportMotos\\wwwroot\\",
+      "BasePath": "_content/SportMotos",
+      "RelativePath": "datatable/langconfig#[.{fingerprint}]?.json",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "0tn42dzp02",
+      "Integrity": "fKiD7MUIrEqsAEtDF/EcQIt/Xljrlu1oa3IBszGafiY=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\datatable\\langconfig.json"
     },
     {
       "Identity": "C:\\Users\\Gomes\\Desktop\\SportMotos\\SportMotos\\wwwroot\\favicon.ico",
@@ -3548,6 +3569,88 @@
         {
           "Name": "integrity",
           "Value": "sha256-BJWUJVyxnlz5I3Fr1lxj9Vr/47ZuuJXrfh3/1vipVAM="
+        }
+      ]
+    },
+    {
+      "Route": "datatable/langconfig.0tn42dzp02.json",
+      "AssetFile": "C:\\Users\\Gomes\\Desktop\\SportMotos\\SportMotos\\wwwroot\\datatable\\langconfig.json",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "7124"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/json"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"fKiD7MUIrEqsAEtDF/EcQIt/Xljrlu1oa3IBszGafiY=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 26 Mar 2025 14:43:41 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "0tn42dzp02"
+        },
+        {
+          "Name": "label",
+          "Value": "datatable/langconfig.json"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-fKiD7MUIrEqsAEtDF/EcQIt/Xljrlu1oa3IBszGafiY="
+        }
+      ]
+    },
+    {
+      "Route": "datatable/langconfig.json",
+      "AssetFile": "C:\\Users\\Gomes\\Desktop\\SportMotos\\SportMotos\\wwwroot\\datatable\\langconfig.json",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "7124"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/json"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"fKiD7MUIrEqsAEtDF/EcQIt/Xljrlu1oa3IBszGafiY=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 26 Mar 2025 14:43:41 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-fKiD7MUIrEqsAEtDF/EcQIt/Xljrlu1oa3IBszGafiY="
         }
       ]
     },

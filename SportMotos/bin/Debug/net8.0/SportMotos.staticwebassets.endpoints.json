@@ -2961,6 +2961,88 @@
       ]
     },
     {
+      "Route": "datatable/langconfig.0tn42dzp02.json",
+      "AssetFile": "datatable/langconfig.json",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "7124"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/json"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"fKiD7MUIrEqsAEtDF/EcQIt/Xljrlu1oa3IBszGafiY=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 26 Mar 2025 14:43:41 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "0tn42dzp02"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-fKiD7MUIrEqsAEtDF/EcQIt/Xljrlu1oa3IBszGafiY="
+        },
+        {
+          "Name": "label",
+          "Value": "datatable/langconfig.json"
+        }
+      ]
+    },
+    {
+      "Route": "datatable/langconfig.json",
+      "AssetFile": "datatable/langconfig.json",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "7124"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/json"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"fKiD7MUIrEqsAEtDF/EcQIt/Xljrlu1oa3IBszGafiY=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 26 Mar 2025 14:43:41 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-fKiD7MUIrEqsAEtDF/EcQIt/Xljrlu1oa3IBszGafiY="
+        }
+      ]
+    },
+    {
       "Route": "favicon.61n19gt1b8.ico",
       "AssetFile": "favicon.ico",
       "Selectors": [],

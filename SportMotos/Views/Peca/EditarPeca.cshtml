@@ -1,15 +1,19 @@
-﻿@model SportMotos.Models.Peca
-
-@{
+﻿@{
+    @if (ViewBag.Sucesso!=null)
+    {
+        <div class="alert alert-success">@ViewBag.Sucesso</div>
+    }
     ViewData["Title"] = "Editar Peça";
 }
 
 <h2>Editar Peça</h2>
 
+@model Peca
+
 <form asp-controller="Peca" asp-action="EditarPeca" method="post" enctype="multipart/form-data">
     <div class="row">
+        <input type="hidden" name="IdPeca" value="@Model.IdPeca" />
         <div class="col-md-6">
-            <input type="hidden" name="IdPeca" value="@Model.IdPeca" />
             <label class="form-label">Nome</label>
             <input type="text" class="form-control" name="Nome" value="@Model.Nome" required>
         </div>
@@ -60,8 +64,8 @@
         <div class="col-md-6">
             <label class="form-label">Estado</label>
             <select class="form-control" name="Estado" value="@Model.Estado" required>
-                <option value="Novo">Novo</option>
-                <option value="Usado">Usado</option>
+                <option value="Nova">Nova</option>
+                <option value="Usada">Usada</option>
             </select>
         </div>
     </div>
