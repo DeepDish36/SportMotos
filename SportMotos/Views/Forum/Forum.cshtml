@@ -1,46 +1,67 @@
-﻿@model IEnumerable<Forum>
+﻿@{
+    ViewData["Title"] = "Fóruns";
+}
 
-<div class="container mt-4">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h2>
-            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-chat-right-dots" viewBox="0 0 16 16">
-                <path d="M2 1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h9.586a2 2 0 0 1 1.414.586l2 2V2a1 1 0 0 0-1-1zm12-1a2 2 0 0 1 2 2v12.793a.5.5 0 0 1-.854.353l-2.853-2.853a1 1 0 0 0-.707-.293H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2z" />
-                <path d="M5 6a1 1 0 1 1-2 0 1 1 0 0 1 2 0m4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0m4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0" />
-            </svg> Fóruns
-        </h2>
-        <a href="@Url.Action("Create", "Forum")" class="btn btn-success">➕ Criar Novo Fórum</a>
+@model IEnumerable<Forum>
+
+<div class="container mt-5">
+    <!-- Breadcrumb -->
+    <div>
+        <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a style="color:black; text-decoration:none" asp-controller="Home" asp-action="Index">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-fill mb-1" viewBox="0 0 16 16">
+                            <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L8 2.207l6.646 6.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293z" />
+                            <path d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293z" />
+                        </svg> SportMotos
+                    </a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">Fórum</li>
+            </ol>
+        </nav>
     </div>
+    <div class="container mt-4">
+        <h3 style="font-weight:bold" class="mb-4">Fóruns</h3>
 
-    @if (!Model.Any())
-    {
-        <div class="alert alert-info text-center">
-            <i class="fas fa-info-circle"></i> Ainda não há fóruns disponíveis. Seja o primeiro a criar um!
+        <h4 style="margin-bottom:2.5%">
+            <span>Ajude os outros respondendo às suas perguntas!</span>
+        </h4>
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <a href="@Url.Action("Create", "Forum")" class="btn btn-success">➕ Criar Novo Fórum</a>
         </div>
-    }
-    else
-    {
-        <div class="list-group">
-            @foreach (var forum in Model.OrderByDescending(f => f.DataCriacao))
-            {
-                <a href="@Url.Action("Details", "Forum", new { id = forum.IdForum })"
-                   class="list-group-item list-group-item-action">
-                    <div class="d-flex justify-content-between">
-                        <h5 class="mb-1">
-                            <i class="fas fa-comment-dots text-primary"></i> @forum.Titulo
-                        </h5>
-                        <small class="text-muted">
-                            Criado em @forum.DataCriacao.ToString("dd/MM/yyyy HH:mm")
-                        </small>
-                    </div>
-                    <p class="mb-1 text-muted">@forum.Descricao</p>
-                    <div class="d-flex justify-content-between">
-                        <small>Por <strong>@forum.IdClienteNavigation.Nome</strong></small>
-                        <span class="badge bg-secondary">
-                            <i class="fas fa-reply"></i> @forum.Respostas.Count() Respostas
-                        </span>
-                    </div>
-                </a>
-            }
-        </div>
-    }
+
+        @if (!Model.Any())
+        {
+            <div class="alert alert-info text-center">
+                <i class="fas fa-info-circle"></i> Ainda não há fóruns disponíveis. Seja o primeiro a criar um!
+            </div>
+        }
+        else
+        {
+            <div class="list-group">
+                @foreach (var forum in Model.OrderByDescending(f => f.DataCriacao))
+                {
+                    <a href="@Url.Action("Details", "Forum", new { id = forum.IdForum })"
+                       class="list-group-item list-group-item-action">
+                        <div class="d-flex justify-content-between">
+                            <h5 class="mb-1">
+                                <i class="fas fa-comment-dots text-primary"></i> @forum.Titulo
+                            </h5>
+                            <small class="text-muted">
+                                Criado em @forum.DataCriacao.ToString("dd/MM/yyyy HH:mm")
+                            </small>
+                        </div>
+                        <p class="mb-1 text-muted">@forum.Descricao</p>
+                        <div class="d-flex justify-content-between">
+                            <small>Por <strong>@forum.IdClienteNavigation.Nome</strong></small>
+                            <span class="badge bg-secondary">
+                                <i class="fas fa-reply"></i> @forum.Respostas.Count() Respostas
+                            </span>
+                        </div>
+                    </a>
+                }
+            </div>
+        }
+    </div>
 </div>

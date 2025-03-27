@@ -34,6 +34,9 @@ namespace SportMotos.Controllers
                     return NotFound(); // Retorna erro 404 se não encontrar
                 }
 
+                anuncio.Visualizacoes++;
+                _context.SaveChanges();
+
                 return View(anuncio);
             }
             else if (tipo == "pecas")
@@ -48,6 +51,9 @@ namespace SportMotos.Controllers
                 {
                     return NotFound();
                 }
+
+                anuncio.Visualizacoes++;
+                _context.SaveChanges();
 
                 return View(anuncio);
             }

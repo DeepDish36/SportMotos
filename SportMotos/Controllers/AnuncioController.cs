@@ -4,7 +4,6 @@ using SportMotos.Models;
 
 namespace SportMotos.Controllers
 {
-    //Mostrar todos os anúncios
     public class AnuncioController : Controller
     {
         private readonly AppDbContext _context;
@@ -14,34 +13,48 @@ namespace SportMotos.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Anuncio(string tipo)
+        public async Task<IActionResult> Anuncio(string tipo, int page = 1, int pageSize = 12)
         {
             var tipoUtilizador = User.FindFirst("Tipo_Utilizador")?.Value;
             ViewBag.TipoUtilizador = tipoUtilizador;
+            ViewBag.TipoAnuncio = tipo;
 
             if (tipo == "motos")
             {
-                // Busca anúncios de motos
-                var anunciosMotos = await _context.AnuncioMotos
-                    .Where(a => a.ApagadoEm == null) // Apenas anúncios ativos
+                var query = _context.AnuncioMotos
+                    .Where(a => a.ApagadoEm == null); // Apenas anúncios ativos
+
+                int totalAnuncios = await query.CountAsync();
+                var anunciosMotos = await query
+                    .OrderByDescending(a => a.DataPublicacao)
+                    .Skip((page - 1) * pageSize)
+                    .Take(pageSize)
                     .ToListAsync();
-                ViewBag.TipoAnuncio = "motos";
+
+                ViewBag.CurrentPage = page;
+                ViewBag.TotalPages = (int)Math.Ceiling((double)totalAnuncios / pageSize);
+
                 return View(anunciosMotos);
             }
-
             else if (tipo == "pecas")
             {
-                // Busca anúncios de peças
-                var anunciosPecas = await _context.AnuncioPecas
-                    .Where(a => a.ApagadoEm == null) // Evita registros nulos
-                    .Include(a => a.IdPecaNavigation) // Carrega a peça associada
+                var query = _context.AnuncioPecas
+                    .Where(a => a.ApagadoEm == null)
+                    .Include(a => a.IdPecaNavigation);
+
+                int totalAnuncios = await query.CountAsync();
+                var anunciosPecas = await query
+                    .OrderByDescending(a => a.DataPublicacao)
+                    .Skip((page - 1) * pageSize)
+                    .Take(pageSize)
                     .ToListAsync();
-                ViewBag.TipoAnuncio = "pecas";
-                // Passa os dados para a View
+
+                ViewBag.CurrentPage = page;
+                ViewBag.TotalPages = (int)Math.Ceiling((double)totalAnuncios / pageSize);
+
                 return View(anunciosPecas);
             }
 
-            // Se o tipo não for especificado, redireciona para uma página de erro ou exibe todos os anúncios
             return RedirectToAction("Index", "Home");
         }
     }

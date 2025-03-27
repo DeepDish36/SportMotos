@@ -173,5 +173,25 @@ namespace SportMotos.Controllers
             }
             return RedirectToAction("Index");
         }
+
+        public IActionResult GetMotoDetails(int id)
+        {
+            var moto=_context.Motos.Find(id);
+
+            if(moto==null)
+            {
+                return NotFound();
+            }
+
+            var motoDetails = new
+            {
+                marca = moto.Marca,
+                modelo = moto.Modelo,
+                preco = moto.Preco,
+                condicao = moto.Condicao
+            };
+
+            return Json(motoDetails);
+        }
     }
 }

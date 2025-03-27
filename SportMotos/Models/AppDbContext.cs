@@ -24,6 +24,8 @@ public partial class AppDbContext : DbContext
 
     public virtual DbSet<Forum> Forums { get; set; }
 
+    public virtual DbSet<Favoritos> Favoritos { get; set; }
+
     public virtual DbSet<Imagem> Imagens { get; set; }
 
     public virtual DbSet<Moto> Motos { get; set; }
@@ -211,6 +213,31 @@ public partial class AppDbContext : DbContext
                 .HasForeignKey<Cliente>(d => d.Nome)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__Cliente__Nome__5629CD9C");
+        });
+
+        modelBuilder.Entity<Favoritos>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__Favoritos");
+
+            entity.ToTable("Favoritos");
+
+            entity.Property(e => e.Id).HasColumnName("Id");
+            entity.Property(e => e.UserId).HasColumnName("UserId");
+            entity.Property(e => e.AnuncioId).HasColumnName("AnuncioId");
+            entity.Property(e => e.TipoAnuncio).HasColumnName("TipoAnuncio");
+            entity.Property(e => e.DataAdicionado).HasColumnName("DataAdicionado").HasDefaultValueSql("GETDATE()");
+
+            entity.HasOne(d => d.AnuncioMoto)
+                .WithMany()
+                .HasForeignKey(d => d.AnuncioId)
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("FK_Favoritos_AnuncioMotos");
+
+            entity.HasOne(d => d.AnuncioPeca)
+                .WithMany()
+                .HasForeignKey(d => d.AnuncioId)
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("FK_Favoritos_AnuncioPecas");
         });
 
         modelBuilder.Entity<Forum>(entity =>
