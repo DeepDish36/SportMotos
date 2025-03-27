@@ -8,8 +8,9 @@ Este site será desenvolvido para um stand de motos, combinando design intuitivo
 **Tecnologias Utilizadas:**
 + [ASP.NET (MVC)](https://learn.microsoft.com/pt-pt/aspnet/core/tutorials/first-mvc-app/start-mvc?view=aspnetcore-9.0&WT.mc_id=dotnet-35129-website&tabs=visual-studio)
 + [SQL Server](https://www.microsoft.com/en-us/sql-server/sql-server-downloads)
-+ [Visual Studio (Executar o programa)](https://visualstudio.microsoft.com/)
-+ [Visual Studio Code (Editar o texto)](https://code.visualstudio.com/)
++ [Visual Studio](https://visualstudio.microsoft.com/)
++ [Visual Studio Code](https://code.visualstudio.com/)
++ [Entity Framework](https://learn.microsoft.com/en-us/ef/)
 
 **Funcionalidades (Atuais)**
 + Catálogo de motos
