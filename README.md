@@ -26,7 +26,7 @@ Este site será desenvolvido para um stand de motos, combinando design intuitivo
 + Chatbot para responder a dúvidas (Não confirmado)
 + Publicação da plataforma online
 
-Este projeto representa o meu esforço e dedicação para criar um site funcional, esteticamente agradável e útil para qualquer stand de motos.
+Este projeto representa o meu esforço e dedicação para criar um site funcional, esteticamente agradável e útil para o meu futuro stand de motos.
 
 Se gostaste, não te esqueças de deixar ⭐ no repositório!
 
