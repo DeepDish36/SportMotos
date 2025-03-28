@@ -76,6 +76,9 @@ namespace SportMotos.Controllers
             }
 
             anuncio.DataPublicacao = DateTime.Now;
+            anuncio.Visualizacoes = 0;
+            anuncio.Favoritos = 0;
+            anuncio.Avaliacoes = 0;
             _context.AnuncioMotos.Add(anuncio);
             await _context.SaveChangesAsync();
 
@@ -85,26 +88,54 @@ namespace SportMotos.Controllers
             return View(anuncio); // Mantém o usuário na mesma página
         }
 
-
         // Criar anúncio de peça
         [HttpGet]
         public IActionResult CriarAnuncioPeca()
         {
-            ViewBag.Pecas = _context.Pecas.ToList(); // Pega todas as peças cadastradas
+            var tipoUsuario = User.FindFirstValue("Tipo_Utilizador");
+
+            if (tipoUsuario != "Admin")
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            // Buscar peças que não estão associadas a um anúncio
+            var pecasDisponiveis = _context.Pecas
+                .Where(m => !_context.AnuncioPecas.Any(a => a.IdPeca == m.IdPeca))
+                .Select(m => new { m.IdPeca, m.Nome, m.Categoria, m.Modelo })
+                .ToList();
+
+            // Preencher a ViewBag com as peças disponíveis
+            ViewBag.PecasDisponiveis = new SelectList(pecasDisponiveis, "IdPeca", "Nome");
+
+            ViewBag.Pecas = _context.Pecas.ToList(); // Vai buscar todas as peças cadastradas
             return View();
         }
 
+        
         [HttpPost]
         public async Task<IActionResult> CriarAnuncioPeca(AnuncioPeca anuncio)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                anuncio.DataPublicacao = DateTime.Now;
-                _context.AnuncioPecas.Add(anuncio);
-                await _context.SaveChangesAsync();
-                return RedirectToAction("Index");
+                // Captura os erros do ModelState e exibe na ViewBag
+                ViewBag.Error = ModelState.Values.SelectMany(v => v.Errors)
+                                                 .Select(e => e.ErrorMessage)
+                                                 .ToList();
+                return View(anuncio);
             }
-            return View(anuncio);
+
+            anuncio.DataPublicacao = DateTime.Now;
+            anuncio.Visualizacoes = 0;
+            anuncio.Favoritos = 0;
+            anuncio.Avaliacoes = 0;
+            _context.AnuncioPecas.Add(anuncio);
+            await _context.SaveChangesAsync();
+
+            // Define uma mensagem de sucesso na ViewBag
+            ViewBag.Success = "Anúncio publicado com sucesso!";
+
+            return View(anuncio); // Mantém o usuário na mesma página
         }
 
         // Editar anúncio
@@ -192,6 +223,25 @@ namespace SportMotos.Controllers
             };
 
             return Json(motoDetails);
+        }
+
+        public IActionResult GetPecaDetails(int id)
+        {
+            var peca = _context.Pecas.Find(id);
+            if (peca == null)
+            {
+                return NotFound();
+            }
+            var pecaDetails = new
+            {
+                nome = peca.Nome,
+                marca = peca.Marca,
+                modelo = peca.Modelo,
+                categoria = peca.Categoria,
+                preco = peca.Preco,
+                condicao = peca.Estado
+            };
+            return Json(pecaDetails);
         }
     }
 }

@@ -55,6 +55,8 @@
                     @if (ViewBag.TipoAnuncio == "pecas" && Model.IdPecaNavigation != null)
                     {
                         <p><strong>Categoria:</strong> @Model.IdPecaNavigation.Categoria</p>
+                        <p><strong>Descrição:</strong> @Model.Descricao</p>
+                        <p><strong>Stock:</strong> @Model.IdPecaNavigation.Stock.ToString()</p>
                     }
 
                     <!-- Botão de Ver outros detalhes -->
@@ -77,8 +79,11 @@
 
                             @if (ViewBag.TipoAnuncio == "pecas" && Model.IdPecaNavigation != null)
                             {
-                                <p><strong>Descrição:</strong> @Model.Descricao</p>
-                                <p><strong>Stock:</strong> @Model.IdPecaNavigation.Stock.ToString()</p>
+                                <p><strong>Marca:</strong> @Model.IdPecaNavigation.Marca</p>
+                                <p><strong>Modelo:</strong> @(Model.IdPecaNavigation.Modelo ?? "-")</p>
+                                <p><strong>Peso:</strong> @Model.IdPecaNavigation.Peso KG</p>
+                                <p><strong>Garantia:</strong> @Model.IdPecaNavigation.Garantia meses</p>
+                                <p><strong>Última edição:</strong> @(Model.DataEdicao?.ToString("dd/MM/yyyy") ?? "Nunca editado")</p>
                             }
                         </div>
                     </div>

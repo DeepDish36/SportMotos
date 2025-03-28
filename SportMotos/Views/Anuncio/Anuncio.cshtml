@@ -102,23 +102,23 @@
         var diasPublicacao = (DateTime.Now - (anuncio.DataPublicacao ?? DateTime.Now)).TotalDays;
 
         <div class="col anuncio-card"
-             data-marca="@(ViewBag.TipoAnuncio == "motos" ? anuncio.IdMotoNavigation?.Marca : anuncio.IdPecaNavigation?.Marca)"
-             data-modelo="@(ViewBag.TipoAnuncio == "motos" ? anuncio.IdMotoNavigation?.Modelo : anuncio.IdPecaNavigation?.Modelo)"
-             data-preco="@anuncio.Preco"
+        data-marca="@(ViewBag.TipoAnuncio == "motos" ? anuncio.IdMotoNavigation?.Marca : anuncio.IdPecaNavigation?.Marca)"
+        data-modelo="@(ViewBag.TipoAnuncio == "motos" ? anuncio.IdMotoNavigation?.Modelo : anuncio.IdPecaNavigation?.Modelo)"
+        data-preco="@anuncio.Preco"
         @(ViewBag.TipoAnuncio == "motos" ? $"data-genero='{anuncio.IdMotoNavigation?.Genero}' data-cor='{anuncio.IdMotoNavigation?.Cor}'" : "")>
 
             <div class="card shadow-sm card-fixed-height position-relative">
                 @if (ViewBag.TipoAnuncio == "motos" && anuncio.IdMotoNavigation != null && anuncio.IdMotoNavigation.Imagens != null && anuncio.IdMotoNavigation.Imagens.Any())
                 {
                     <img src="@Url.Content("~/images/motos/" + anuncio.IdMotoNavigation.Imagens.FirstOrDefault()?.NomeArquivo)"
-                         alt="Imagem da Moto @anuncio.IdMotoNavigation.Matricula"
-                         class="img-fluid rounded card-img-top">
+                    alt="Imagem da Moto @anuncio.IdMotoNavigation.Matricula"
+                    class="img-fluid rounded card-img-top">
                 }
                 else if (ViewBag.TipoAnuncio == "pecas" && anuncio.IdPecaNavigation != null && !string.IsNullOrEmpty(anuncio.IdPecaNavigation.NomeArquivo))
                 {
                     <img src="@Url.Content("~/images/pecas/" + anuncio.IdPecaNavigation.NomeArquivo)"
-                         alt="Imagem da Peça"
-                         class="img-fluid rounded card-img-top">
+                    alt="Imagem da Peça"
+                    class="img-fluid rounded card-img-top">
                 }
                 else
                 {
@@ -131,20 +131,39 @@
 
                 @if (ViewBag.TipoAnuncio == "motos" && anuncio.Vendido)
                 {
-                    <span class="badge bg-danger position-absolute top-0 start-0 m-2">Vendida!</span>
+                    <span class="badge bg-danger position-absolute top-0 end-0 m-2">Vendida!</span>
                 }
                 else if (ViewBag.TipoAnuncio == "pecas" && anuncio.IdPecaNavigation?.Stock <= 10)
                 {
-                    <span class="badge bg-danger position-absolute top-0 start-0 m-2">A esgotar!</span>
+                    <span class="badge bg-danger position-absolute top-0 end-0 m-2">A esgotar!</span>
                 }
                 else if (ViewBag.TipoAnuncio == "motos" && diasPublicacao <= 30)
                 {
-                    <span class="badge bg-success position-absolute top-0 start-0 m-2">Novo!</span>
+                    <span class="badge bg-success position-absolute top-0 end-0 m-2">Novo!</span>
+                }
+
+                @*Verifica se está esgotado*@
+                @if (ViewBag.TipoAnuncio == "pecas" && anuncio.IdPecaNavigation?.Stock <= 0)
+                {
+                    <span class="badge bg-danger position-absolute top-0 start-0 m-2">Esgotado!</span>
+                }
+
+                @*Verifica se foi publicado há menos de 30 dias*@
+                @if (ViewBag.TipoAnuncio == "pecas" && diasPublicacao<=30)
+                {
+                    <span class="badge bg-success position-absolute top-0 end-0 m-2">Novo!</span>
                 }
 
                 <div class="card-body card-body-fixed-height">
                     <p class="card-text">@anuncio.Titulo</p>
-                    <p class="text-muted">Preço: €@anuncio.Preco.ToString("F2")</p>
+                    @if(ViewBag.TipoAnuncio=="motos" && anuncio.Vendido)
+                    {
+                        <p class="text-muted">Preço: Vendida!</p>
+                    }
+                    else
+                    {
+                        <p class="text-muted">Preço: €@anuncio.Preco.ToString("F2")</p>
+                    }
 
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="btn-group">
