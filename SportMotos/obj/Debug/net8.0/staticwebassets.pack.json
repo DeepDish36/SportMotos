@@ -89,6 +89,10 @@
       "PackagePath": "staticwebassets\\js\\criaranunciopeca.js"
     },
     {
+      "Id": "C:\\Users\\g0mes\\Desktop\\SportMotos\\SportMotos\\wwwroot\\js\\editaranunciomotojs.js",
+      "PackagePath": "staticwebassets\\js\\editaranunciomotojs.js"
+    },
+    {
       "Id": "C:\\Users\\g0mes\\Desktop\\SportMotos\\SportMotos\\wwwroot\\js\\index.js",
       "PackagePath": "staticwebassets\\js\\index.js"
     },

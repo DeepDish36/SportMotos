@@ -1,0 +1,75 @@
+﻿@model SportMotos.Models.AnuncioMoto
+
+@{
+    ViewData["Title"] = "Editar Anúncio de Moto";
+}
+
+<h2 class="mb-4">Editar Anúncio de Moto</h2>
+
+<form asp-action="EditarAnuncioMoto" asp-controller="CriarAnuncio" method="post">
+    @if (ViewBag.Error != null && ViewBag.Error.Count > 0)
+    {
+        <div class="alert alert-danger">
+            <ul>
+                @foreach (var error in ViewBag.Error as List<string>)
+                {
+                    <li>@error</li>
+                }
+            </ul>
+        </div>
+    }
+
+    @if (!string.IsNullOrEmpty(ViewBag.Success))
+    {
+        <div class="alert alert-success">
+            @ViewBag.Success
+        </div>
+    }
+
+    <div class="form-group">
+        <label for="IdMoto">Moto</label>
+        <select asp-for="IdMoto" class="form-control" asp-items="ViewBag.MotosDisponiveis" id="IdMoto"></select>
+    </div>
+
+    <div class="form-group">
+        <label for="Marca">Marca</label>
+        <input class="form-control" id="Marca" disabled />
+    </div>
+
+    <div class="form-group">
+        <label for="Modelo">Modelo</label>
+        <input class="form-control" id="Modelo" disabled />
+    </div>
+
+    <div class="form-group">
+        <label for="Titulo">Título</label>
+        <input asp-for="Titulo" class="form-control" required />
+    </div>
+
+    <div class="form-group">
+        <label for="Descricao">Descrição</label>
+        <textarea asp-for="Descricao" class="form-control" required></textarea>
+    </div>
+
+    <div class="form-group">
+        <label for="Preco">Preço</label>
+        <input class="form-control" type="number" step="0.01" id="Preco" disabled />
+        <input type="hidden" asp-for="Preco" id="PrecoHidden" />
+    </div>
+
+    <div class="form-group">
+        <label for="Condicao">Condição</label>
+        <select class="form-control" id="Condicao" disabled>
+            <option value="Nova">Nova</option>
+            <option value="Usada">Usada</option>
+        </select>
+        <input type="hidden" asp-for="Condicao" id="CondicaoHidden" />
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-3">Salvar Alterações</button>
+    <a asp-action="Index" class="btn btn-secondary mt-3">Cancelar</a>
+</form>
+
+@section Scripts {
+    <script src="~/js/editaranunciomotojs.js"></script>
+}

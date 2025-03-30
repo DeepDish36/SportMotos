@@ -39,6 +39,8 @@ namespace SportMotos.Controllers
             return View();
         }
 
+        // *--------------------CRUD ANÚNCIOS--------------------* //
+
         // Criar anúncio de moto
         [HttpGet]
         public IActionResult CriarAnuncioMoto()
@@ -151,6 +153,7 @@ namespace SportMotos.Controllers
         {
             if (ModelState.IsValid)
             {
+                anuncio.DataEdicao = DateTime.Now;
                 _context.Update(anuncio);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
@@ -205,6 +208,9 @@ namespace SportMotos.Controllers
             return RedirectToAction("Index");
         }
 
+        // *-----------------------------------------------------* //
+
+        // *--------------------DETALHES--------------------* //
         public IActionResult GetMotoDetails(int id)
         {
             var moto=_context.Motos.Find(id);
@@ -243,5 +249,29 @@ namespace SportMotos.Controllers
             };
             return Json(pecaDetails);
         }
+
+        public IActionResult GetAnuncioMotoDetails(int id)
+        {
+            var anuncio = _context.AnuncioMotos
+                .Include(a => a.IdMotoNavigation)
+                .FirstOrDefault(a => a.IdMoto == id);
+            if (anuncio == null)
+            {
+                return NotFound();
+            }
+
+            var anuncioDetails = new
+            {
+                titulo = anuncio.Titulo,
+                descricao = anuncio.Descricao,
+                preco = anuncio.IdMotoNavigation?.Preco,
+                marca = anuncio.IdMotoNavigation?.Marca,
+                modelo = anuncio.IdMotoNavigation?.Modelo,
+                condicao = anuncio.IdMotoNavigation?.Condicao
+            };
+
+            return Json(anuncioDetails);
+        }
+        // *-----------------------------------------------------* //
     }
 }

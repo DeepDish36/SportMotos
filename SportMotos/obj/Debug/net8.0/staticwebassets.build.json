@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "C582qFCcSSdDrgndWB+G/5YZIp5yoUQ9IrxiDct1p7o=",
+  "Hash": "r7Y3rFShTAX3fLw+BJ0NZT6HllCR8riH5QU0fGrPKsM=",
   "Source": "SportMotos",
   "BasePath": "_content/SportMotos",
   "Mode": "Default",
@@ -1758,6 +1758,27 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\criaranunciopeca.js"
+    },
+    {
+      "Identity": "C:\\Users\\g0mes\\Desktop\\SportMotos\\SportMotos\\wwwroot\\js\\editaranunciomotojs.js",
+      "SourceId": "SportMotos",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\g0mes\\Desktop\\SportMotos\\SportMotos\\wwwroot\\",
+      "BasePath": "_content/SportMotos",
+      "RelativePath": "js/editaranunciomotojs#[.{fingerprint}]?.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "7iag2hqrxi",
+      "Integrity": "Lx/FbHPv6GZ8pvaxSZXo5Lsx42xa36Ii4oxWFKzHKyo=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\editaranunciomotojs.js"
     },
     {
       "Identity": "C:\\Users\\g0mes\\Desktop\\SportMotos\\SportMotos\\wwwroot\\js\\index.js",
@@ -6822,7 +6843,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 28 Mar 2025 15:26:01 GMT"
+          "Value": "Sun, 30 Mar 2025 11:27:52 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -6867,7 +6888,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 28 Mar 2025 15:26:01 GMT"
+          "Value": "Sun, 30 Mar 2025 11:27:52 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -6960,6 +6981,88 @@
         {
           "Name": "integrity",
           "Value": "sha256-LSTALGyqkfPpU75tR3fCCn3dH6qUt4pEmGjpMFeh11I="
+        }
+      ]
+    },
+    {
+      "Route": "js/editaranunciomotojs.7iag2hqrxi.js",
+      "AssetFile": "C:\\Users\\g0mes\\Desktop\\SportMotos\\SportMotos\\wwwroot\\js\\editaranunciomotojs.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1905"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Lx/FbHPv6GZ8pvaxSZXo5Lsx42xa36Ii4oxWFKzHKyo=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 30 Mar 2025 11:40:48 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "7iag2hqrxi"
+        },
+        {
+          "Name": "label",
+          "Value": "js/editaranunciomotojs.js"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-Lx/FbHPv6GZ8pvaxSZXo5Lsx42xa36Ii4oxWFKzHKyo="
+        }
+      ]
+    },
+    {
+      "Route": "js/editaranunciomotojs.js",
+      "AssetFile": "C:\\Users\\g0mes\\Desktop\\SportMotos\\SportMotos\\wwwroot\\js\\editaranunciomotojs.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1905"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Lx/FbHPv6GZ8pvaxSZXo5Lsx42xa36Ii4oxWFKzHKyo=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 30 Mar 2025 11:40:48 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-Lx/FbHPv6GZ8pvaxSZXo5Lsx42xa36Ii4oxWFKzHKyo="
         }
       ]
     },

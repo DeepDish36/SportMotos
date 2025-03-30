@@ -3889,7 +3889,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 28 Mar 2025 15:26:01 GMT"
+          "Value": "Sun, 30 Mar 2025 11:27:52 GMT"
         }
       ],
       "EndpointProperties": [
@@ -3934,7 +3934,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 28 Mar 2025 15:26:01 GMT"
+          "Value": "Sun, 30 Mar 2025 11:27:52 GMT"
         }
       ],
       "EndpointProperties": [
@@ -4023,6 +4023,88 @@
         {
           "Name": "integrity",
           "Value": "sha256-LSTALGyqkfPpU75tR3fCCn3dH6qUt4pEmGjpMFeh11I="
+        }
+      ]
+    },
+    {
+      "Route": "js/editaranunciomotojs.7iag2hqrxi.js",
+      "AssetFile": "js/editaranunciomotojs.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1905"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Lx/FbHPv6GZ8pvaxSZXo5Lsx42xa36Ii4oxWFKzHKyo=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 30 Mar 2025 11:40:48 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "7iag2hqrxi"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-Lx/FbHPv6GZ8pvaxSZXo5Lsx42xa36Ii4oxWFKzHKyo="
+        },
+        {
+          "Name": "label",
+          "Value": "js/editaranunciomotojs.js"
+        }
+      ]
+    },
+    {
+      "Route": "js/editaranunciomotojs.js",
+      "AssetFile": "js/editaranunciomotojs.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1905"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Lx/FbHPv6GZ8pvaxSZXo5Lsx42xa36Ii4oxWFKzHKyo=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 30 Mar 2025 11:40:48 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-Lx/FbHPv6GZ8pvaxSZXo5Lsx42xa36Ii4oxWFKzHKyo="
         }
       ]
     },

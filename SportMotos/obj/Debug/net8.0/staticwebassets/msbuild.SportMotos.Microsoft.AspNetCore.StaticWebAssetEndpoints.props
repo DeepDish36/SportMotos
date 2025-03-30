@@ -232,13 +232,13 @@
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\criaranunciomoto.js'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
       <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"2gpidn04qs"},{"Name":"integrity","Value":"sha256-rsWdMNG1bXP5wHMkdGQ2CUgbbcxiPmmLASdJlSmj/Z4="},{"Name":"label","Value":"_content/SportMotos/js/criaranunciomoto.js"}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"1300"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022rsWdMNG1bXP5wHMkdGQ2CUgbbcxiPmmLASdJlSmj/Z4=\u0022"},{"Name":"Last-Modified","Value":"Fri, 28 Mar 2025 15:26:01 GMT"}]]]></ResponseHeaders>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"1300"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022rsWdMNG1bXP5wHMkdGQ2CUgbbcxiPmmLASdJlSmj/Z4=\u0022"},{"Name":"Last-Modified","Value":"Sun, 30 Mar 2025 11:27:52 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/SportMotos/js/criaranunciomoto.js">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\criaranunciomoto.js'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
       <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-rsWdMNG1bXP5wHMkdGQ2CUgbbcxiPmmLASdJlSmj/Z4="}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"1300"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022rsWdMNG1bXP5wHMkdGQ2CUgbbcxiPmmLASdJlSmj/Z4=\u0022"},{"Name":"Last-Modified","Value":"Fri, 28 Mar 2025 15:26:01 GMT"}]]]></ResponseHeaders>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"1300"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022rsWdMNG1bXP5wHMkdGQ2CUgbbcxiPmmLASdJlSmj/Z4=\u0022"},{"Name":"Last-Modified","Value":"Sun, 30 Mar 2025 11:27:52 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/SportMotos/js/criaranunciopeca.3g900bimik.js">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\criaranunciopeca.js'))</AssetFile>
@@ -251,6 +251,18 @@
       <Selectors><![CDATA[[]]]></Selectors>
       <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-LSTALGyqkfPpU75tR3fCCn3dH6qUt4pEmGjpMFeh11I="}]]]></EndpointProperties>
       <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"1712"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022LSTALGyqkfPpU75tR3fCCn3dH6qUt4pEmGjpMFeh11I=\u0022"},{"Name":"Last-Modified","Value":"Fri, 28 Mar 2025 18:08:15 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/SportMotos/js/editaranunciomotojs.7iag2hqrxi.js">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\editaranunciomotojs.js'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"7iag2hqrxi"},{"Name":"integrity","Value":"sha256-Lx/FbHPv6GZ8pvaxSZXo5Lsx42xa36Ii4oxWFKzHKyo="},{"Name":"label","Value":"_content/SportMotos/js/editaranunciomotojs.js"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"1905"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022Lx/FbHPv6GZ8pvaxSZXo5Lsx42xa36Ii4oxWFKzHKyo=\u0022"},{"Name":"Last-Modified","Value":"Sun, 30 Mar 2025 11:40:48 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/SportMotos/js/editaranunciomotojs.js">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\editaranunciomotojs.js'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-Lx/FbHPv6GZ8pvaxSZXo5Lsx42xa36Ii4oxWFKzHKyo="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"1905"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022Lx/FbHPv6GZ8pvaxSZXo5Lsx42xa36Ii4oxWFKzHKyo=\u0022"},{"Name":"Last-Modified","Value":"Sun, 30 Mar 2025 11:40:48 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/SportMotos/js/index.ch8j3q6ws9.js">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\index.js'))</AssetFile>

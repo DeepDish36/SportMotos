@@ -177,7 +177,8 @@
                         <a asp-controller="DetalhesAnuncios" asp-action="DetalheAnuncio"
                            asp-route-id="@anuncio.IdAnuncioMoto"
                            asp-route-tipo="motos" class="btn btn-info btn-sm">Ver</a>
-                        <a href="#" class="btn btn-success btn-sm">Editar</a>
+                        <a asp-controller="CriarAnuncio" asp-action="EditarAnuncioMoto"
+                        asp-route-id="@anuncio.IdAnuncioMoto" class="btn btn-success btn-sm">Editar</a>
                         <a href="#" class="btn btn-danger btn-sm">Excluir</a>
                     </td>
                 </tr>
