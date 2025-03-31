@@ -8,7 +8,7 @@
     const condicaoDropdown = document.getElementById("Condicao");
     const condicaoHiddenInput = document.getElementById("CondicaoHidden");
 
-    pecasDropdown.addEventListener("change", function () {
+    pecasDropdown.addEventListener("click", function () {
         const selectedPecaId = this.value;
 
         if (selectedPecaId) {

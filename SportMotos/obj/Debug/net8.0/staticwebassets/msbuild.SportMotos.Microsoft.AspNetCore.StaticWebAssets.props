@@ -372,8 +372,8 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>3g900bimik</Fingerprint>
-      <Integrity>LSTALGyqkfPpU75tR3fCCn3dH6qUt4pEmGjpMFeh11I=</Integrity>
+      <Fingerprint>b2kynkpnds</Fingerprint>
+      <Integrity>7c4nRcJNfM/cTUH49G7tf8Yn1LEbSoN6DcxxiO2kfWM=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\criaranunciopeca.js'))</OriginalItemSpec>
