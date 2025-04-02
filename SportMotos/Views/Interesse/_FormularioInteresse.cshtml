@@ -1,4 +1,6 @@
-﻿<div class="modal fade" id="modalInteresse" tabindex="-1" aria-labelledby="modalInteresseLabel" aria-hidden="true">
+﻿@model SportMotos.Models.InteresseMotos
+
+<div class="modal fade" id="modalInteresse" tabindex="-1" aria-labelledby="modalInteresseLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -7,7 +9,7 @@
             </div>
             <div class="modal-body">
                 <form id="formInteresse">
-                    <input type="hidden" id="IdAnuncio" name="IdAnuncio" value="" />
+                    <input type="hidden" id="IdAnuncio" name="IdAnuncio" value="@Model.IdMoto" />
                     <div class="mb-3">
                         <label for="NomeCliente" class="form-label">Nome</label>
                         <input type="text" class="form-control" id="NomeCliente" name="NomeCliente" required />

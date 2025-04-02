@@ -17,20 +17,7 @@ namespace SportMotos.Controllers
         [Authorize] // Garante que só usuários logados acessem
         public IActionResult Criar(int idMoto)
         {
-            var moto = _context.Motos.FirstOrDefault(m => m.IdMoto == idMoto);
-            if (moto == null)
-            {
-                return NotFound();
-            }
-
-            var model = new InteresseMotos
-            {
-                IdCliente = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value), // ID do cliente logado
-                IdMoto = idMoto,
-                DataInteresse = DateTime.Now,
-                Status = "Pendente"
-            };
-
+            var model = new InteresseMotos { IdMoto = idMoto };
             return PartialView("_FormularioInteresse", model);
         }
 
@@ -40,12 +27,19 @@ namespace SportMotos.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.InteresseMotos.Add(interesse);
-                await _context.SaveChangesAsync();
-                return Json(new { success = true });
+                // Obter o ID do cliente logado
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                if (int.TryParse(userId, out int idCliente))
+                {
+                    interesse.IdCliente = idCliente;
+                    interesse.DataInteresse = DateTime.Now;
+                    _context.InteresseMotos.Add(interesse);
+                    await _context.SaveChangesAsync();
+                    return Json(new { success = true });
+                }
+                return Json(new { success = false, message = "Erro ao obter o ID do cliente." });
             }
-
-            return Json(new { success = false, message = "Erro ao salvar interesse." });
+            return Json(new { success = false });
         }
 
         [Authorize]

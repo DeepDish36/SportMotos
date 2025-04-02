@@ -110,15 +110,18 @@
 </div>
 
 <script src="~/js/jquery.js"></script>
+<script src="~/js/bootstrap.bundle.min.js"></script>
 <script>
     $(function () {
         $("#btnInteresse").click(function (e) {
             e.preventDefault();
             var idAnuncio = $(this).data("id");
 
-            $.get("/Interesse/Criar", { idAnuncio: idAnuncio }, function (data) {
+            $.get("/Interesse/Criar", { idMoto: idAnuncio }, function (data) {
                 $("body").append(data);
                 $("#modalInteresse").modal("show");
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                console.error("Erro ao carregar a modal: " + textStatus, errorThrown);
             });
         });
 
