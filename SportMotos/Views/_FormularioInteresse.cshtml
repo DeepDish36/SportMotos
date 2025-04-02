@@ -1,0 +1,24 @@
+﻿<div class="modal fade" id="modalInteresse" tabindex="-1" aria-labelledby="modalInteresseLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalInteresseLabel">Estou interessado</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="formInteresse">
+                    <input type="hidden" id="IdAnuncio" name="IdAnuncio" value="" />
+                    <div class="mb-3">
+                        <label for="NomeCliente" class="form-label">Nome</label>
+                        <input type="text" class="form-control" id="NomeCliente" name="NomeCliente" required />
+                    </div>
+                    <div class="mb-3">
+                        <label for="EmailCliente" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="EmailCliente" name="EmailCliente" required />
+                    </div>
+                    <button type="submit" class="btn btn-primary">Enviar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
