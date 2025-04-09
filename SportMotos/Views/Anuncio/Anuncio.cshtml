@@ -102,36 +102,57 @@
         var diasPublicacao = (DateTime.Now - (anuncio.DataPublicacao ?? DateTime.Now)).TotalDays;
 
         <div class="col anuncio-card"
-        data-marca="@(ViewBag.TipoAnuncio == "motos" ? anuncio.IdMotoNavigation?.Marca : anuncio.IdPecaNavigation?.Marca)"
-        data-modelo="@(ViewBag.TipoAnuncio == "motos" ? anuncio.IdMotoNavigation?.Modelo : anuncio.IdPecaNavigation?.Modelo)"
-        data-preco="@anuncio.Preco"
+             data-marca="@(ViewBag.TipoAnuncio == "motos" ? anuncio.IdMotoNavigation?.Marca : anuncio.IdPecaNavigation?.Marca)"
+             data-modelo="@(ViewBag.TipoAnuncio == "motos" ? anuncio.IdMotoNavigation?.Modelo : anuncio.IdPecaNavigation?.Modelo)"
+             data-preco="@anuncio.Preco"
         @(ViewBag.TipoAnuncio == "motos" ? $"data-genero='{anuncio.IdMotoNavigation?.Genero}' data-cor='{anuncio.IdMotoNavigation?.Cor}'" : "")>
 
             <div class="card shadow-sm card-fixed-height position-relative">
-                @if (ViewBag.TipoAnuncio == "motos" && anuncio.IdMotoNavigation != null && anuncio.IdMotoNavigation.Imagens != null && anuncio.IdMotoNavigation.Imagens.Any())
+               @if (ViewBag.TipoAnuncio == "motos" &&
+               anuncio.IdMotoNavigation?.Imagens != null &&
+               anuncio.IdMotoNavigation.Imagens.Any())
                 {
-                    <img src="@Url.Content("~/images/motos/" + anuncio.IdMotoNavigation.Imagens.FirstOrDefault()?.NomeArquivo)"
-                    alt="Imagem da Moto @anuncio.IdMotoNavigation.Matricula"
-                    class="img-fluid rounded card-img-top">
+                    var imagemMoto = anuncio.IdMotoNavigation.Imagens.FirstOrDefault();
+                    var nomeArquivo = imagemMoto?.NomeArquivo;
+                    if (!string.IsNullOrEmpty(nomeArquivo))
+                    {
+                        var imagemPath = Url.Content($"~/images/motos/{nomeArquivo}.jpg");
+                        <img src="@imagemPath"
+                             alt="Imagem da Moto @anuncio.IdMotoNavigation.Matricula"
+                             class="img-fluid rounded card-img-top" />
+                    }
                 }
-                else if (ViewBag.TipoAnuncio == "pecas" && anuncio.IdPecaNavigation != null && !string.IsNullOrEmpty(anuncio.IdPecaNavigation.NomeArquivo))
-                {
-                    <img src="@Url.Content("~/images/pecas/" + anuncio.IdPecaNavigation.NomeArquivo)"
-                    alt="Imagem da Peça"
-                    class="img-fluid rounded card-img-top">
-                }
+                else if (ViewBag.TipoAnuncio == "pecas" &&
+                    anuncio.IdPecaNavigation?.Imagens != null &&
+                    anuncio.IdPecaNavigation.Imagens.Any())
+                    {
+                        var nomeArquivo = anuncio.IdPecaNavigation.Imagens.FirstOrDefault()?.NomeArquivo;
+                        var imagemPecaPath = Url.Content($"~/images/pecas/{nomeArquivo}.jpg");
+
+                        <img src="@imagemPecaPath"
+                            alt="Imagem da Peça"
+                            class="img-fluid rounded card-img-top" />
+                    }
+
                 else
                 {
-                    <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
+                    <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
+                         xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail"
+                         preserveAspectRatio="xMidYMid slice" focusable="false">
                         <title>@anuncio.Titulo</title>
                         <rect width="100%" height="100%" fill="#55595c"></rect>
-                        <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
+                        <text x="50%" y="50%" fill="#eceeef" dy=".3em">Sem Imagem!</text>
                     </svg>
                 }
+
 
                 @if (ViewBag.TipoAnuncio == "motos" && anuncio.Vendido)
                 {
                     <span class="badge bg-danger position-absolute top-0 end-0 m-2">Vendida!</span>
+                }
+                else if (anuncio.Visualizacoes > 110)
+                {
+                    <span class="badge bg-success position-absolute top-0 end-0 m-2">🔥 Popular entre os fãs!</span>
                 }
                 else if (ViewBag.TipoAnuncio == "pecas" && anuncio.IdPecaNavigation?.Stock <= 10)
                 {
@@ -149,14 +170,14 @@
                 }
 
                 @*Verifica se foi publicado há menos de 30 dias*@
-                @if (ViewBag.TipoAnuncio == "pecas" && diasPublicacao<=30)
+                @if (ViewBag.TipoAnuncio == "pecas" && diasPublicacao <= 30)
                 {
                     <span class="badge bg-success position-absolute top-0 end-0 m-2">Novo!</span>
                 }
 
                 <div class="card-body card-body-fixed-height">
                     <p class="card-text">@anuncio.Titulo</p>
-                    @if(ViewBag.TipoAnuncio=="motos" && anuncio.Vendido)
+                    @if (ViewBag.TipoAnuncio == "motos" && anuncio.Vendido)
                     {
                         <p class="text-muted">Preço: Vendida!</p>
                     }

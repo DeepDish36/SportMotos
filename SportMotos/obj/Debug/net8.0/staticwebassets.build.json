@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "Dj/KItMttZOOppfRzVeYzhk6J8colLgg7j9JRYe1CEU=",
+  "Hash": "4gRp9T2CHYR+65GS5p3vf5aMl9+pV1oEI9Cexy2dmNQ=",
   "Source": "SportMotos",
   "BasePath": "_content/SportMotos",
   "Mode": "Default",
@@ -1674,6 +1674,27 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\motos\\13-55-AA_1.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\Gomes\\Desktop\\SportMotos\\SportMotos\\wwwroot\\images\\pecas\\16_1.jpg",
+      "SourceId": "SportMotos",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Gomes\\Desktop\\SportMotos\\SportMotos\\wwwroot\\",
+      "BasePath": "_content/SportMotos",
+      "RelativePath": "images/pecas/16_1#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "qy28thf3hr",
+      "Integrity": "/m10LaiDr16AGHWAJpTsrXqnc5WZXNGIBj3qPEnss3U=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\pecas\\16_1.jpg"
     },
     {
       "Identity": "C:\\Users\\Gomes\\Desktop\\SportMotos\\SportMotos\\wwwroot\\js\\anuncio.js",
@@ -6653,6 +6674,88 @@
         {
           "Name": "integrity",
           "Value": "sha256-bHh5sBKQYqJNhj97erYR1zFXMrSuWSeuVYBzAyYpKHE="
+        }
+      ]
+    },
+    {
+      "Route": "images/pecas/16_1.jpg",
+      "AssetFile": "C:\\Users\\Gomes\\Desktop\\SportMotos\\SportMotos\\wwwroot\\images\\pecas\\16_1.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "71535"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"/m10LaiDr16AGHWAJpTsrXqnc5WZXNGIBj3qPEnss3U=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 09 Apr 2025 15:02:33 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-/m10LaiDr16AGHWAJpTsrXqnc5WZXNGIBj3qPEnss3U="
+        }
+      ]
+    },
+    {
+      "Route": "images/pecas/16_1.qy28thf3hr.jpg",
+      "AssetFile": "C:\\Users\\Gomes\\Desktop\\SportMotos\\SportMotos\\wwwroot\\images\\pecas\\16_1.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "71535"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"/m10LaiDr16AGHWAJpTsrXqnc5WZXNGIBj3qPEnss3U=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 09 Apr 2025 15:02:33 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "qy28thf3hr"
+        },
+        {
+          "Name": "label",
+          "Value": "images/pecas/16_1.jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-/m10LaiDr16AGHWAJpTsrXqnc5WZXNGIBj3qPEnss3U="
         }
       ]
     },

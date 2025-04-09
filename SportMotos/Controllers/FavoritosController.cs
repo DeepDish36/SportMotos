@@ -17,7 +17,7 @@ namespace SportMotos.Controllers
         [HttpPost("Adicionar")]
         public async Task<IActionResult> Adicionar([FromBody] FavoritoRequest request)
         {
-            if (request == null || request.AnuncioId <= 0 || string.IsNullOrEmpty(request.TipoAnuncio))
+            if (request == null || request.Id_Anuncio <= 0 || string.IsNullOrEmpty(request.TipoAnuncio))
                 return BadRequest(new { sucesso = false, mensagem = "Dados inválidos." });
 
             // Recuperar o IdCliente dos claims
@@ -31,7 +31,7 @@ namespace SportMotos.Controllers
             var favorito = new Favoritos
             {
                 Id_Cliente = idCliente,
-                AnuncioId = request.AnuncioId,
+                Id_Anuncio = request.Id_Anuncio,
                 TipoAnuncio = request.TipoAnuncio,
                 DataAdicionado = DateTime.Now
             };
@@ -72,7 +72,7 @@ namespace SportMotos.Controllers
 
     public class FavoritoRequest
     {
-        public int AnuncioId { get; set; }
+        public int Id_Anuncio { get; set; }
         public string TipoAnuncio { get; set; } = null!;
     }
 }

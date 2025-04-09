@@ -15,7 +15,7 @@
                     {
                         @foreach (var imagem in Model.IdMotoNavigation.Imagens)
                         {
-                            <img src="@Url.Content("~/images/motos/" + imagem.NomeArquivo)"
+                            <img src="@Url.Content("~/images/motos/" + imagem.NomeArquivo + ".jpg")"
                                  alt="Imagem da Moto @Model.IdMotoNavigation.Matricula"
                                  class="img-fluid rounded">
                         }
@@ -27,11 +27,14 @@
                 }
                 else if (ViewBag.TipoAnuncio == "pecas")
                 {
-                    if (Model.IdPecaNavigation != null && Model.IdPecaNavigation.NomeArquivo != null)
+                    @if (Model.IdPecaNavigation != null && Model.IdPecaNavigation.Imagens != null && Model.IdPecaNavigation.Imagens.Count > 0)
                     {
-                        <img src="@Url.Content("~/images/pecas/" + Model.IdPecaNavigation.NomeArquivo)"
-                             alt="Imagem da Peça"
-                             class="img-fluid rounded">
+                        @foreach (var imagem in Model.IdPecaNavigation.Imagens)
+                        {
+                            <img src="@Url.Content("~/images/pecas/" + imagem.NomeArquivo + ".jpg")"
+                                 alt="Imagem da Peça @Model.IdPecaNavigation.Nome"
+                                 class="img-fluid rounded">
+                        }
                     }
                     else
                     {

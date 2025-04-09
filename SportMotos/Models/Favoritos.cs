@@ -10,7 +10,7 @@ namespace SportMotos.Models
 
         public int Id_Cliente { get; set; }
 
-        public int AnuncioId { get; set; }
+        public int Id_Anuncio { get; set; }
 
         public string TipoAnuncio { get; set; } // "motos" ou "pecas"
 

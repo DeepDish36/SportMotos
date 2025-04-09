@@ -223,7 +223,7 @@ public partial class AppDbContext : DbContext
 
             entity.Property(e => e.Id).HasColumnName("Id");
             entity.Property(e => e.Id_Cliente).HasColumnName("Id_Cliente");
-            entity.Property(e => e.AnuncioId).HasColumnName("AnuncioId");
+            entity.Property(e => e.Id_Anuncio).HasColumnName("Id_Anuncio");
             entity.Property(e => e.TipoAnuncio).HasColumnName("TipoAnuncio");
             entity.Property(e => e.DataAdicionado).HasColumnName("DataAdicionado").HasDefaultValueSql("GETDATE()");
 
@@ -234,13 +234,13 @@ public partial class AppDbContext : DbContext
 
             entity.HasOne(d => d.AnuncioMoto)
                 .WithMany()
-                .HasForeignKey(d => d.AnuncioId)
+                .HasForeignKey(d => d.Id_Anuncio)
                 .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_Favoritos_AnuncioMotos");
 
             entity.HasOne(d => d.AnuncioPeca)
                 .WithMany()
-                .HasForeignKey(d => d.AnuncioId)
+                .HasForeignKey(d => d.Id_Anuncio)
                 .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_Favoritos_AnuncioPecas");
         });

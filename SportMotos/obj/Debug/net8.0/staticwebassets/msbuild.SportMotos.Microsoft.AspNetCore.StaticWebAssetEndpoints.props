@@ -204,6 +204,18 @@
       <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-bHh5sBKQYqJNhj97erYR1zFXMrSuWSeuVYBzAyYpKHE="}]]]></EndpointProperties>
       <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"8654"},{"Name":"Content-Type","Value":"image/jpeg"},{"Name":"ETag","Value":"\u0022bHh5sBKQYqJNhj97erYR1zFXMrSuWSeuVYBzAyYpKHE=\u0022"},{"Name":"Last-Modified","Value":"Wed, 09 Apr 2025 09:08:48 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/SportMotos/images/pecas/16_1.jpg">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\pecas\16_1.jpg'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-/m10LaiDr16AGHWAJpTsrXqnc5WZXNGIBj3qPEnss3U="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"71535"},{"Name":"Content-Type","Value":"image/jpeg"},{"Name":"ETag","Value":"\u0022/m10LaiDr16AGHWAJpTsrXqnc5WZXNGIBj3qPEnss3U=\u0022"},{"Name":"Last-Modified","Value":"Wed, 09 Apr 2025 15:02:33 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/SportMotos/images/pecas/16_1.qy28thf3hr.jpg">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\pecas\16_1.jpg'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"qy28thf3hr"},{"Name":"integrity","Value":"sha256-/m10LaiDr16AGHWAJpTsrXqnc5WZXNGIBj3qPEnss3U="},{"Name":"label","Value":"_content/SportMotos/images/pecas/16_1.jpg"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"71535"},{"Name":"Content-Type","Value":"image/jpeg"},{"Name":"ETag","Value":"\u0022/m10LaiDr16AGHWAJpTsrXqnc5WZXNGIBj3qPEnss3U=\u0022"},{"Name":"Last-Modified","Value":"Wed, 09 Apr 2025 15:02:33 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/SportMotos/js/anuncio.js">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\anuncio.js'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
