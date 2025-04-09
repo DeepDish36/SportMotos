@@ -222,10 +222,15 @@ public partial class AppDbContext : DbContext
             entity.ToTable("Favoritos");
 
             entity.Property(e => e.Id).HasColumnName("Id");
-            entity.Property(e => e.UserId).HasColumnName("UserId");
+            entity.Property(e => e.Id_Cliente).HasColumnName("Id_Cliente");
             entity.Property(e => e.AnuncioId).HasColumnName("AnuncioId");
             entity.Property(e => e.TipoAnuncio).HasColumnName("TipoAnuncio");
             entity.Property(e => e.DataAdicionado).HasColumnName("DataAdicionado").HasDefaultValueSql("GETDATE()");
+
+            entity.HasOne(d => d.Cliente).WithMany(p => p.Favoritos)
+                .HasForeignKey(d => d.Id_Cliente)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Favoritos_Cliente");
 
             entity.HasOne(d => d.AnuncioMoto)
                 .WithMany()

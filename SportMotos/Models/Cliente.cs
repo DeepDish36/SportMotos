@@ -65,5 +65,8 @@ public partial class Cliente
     // Relação 1:N - Cliente pode ter vários pedidos
     public virtual ICollection<Pedidos> Pedidos { get; set; } = new List<Pedidos>();
 
+    //Cliente tem vários favoritos
+    public virtual ICollection<Favoritos> Favoritos { get; set; } = new List<Favoritos>();
+
     public virtual ICollection<Orcamento> Orcamentos { get; set; } = new List<Orcamento>();
 }

@@ -96,11 +96,12 @@
                     {
                         <div class="mt-3">
                             <a href="#" class="btn btn-primary" id="btnInteresse" data-id="@Model.IdMoto">Estou interessado</a>
-                            <a href="#">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="black" class="bi bi-heart" viewBox="0 0 16 16">
+                            <a href="#" id="favorito-btn">
+                                <svg id="favorito-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="black" class="bi bi-heart" viewBox="0 0 16 16">
                                     <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15" />
                                 </svg>
                             </a>
+                            <input type="hidden" id="moto-id" value="@Model.IdMoto" />
                         </div>
                     }
                 </div>
@@ -112,6 +113,64 @@
 <script src="~/js/jquery.js"></script>
 <script src="~/js/bootstrap.bundle.min.js"></script>
 <script>
+    //Marcar Favorito
+            document.addEventListener("DOMContentLoaded", function () {
+        const favoritoBtn = document.getElementById('favorito-btn');
+        const icon = document.getElementById('favorito-icon');
+        const idMotoInput = document.getElementById('moto-id');
+
+        if (favoritoBtn && icon && idMotoInput) {
+            favoritoBtn.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                const idMoto = idMotoInput.value;
+                const tipoAnuncio = '@ViewBag.TipoAnuncio';
+
+                const isFavoritado = icon.classList.contains('bi-heart-fill');
+
+                if (!isFavoritado) {
+                    icon.classList.replace('bi-heart', 'bi-heart-fill');
+                    icon.style.color = "#7d0404";
+                    this.title = "Remover dos Favoritos";
+
+                    fetch('/Favoritos/Adicionar', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ anuncioId: idMoto, tipoAnuncio: tipoAnuncio })
+                    }).then(response => response.json())
+                        .then(data => {
+                            if (!data.sucesso) alert('Erro ao adicionar aos favoritos.');
+                        });
+                } else {
+                    icon.classList.replace('bi-heart-fill', 'bi-heart');
+                    icon.style.color = "black";
+                    this.title = "Adicionar aos Favoritos";
+
+                        fetch('/Favoritos/Remover', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ anuncioId: idMoto, tipoAnuncio: tipoAnuncio })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (!data.sucesso) {
+            console.error('Erro ao remover dos favoritos:', data.mensagem);
+        }
+    })
+    .catch(error => {
+        console.error('Erro na requisição:', error);
+    });
+                }
+            });
+        }
+    });
+
+    //Marcar intersse
     $(function () {
         $("#btnInteresse").click(function (e) {
             e.preventDefault();

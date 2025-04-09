@@ -81,11 +81,17 @@ namespace SportMotos.Controllers
 
             // Criar os Claims (dados da sessão)
             var claims = new List<Claim>
-    {
-        new Claim(ClaimTypes.Name, user.Username),
-        new Claim("Tipo_Utilizador", user.Tipo_Utilizador), // "Cliente" ou "Admin"
-        new Claim(ClaimTypes.Email, emailNormalizado) // Garante que o email está nos claims
-    };
+            {
+                new Claim(ClaimTypes.Name, user.Username),
+                new Claim("Tipo_Utilizador", user.Tipo_Utilizador), // "Cliente" ou "Admin"
+                new Claim(ClaimTypes.Email, emailNormalizado) // Garante que o email está nos claims
+            };
+
+            // Adicionar o IdCliente como claim, se for um cliente
+            if (cliente != null)
+            {
+                claims.Add(new Claim("IdCliente", cliente.IdCliente.ToString()));
+            }
 
             var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
             var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
