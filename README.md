@@ -31,4 +31,4 @@ Este projeto representa o meu esforço e dedicação para criar um site funciona
 Se gostaste, não te esqueças de deixar ⭐ no repositório!
 
 <b>Tens dúvidas? Contacta-me através das issues ou pelo meu email: `andredeepgomes@gmail.com`</b>
-<div align="right">Made by: André Gomes, 12ºH | On GPSI 2022/2025</div>
+<div align="right">Made by: André Gomes, 12ºH | In GPSI 2022/2025</div>
