@@ -2,6 +2,7 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+    ViewData["Title"] = "Notícias";
 }
 
 @model IEnumerable<SportMotos.Models.Noticium>
@@ -39,7 +40,7 @@
                 <div class="card shadow-sm">
                     <div class="card-body">
                         <h5 class="card-title">@noticia.Titulo</h5>
-                        <p class="card-text">@noticia.Descricao</p>
+                        <p class="card-text">@noticia.SubTitulo</p>
 
                         <!-- Badge "Novidades" -->
                         @if (diasPublicacao <= 30)
@@ -49,7 +50,7 @@
 
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">
-                                <a asp-controller="Noticia" asp-action="Detalhe" asp-route-id="@noticia.IdNoticia" class="btn btn-sm btn-outline-secondary">
+                                <a asp-controller="Noticia" asp-action="DetalhesNoticia" asp-route-id="@noticia.IdNoticia" class="btn btn-sm btn-outline-secondary">
                                     Ver
                                 </a>
                             </div>

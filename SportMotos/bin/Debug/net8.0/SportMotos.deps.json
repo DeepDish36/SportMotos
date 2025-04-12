@@ -9,6 +9,7 @@
       "SportMotos/1.0.0": {
         "dependencies": {
           "BCrypt.Net-Next": "4.0.3",
+          "Markdig": "0.40.0",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "8.0.11",
           "Microsoft.AspNetCore.Identity.UI": "8.0.11",
           "Microsoft.EntityFrameworkCore.Design": "9.0.2",
@@ -600,6 +601,14 @@
         "resources": {
           "lib/net6.0/zh-Hant/Humanizer.resources.dll": {
             "locale": "zh-Hant"
+          }
+        }
+      },
+      "Markdig/0.40.0": {
+        "runtime": {
+          "lib/net8.0/Markdig.dll": {
+            "assemblyVersion": "0.40.0.0",
+            "fileVersion": "0.40.0.0"
           }
         }
       },
@@ -2521,6 +2530,13 @@
       "sha512": "sha512-VIXB7HCUC34OoaGnO3HJVtSv2/wljPhjV7eKH4+TFPgQdJj2lvHNKY41Dtg0Bphu7X5UaXFR4zrYYyo+GNOjbA==",
       "path": "humanizer.core.zh-hant/2.14.1",
       "hashPath": "humanizer.core.zh-hant.2.14.1.nupkg.sha512"
+    },
+    "Markdig/0.40.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-4ve14zs+gt1irldTQE3y5FLAHuzmhW7T99lAAvVipe/q2LWT/nUCO0iICb9TXGvMX6n7Z1OZroFXkdSy91rO8w==",
+      "path": "markdig/0.40.0",
+      "hashPath": "markdig.0.40.0.nupkg.sha512"
     },
     "Microsoft.AspNetCore.Cryptography.Internal/8.0.11": {
       "type": "package",

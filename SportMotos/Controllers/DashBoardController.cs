@@ -24,7 +24,12 @@ namespace SportMotos.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
+            ViewBag.AnunciosExpirados = _context.AnuncioPecas
+                .Count(a => a.DataExpiracao <= DateTime.Now);
 
+            ViewBag.AnunciosProximosDeExpirar = _context.AnuncioPecas
+                .Count(a => a.DataExpiracao > DateTime.Now && a.DataExpiracao <= DateTime.Now.AddDays(5));
+            
             ViewBag.TotalClientes = _context.Clientes.Count();
             ViewBag.TotalUsuarios = _context.Users.Count();
             ViewBag.TotalAnunciosMoto = _context.AnuncioMotos.Count();
@@ -101,6 +106,8 @@ namespace SportMotos.Controllers
                 .ToList();
 
             ViewBag.MostrarTodos = mostrarTodos; // Passamos essa variável para a View
+
+            ViewBag.Noticias = _context.Noticia.ToList();
 
             return View();
         }

@@ -15,6 +15,7 @@
                     {
                         @foreach (var imagem in Model.IdMotoNavigation.Imagens)
                         {
+                            Console.WriteLine("Nome imagem:" + imagem);
                             <img src="@Url.Content("~/images/motos/" + imagem.NomeArquivo + ".jpg")"
                                  alt="Imagem da Moto @Model.IdMotoNavigation.Matricula"
                                  class="img-fluid rounded">
@@ -31,6 +32,7 @@
                     {
                         @foreach (var imagem in Model.IdPecaNavigation.Imagens)
                         {
+                            Console.WriteLine("Nome imagem:" + imagem);
                             <img src="@Url.Content("~/images/pecas/" + imagem.NomeArquivo + ".jpg")"
                                  alt="Imagem da Peça @Model.IdPecaNavigation.Nome"
                                  class="img-fluid rounded">

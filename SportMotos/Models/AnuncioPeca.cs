@@ -25,6 +25,8 @@ public partial class AnuncioPeca
 
     public DateTime? ApagadoEm { get; set; }
 
+    public DateTime? DataExpiracao { get; set; }
+
     public DateTime? DataVenda { get; set; } // Novo campo
 
     public int? Visualizacoes { get; set; }

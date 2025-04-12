@@ -78,6 +78,7 @@ namespace SportMotos.Controllers
             }
 
             anuncio.DataPublicacao = DateTime.Now;
+            anuncio.DataExpiracao = DateTime.Now.AddDays(30); // Define a data de expiração para 30 dias a partir da publicação
             anuncio.Visualizacoes = 0;
             anuncio.Favoritos = 0;
             anuncio.Avaliacoes = 0;
@@ -128,6 +129,7 @@ namespace SportMotos.Controllers
             }
 
             anuncio.DataPublicacao = DateTime.Now;
+            anuncio.DataExpiracao = DateTime.Now.AddDays(30); // Define a data de expiração para 30 dias a partir da publicação
             anuncio.Visualizacoes = 0;
             anuncio.Favoritos = 0;
             anuncio.Avaliacoes = 0;

@@ -20,6 +20,13 @@
     </div>
 }
 
+@if (ViewBag.AnunciosProximosDeExpirar > 0)
+{
+    <div class="alert alert-warning">
+        ⚠️ Existem @ViewBag.AnunciosProximosDeExpirar anúncios que expirarão em breve!
+    </div>
+}
+
 <!-- Botões de Navegação -->
 <div class="btn-group mb-3" style="width: 100%;">
     <button class="btn btn-primary btn-block mr-2" style="flex: 1;" onclick="showSection('estatisticas')">📊 Estatísticas</button>
@@ -28,6 +35,7 @@
     <button class="btn btn-success btn-block mr-2" style="flex: 1;" onclick="showSection('anuncioMotos')">🏍️ Anúncios de Motos</button>
     <button class="btn btn-warning btn-block mr-2" style="flex: 1;" onclick="showSection('anuncioPecas')">🔩 Anúncios de Peças</button>
     <button class="btn btn-info btn-block" style="flex: 1;" onclick="showSection('pedidos')">📦 Pedidos</button>
+    <button class="btn btn-secondary btn-block" style="flex: 1;" onclick="showSection('estatisticasDetalhadas')">📈 Estatísticas Detalhadas</button>
 </div>
 
 <!-- Estatísticas -->
@@ -75,6 +83,69 @@
         </select>
     </div>
     <canvas id="vendasChart"></canvas>
+</div>
+
+<!-- Notícias -->
+<div id="noticias" class="dashboard-section" style="display: none;">
+    <h3>📰 Notícias</h3>
+    <a asp-action="AdicionarNoticia" asp-controller="Noticia" class="btn btn-success btn-sm" style="margin-bottom:20px">Adicionar Notícia</a>
+    <hr />
+    <table id="noticiasTable" class="table table-striped">
+        <thead>
+            <tr>
+                <th>Título</th>
+                <th>SubTítulo</th>
+                <th>Data de Publicação</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var noticia in ViewBag.Noticias)
+            {
+                <tr>
+                    <td>@noticia.Titulo</td>
+                    <td>@noticia.SubTitulo</td>
+                    <td>@noticia.DataPublicacao.ToString("dd/MM/yyyy")</td>
+                    <td>
+                        <a asp-controller="Noticia" asp-action="EditarNoticia" asp-route-id="@noticia.IdNoticia" class="btn btn-success btn-sm">Editar</a>
+                        <a href="#" class="btn btn-danger btn-sm" onclick="showDeleteModal('@noticia.IdNoticia', 'noticia')">Excluir</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<!-- Estatísticas Detalhadas -->
+<div id="estatisticasDetalhadas" class="dashboard-section" style="display: none;">
+    <h3>📈 Estatísticas Detalhadas</h3>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card bg-info text-white shadow-sm mb-3">
+                <div class="card-header">Anúncios Ativos</div>
+                <div class="card-body text-center">
+                    <h3>@ViewBag.AnunciosAtivos</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card bg-danger text-white shadow-sm mb-3">
+                <div class="card-header">Anúncios Expirados</div>
+                <div class="card-body text-center">
+                    <h3>@ViewBag.AnunciosExpirados</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card bg-success text-white shadow-sm mb-3">
+                <div class="card-header">Pedidos Concluídos</div>
+                <div class="card-body text-center">
+                    <h3>@ViewBag.PedidosConcluidos</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <canvas id="estatisticasDetalhadasChart" width="100" height="100"></canvas>
 </div>
 
 <!--Motos -->
@@ -178,8 +249,9 @@
                            asp-route-id="@anuncio.IdAnuncioMoto"
                            asp-route-tipo="motos" class="btn btn-info btn-sm">Ver</a>
                         <a asp-controller="CriarAnuncio" asp-action="EditarAnuncioMoto"
-                        asp-route-id="@anuncio.IdAnuncioMoto" class="btn btn-success btn-sm">Editar</a>
+                           asp-route-id="@anuncio.IdAnuncioMoto" class="btn btn-success btn-sm">Editar</a>
                         <a href="#" class="btn btn-danger btn-sm">Excluir</a>
+                        <a asp-controller="Anuncio" asp-action="RenovarAnuncio" asp-route-id="@anuncio.IdAnuncioMoto" class="btn btn-primary btn-sm">Renovar</a>
                     </td>
                 </tr>
             }
@@ -217,6 +289,7 @@
                            asp-route-tipo="pecas" class="btn btn-info btn-sm">Ver</a>
                         <a href="#" class="btn btn-success btn-sm">Editar</a>
                         <a href="#" class="btn btn-danger btn-sm">Excluir</a>
+                        <a asp-controller="Anuncio" asp-action="RenovarAnuncio" asp-route-id="@anuncio.IdAnuncioMoto" class="btn btn-primary btn-sm">Renovar</a>
                     </td>
                 </tr>
             }
@@ -300,6 +373,11 @@
                 }
             });
             $('#pedidosTable').DataTable({
+                language: {
+                    url: "/datatable/langconfig.json"
+                }
+            });
+            $('#noticiasTable').DataTable({
                 language: {
                     url: "/datatable/langconfig.json"
                 }
@@ -389,6 +467,22 @@
                     borderColor: "#007bff",
                     backgroundColor: "rgba(0, 123, 255, 0.2)",
                     fill: true
+                }]
+            }
+        });
+                // Gráfico de Estatísticas Detalhadas
+        var ctxEstatisticasDetalhadas = document.getElementById("estatisticasDetalhadasChart").getContext("2d");
+        var estatisticasDetalhadasChart = new Chart(ctxEstatisticasDetalhadas, {
+            type: "pie",
+            data: {
+                labels: ["Anúncios Ativos", "Anúncios Expirados", "Pedidos Concluídos"],
+                datasets: [{
+                    data: [
+        @ViewBag.AnunciosAtivos,
+        @ViewBag.AnunciosExpirados,
+        @ViewBag.PedidosConcluidos
+                    ],
+                    backgroundColor: ["#17a2b8", "#dc3545", "#28a745"]
                 }]
             }
         });

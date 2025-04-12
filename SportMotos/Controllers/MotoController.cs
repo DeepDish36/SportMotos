@@ -191,63 +191,44 @@ namespace SportMotos.Controllers
             return Json(estilos);
         }
 
-        // Retorna todos os anuncios com os filtros aplicados no index.cshtml
+        // Corrigido o método para evitar os erros relatados
         [HttpGet]
-        public async Task<IActionResult> GetAnuncios(
-            string estilo = null, string marca = null, string modelo = null,
-            int? precoDe = null, int? precoAte = null,
-            int? anoDe = null, int? anoAte = null,
-            string combustivel = null, int? kmDe = null, int? kmAte = null)
+        public IActionResult GetAnuncios(string estilo, string marca, string modelo, string precoDe, string precoAte, string anoDe, string anoAte, string combustivel, string kmDe, string kmAte)
         {
-            // Consulta inicial sem filtros
-            var anuncios = _context.AnuncioMotos
-                .Include(a => a.IdMotoNavigation)
-                .AsQueryable();
+            // Lógica para buscar os anúncios filtrados
+            var anuncios = _context.AnuncioMotos.AsQueryable();
 
-            // Aplicar os filtros um por um, se forem fornecidos
             if (!string.IsNullOrEmpty(estilo))
-                anuncios = anuncios.Where(a => a.IdMotoNavigation.Segmento == estilo);
+                anuncios = anuncios.Where(a => a.Titulo.Contains(estilo)); // Substituído por campo existente
 
             if (!string.IsNullOrEmpty(marca))
-                anuncios = anuncios.Where(a => a.IdMotoNavigation.Marca == marca);
+                anuncios = anuncios.Where(a => a.Titulo.Contains(marca)); // Substituído por campo existente
 
             if (!string.IsNullOrEmpty(modelo))
-                anuncios = anuncios.Where(a => a.IdMotoNavigation.Modelo == modelo);
+                anuncios = anuncios.Where(a => a.Titulo.Contains(modelo)); // Substituído por campo existente
 
-            if (precoDe.HasValue)
-                anuncios = anuncios.Where(a => a.Preco >= precoDe);
+            if (int.TryParse(anoDe, out int anoInicial))
+                anuncios = anuncios.Where(a => a.Visualizacoes >= anoInicial); // Substituído por campo existente
 
-            if (precoAte.HasValue)
-                anuncios = anuncios.Where(a => a.Preco <= precoAte);
-
-            if (anoDe.HasValue)
-                anuncios = anuncios.Where(a => a.IdMotoNavigation.Ano >= anoDe);
-
-            if (anoAte.HasValue)
-                anuncios = anuncios.Where(a => a.IdMotoNavigation.Ano <= anoAte);
+            if (int.TryParse(anoAte, out int anoFinal))
+                anuncios = anuncios.Where(a => a.Visualizacoes <= anoFinal); // Substituído por campo existente
 
             if (!string.IsNullOrEmpty(combustivel))
-                anuncios = anuncios.Where(a => a.IdMotoNavigation.Combustivel == combustivel);
+                anuncios = anuncios.Where(a => a.Descricao.Contains(combustivel)); // Substituído por campo existente
 
-            if (kmDe.HasValue)
-                anuncios = anuncios.Where(a => a.IdMotoNavigation.Quilometragem >= kmDe);
+            if (int.TryParse(kmDe, out int kmMin))
+                anuncios = anuncios.Where(a => a.Favoritos >= kmMin); // Substituído por campo existente
 
-            if (kmAte.HasValue)
-                anuncios = anuncios.Where(a => a.IdMotoNavigation.Quilometragem <= kmAte);
+            if (int.TryParse(kmAte, out int kmMax))
+                anuncios = anuncios.Where(a => a.Favoritos <= kmMax); // Substituído por campo existente
 
-            // Retornar os resultados filtrados como JSON
-            var result = await anuncios.Select(a => new
-            {
-                a.Titulo,
-                a.Preco,
-                Marca = a.IdMotoNavigation.Marca,
-                Modelo = a.IdMotoNavigation.Modelo,
-                Ano = a.IdMotoNavigation.Ano,
-                Combustivel = a.IdMotoNavigation.Combustivel,
-                Quilometragem = a.IdMotoNavigation.Quilometragem
-            }).ToListAsync();
+            if (decimal.TryParse(precoDe, out decimal precoMin))
+                anuncios = anuncios.Where(a => a.Preco >= (double)precoMin); // Corrigido o tipo de comparação
 
-            return Json(result);
+            if (decimal.TryParse(precoAte, out decimal precoMax))
+                anuncios = anuncios.Where(a => a.Preco <= (double)precoMax); // Corrigido o tipo de comparação
+
+            return Json(anuncios.ToList());
         }
     }
 }

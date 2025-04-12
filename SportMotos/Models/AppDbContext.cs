@@ -341,6 +341,9 @@ public partial class AppDbContext : DbContext
             entity.Property(e => e.Titulo)
                 .HasMaxLength(200)
                 .IsUnicode(false);
+            entity.Property(e => e.SubTitulo)
+                .HasMaxLength(80)
+                .IsUnicode(false);
         });
 
         modelBuilder.Entity<Orcamento>(entity =>

@@ -57,5 +57,21 @@ namespace SportMotos.Controllers
 
             return RedirectToAction("Index", "Home");
         }
+
+        [HttpPost]
+        public async Task<IActionResult> RenovarAnuncio(int id)
+        {
+            var anuncio = await _context.AnuncioMotos.FindAsync(id);
+            if (anuncio == null)
+            {
+                return NotFound();
+            }
+
+            anuncio.DataExpiracao = DateTime.Now.AddDays(30); // Renova por mais 30 dias
+            _context.Update(anuncio);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Dashboard");
+        }
     }
 }

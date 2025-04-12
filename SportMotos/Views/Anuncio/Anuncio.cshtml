@@ -108,7 +108,7 @@
         @(ViewBag.TipoAnuncio == "motos" ? $"data-genero='{anuncio.IdMotoNavigation?.Genero}' data-cor='{anuncio.IdMotoNavigation?.Cor}'" : "")>
 
             <div class="card shadow-sm card-fixed-height position-relative">
-               @if (ViewBag.TipoAnuncio == "motos" &&
+                @if (ViewBag.TipoAnuncio == "motos" &&
                anuncio.IdMotoNavigation?.Imagens != null &&
                anuncio.IdMotoNavigation.Imagens.Any())
                 {
@@ -116,23 +116,31 @@
                     var nomeArquivo = imagemMoto?.NomeArquivo;
                     if (!string.IsNullOrEmpty(nomeArquivo))
                     {
-                        var imagemPath = Url.Content($"~/images/motos/{nomeArquivo}.jpg");
+                        var imagemPath = Url.Content($"~/images/motos/" + nomeArquivo + ".jpg");
                         <img src="@imagemPath"
                              alt="Imagem da Moto @anuncio.IdMotoNavigation.Matricula"
                              class="img-fluid rounded card-img-top" />
                     }
                 }
-                else if (ViewBag.TipoAnuncio == "pecas" &&
-                    anuncio.IdPecaNavigation?.Imagens != null &&
-                    anuncio.IdPecaNavigation.Imagens.Any())
-                    {
-                        var nomeArquivo = anuncio.IdPecaNavigation.Imagens.FirstOrDefault()?.NomeArquivo;
-                        var imagemPecaPath = Url.Content($"~/images/pecas/{nomeArquivo}.jpg");
 
-                        <img src="@imagemPecaPath"
-                            alt="Imagem da Peça"
-                            class="img-fluid rounded card-img-top" />
+                @if (ViewBag.TipoAnuncio == "pecas")
+                {
+                    var imagensPeca = anuncio.IdPecaNavigation?.Imagens as List<SportMotos.Models.Imagem>;
+                    string imagemPecaPath = null;
+
+                    if (imagensPeca != null && imagensPeca.Any())
+                    {
+                        var nomeArquivo = imagensPeca.FirstOrDefault()?.NomeArquivo;
+                        imagemPecaPath = Url.Content($"~/images/pecas/{nomeArquivo}.jpg");
                     }
+
+                    if (!string.IsNullOrEmpty(imagemPecaPath))
+                    {
+                        <img src="@imagemPecaPath"
+                             alt="Imagem da Peça"
+                             class="img-fluid rounded card-img-top" />
+                    }
+                }
 
                 else
                 {
