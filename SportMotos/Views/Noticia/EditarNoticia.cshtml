@@ -1,5 +1,43 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model SportMotos.Models.Noticium
+
 @{
+    ViewData["Title"] = "Editar Notícia";
+}
+
+<h2>Editar Notícia</h2>
+
+<form asp-action="EditarNoticia" method="post">
+    <input type="hidden" asp-for="IdNoticia" />
+
+    <div class="form-group">
+        <label asp-for="Titulo" class="control-label">Título</label>
+        <input asp-for="Titulo" class="form-control" />
+        <span asp-validation-for="Titulo" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="SubTitulo" class="control-label">Subtítulo</label>
+        <input asp-for="SubTitulo" class="form-control" />
+        <span asp-validation-for="SubTitulo" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Descricao" class="control-label">Descrição</label>
+        <textarea asp-for="Descricao" class="form-control" rows="5" data-bs-toggle="tooltip" title="Você pode usar tags HTML para formatar o texto, como <b>, <i>, e <u>."></textarea>
+        <span asp-validation-for="Descricao" class="text-danger"></span>
+    </div>
+
+    <input type="datetime" class="form-control" id="Data_Publicacao" name="Data_Publicacao" value="@Model.DataPublicacao" readonly />
+
+    <button type="submit" class="btn btn-primary">Salvar</button>
+    <a asp-action="Noticias" class="btn btn-secondary">Cancelar</a>
+</form>
+
+@section Scripts {
+    <script>
+        // Inicializar tooltip
+        $(function () {
+            $('[data-bs-toggle="tooltip"]').tooltip();
+        });
+    </script>
 }

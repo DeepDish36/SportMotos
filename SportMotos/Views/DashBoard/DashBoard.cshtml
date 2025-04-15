@@ -1,6 +1,12 @@
 ﻿@{
     ViewData["Title"] = "Dashboard";
 }
+<style>
+    .row-expired {
+        background-color: #f8d7da; /* Vermelho claro */
+        color: #ff0000; /* Texto vermelho escuro */
+    }
+</style>
 <link rel="stylesheet" href="~/datatable/datatables.css" />
 
 <h2 class="mb-4">Painel de Administração</h2>
@@ -13,10 +19,17 @@
     </div>
 }
 
-@if (ViewBag.AnunciosExpirados > 0)
+@if (ViewBag.AnuncioMotosExpirados > 0)
 {
     <div class="alert alert-danger">
-        ❌ Existem @ViewBag.AnunciosExpirados anúncios expirados que precisam ser renovados!
+        ❌ Existem @ViewBag.AnuncioMotosExpirados anúncios de motos expirados que precisam ser renovados!
+    </div>
+}
+
+@if (ViewBag.AnunciosPecasExpirados > 0)
+{
+    <div class="alert alert-danger">
+        ❌ Existem @ViewBag.AnuncioPecassExpirados anúncios de peças expirados que precisam ser renovados!
     </div>
 }
 
@@ -32,10 +45,16 @@
     <button class="btn btn-primary btn-block mr-2" style="flex: 1;" onclick="showSection('estatisticas')">📊 Estatísticas</button>
     <button class="btn btn-success btn-block mr-2" style="flex: 1;" onclick="showSection('motos')">🏍️ Motos</button>
     <button class="btn btn-warning btn-block mr-2" style="flex: 1;" onclick="showSection('pecas')">🔩 Peças</button>
-    <button class="btn btn-success btn-block mr-2" style="flex: 1;" onclick="showSection('anuncioMotos')">🏍️ Anúncios de Motos</button>
-    <button class="btn btn-warning btn-block mr-2" style="flex: 1;" onclick="showSection('anuncioPecas')">🔩 Anúncios de Peças</button>
+    <button class="btn btn-success btn-block mr-2 position-relative" style="flex: 1;" onclick="showSection('anuncioMotos')">
+        🏍️ Anúncios de Motos
+        <span class="badge bg-danger position-absolute top-0 end-0 m-2">@ViewBag.AnuncioMotosExpirados</span>
+    </button>
+    <button class="btn btn-warning btn-block mr-2 position-relative" style="flex: 1;" onclick="showSection('anuncioPecas')">
+        🔩 Anúncios de Peças
+        <span class="badge bg-danger position-absolute top-0 end-0 m-2">@ViewBag.AnuncioPecasExpirados</span>
+    </button>
     <button class="btn btn-info btn-block" style="flex: 1;" onclick="showSection('pedidos')">📦 Pedidos</button>
-    <button class="btn btn-secondary btn-block" style="flex: 1;" onclick="showSection('estatisticasDetalhadas')">📈 Estatísticas Detalhadas</button>
+    <button class="btn btn-secondary btn-block" style="flex: 1;" onclick="showSection('noticias')">📰 Notícias</button>
 </div>
 
 <!-- Estatísticas -->
@@ -116,36 +135,36 @@
     </table>
 </div>
 
-<!-- Estatísticas Detalhadas -->
-<div id="estatisticasDetalhadas" class="dashboard-section" style="display: none;">
-    <h3>📈 Estatísticas Detalhadas</h3>
-    <div class="row">
-        <div class="col-md-4">
-            <div class="card bg-info text-white shadow-sm mb-3">
-                <div class="card-header">Anúncios Ativos</div>
-                <div class="card-body text-center">
-                    <h3>@ViewBag.AnunciosAtivos</h3>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card bg-danger text-white shadow-sm mb-3">
-                <div class="card-header">Anúncios Expirados</div>
-                <div class="card-body text-center">
-                    <h3>@ViewBag.AnunciosExpirados</h3>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card bg-success text-white shadow-sm mb-3">
-                <div class="card-header">Pedidos Concluídos</div>
-                <div class="card-body text-center">
-                    <h3>@ViewBag.PedidosConcluidos</h3>
-                </div>
-            </div>
-        </div>
-    </div>
-    <canvas id="estatisticasDetalhadasChart" width="100" height="100"></canvas>
+<!-- Notícias -->
+<div id="noticias" class="dashboard-section" style="display: none;">
+    <h3>📰 Notícias</h3>
+    <a asp-action="AdicionarNoticia" asp-controller="Noticia" class="btn btn-success btn-sm mb-3">Adicionar Notícia</a>
+    <hr />
+    <table id="noticiasTable" class="table table-striped">
+        <thead>
+            <tr>
+                <th>Título</th>
+                <th>SubTítulo</th>
+                <th>Data de Publicação</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var noticia in ViewBag.Noticias)
+            {
+                <tr>
+                    <td>@noticia.Titulo</td>
+                    <td>@noticia.SubTitulo</td>
+                    <td>@noticia.DataPublicacao.ToString("dd/MM/yyyy")</td>
+                    <td>
+                        <a asp-controller="Noticia" asp-action="DetalhesNoticia" asp-route-id="@noticia.IdNoticia" class="btn btn-info btn-sm">Ver</a>
+                        <a asp-controller="Noticia" asp-action="EditarNoticia" asp-route-id="@noticia.IdNoticia" class="btn btn-success btn-sm">Editar</a>
+                        <a href="#" class="btn btn-danger btn-sm" onclick="showDeleteModal('@noticia.IdNoticia', 'noticia')">Excluir</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>
 
 <!--Motos -->
@@ -224,9 +243,16 @@
 <div id="anuncioMotos" class="dashboard-section" style="display: none;">
     <h3>🏍️ Anúncios de Motos</h3>
     <a asp-action="CriarAnuncioMoto" asp-controller="CriarAnuncio" class="btn btn-success btn-sm" style="margin-bottom:20px">Adicionar Anúncio de Moto</a>
-    <a href="@Url.Action("Dashboard", new { mostrarTodos = !ViewBag.MostrarTodos })" class="btn btn-primary">
-        @(ViewBag.MostrarTodos ? "Mostrar Últimos 5" : "Mostrar Todos")
-    </a>
+    <div class="btn-group-toggle mb-3" data-toggle="buttons">
+        <label class="btn btn-outline-primary @(ViewBag.MostrarTodos ? "" : "active")">
+            <input type="radio" name="mostrarAnuncios" value="false" autocomplete="off"
+                   onchange="toggleAnuncios(false)" @(ViewBag.MostrarTodos ? "" : "checked")> Mostrar Últimos 5
+        </label>
+        <label class="btn btn-outline-primary @(ViewBag.MostrarTodos ? "active" : "")">
+            <input type="radio" name="mostrarAnuncios" value="true" autocomplete="off"
+                   onchange="toggleAnuncios(true)" @(ViewBag.MostrarTodos ? "checked" : "")> Mostrar Todos
+        </label>
+    </div>
     <hr />
     <table id="anuncioMotosTable" class="table table-striped">
         <thead>
@@ -240,7 +266,9 @@
         <tbody>
             @foreach (var anuncio in ViewBag.UltimosAnunciosMoto)
             {
-                <tr>
+                var isExpirado = (DateTime.Now - anuncio.DataExpiracao).TotalDays >= 30;
+                var rowClass = isExpirado ? "row-expired" : "";
+                <tr class="@rowClass">
                     <td>@anuncio.Titulo</td>
                     <td>€@anuncio.Preco</td>
                     <td>@anuncio.DataPublicacao.ToString("dd/MM/yyyy")</td>
@@ -262,6 +290,7 @@
 <!-- Anúncios de Peças -->
 <div id="anuncioPecas" class="dashboard-section" style="display: none;">
     <h3>🔩 Anúncios de Peças</h3>
+    <span class="badge bg-danger">@ViewBag.AnunciosExpirados</span>
     <a asp-action="CriarAnuncioPeca" asp-controller="CriarAnuncio" class="btn btn-success btn-sm" style="margin-bottom:20px">Adicionar Anúncio de Peça</a>
     <a href="@Url.Action("Dashboard", new { mostrarTodos = !ViewBag.MostrarTodos })" class="btn btn-primary" style="margin-bottom:20px">
         @(ViewBag.MostrarTodos ? "Mostrar Últimos 5" : "Mostrar Todos")
@@ -279,7 +308,10 @@
         <tbody>
             @foreach (var anuncio in ViewBag.UltimosAnunciosPeca)
             {
-                <tr>
+                var isExpirado = (DateTime.Now - anuncio.DataExpiracao).TotalDays >= 30;
+                var rowClass = isExpirado ? "row-expired" : "";
+
+                <tr class="@rowClass">
                     <td>@anuncio.Titulo</td>
                     <td>€@anuncio.Preco</td>
                     <td>@anuncio.DataPublicacao.ToString("dd/MM/yyyy")</td>
@@ -289,7 +321,7 @@
                            asp-route-tipo="pecas" class="btn btn-info btn-sm">Ver</a>
                         <a href="#" class="btn btn-success btn-sm">Editar</a>
                         <a href="#" class="btn btn-danger btn-sm">Excluir</a>
-                        <a asp-controller="Anuncio" asp-action="RenovarAnuncio" asp-route-id="@anuncio.IdAnuncioMoto" class="btn btn-primary btn-sm">Renovar</a>
+                        <a asp-controller="Anuncio" asp-action="RenovarAnuncio" asp-route-id="@anuncio.IdAnuncioPeca" class="btn btn-primary btn-sm">Renovar</a>
                     </td>
                 </tr>
             }
@@ -383,7 +415,11 @@
                 }
             });
         });
-
+             function toggleAnuncios(mostrarTodos) {
+            const url = new URL(window.location.href);
+            url.searchParams.set("mostrarTodos", mostrarTodos);
+            window.location.href = url.toString();
+        }
         // Modal
         function showDeleteModal(id, tipo) {
             let mensagem = "";
@@ -406,6 +442,10 @@
                 case "anuncioPeca":
                     mensagem = "Tem certeza de que deseja excluir este anúncio de peça?";
                     url = `/Anuncios/ExcluirAnuncioPeca/${id}`;
+                    break;
+                case "noticias":
+                    mensagem = "Tem certeza de que deseja excluir esta notícia?";
+                    url = `/Noticia/ExcluirNoticia/${id}`;
                     break;
             }
 
@@ -467,22 +507,6 @@
                     borderColor: "#007bff",
                     backgroundColor: "rgba(0, 123, 255, 0.2)",
                     fill: true
-                }]
-            }
-        });
-                // Gráfico de Estatísticas Detalhadas
-        var ctxEstatisticasDetalhadas = document.getElementById("estatisticasDetalhadasChart").getContext("2d");
-        var estatisticasDetalhadasChart = new Chart(ctxEstatisticasDetalhadas, {
-            type: "pie",
-            data: {
-                labels: ["Anúncios Ativos", "Anúncios Expirados", "Pedidos Concluídos"],
-                datasets: [{
-                    data: [
-        @ViewBag.AnunciosAtivos,
-        @ViewBag.AnunciosExpirados,
-        @ViewBag.PedidosConcluidos
-                    ],
-                    backgroundColor: ["#17a2b8", "#dc3545", "#28a745"]
                 }]
             }
         });

@@ -1189,3 +1189,7 @@ C:\Users\Gomes\Desktop\SportMotos\SportMotos\bin\Debug\net8.0\BCrypt.Net-Next.dl
 C:\Users\g0mes\Desktop\SportMotos\SportMotos\bin\Debug\net8.0\BCrypt.Net-Next.dll
 C:\Users\g0mes\Desktop\SportMotos\SportMotos\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
 C:\Users\g0mes\Desktop\SportMotos\SportMotos\bin\Debug\net8.0\Markdig.dll
+C:\Users\g0mes\Desktop\SportMotos\SportMotos\bin\Debug\net8.0\AngleSharp.dll
+C:\Users\g0mes\Desktop\SportMotos\SportMotos\bin\Debug\net8.0\AngleSharp.Css.dll
+C:\Users\g0mes\Desktop\SportMotos\SportMotos\bin\Debug\net8.0\HtmlSanitizer.dll
+C:\Users\g0mes\Desktop\SportMotos\SportMotos\bin\Debug\net8.0\System.Collections.Immutable.dll

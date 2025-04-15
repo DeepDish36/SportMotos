@@ -50,10 +50,22 @@ namespace SportMotos.Controllers
         {
             if (ModelState.IsValid)
             {
-                noticia.DataPublicacao = DateTime.Now;
+                // Instanciar o HtmlSanitizer
+                var sanitizer = new Ganss.Xss.HtmlSanitizer();
+
+                // Sanitizar o campo Descricao
+                noticia.Descricao = sanitizer.Sanitize(noticia.Descricao);
+
+                // Inicializar campos de data
+                noticia.DataPublicacao = DateTime.Now; // Sempre inicializado
+                noticia.DataEdicao = null; // Pode ser nulo
+                noticia.ApagadoEm = null; // Pode ser nulo
+
+                // Salvar no banco de dados
                 _context.Add(noticia);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+
+                return RedirectToAction(nameof(Noticias));
             }
             return View(noticia);
         }
@@ -82,6 +94,13 @@ namespace SportMotos.Controllers
             {
                 try
                 {
+                    // Sanitizar o campo Descricao
+                    var sanitizer = new Ganss.Xss.HtmlSanitizer();
+                    noticia.Descricao = sanitizer.Sanitize(noticia.Descricao);
+
+                    // Atualizar a data de edição
+                    noticia.DataEdicao = DateTime.Now;
+
                     _context.Update(noticia);
                     await _context.SaveChangesAsync();
                 }
@@ -93,7 +112,7 @@ namespace SportMotos.Controllers
                     }
                     throw;
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Noticias));
             }
             return View(noticia);
         }

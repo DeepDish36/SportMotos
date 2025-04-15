@@ -55,6 +55,10 @@
               "target": "Package",
               "version": "[4.0.3, )"
             },
+            "HtmlSanitizer": {
+              "target": "Package",
+              "version": "[9.0.876, )"
+            },
             "Markdig": {
               "target": "Package",
               "version": "[0.40.0, )"

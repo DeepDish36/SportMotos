@@ -24,12 +24,22 @@ namespace SportMotos.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-            ViewBag.AnunciosExpirados = _context.AnuncioPecas
-                .Count(a => a.DataExpiracao <= DateTime.Now);
+
+            var anuncioMotos = _context.AnuncioMotos
+                .Where(a => a.DataExpiracao.HasValue)
+                .ToList();
+
+            ViewBag.AnuncioMotosExpirados = anuncioMotos.Count(a => (DateTime.Now - a.DataExpiracao.Value).TotalDays >= 30);
+            
+            var anuncioPecas = _context.AnuncioPecas
+                .Where(a => a.DataExpiracao.HasValue)
+                .ToList();
+
+            ViewBag.AnuncioPecasExpirados = anuncioPecas.Count(a => (DateTime.Now - a.DataExpiracao.Value).TotalDays >= 30);
 
             ViewBag.AnunciosProximosDeExpirar = _context.AnuncioPecas
                 .Count(a => a.DataExpiracao > DateTime.Now && a.DataExpiracao <= DateTime.Now.AddDays(5));
-            
+
             ViewBag.TotalClientes = _context.Clientes.Count();
             ViewBag.TotalUsuarios = _context.Users.Count();
             ViewBag.TotalAnunciosMoto = _context.AnuncioMotos.Count();
@@ -80,6 +90,7 @@ namespace SportMotos.Controllers
                     a.Titulo,
                     a.DataPublicacao,
                     a.Preco,
+                    a.DataExpiracao,
                     Moto = a.IdMotoNavigation.Modelo
                 })
                 .ToList();
@@ -101,6 +112,7 @@ namespace SportMotos.Controllers
                     a.Titulo,
                     a.DataPublicacao,
                     a.Preco,
+                    a.DataExpiracao,
                     Peca = a.IdPecaNavigation.Nome
                 })
                 .ToList();

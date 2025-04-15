@@ -7,22 +7,22 @@
 <h1>Adicionar Notícia</h1>
 
 <form asp-action="AdicionarNoticia" method="post">
-    <div class="form-group">
+    <div class="form-group mb-3">
         <label for="Titulo">
             Título
-            <i class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="top" title="O título será exibido como o cabeçalho principal da notícia."></i>
+            <i class="bi bi-info-circle"></i>
         </label>
-        <input type="text" class="form-control" id="Titulo" name="Titulo" placeholder="Digite o título da notícia" required />
+        <input type="text" class="form-control" id="Titulo" name="Titulo" placeholder="Digite o título da notícia" data-bs-toggle="tooltip" title="O título será exibido como cabeçalho da notícia" required />
     </div>
 
-    <div class="form-group">
+    <div class="form-group mb-3">
         <label for="Subtitulo">Subtítulo</label>
         <input type="text" class="form-control" id="Subtitulo" name="Subtitulo" placeholder="Digite o subtítulo da notícia" />
     </div>
 
     <div class="form-group">
         <label for="Descricao">Descrição</label>
-        <textarea id="Descricao" name="Descricao" class="form-control" rows="10" placeholder="Escreva a descrição da notícia em Markdown"></textarea>
+        <textarea id="Descricao" name="Descricao" class="form-control" rows="10" placeholder="Escreva a descrição da notícia em Markdown" data-bs-toggle="tooltip" title="Você pode usar tags HTML para formatar o texto, como <b>, <i>, e <u>."></textarea>
     </div>
 
     <button type="submit" class="btn btn-primary mt-3">Salvar</button>
@@ -30,10 +30,11 @@
 
 @section Scripts {
     <script>
-        // Inicializar tooltip do Bootstrap
-        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-            return new bootstrap.Tooltip(tooltipTriggerEl);
+                document.addEventListener("DOMContentLoaded", function () {
+            var tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+            var tooltipList = [...tooltipTriggerList].map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl);
+            });
         });
     </script>
 }
