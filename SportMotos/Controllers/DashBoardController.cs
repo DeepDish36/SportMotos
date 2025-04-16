@@ -29,13 +29,13 @@ namespace SportMotos.Controllers
                 .Where(a => a.DataExpiracao.HasValue)
                 .ToList();
 
-            ViewBag.AnuncioMotosExpirados = anuncioMotos.Count(a => (DateTime.Now - a.DataExpiracao.Value).TotalDays >= 30);
+            ViewBag.AnuncioMotosExpirados = anuncioMotos.Count(a => (DateTime.Now - a.DataExpiracao.Value).TotalDays >= 50);
             
             var anuncioPecas = _context.AnuncioPecas
                 .Where(a => a.DataExpiracao.HasValue)
                 .ToList();
 
-            ViewBag.AnuncioPecasExpirados = anuncioPecas.Count(a => (DateTime.Now - a.DataExpiracao.Value).TotalDays >= 30);
+            ViewBag.AnuncioPecasExpirados = anuncioPecas.Count(a => (DateTime.Now - a.DataExpiracao.Value).TotalDays >= 50);
 
             ViewBag.AnunciosProximosDeExpirar = _context.AnuncioPecas
                 .Count(a => a.DataExpiracao > DateTime.Now && a.DataExpiracao <= DateTime.Now.AddDays(5));

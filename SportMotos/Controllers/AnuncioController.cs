@@ -67,7 +67,7 @@ namespace SportMotos.Controllers
                 return NotFound();
             }
 
-            anuncio.DataExpiracao = DateTime.Now.AddDays(30); // Renova por mais 30 dias
+            anuncio.DataExpiracao = DateTime.Now.AddDays(50); // Renova por mais 30 dias
             _context.Update(anuncio);
             await _context.SaveChangesAsync();
 
