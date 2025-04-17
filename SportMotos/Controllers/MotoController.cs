@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SportMotos.Models;
+using System.Security.Claims;
 
 namespace SportMotos.Controllers
 {
@@ -129,26 +131,23 @@ namespace SportMotos.Controllers
             return View(motoExistente);
         }
 
-        //Excluir moto (GET)
         public async Task<IActionResult> ExcluirMoto(int id)
         {
-            var moto = await _context.Motos.FindAsync(id);
-            if (moto == null) return NotFound();
-            return View(moto);
-        }
+            // Busca a moto e verifica se pertence ao utilizador
+            var moto = await _context.Motos
+                .Include(m => m.AnuncioMotos) // Garante que os anúncios associados são carregados
+                .FirstOrDefaultAsync(m => m.IdMoto == id);
 
-        //Confirmar Excluir moto (POST)
-        [HttpPost, ActionName("ExcluirMoto")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ConfirmarExclusaoMoto(int id)
-        {
-            var moto = await _context.Motos.FindAsync(id);
-            if (moto != null)
+            if (moto == null)
             {
-                _context.Motos.Remove(moto);
-                await _context.SaveChangesAsync();
+                return NotFound();
             }
-            return RedirectToAction(nameof(ListarMotos));
+
+            // Remove a moto (os anúncios serão apagados automaticamente por `ON DELETE CASCADE`)
+            _context.Motos.Remove(moto);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Dashboard", "DashBoard");
         }
 
         //Retorna as marcas das motos

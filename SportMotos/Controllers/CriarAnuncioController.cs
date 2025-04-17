@@ -190,24 +190,37 @@ namespace SportMotos.Controllers
         // Deletar anúncio
         public async Task<IActionResult> DeletarAnuncioMoto(int id)
         {
-            var anuncio = await _context.AnuncioMotos.FindAsync(id);
-            if (anuncio != null)
+            // Buscar o anúncio com a moto associada
+            var anuncio = await _context.AnuncioMotos
+                .Include(a => a.IdMotoNavigation) // Inclui a moto, mas não a remove
+                .FirstOrDefaultAsync(a => a.IdAnuncioMoto == id);
+
+            if (anuncio == null)
             {
-                _context.AnuncioMotos.Remove(anuncio);
-                await _context.SaveChangesAsync();
+                return NotFound();
             }
-            return RedirectToAction("Index");
+
+            // Remover apenas o anúncio, sem excluir a moto
+            _context.AnuncioMotos.Remove(anuncio);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Dashboard", "DashBoard");
         }
 
         public async Task<IActionResult> DeletarAnuncioPeca(int id)
         {
-            var anuncio = await _context.AnuncioPecas.FindAsync(id);
-            if (anuncio != null)
+            var anuncio = await _context.AnuncioPecas
+                .Include(a => a.IdPecaNavigation)
+                .FirstOrDefaultAsync(a=>a.IdAnuncioPeca == id);
+            if (anuncio == null)
             {
-                _context.AnuncioPecas.Remove(anuncio);
-                await _context.SaveChangesAsync();
+                return NotFound();
             }
-            return RedirectToAction("Index");
+
+            // Remover apenas o anúncio, sem excluir a peça
+            _context.AnuncioPecas.Remove(anuncio);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Dashboard", "DashBoard");
         }
 
         // *-----------------------------------------------------* //

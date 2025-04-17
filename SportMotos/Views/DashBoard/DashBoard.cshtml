@@ -233,8 +233,7 @@
         <tbody>
             @foreach (var anuncio in ViewBag.UltimosAnunciosMoto)
             {
-                // Verifica se DataExpiracao está definida e se o anúncio já expirou
-                var isExpirado = (DateTime.Now - anuncio.DataExpiracao).TotalDays >= 50;
+                var isExpirado = anuncio.DataExpiracao <= DateTime.Now;
                 var rowClass = isExpirado ? "row-expired" : "";
 
                 <tr class="@rowClass">
@@ -247,12 +246,11 @@
                            asp-route-tipo="motos" class="btn btn-info btn-sm">Ver</a>
                         <a asp-controller="CriarAnuncio" asp-action="EditarAnuncioMoto"
                            asp-route-id="@anuncio.IdAnuncioMoto" class="btn btn-success btn-sm">Editar</a>
-                        <a href="#" class="btn btn-danger btn-sm">Excluir</a>
+                        <a href="#" class="btn btn-danger btn-sm" onclick="showDeleteModal('@anuncio.IdAnuncioMoto', 'anuncioMoto')">Excluir</a>
                         <a asp-controller="Anuncio" asp-action="RenovarAnuncio" asp-route-id="@anuncio.IdAnuncioMoto" class="btn btn-primary btn-sm">Renovar</a>
                     </td>
                 </tr>
             }
-
         </tbody>
     </table>
 </div>
@@ -262,9 +260,16 @@
     <h3>🔩 Anúncios de Peças</h3>
     <span class="badge bg-danger">@ViewBag.AnunciosExpirados</span>
     <a asp-action="CriarAnuncioPeca" asp-controller="CriarAnuncio" class="btn btn-success btn-sm" style="margin-bottom:20px">Adicionar Anúncio de Peça</a>
-    <a href="@Url.Action("Dashboard", new { mostrarTodos = !ViewBag.MostrarTodos })" class="btn btn-primary" style="margin-bottom:20px">
-        @(ViewBag.MostrarTodos ? "Mostrar Últimos 5" : "Mostrar Todos")
-    </a>
+    <div class="btn-group-toggle mb-3" data-toggle="buttons">
+        <label class="btn @(ViewBag.MostrarTodos ? "" : "active")">
+            <input type="radio" name="mostrarAnuncios" value="false" autocomplete="off"
+                   onchange="toggleAnuncios(false)" @(ViewBag.MostrarTodos ? "" : "checked")> Mostrar Últimos 5
+        </label>
+        <label class="btn @(ViewBag.MostrarTodos ? "active" : "")">
+            <input type="radio" name="mostrarAnuncios" value="true" autocomplete="off"
+                   onchange="toggleAnuncios(true)" @(ViewBag.MostrarTodos ? "checked" : "")> Mostrar Todos
+        </label>
+    </div>
     <hr />
     <table id="anuncioPecasTable" class="table table-striped">
         <thead>
@@ -399,19 +404,19 @@
             switch (tipo) {
                 case "moto":
                     mensagem = "Tem certeza de que deseja excluir esta moto?";
-                    url = `/CriarAnuncio/ExcluirMoto/${id}`;
+                    url = `/Moto/ExcluirMoto/${id}`;
                     break;
                 case "peca":
                     mensagem = "Tem certeza de que deseja excluir esta peça?";
-                    url = `/Pecas/ExcluirPeca/${id}`;
+                    url = `/Peca/ExcluirPeca/${id}`;
                     break;
                 case "anuncioMoto":
                     mensagem = "Tem certeza de que deseja excluir este anúncio de moto?";
-                    url = `/Anuncios/ExcluirAnuncioMoto/${id}`;
+                    url = `/CriarAnuncio/DeletarAnuncioMoto/${id}`;
                     break;
                 case "anuncioPeca":
                     mensagem = "Tem certeza de que deseja excluir este anúncio de peça?";
-                    url = `/Anuncios/ExcluirAnuncioPeca/${id}`;
+                    url = `/CriarAnuncio/DeletarAnuncioPeca/${id}`;
                     break;
                 case "noticias":
                     mensagem = "Tem certeza de que deseja excluir esta notícia?";

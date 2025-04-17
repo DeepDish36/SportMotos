@@ -29,4 +29,5 @@ public partial class Admin
     public DateTime? ApagadoEm { get; set; }
 
     public virtual User? NomeNavigation { get; set; } = null!;
+    public virtual ICollection<Forum> Forums { get; set; } = new List<Forum>();
 }

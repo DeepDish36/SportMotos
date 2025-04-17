@@ -132,25 +132,21 @@ namespace SportMotos.Controllers
             return View(noticia);
         }
 
-        // Excluir notícia
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> ExcluirNoticia(int id)
         {
+            // Busca a notícia pelo ID
             var noticia = await _context.Noticia.FindAsync(id);
+
             if (noticia == null)
             {
-                return NotFound();
+                return NotFound("Notícia não encontrada.");
             }
-            return View(noticia);
-        }
 
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var noticia = await _context.Noticia.FindAsync(id);
+            // Remove a notícia
             _context.Noticia.Remove(noticia);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+
+            return RedirectToAction("Dashboard", "DashBoard");
         }
     }
 }

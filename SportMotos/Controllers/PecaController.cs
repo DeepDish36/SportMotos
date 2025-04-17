@@ -131,26 +131,22 @@ namespace SportMotos.Controllers
             return View(pecaExistente);
         }
 
-        //Excluir peça (GET)
         public async Task<IActionResult> ExcluirPeca(int id)
-        {
-            var peca = await _context.Pecas.FindAsync(id);
-            if (peca == null) return NotFound();
-            return View(peca);
-        }
+        { 
+            var peca = await _context.Pecas
+                .Include(m => m.AnuncioPecas) // Garante que os anúncios associados são carregados
+                .FirstOrDefaultAsync(m => m.IdPeca == id);
 
-        //Confirmar Excluir peça (POST)
-        [HttpPost, ActionName("ExcluirMoto")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ConfirmarExclusaoPeca(int id)
-        {
-            var peca = await _context.Pecas.FindAsync(id);
-            if (peca != null)
+            if (peca == null)
             {
-                _context.Pecas.Remove(peca);
-                await _context.SaveChangesAsync();
+                return NotFound();
             }
-            return RedirectToAction(nameof(ListarPecas));
+
+            // Remove a peça (os anúncios serão apagados automaticamente por `ON DELETE CASCADE`)
+            _context.Pecas.Remove(peca);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Dashboard", "DashBoard");
         }
     }
 }

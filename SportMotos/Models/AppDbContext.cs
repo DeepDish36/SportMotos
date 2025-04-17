@@ -247,30 +247,70 @@ public partial class AppDbContext : DbContext
 
         modelBuilder.Entity<Forum>(entity =>
         {
-            entity.HasKey(e => e.IdForum).HasName("PK__Forum__0503F940E68FFBFC");
+            entity.HasKey(e => e.IdForum).HasName("PK_Forum");
 
             entity.ToTable("Forum");
 
             entity.Property(e => e.IdForum).HasColumnName("ID_Forum");
-            entity.Property(e => e.ApagadoEm)
-                .HasColumnType("datetime")
-                .HasColumnName("Apagado_Em");
-            entity.Property(e => e.DataCriacao)
-                .HasColumnType("datetime")
-                .HasColumnName("Data_Criacao");
-            entity.Property(e => e.DataEdicao)
-                .HasColumnType("datetime")
-                .HasColumnName("Data_Edicao");
-            entity.Property(e => e.Descricao).IsUnicode(false);
-            entity.Property(e => e.IdCliente).HasColumnName("ID_Cliente");
+
+            entity.Property(e => e.IdCliente).HasColumnName("ID_Cliente").IsRequired(false); // Agora permite NULL
+            entity.Property(e => e.IdAdmin).HasColumnName("ID_Admin").IsRequired(false); // Novo campo para admins
+
             entity.Property(e => e.Titulo)
                 .HasMaxLength(150)
                 .IsUnicode(false);
 
+            entity.Property(e => e.Descricao)
+                .IsUnicode(false);
+
+            entity.Property(e => e.DataCriacao)
+                .HasColumnType("datetime")
+                .HasColumnName("Data_Criacao");
+
+            entity.Property(e => e.DataEdicao)
+                .HasColumnType("datetime")
+                .HasColumnName("Data_Edicao");
+
+            entity.Property(e => e.ApagadoEm)
+                .HasColumnType("datetime")
+                .HasColumnName("Apagado_Em");
+
+            entity.Property(e => e.Estado)
+                .HasMaxLength(20)
+                .HasColumnName("Estado")
+                .HasDefaultValue("Ativo");
+
+            entity.Property(e => e.Visualizacoes)
+                .HasColumnName("Visualizacoes")
+                .HasDefaultValue(0);
+
+            entity.Property(e => e.TotalRespostas)
+                .HasColumnName("Total_Respostas")
+                .HasDefaultValue(0);
+
+            entity.Property(e => e.UltimaResposta)
+                .HasColumnType("datetime")
+                .HasColumnName("Ultima_Resposta");
+
+            entity.Property(e => e.Categoria)
+                .HasMaxLength(100)
+                .HasColumnName("Categoria");
+
+            entity.Property(e => e.Likes)
+                .HasColumnName("Likes")
+                .HasDefaultValue(0);
+
+            // 🔗 Relacionamento com Cliente
             entity.HasOne(d => d.IdClienteNavigation).WithMany(p => p.Forums)
                 .HasForeignKey(d => d.IdCliente)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__Forum__ID_Client__5EBF139D");
+                .HasConstraintName("FK_Forum_Cliente");
+
+            // 🔗 Relacionamento com Admin
+            entity.HasOne(d => d.IdAdminNavigation).WithMany(a => a.Forums)
+                .HasForeignKey(d => d.IdAdmin)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Forum_Admin");
         });
 
         modelBuilder.Entity<Imagem>(entity =>
