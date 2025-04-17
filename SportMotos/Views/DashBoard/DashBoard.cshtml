@@ -233,8 +233,10 @@
         <tbody>
             @foreach (var anuncio in ViewBag.UltimosAnunciosMoto)
             {
+                // Verifica se DataExpiracao está definida e se o anúncio já expirou
                 var isExpirado = (DateTime.Now - anuncio.DataExpiracao).TotalDays >= 50;
                 var rowClass = isExpirado ? "row-expired" : "";
+
                 <tr class="@rowClass">
                     <td>@anuncio.Titulo</td>
                     <td>€@anuncio.Preco</td>
@@ -250,6 +252,7 @@
                     </td>
                 </tr>
             }
+
         </tbody>
     </table>
 </div>

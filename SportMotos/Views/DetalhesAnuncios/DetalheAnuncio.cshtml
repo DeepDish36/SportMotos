@@ -1,4 +1,6 @@
-﻿@{
+﻿@using System.IO
+
+@{
     ViewData["Title"] = @Model.Titulo;
 }
 
@@ -26,22 +28,46 @@
                         <p>Sem imagem disponível</p>
                     }
                 }
-                else if (ViewBag.TipoAnuncio == "pecas")
+                else if (ViewBag.TipoAnuncio == "pecas" && Model.IdPecaNavigation?.Imagens != null && Model.IdPecaNavigation.Imagens.Count > 0)
                 {
-                    @if (Model.IdPecaNavigation != null && Model.IdPecaNavigation.Imagens != null && Model.IdPecaNavigation.Imagens.Count > 0)
+                    var nomeArquivo = Model.IdPecaNavigation.Imagens.FirstOrDefault()?.NomeArquivo;
+
+                    if (!string.IsNullOrEmpty(nomeArquivo))
                     {
-                        @foreach (var imagem in Model.IdPecaNavigation.Imagens)
+                        // Verificar diferentes extensões
+                        var extensoes = new[] { ".jpg", ".png", ".jpeg" };
+                        string imagemPecaPath = null;
+
+                        foreach (var extensao in extensoes)
                         {
-                            Console.WriteLine("Nome imagem:" + imagem);
-                            <img src="@Url.Content("~/images/pecas/" + imagem.NomeArquivo + ".jpg")"
-                            alt="Imagem da Peça @Model.IdPecaNavigation.Nome"
-                            class="img-fluid rounded">
+                            var caminhoCompleto = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/pecas", nomeArquivo + extensao);
+
+                            if (System.IO.File.Exists(caminhoCompleto))
+                            {
+                                imagemPecaPath = Url.Content($"~/images/pecas/{nomeArquivo}{extensao}");
+                                break;
+                            }
+                        }
+
+                        if (!string.IsNullOrEmpty(imagemPecaPath))
+                        {
+                            <img src="@imagemPecaPath"
+                                 alt="Imagem da Peça @Model.IdPecaNavigation.Nome"
+                                 class="img-fluid rounded" />
+                        }
+                        else
+                        {
+                            <p>Sem imagem disponível</p>
                         }
                     }
                     else
                     {
                         <p>Sem imagem disponível</p>
                     }
+                }
+                else
+                {
+                    <p>Sem imagem disponível</p>
                 }
             </div>
 

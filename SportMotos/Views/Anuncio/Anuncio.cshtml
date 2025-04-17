@@ -108,9 +108,7 @@
         @(ViewBag.TipoAnuncio == "motos" ? $"data-genero='{anuncio.IdMotoNavigation?.Genero}' data-cor='{anuncio.IdMotoNavigation?.Cor}'" : "")>
 
             <div class="card shadow-sm card-fixed-height position-relative">
-                @if (ViewBag.TipoAnuncio == "motos" &&
-               anuncio.IdMotoNavigation?.Imagens != null &&
-               anuncio.IdMotoNavigation.Imagens.Any())
+                @if (ViewBag.TipoAnuncio == "motos" && anuncio.IdMotoNavigation?.Imagens != null && anuncio.IdMotoNavigation.Imagens.Any())
                 {
                     var imagemMoto = anuncio.IdMotoNavigation.Imagens.FirstOrDefault();
                     var nomeArquivo = imagemMoto?.NomeArquivo;
@@ -121,9 +119,19 @@
                              alt="Imagem da Moto @anuncio.IdMotoNavigation.Matricula"
                              class="img-fluid rounded card-img-top" />
                     }
+                    else
+                    {
+                        // Se não houver imagem, mostrar o placeholder
+                        <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
+                             xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail"
+                             preserveAspectRatio="xMidYMid slice" focusable="false">
+                            <title>@anuncio.Titulo</title>
+                            <rect width="100%" height="100%" fill="#55595c"></rect>
+                            <text x="50%" y="50%" fill="#eceeef" dy=".3em">Sem Imagem!</text>
+                        </svg>
+                    }
                 }
-
-                @if (ViewBag.TipoAnuncio == "pecas")
+                else if (ViewBag.TipoAnuncio == "pecas")
                 {
                     var imagensPeca = anuncio.IdPecaNavigation?.Imagens as List<SportMotos.Models.Imagem>;
                     string imagemPecaPath = null;
@@ -140,10 +148,21 @@
                              alt="Imagem da Peça"
                              class="img-fluid rounded card-img-top" />
                     }
+                    else
+                    {
+                        // Se não houver imagem, mostrar o placeholder
+                        <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
+                             xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail"
+                             preserveAspectRatio="xMidYMid slice" focusable="false">
+                            <title>@anuncio.Titulo</title>
+                            <rect width="100%" height="100%" fill="#55595c"></rect>
+                            <text x="50%" y="50%" fill="#eceeef" dy=".3em">Sem Imagem!</text>
+                        </svg>
+                    }
                 }
-
                 else
                 {
+                    // Caso não seja nem "motos" nem "pecas", usa o placeholder por padrão
                     <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
                          xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail"
                          preserveAspectRatio="xMidYMid slice" focusable="false">
@@ -152,7 +171,6 @@
                         <text x="50%" y="50%" fill="#eceeef" dy=".3em">Sem Imagem!</text>
                     </svg>
                 }
-
 
                 @if (ViewBag.TipoAnuncio == "motos" && anuncio.Vendido)
                 {
