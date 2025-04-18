@@ -1,0 +1,53 @@
+﻿@model Forum
+
+@{
+    ViewData["Title"] = @Model.Titulo;
+}
+
+<div class="container mt-4">
+    <h2><i class="fas fa-comments"></i> @Model.Titulo</h2>
+    <hr />
+
+    <div class="forum-info">
+        <p><strong>Categoria:</strong> @Model.Categoria</p>
+        <p><strong>Estado:</strong> @Model.Estado</p>
+        <p><strong>Publicado em:</strong> @Model.DataCriacao.ToString("dd/MM/yyyy HH:mm")</p>
+    </div>
+
+    <div class="forum-descricao mt-3">
+        <h4>Descrição</h4>
+        <p>@Model.Descricao</p>
+    </div>
+
+    <hr />
+
+    <h3><i class="fas fa-reply"></i> Respostas</h3>
+    <div class="forum-respostas">
+        @if (Model.Respostas != null && Model.Respostas.Any())
+        {
+            foreach (var resposta in Model.Respostas)
+            {
+                <div class="resposta p-3 mb-2 bg-light border rounded">
+                    <p><strong>@resposta.IdClienteNavigation?.Nome</strong> - @resposta.DataCriacao.ToString("dd/MM/yyyy HH:mm")</p>
+                    <p>@resposta.Conteudo</p>
+                </div>
+            }
+        }
+        else
+        {
+            <p class="text-muted">Ainda não há respostas. Seja o primeiro a participar!</p>
+        }
+    </div>
+
+    <hr />
+
+    <h3><i class="fas fa-edit"></i> Adicionar Resposta</h3>
+    <form asp-action="AdicionarResposta" method="post">
+        <input type="hidden" name="IdForum" value="@Model.IdForum" />
+        <div class="mb-3">
+            <label for="Conteudo" class="form-label">Sua resposta</label>
+            <textarea name="Conteudo" class="form-control" rows="3" placeholder="Escreva sua resposta..." required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Enviar Resposta</button>
+    </form>
+</div>

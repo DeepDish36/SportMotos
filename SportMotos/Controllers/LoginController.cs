@@ -22,7 +22,8 @@ namespace SportMotos.Controllers
             return View();
         }
 
-        [HttpPost] // 🔥 Agora é POST, pois envia dados sensíveis
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(string Email, string password)
         {
             if (string.IsNullOrWhiteSpace(Email) || string.IsNullOrWhiteSpace(password))
@@ -93,6 +94,12 @@ namespace SportMotos.Controllers
                 claims.Add(new Claim("IdCliente", cliente.IdCliente.ToString()));
             }
 
+            // 🔥 Adicionar o IdAdmin como claim, se for um admin
+            if (admin != null)
+            {
+                claims.Add(new Claim("IdAdmin", admin.IdAdmin.ToString())); // Agora adiciona corretamente!
+            }
+
             var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
             var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
 
@@ -112,7 +119,7 @@ namespace SportMotos.Controllers
             return user.Tipo_Utilizador == "Cliente"
                 ? RedirectToAction("Index", "Home")
                 : RedirectToAction("Dashboard", "DashBoard");
-        }        
+        }
 
         [HttpGet]
         public async Task<IActionResult> Logout()

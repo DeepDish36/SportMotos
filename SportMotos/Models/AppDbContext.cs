@@ -42,6 +42,8 @@ public partial class AppDbContext : DbContext
 
     public DbSet<Pedidos> Pedidos { get; set; }
 
+    public DbSet<Resposta> Resposta { get; set; }
+
     public DbSet<InteresseMotos> InteresseMotos { get; set; }
 
     public DbSet<CarrinhoCompras> CarrinhoCompras { get; set; }
@@ -564,7 +566,8 @@ public partial class AppDbContext : DbContext
 
             entity.Property(e => e.IdResposta).HasColumnName("ID_Resposta");
             entity.Property(e => e.IdForum).HasColumnName("ID_Forum");
-            entity.Property(e => e.IdCliente).HasColumnName("ID_Cliente");
+            entity.Property(e => e.IdCliente).HasColumnName("ID_Cliente").IsRequired(false);
+            entity.Property(e=>e.IdAdmin).HasColumnName("ID_Admin").IsRequired(false); // Novo campo para admins
             entity.Property(e => e.Conteudo).IsUnicode(false);
             entity.Property(e => e.DataCriacao)
                 .HasColumnType("datetime")
@@ -580,6 +583,12 @@ public partial class AppDbContext : DbContext
                 .HasForeignKey(d => d.IdCliente)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__Resposta__ID_Cliente");
+            
+            entity.HasOne(d => d.IdAdminNavigation)
+                .WithMany()
+                .HasForeignKey(d => d.IdAdmin)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__Resposta__ID_Admin");
         });
 
         modelBuilder.Entity<VendaPeca>()

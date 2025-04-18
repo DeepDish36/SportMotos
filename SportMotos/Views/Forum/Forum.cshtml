@@ -21,47 +21,69 @@
             </ol>
         </nav>
     </div>
-    <div class="container mt-4">
-        <h3 style="font-weight:bold" class="mb-4">Fóruns</h3>
 
-        <h4 style="margin-bottom:2.5%">
-            <span>Ajude os outros respondendo às suas perguntas!</span>
-        </h4>
-        <div class="d-flex justify-content-between align-items-center mb-3">
-            <a href="@Url.Action("Create", "Forum")" class="btn btn-success">➕ Criar Novo Fórum</a>
-        </div>
-
-        @if (!Model.Any())
-        {
-            <div class="alert alert-info text-center">
-                <i class="fas fa-info-circle"></i> Ainda não há fóruns disponíveis. Seja o primeiro a criar um!
-            </div>
-        }
-        else
-        {
-            <div class="list-group">
-                @foreach (var forum in Model.OrderByDescending(f => f.DataCriacao))
-                {
-                    <a href="@Url.Action("Details", "Forum", new { id = forum.IdForum })"
-                       class="list-group-item list-group-item-action">
-                        <div class="d-flex justify-content-between">
-                            <h5 class="mb-1">
-                                <i class="fas fa-comment-dots text-primary"></i> @forum.Titulo
-                            </h5>
-                            <small class="text-muted">
-                                Criado em @forum.DataCriacao.ToString("dd/MM/yyyy HH:mm")
-                            </small>
-                        </div>
-                        <p class="mb-1 text-muted">@forum.Descricao</p>
-                        <div class="d-flex justify-content-between">
-                            <small>Por <strong>@forum.IdClienteNavigation.Nome</strong></small>
-                            <span class="badge bg-secondary">
-                                <i class="fas fa-reply"></i> @forum.Respostas.Count() Respostas
-                            </span>
-                        </div>
-                    </a>
-                }
-            </div>
-        }
+    <!-- 🔥 Título e botão alinhados corretamente -->
+    <div class="d-flex justify-content-between align-items-center mt-4 mb-3">
+        <h3 style="font-weight:bold; margin-bottom:0">Ajude os outros respondendo às suas perguntas!</h3>
+        <a href="@Url.Action("Create", "Forum")" class="btn btn-success text-end">➕ Criar Novo Fórum</a>
     </div>
+
+    <!-- Seção de Tópicos Recentes -->
+    <div class="mt-4">
+        <h4>Tópicos Recentes</h4>
+        <div class="list-group">
+            @foreach (var forum in Model.OrderByDescending(f => f.DataCriacao).Take(3))
+            {
+                <a href="@Url.Action("DetalhesForum", "Forum", new { id = forum.IdForum })"
+                   class="list-group-item list-group-item-action">
+                    <div class="d-flex justify-content-between">
+                        <h6 class="mb-1">@forum.Titulo</h6>
+                        <small class="text-muted">@forum.DataCriacao.ToString("dd/MM/yyyy HH:mm")</small>
+                    </div>
+                </a>
+            }
+        </div>
+    </div>
+    <hr class="mb-4" />
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info text-center">
+            <i class="fas fa-info-circle"></i> Ainda não há fóruns disponíveis. Seja o primeiro a criar um!
+        </div>
+    }
+    else
+    {
+        <h2>Discussões</h2>
+        <div class="list-group">
+            @foreach (var forum in Model.OrderByDescending(f => f.DataCriacao))
+            {
+                <a href="@Url.Action("DetalhesForum", "Forum", new { id = forum.IdForum })"
+                   class="list-group-item list-group-item-action">
+                    <div class="d-flex justify-content-between">
+                        <h5 class="mb-1">
+                            <i class="fas fa-comment-dots text-primary"></i> @forum.Titulo
+                        </h5>
+                        <small class="text-muted">
+                            Criado em @forum.DataCriacao.ToString("dd/MM/yyyy HH:mm")
+                        </small>
+                    </div>
+                    <p class="mb-1 text-muted">@forum.Descricao</p>
+                    <div class="d-flex justify-content-between">
+                        <small>
+                            Por <strong>
+                                @(forum.IdClienteNavigation != null
+                                    ? forum.IdClienteNavigation.Nome
+                                    : forum.IdAdminNavigation != null
+                                    ? forum.IdAdminNavigation.Nome
+                                    : "Utilizador desconhecido")
+                            </strong>
+                        </small>
+                        <span class="badge bg-secondary">
+                            <i class="fas fa-reply"></i> @forum.Respostas.Count() Respostas
+                        </span>
+                    </div>
+                </a>
+            }
+        </div>
+    }
 </div>

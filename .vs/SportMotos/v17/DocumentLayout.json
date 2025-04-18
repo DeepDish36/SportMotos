@@ -7,6 +7,18 @@
       "RelativeMoniker": "D:0:0:{C1F1A03D-FAA6-4992-AE87-1A9599C29F96}|SportMotos\\SportMotos.csproj|solutionrelative:sportmotos\\controllers\\forumcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{C1F1A03D-FAA6-4992-AE87-1A9599C29F96}|SportMotos\\SportMotos.csproj|c:\\users\\g0mes\\desktop\\sportmotos\\sportmotos\\models\\forum.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C1F1A03D-FAA6-4992-AE87-1A9599C29F96}|SportMotos\\SportMotos.csproj|solutionrelative:sportmotos\\models\\forum.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C1F1A03D-FAA6-4992-AE87-1A9599C29F96}|SportMotos\\SportMotos.csproj|c:\\users\\g0mes\\desktop\\sportmotos\\sportmotos\\views\\forum\\forum.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{C1F1A03D-FAA6-4992-AE87-1A9599C29F96}|SportMotos\\SportMotos.csproj|solutionrelative:sportmotos\\views\\forum\\forum.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C1F1A03D-FAA6-4992-AE87-1A9599C29F96}|SportMotos\\SportMotos.csproj|c:\\users\\g0mes\\desktop\\sportmotos\\sportmotos\\views\\forum\\detalhesforum.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{C1F1A03D-FAA6-4992-AE87-1A9599C29F96}|SportMotos\\SportMotos.csproj|solutionrelative:sportmotos\\views\\forum\\detalhesforum.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{C1F1A03D-FAA6-4992-AE87-1A9599C29F96}|SportMotos\\SportMotos.csproj|c:\\users\\g0mes\\desktop\\sportmotos\\sportmotos\\views\\forum\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{C1F1A03D-FAA6-4992-AE87-1A9599C29F96}|SportMotos\\SportMotos.csproj|solutionrelative:sportmotos\\views\\forum\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
@@ -19,23 +31,23 @@
       "RelativeMoniker": "D:0:0:{C1F1A03D-FAA6-4992-AE87-1A9599C29F96}|SportMotos\\SportMotos.csproj|solutionrelative:sportmotos\\controllers\\logincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C1F1A03D-FAA6-4992-AE87-1A9599C29F96}|SportMotos\\SportMotos.csproj|c:\\users\\g0mes\\desktop\\sportmotos\\sportmotos\\controllers\\motocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C1F1A03D-FAA6-4992-AE87-1A9599C29F96}|SportMotos\\SportMotos.csproj|solutionrelative:sportmotos\\controllers\\motocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{C1F1A03D-FAA6-4992-AE87-1A9599C29F96}|SportMotos\\SportMotos.csproj|c:\\users\\g0mes\\desktop\\sportmotos\\sportmotos\\controllers\\pecacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C1F1A03D-FAA6-4992-AE87-1A9599C29F96}|SportMotos\\SportMotos.csproj|solutionrelative:sportmotos\\controllers\\pecacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C1F1A03D-FAA6-4992-AE87-1A9599C29F96}|SportMotos\\SportMotos.csproj|c:\\users\\g0mes\\desktop\\sportmotos\\sportmotos\\controllers\\criaranunciocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C1F1A03D-FAA6-4992-AE87-1A9599C29F96}|SportMotos\\SportMotos.csproj|solutionrelative:sportmotos\\controllers\\criaranunciocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|ViewDataWindow_MSSQL__/_LocalDB__MSSQLLocalDB/C__USERS_G0MES_DESKTOP_SPORTMOTOS_SPORTMOTOS_BIN_DEBUG_NET8.0_SPORTMOTOS.MDF/True/SqlTable/dbo.Forum.sql||{0058A1F7-65F3-4DB9-B3D0-CA7E64DD73CD}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{C1F1A03D-FAA6-4992-AE87-1A9599C29F96}|SportMotos\\SportMotos.csproj|c:\\users\\g0mes\\desktop\\sportmotos\\sportmotos\\models\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C1F1A03D-FAA6-4992-AE87-1A9599C29F96}|SportMotos\\SportMotos.csproj|solutionrelative:sportmotos\\models\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|ViewDataWindow_MSSQL__/_LocalDB__MSSQLLocalDB/C__USERS_G0MES_DESKTOP_SPORTMOTOS_SPORTMOTOS_BIN_DEBUG_NET8.0_SPORTMOTOS.MDF/True/SqlTable/dbo.Forum.sql||{0058A1F7-65F3-4DB9-B3D0-CA7E64DD73CD}"
+      "AbsoluteMoniker": "D:0:0:{C1F1A03D-FAA6-4992-AE87-1A9599C29F96}|SportMotos\\SportMotos.csproj|c:\\users\\g0mes\\desktop\\sportmotos\\sportmotos\\controllers\\motocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C1F1A03D-FAA6-4992-AE87-1A9599C29F96}|SportMotos\\SportMotos.csproj|solutionrelative:sportmotos\\controllers\\motocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C1F1A03D-FAA6-4992-AE87-1A9599C29F96}|SportMotos\\SportMotos.csproj|c:\\users\\g0mes\\desktop\\sportmotos\\sportmotos\\models\\forum.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C1F1A03D-FAA6-4992-AE87-1A9599C29F96}|SportMotos\\SportMotos.csproj|solutionrelative:sportmotos\\models\\forum.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{C1F1A03D-FAA6-4992-AE87-1A9599C29F96}|SportMotos\\SportMotos.csproj|c:\\users\\g0mes\\desktop\\sportmotos\\sportmotos\\controllers\\criaranunciocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C1F1A03D-FAA6-4992-AE87-1A9599C29F96}|SportMotos\\SportMotos.csproj|solutionrelative:sportmotos\\controllers\\criaranunciocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{C1F1A03D-FAA6-4992-AE87-1A9599C29F96}|SportMotos\\SportMotos.csproj|c:\\users\\g0mes\\desktop\\sportmotos\\sportmotos\\controllers\\dashboardcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -48,10 +60,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{C1F1A03D-FAA6-4992-AE87-1A9599C29F96}|SportMotos\\SportMotos.csproj|c:\\users\\g0mes\\desktop\\sportmotos\\sportmotos\\controllers\\noticiacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C1F1A03D-FAA6-4992-AE87-1A9599C29F96}|SportMotos\\SportMotos.csproj|solutionrelative:sportmotos\\controllers\\noticiacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C1F1A03D-FAA6-4992-AE87-1A9599C29F96}|SportMotos\\SportMotos.csproj|c:\\users\\g0mes\\desktop\\sportmotos\\sportmotos\\controllers\\pecacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C1F1A03D-FAA6-4992-AE87-1A9599C29F96}|SportMotos\\SportMotos.csproj|solutionrelative:sportmotos\\controllers\\pecacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{C1F1A03D-FAA6-4992-AE87-1A9599C29F96}|SportMotos\\SportMotos.csproj|c:\\users\\g0mes\\desktop\\sportmotos\\sportmotos\\views\\noticia\\editarnoticia.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -117,7 +125,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 7,
+          "SelectedChildIndex": 9,
           "Children": [
             {
               "$type": "Bookmark",
@@ -126,19 +134,55 @@
             {
               "$type": "Document",
               "DocumentIndex": 3,
+              "Title": "DetalhesForum.cshtml",
+              "DocumentMoniker": "C:\\Users\\g0mes\\Desktop\\SportMotos\\SportMotos\\Views\\Forum\\DetalhesForum.cshtml",
+              "RelativeDocumentMoniker": "SportMotos\\Views\\Forum\\DetalhesForum.cshtml",
+              "ToolTip": "C:\\Users\\g0mes\\Desktop\\SportMotos\\SportMotos\\Views\\Forum\\DetalhesForum.cshtml",
+              "RelativeToolTip": "SportMotos\\Views\\Forum\\DetalhesForum.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-04-18T15:49:00.463Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Forum.cshtml",
+              "DocumentMoniker": "C:\\Users\\g0mes\\Desktop\\SportMotos\\SportMotos\\Views\\Forum\\Forum.cshtml",
+              "RelativeDocumentMoniker": "SportMotos\\Views\\Forum\\Forum.cshtml",
+              "ToolTip": "C:\\Users\\g0mes\\Desktop\\SportMotos\\SportMotos\\Views\\Forum\\Forum.cshtml*",
+              "RelativeToolTip": "SportMotos\\Views\\Forum\\Forum.cshtml*",
+              "ViewState": "AgIAACAAAAAAAAAAAADwvywAAAA3AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-04-18T15:16:37.34Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "dbo.Forum [Dados]",
+              "DocumentMoniker": "ViewDataWindow_MSSQL__/_LocalDB__MSSQLLocalDB/C__USERS_G0MES_DESKTOP_SPORTMOTOS_SPORTMOTOS_BIN_DEBUG_NET8.0_SPORTMOTOS.MDF/True/SqlTable/dbo.Forum.sql",
+              "ToolTip": "dbo.Forum [Dados]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
+              "WhenOpened": "2025-04-18T14:50:31.965Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
               "Title": "LoginController.cs",
               "DocumentMoniker": "C:\\Users\\g0mes\\Desktop\\SportMotos\\SportMotos\\Controllers\\LoginController.cs",
               "RelativeDocumentMoniker": "SportMotos\\Controllers\\LoginController.cs",
               "ToolTip": "C:\\Users\\g0mes\\Desktop\\SportMotos\\SportMotos\\Controllers\\LoginController.cs",
               "RelativeToolTip": "SportMotos\\Controllers\\LoginController.cs",
-              "ViewState": "AgIAAD8AAAAAAAAAAAAowHIAAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAAGsAAAAAAAAAAAAiwHkAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-17T17:02:53.882Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 5,
               "Title": "CriarContaController.cs",
               "DocumentMoniker": "C:\\Users\\g0mes\\Desktop\\SportMotos\\SportMotos\\Controllers\\CriarContaController.cs",
               "RelativeDocumentMoniker": "SportMotos\\Controllers\\CriarContaController.cs",
@@ -151,30 +195,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "dbo.Forum [Dados]",
-              "DocumentMoniker": "ViewDataWindow_MSSQL__/_LocalDB__MSSQLLocalDB/C__USERS_G0MES_DESKTOP_SPORTMOTOS_SPORTMOTOS_BIN_DEBUG_NET8.0_SPORTMOTOS.MDF/True/SqlTable/dbo.Forum.sql",
-              "ToolTip": "dbo.Forum [Dados]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
-              "WhenOpened": "2025-04-17T16:36:10.64Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
               "Title": "Create.cshtml",
               "DocumentMoniker": "C:\\Users\\g0mes\\Desktop\\SportMotos\\SportMotos\\Views\\Forum\\Create.cshtml",
               "RelativeDocumentMoniker": "SportMotos\\Views\\Forum\\Create.cshtml",
               "ToolTip": "C:\\Users\\g0mes\\Desktop\\SportMotos\\SportMotos\\Views\\Forum\\Create.cshtml",
               "RelativeToolTip": "SportMotos\\Views\\Forum\\Create.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAADYAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAArAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-04-17T16:26:23.498Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 9,
               "Title": "AppDbContext.cs",
               "DocumentMoniker": "C:\\Users\\g0mes\\Desktop\\SportMotos\\SportMotos\\Models\\AppDbContext.cs",
               "RelativeDocumentMoniker": "SportMotos\\Models\\AppDbContext.cs",
@@ -187,13 +221,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 1,
               "Title": "Forum.cs",
               "DocumentMoniker": "C:\\Users\\g0mes\\Desktop\\SportMotos\\SportMotos\\Models\\Forum.cs",
               "RelativeDocumentMoniker": "SportMotos\\Models\\Forum.cs",
               "ToolTip": "C:\\Users\\g0mes\\Desktop\\SportMotos\\SportMotos\\Models\\Forum.cs",
               "RelativeToolTip": "SportMotos\\Models\\Forum.cs",
-              "ViewState": "AgIAAAQAAAAAAAAAAADwvyMAAABGAAAAAAAAAA==",
+              "ViewState": "AgIAABUAAAAAAAAAAAAwwCMAAAAqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-17T16:23:21.049Z",
               "EditorCaption": ""
@@ -204,16 +238,16 @@
               "Title": "ForumController.cs",
               "DocumentMoniker": "C:\\Users\\g0mes\\Desktop\\SportMotos\\SportMotos\\Controllers\\ForumController.cs",
               "RelativeDocumentMoniker": "SportMotos\\Controllers\\ForumController.cs",
-              "ToolTip": "C:\\Users\\g0mes\\Desktop\\SportMotos\\SportMotos\\Controllers\\ForumController.cs",
-              "RelativeToolTip": "SportMotos\\Controllers\\ForumController.cs",
-              "ViewState": "AgIAADwAAAAAAAAAAAAiwEwAAAAAAAAAAAAAAA==",
+              "ToolTip": "C:\\Users\\g0mes\\Desktop\\SportMotos\\SportMotos\\Controllers\\ForumController.cs*",
+              "RelativeToolTip": "SportMotos\\Controllers\\ForumController.cs*",
+              "ViewState": "AgIAAGoAAAAAAAAAAADwv3YAAAAvAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-17T16:18:55.735Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 7,
               "Title": "PecaController.cs",
               "DocumentMoniker": "C:\\Users\\g0mes\\Desktop\\SportMotos\\SportMotos\\Controllers\\PecaController.cs",
               "RelativeDocumentMoniker": "SportMotos\\Controllers\\PecaController.cs",
@@ -226,7 +260,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 21,
               "Title": "cart.svg",
               "DocumentMoniker": "C:\\Users\\g0mes\\Desktop\\SportMotos\\SportMotos\\wwwroot\\icons\\cart.svg",
               "RelativeDocumentMoniker": "SportMotos\\wwwroot\\icons\\cart.svg",
@@ -239,7 +273,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 22,
               "Title": "search.svg",
               "DocumentMoniker": "C:\\Users\\g0mes\\Desktop\\SportMotos\\SportMotos\\wwwroot\\icons\\search.svg",
               "RelativeDocumentMoniker": "SportMotos\\wwwroot\\icons\\search.svg",
@@ -252,7 +286,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 23,
               "Title": "person.svg",
               "DocumentMoniker": "C:\\Users\\g0mes\\Desktop\\SportMotos\\SportMotos\\wwwroot\\icons\\person.svg",
               "RelativeDocumentMoniker": "SportMotos\\wwwroot\\icons\\person.svg",
@@ -265,7 +299,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 20,
               "Title": "_Layout.cshtml",
               "DocumentMoniker": "C:\\Users\\g0mes\\Desktop\\SportMotos\\SportMotos\\Views\\Shared\\_Layout.cshtml",
               "RelativeDocumentMoniker": "SportMotos\\Views\\Shared\\_Layout.cshtml",
@@ -278,7 +312,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 12,
               "Title": "DashBoardController.cs",
               "DocumentMoniker": "C:\\Users\\g0mes\\Desktop\\SportMotos\\SportMotos\\Controllers\\DashBoardController.cs",
               "RelativeDocumentMoniker": "SportMotos\\Controllers\\DashBoardController.cs",
@@ -291,7 +325,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 11,
               "Title": "CriarAnuncioController.cs",
               "DocumentMoniker": "C:\\Users\\g0mes\\Desktop\\SportMotos\\SportMotos\\Controllers\\CriarAnuncioController.cs",
               "RelativeDocumentMoniker": "SportMotos\\Controllers\\CriarAnuncioController.cs",
@@ -304,7 +338,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 13,
               "Title": "DashBoard.cshtml",
               "DocumentMoniker": "C:\\Users\\g0mes\\Desktop\\SportMotos\\SportMotos\\Views\\DashBoard\\DashBoard.cshtml",
               "RelativeDocumentMoniker": "SportMotos\\Views\\DashBoard\\DashBoard.cshtml",
@@ -317,7 +351,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 17,
               "Title": "EditarMoto.cshtml",
               "DocumentMoniker": "C:\\Users\\g0mes\\Desktop\\SportMotos\\SportMotos\\Views\\Moto\\EditarMoto.cshtml",
               "RelativeDocumentMoniker": "SportMotos\\Views\\Moto\\EditarMoto.cshtml",
@@ -330,7 +364,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 24,
               "Title": "DetalhesNoticia.cshtml",
               "DocumentMoniker": "C:\\Users\\g0mes\\Desktop\\SportMotos\\SportMotos\\Views\\Noticia\\DetalhesNoticia.cshtml",
               "RelativeDocumentMoniker": "SportMotos\\Views\\Noticia\\DetalhesNoticia.cshtml",
@@ -343,7 +377,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 15,
               "Title": "EditarNoticia.cshtml",
               "DocumentMoniker": "C:\\Users\\g0mes\\Desktop\\SportMotos\\SportMotos\\Views\\Noticia\\EditarNoticia.cshtml",
               "RelativeDocumentMoniker": "SportMotos\\Views\\Noticia\\EditarNoticia.cshtml",
@@ -356,7 +390,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 14,
               "Title": "NoticiaController.cs",
               "DocumentMoniker": "C:\\Users\\g0mes\\Desktop\\SportMotos\\SportMotos\\Controllers\\NoticiaController.cs",
               "RelativeDocumentMoniker": "SportMotos\\Controllers\\NoticiaController.cs",
@@ -369,7 +403,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 10,
               "Title": "MotoController.cs",
               "DocumentMoniker": "C:\\Users\\g0mes\\Desktop\\SportMotos\\SportMotos\\Controllers\\MotoController.cs",
               "RelativeDocumentMoniker": "SportMotos\\Controllers\\MotoController.cs",
@@ -382,7 +416,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 25,
               "Title": "index.js",
               "DocumentMoniker": "C:\\Users\\g0mes\\Desktop\\SportMotos\\SportMotos\\wwwroot\\js\\index.js",
               "RelativeDocumentMoniker": "SportMotos\\wwwroot\\js\\index.js",
@@ -395,7 +429,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 18,
               "Title": "AnuncioController.cs",
               "DocumentMoniker": "C:\\Users\\g0mes\\Desktop\\SportMotos\\SportMotos\\Controllers\\AnuncioController.cs",
               "RelativeDocumentMoniker": "SportMotos\\Controllers\\AnuncioController.cs",
@@ -408,7 +442,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 27,
               "Title": "HomeController.cs",
               "DocumentMoniker": "C:\\Users\\g0mes\\Desktop\\SportMotos\\SportMotos\\Controllers\\HomeController.cs",
               "RelativeDocumentMoniker": "SportMotos\\Controllers\\HomeController.cs",
@@ -421,7 +455,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 26,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\g0mes\\Desktop\\SportMotos\\SportMotos\\Views\\Home\\Index.cshtml",
               "RelativeDocumentMoniker": "SportMotos\\Views\\Home\\Index.cshtml",
@@ -434,7 +468,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 16,
               "Title": "DetalheAnuncio.cshtml",
               "DocumentMoniker": "C:\\Users\\g0mes\\Desktop\\SportMotos\\SportMotos\\Views\\DetalhesAnuncios\\DetalheAnuncio.cshtml",
               "RelativeDocumentMoniker": "SportMotos\\Views\\DetalhesAnuncios\\DetalheAnuncio.cshtml",
@@ -447,7 +481,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 19,
               "Title": "Anuncio.cshtml",
               "DocumentMoniker": "C:\\Users\\g0mes\\Desktop\\SportMotos\\SportMotos\\Views\\Anuncio\\Anuncio.cshtml",
               "RelativeDocumentMoniker": "SportMotos\\Views\\Anuncio\\Anuncio.cshtml",
@@ -460,7 +494,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 28,
               "Title": "Peca.cs",
               "DocumentMoniker": "C:\\Users\\g0mes\\Desktop\\SportMotos\\SportMotos\\Models\\Peca.cs",
               "RelativeDocumentMoniker": "SportMotos\\Models\\Peca.cs",
