@@ -34,10 +34,10 @@ namespace SportMotos.Controllers
 
             var emailNormalizado = Email.Trim().ToLower();
 
-            // Primeiro, tenta encontrar um Cliente com esse email
+            // 🔍 Verifica se é um Cliente
             var cliente = _context.Clientes.FirstOrDefault(c => c.Email.Trim().ToLower() == emailNormalizado);
 
-            // Verifica se há algum administrador com esse email
+            // 🔍 Verifica se é um Administrador
             var admin = _context.Admins.FirstOrDefault(a => a.Email.Trim().ToLower() == emailNormalizado);
 
             if (cliente == null && admin == null)
@@ -46,15 +46,15 @@ namespace SportMotos.Controllers
                 return View();
             }
 
-            // Obtém o nome do usuário (Cliente ou Admin)
+            // Obtém o nome do utilizador
             var username = cliente?.Nome ?? admin?.Nome;
             if (string.IsNullOrEmpty(username))
             {
-                ViewBag.Mensagem = "E-mail ou senha inválidos!";
+                ViewBag.Mensagem = "Erro ao identificar o utilizador!";
                 return View();
             }
 
-            // Buscar usuário na tabela Users
+            // Busca o utilizador na tabela Users
             var user = _context.Users.FirstOrDefault(u => u.Username == username);
             if (user == null)
             {
@@ -62,15 +62,16 @@ namespace SportMotos.Controllers
                 return View();
             }
 
-            // 🔐 Verifica se a senha está correta usando BCrypt
+            // 🔐 Verifica a senha com BCrypt
             bool senhaValida;
             try
             {
                 senhaValida = BCrypt.Net.BCrypt.Verify(password, user.Password);
             }
-            catch (SaltParseException)
+            catch (SaltParseException ex)
             {
-                ViewBag.Mensagem = "Erro ao verificar a senha. Por favor, tente novamente.";
+                Console.WriteLine($"Erro ao verificar a senha: {ex.Message}");
+                ViewBag.Mensagem = "Erro ao verificar a senha. Tente novamente.";
                 return View();
             }
 
@@ -80,33 +81,35 @@ namespace SportMotos.Controllers
                 return View();
             }
 
-            // Criar os Claims (dados da sessão)
+            // 🔥 Criar os Claims (dados da sessão)
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, user.Username),
-                new Claim("Tipo_Utilizador", user.Tipo_Utilizador), // "Cliente" ou "Admin"
-                new Claim(ClaimTypes.Email, emailNormalizado) // Garante que o email está nos claims
+                new Claim(ClaimTypes.Name, user.Username), // Nome do utilizador
+                new Claim("Tipo_Utilizador", user.Tipo_Utilizador), // Tipo de utilizador (Cliente ou Admin)
+                new Claim(ClaimTypes.Email, emailNormalizado) // Email normalizado
             };
 
-            // Adicionar o IdCliente como claim, se for um cliente
+            // Adiciona o IdCliente como claim se for Cliente
             if (cliente != null)
             {
-                claims.Add(new Claim("IdCliente", cliente.IdCliente.ToString()));
+                claims.Add(new Claim(ClaimTypes.NameIdentifier, cliente.IdCliente.ToString())); // ID do cliente
+                Console.WriteLine($"Cliente autenticado: {cliente.Nome}, ID: {cliente.IdCliente}"); // Log para depuração
             }
 
-            // 🔥 Adicionar o IdAdmin como claim, se for um admin
+            // Adiciona o IdAdmin como claim se for Admin
             if (admin != null)
             {
-                claims.Add(new Claim("IdAdmin", admin.IdAdmin.ToString())); // Agora adiciona corretamente!
+                claims.Add(new Claim(ClaimTypes.NameIdentifier, admin.IdAdmin.ToString())); // ID do admin
+                Console.WriteLine($"Admin autenticado: {admin.Nome}, ID: {admin.IdAdmin}"); // Log para depuração
             }
 
             var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
             var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
 
-            // 🔥 Criar a sessão persistente
+            // 🔒 Criar sessão persistente
             var authProperties = new AuthenticationProperties
             {
-                IsPersistent = true, // Mantém a sessão após fechar o navegador
+                IsPersistent = true, // Mantém sessão após fechar navegador
                 ExpiresUtc = DateTime.UtcNow.AddHours(1) // Expira em 1 hora
             };
 
@@ -115,7 +118,9 @@ namespace SportMotos.Controllers
                 claimsPrincipal,
                 authProperties);
 
-            // Redirecionar consoante o tipo de utilizador
+            Console.WriteLine("Login realizado com sucesso!");
+
+            // Redireciona conforme o tipo de utilizador
             return user.Tipo_Utilizador == "Cliente"
                 ? RedirectToAction("Index", "Home")
                 : RedirectToAction("Dashboard", "DashBoard");

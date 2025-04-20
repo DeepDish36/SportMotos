@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 using SportMotos.Models;
+using SportMotos.Services;
 using System.Security.Claims;
 
 namespace SportMotos.Controllers
@@ -8,16 +11,25 @@ namespace SportMotos.Controllers
     public class InteresseController : Controller
     {
         private readonly AppDbContext _context;
+        private readonly IEmailService _emailService;
 
-        public InteresseController(AppDbContext context)
+        public InteresseController(AppDbContext context, IEmailService emailService)
         {
             _context = context;
+            _emailService = emailService; // Inicializa o serviço de email
         }
 
         [Authorize] // Garante que só usuários logados acessem
         public IActionResult Criar(int idMoto)
         {
+            if (idMoto <= 0)
+            {
+                Console.WriteLine("ID_Moto inválido recebido: " + idMoto);
+                return BadRequest("ID_Moto inválido.");
+            }
+
             var model = new InteresseMotos { IdMoto = idMoto };
+            Console.WriteLine($"Modal carregada com ID_Moto: {model.IdMoto}");
             return PartialView("_FormularioInteresse", model);
         }
 
@@ -25,25 +37,53 @@ namespace SportMotos.Controllers
         [Authorize]
         public async Task<IActionResult> SalvarInteresse(InteresseMotos interesse)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                // Obter o ID do cliente logado
-                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                if (int.TryParse(userId, out int idCliente))
-                {
-                    interesse.IdCliente = idCliente;
-                    interesse.DataInteresse = DateTime.Now;
-                    _context.InteresseMotos.Add(interesse);
-                    await _context.SaveChangesAsync();
-                    return Json(new { success = true });
-                }
-                return Json(new { success = false, message = "Erro ao obter o ID do cliente." });
+                Console.WriteLine("ModelState inválido: " + string.Join(", ", ModelState.Values.SelectMany(v => v.Errors.Select(e => e.ErrorMessage))));
+                return Json(new { success = false, message = "Dados inválidos. Verifique os campos obrigatórios." });
             }
-            return Json(new { success = false });
+
+            // Obter o ID do cliente logado
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (string.IsNullOrEmpty(userId) || !int.TryParse(userId, out int idCliente))
+            {
+                Console.WriteLine("Erro ao obter ID do cliente.");
+                return Json(new { success = false, message = "Erro ao identificar o cliente logado." });
+            }
+
+            Console.WriteLine($"IdCliente obtido: {idCliente}");
+
+            // Verificar se o ID da moto existe na base de dados
+            var motoExistente = await _context.Motos.AnyAsync(m => m.IdMoto == interesse.IdMoto);
+            if (!motoExistente)
+            {
+                Console.WriteLine($"A moto com ID_Moto = {interesse.IdMoto} não existe na base de dados.");
+                return Json(new { success = false, message = "A moto selecionada não existe." });
+            }
+
+            Console.WriteLine($"Moto com ID_Moto = {interesse.IdMoto} foi validada.");
+
+            try
+            {
+                // Configuração para salvar interesse
+                interesse.IdCliente = idCliente;
+                interesse.DataInteresse = DateTime.Now;
+
+                _context.InteresseMotos.Add(interesse);
+                await _context.SaveChangesAsync();
+
+                Console.WriteLine("Interesse salvo com sucesso!");
+                return Json(new { success = true });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erro ao salvar interesse: {ex.Message}");
+                return Json(new { success = false, message = "Erro ao salvar no banco de dados. Tente novamente mais tarde." });
+            }
         }
 
         [Authorize]
-        public async Task<IActionResult> Aprovar(int id)
+        public async Task<IActionResult> AprovarPedido(int id, string email)
         {
             var tipoUsuario = User.FindFirstValue("Tipo_Utilizador");
 
@@ -53,16 +93,81 @@ namespace SportMotos.Controllers
             }
 
             var interesse = await _context.InteresseMotos.FindAsync(id);
-            if (interesse == null) return NotFound();
+            if (interesse == null)
+            {
+                return NotFound("Pedido não encontrado.");
+            }
 
+            // Atualiza o status do pedido para "Aprovado"
             interesse.Status = "Aprovado";
+            _context.Update(interesse);
             await _context.SaveChangesAsync();
 
-            // Enviar email
-            //await _emailService.EnviarEmail(interesse.EmailCliente, "Seu interesse foi aprovado!",
-            //    $"Olá {interesse.NomeCliente}, seu interesse na moto foi aprovado! Visite-nos para fechar negócio.");
+            // Envia o email ao cliente
+            await EnviarEmailAprovacao(email, interesse);
 
-            return RedirectToAction("Dashboard");
+            return Ok();
         }
+
+        [HttpPost]
+        public async Task<IActionResult> RejeitarPedido(int id)
+        {
+            var interesse = await _context.InteresseMotos.FindAsync(id);
+            if (interesse == null)
+            {
+                return NotFound("Pedido não encontrado.");
+            }
+
+            // Atualiza o status do pedido para "Rejeitado"
+            interesse.Status = "Rejeitado";
+            _context.Update(interesse);
+            await _context.SaveChangesAsync();
+
+            return Ok();
+        }
+
+        private async Task EnviarEmailAprovacao(string email, InteresseMotos interesse)
+        {
+            // Carregar o cliente e a moto relacionados ao interesse
+            var interesseCompleto = await _context.InteresseMotos
+                .Include(i => i.Cliente)
+                .Include(i => i.Moto)
+                .FirstOrDefaultAsync(i => i.IdInteresse == interesse.IdInteresse);
+
+            if (interesseCompleto == null || interesseCompleto.Cliente == null || interesseCompleto.Moto == null)
+            {
+                Console.WriteLine("Erro ao carregar os dados do interesse, cliente ou moto.");
+                return;
+            }
+
+            var nomeCliente = interesseCompleto.Cliente.Nome;
+            var marcaMoto = interesseCompleto.Moto.Marca;
+
+            var subject = "Pedido Aprovado";
+            var message = $@"
+                    Olá, {nomeCliente}!
+
+                    Temos o prazer de informar que o seu pedido para a moto da marca {marcaMoto} foi aprovado com sucesso. Entre em contato conosco para mais informações ou para agendar a retirada.
+
+                    **Horário de funcionamento:**
+                    - Seg. a Sex.: 9:00 às 18:00
+                    - Sáb.: 9:00 às 17:00
+                    - Dom.: Encerrados
+
+                    **Contactos:**
+                    - Tlm: 922333444
+                    - Tlf: 232876554
+                    - Email: sportmotos@gmail.com
+
+                    Estamos à sua disposição para quaisquer dúvidas ou suporte adicional.
+
+                    Atenciosamente,  
+                    SportMotos
+                ";
+
+            // Enviar o email
+            await _emailService.SendEmailAsync(email, subject, message);
+        }
+
     }
 }

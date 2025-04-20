@@ -488,7 +488,7 @@ namespace SportMotos.Migrations
 
                     b.Property<DateTime?>("DataInteresse")
                         .HasColumnType("datetime")
-                        .HasColumnName("Data_Interesse");
+                        .HasColumnName("DataInteresse");
 
                     b.Property<int>("IdCliente")
                         .HasColumnType("int");

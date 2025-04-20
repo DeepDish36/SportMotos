@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using SportMotos.Models;
+using SportMotos.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +20,9 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+// Adiciona o EmailService ao contêiner de serviços
+builder.Services.AddScoped<IEmailService, EmailService>();
 
 var app = builder.Build();
 

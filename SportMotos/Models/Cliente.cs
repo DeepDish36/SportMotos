@@ -69,4 +69,7 @@ public partial class Cliente
     public virtual ICollection<Favoritos> Favoritos { get; set; } = new List<Favoritos>();
 
     public virtual ICollection<Orcamento> Orcamentos { get; set; } = new List<Orcamento>();
+
+    // Propriedade de navegação para os interesses
+    public virtual ICollection<InteresseMotos> Interesses { get; set; } = new List<InteresseMotos>();
 }

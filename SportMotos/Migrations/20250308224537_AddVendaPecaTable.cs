@@ -312,7 +312,7 @@ namespace SportMotos.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     IdCliente = table.Column<int>(type: "int", nullable: false),
                     IdMoto = table.Column<int>(type: "int", nullable: false),
-                    Data_Interesse = table.Column<DateTime>(type: "datetime", nullable: true),
+                    DataInteresse = table.Column<DateTime>(type: "datetime", nullable: true),
                     Status = table.Column<string>(type: "VARCHAR(20)", nullable: false)
                 },
                 constraints: table =>

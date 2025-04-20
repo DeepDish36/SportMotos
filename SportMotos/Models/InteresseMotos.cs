@@ -10,22 +10,24 @@ namespace SportMotos.Models
         public int IdInteresse { get; set; }
 
         [Required]
-        [ForeignKey("Cliente")]
+        [Column("ID_Cliente")] // Corrige o mapeamento para a coluna correta
         public int IdCliente { get; set; }
 
         [Required]
-        [ForeignKey("Moto")]
+        [Column("ID_Moto")] // Corrige o mapeamento para a coluna correta
         public int IdMoto { get; set; }
 
+        [Column("DataInteresse")] // Corrige o nome para corresponder ao banco de dados
         public DateTime? DataInteresse { get; set; } = DateTime.Now;
 
-        [Column(TypeName = "VARCHAR(20)")]
+        [Column("Status", TypeName = "VARCHAR(20)")]
         public string Status { get; set; } = "Pendente";
 
-        // Propriedades de Navegação
-        public virtual Cliente Cliente { get; set; } = null!;
+        // Propriedades de Navegação (não mapeadas para colunas)
+        [ForeignKey("IdCliente")]
+        public virtual Cliente? Cliente { get; set; }
 
-        public virtual Moto Moto { get; set; } = null!;
+        [ForeignKey("IdMoto")]
+        public virtual Moto? Moto { get; set; }
     }
-
 }

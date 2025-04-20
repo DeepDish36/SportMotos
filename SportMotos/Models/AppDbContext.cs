@@ -483,14 +483,34 @@ public partial class AppDbContext : DbContext
 
         modelBuilder.Entity<InteresseMotos>(entity =>
         {
+            // Chave primária
             entity.HasKey(e => e.IdInteresse).HasName("PK__InteresseMotos__ID_Interesse");
 
+            // Nome da tabela
             entity.ToTable("InteresseMotos");
 
+            // Propriedades
             entity.Property(e => e.IdInteresse).HasColumnName("ID_Interesse");
             entity.Property(e => e.DataInteresse)
                 .HasColumnType("datetime")
-                .HasColumnName("Data_Interesse");
+                .HasColumnName("DataInteresse");
+            entity.Property(e => e.Status)
+                .HasColumnType("VARCHAR(20)")
+                .HasDefaultValue("Pendente")
+                .HasColumnName("Status");
+
+            // Configuração das chaves estrangeiras
+            entity.HasOne(e => e.Cliente)
+                .WithMany(c => c.Interesses) // Assume que o cliente pode ter múltiplos interesses
+                .HasForeignKey(e => e.IdCliente)
+                .OnDelete(DeleteBehavior.Cascade) // Define comportamento de deleção em cascata
+                .HasConstraintName("FK__InteresseMotos__ID_Cliente");
+
+            entity.HasOne(e => e.Moto)
+                .WithMany(m => m.Interesses) // Assume que a moto pode ter múltiplos interesses
+                .HasForeignKey(e => e.IdMoto)
+                .OnDelete(DeleteBehavior.Cascade) // Define comportamento de deleção em cascata
+                .HasConstraintName("FK__InteresseMotos__ID_Moto");
         });
 
         modelBuilder.Entity<ItensPedido>(entity =>

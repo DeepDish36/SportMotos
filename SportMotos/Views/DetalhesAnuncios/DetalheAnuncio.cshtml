@@ -163,8 +163,8 @@
 <script src="~/js/jquery.js"></script>
 <script src="~/js/bootstrap.bundle.min.js"></script>
 <script>
-    //Marcar Favorito
-            document.addEventListener("DOMContentLoaded", function () {
+        // Marcar Favorito
+    document.addEventListener("DOMContentLoaded", function () {
         const favoritoBtn = document.getElementById('favorito-btn');
         const icon = document.getElementById('favorito-icon');
         const idMotoInput = document.getElementById('moto-id');
@@ -174,7 +174,7 @@
                 e.preventDefault();
 
                 const idMoto = idMotoInput.value;
-                const tipoAnuncio = '@ViewBag.TipoAnuncio';
+                const tipoAnuncio = 'motos';
 
                 const isFavoritado = icon.classList.contains('bi-heart-fill');
 
@@ -196,25 +196,25 @@
                     icon.style.color = "black";
                     this.title = "Adicionar aos Favoritos";
 
-                        fetch('/Favoritos/Remover', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ anuncioId: idMoto, tipoAnuncio: tipoAnuncio })
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return response.json();
-    })
-    .then(data => {
-        if (!data.sucesso) {
-            console.error('Erro ao remover dos favoritos:', data.mensagem);
-        }
-    })
-    .catch(error => {
-        console.error('Erro na requisição:', error);
-    });
+                    fetch('/Favoritos/Remover', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ anuncioId: idMoto, tipoAnuncio: tipoAnuncio })
+                    })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error(`HTTP error! status: ${response.status}`);
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            if (!data.sucesso) {
+                                console.error('Erro ao remover dos favoritos:', data.mensagem);
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Erro na requisição:', error);
+                        });
                 }
             });
         }
@@ -223,36 +223,39 @@
         const increaseBtn = document.getElementById("increase");
         const quantityInput = document.getElementById("quantity");
         const totalPriceBadge = document.getElementById("totalPrice");
-        const precoUnitario = @Model.Preco; // Obtém o preço do produto
+        const precoUnitario = 8000; // Obtém o preço do produto
 
-        // Função para atualizar a quantidade
-        function updateQuantity(change) {
-            let quantidade = parseInt(quantityInput.value) + change;
-            if (quantidade < 1) return;
+        // Verificar se os elementos existem antes de adicionar eventos
+        if (decreaseBtn && increaseBtn && quantityInput && totalPriceBadge) {
+            // Função para atualizar a quantidade
+            function updateQuantity(change) {
+                let quantidade = parseInt(quantityInput.value) + change;
+                if (quantidade < 1) return;
 
-            quantityInput.value = quantidade;
+                quantityInput.value = quantidade;
 
-            // Atualizar preço total e exibir badge se quantidade for >= 2
-            if (quantidade >= 2) {
-                totalPriceBadge.textContent = `Total: €${(precoUnitario * quantidade).toFixed(2)}`;
-                totalPriceBadge.style.display = "inline-block";
-            } else {
-                totalPriceBadge.style.display = "none";
+                // Atualizar preço total e exibir badge se quantidade for >= 2
+                if (quantidade >= 2) {
+                    totalPriceBadge.textContent = `Total: €${(precoUnitario * quantidade).toFixed(2)}`;
+                    totalPriceBadge.style.display = "inline-block";
+                } else {
+                    totalPriceBadge.style.display = "none";
+                }
             }
-        }
 
-        // Eventos de clique nos botões
-        decreaseBtn.addEventListener("click", () => updateQuantity(-1));
-        increaseBtn.addEventListener("click", () => updateQuantity(1));
+            // Eventos de clique nos botões
+            decreaseBtn.addEventListener("click", () => updateQuantity(-1));
+            increaseBtn.addEventListener("click", () => updateQuantity(1));
+        }
     });
 
     //Marcar intersse
-    $(function () {
+        $(function () {
         $("#btnInteresse").click(function (e) {
             e.preventDefault();
-            var idAnuncio = $(this).data("id");
+            var idMoto = $(this).data("id"); // Alterado para idMoto para consistência
 
-            $.get("/Interesse/Criar", { idMoto: idAnuncio }, function (data) {
+            $.get("/Interesse/Criar", { idMoto: idMoto }, function (data) {
                 $("body").append(data);
                 $("#modalInteresse").modal("show");
             }).fail(function (jqXHR, textStatus, errorThrown) {
@@ -263,7 +266,7 @@
         $(document).on("submit", "#formInteresse", function (e) {
             e.preventDefault();
             var formData = {
-                IdAnuncio: $("#IdAnuncio").val(),
+                IdMoto: $("#IdAnuncio").val(), // Alterado para IdMoto para corresponder ao modelo
                 NomeCliente: $("#NomeCliente").val(),
                 EmailCliente: $("#EmailCliente").val()
             };
@@ -275,6 +278,8 @@
                 } else {
                     alert("Erro ao enviar interesse.");
                 }
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                console.error("Erro ao enviar interesse: " + textStatus, errorThrown);
             });
         });
     });

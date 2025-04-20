@@ -30,7 +30,7 @@ namespace SportMotos.Controllers
                 .ToList();
 
             ViewBag.AnuncioMotosExpirados = anuncioMotos.Count(a => (DateTime.Now - a.DataExpiracao.Value).TotalDays >= 50);
-            
+
             var anuncioPecas = _context.AnuncioPecas
                 .Where(a => a.DataExpiracao.HasValue)
                 .ToList();
@@ -59,19 +59,19 @@ namespace SportMotos.Controllers
                 .FirstOrDefault();
             ViewBag.UltimoCliente = ultimoCliente ?? "Nenhum Cliente";
 
-            // 🔹 Buscar os pedidos recentes
-            ViewBag.UltimosPedidos = _context.Pedidos
-                .Include(p => p.Cliente)
-                .OrderByDescending(p => p.DataCompra)
-                .Take(5)
-                .Select(p => new
+            var ultimosPedidos = _context.InteresseMotos
+                .Select(i => new
                 {
-                    p.IdPedido,
-                    ClienteNome = p.Cliente.Nome,
-                    p.DataCompra,
-                    p.Status
+                    IdInteresse = i.IdInteresse,
+                    ClienteNome = i.Cliente.Nome,
+                    ClienteEmail = i.Cliente.Email,
+                    DataCompra = i.DataInteresse,
+                    Status = i.Status,
+                    TipoPedido = "motos" // Adiciona o tipo de pedido
                 })
                 .ToList();
+
+            ViewBag.UltimosPedidos = ultimosPedidos;
 
             // 🔹 Buscar anúncios de motos (5 ou todos)
             var anunciosMotoQuery = _context.AnuncioMotos
