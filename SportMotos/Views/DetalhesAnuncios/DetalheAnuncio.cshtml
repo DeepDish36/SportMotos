@@ -19,8 +19,8 @@
                         {
                             Console.WriteLine("Nome imagem:" + imagem);
                             <img src="@Url.Content("~/images/motos/" + imagem.NomeArquivo + ".jpg")"
-                            alt="Imagem da Moto @Model.IdMotoNavigation.Matricula"
-                            class="img-fluid rounded">
+                                 alt="Imagem da Moto @Model.IdMotoNavigation.Matricula"
+                                 class="img-fluid rounded">
                         }
                     }
                     else
@@ -123,17 +123,10 @@
                     {
                         <div class="mt-3">
                             <div class="d-flex align-items-center">
-                                <!-- Botão de diminuir quantidade -->
                                 <button type="button" class="btn btn-danger me-2" id="decrease">-</button>
-
-                                <!-- Campo de quantidade (desativado) -->
                                 <input type="text" id="quantity" class="form-control text-center" value="1" disabled style="width: 50px;">
-
-                                <!-- Botão de aumentar quantidade -->
                                 <button type="button" class="btn btn-success ms-2" id="increase">+</button>
                             </div>
-
-                            <!-- Badge do preço total (escondido por padrão) -->
                             <span id="totalPrice" class="badge bg-primary mt-2" style="display: none;"></span>
                         </div>
                     }
@@ -146,12 +139,13 @@
                     {
                         <div class="mt-3">
                             <a href="#" class="btn btn-primary" id="btnInteresse" data-id="@Model.IdMoto">Estou interessado</a>
-                            <a href="#" id="favorito-btn">
-                                <svg id="favorito-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="black" class="bi bi-heart" viewBox="0 0 16 16">
+                            <a href="#" id="favorito-btn" class="btn btn-danger">
+                                <svg id="favorito-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" class="bi bi-heart" viewBox="0 0 16 16">
                                     <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15" />
                                 </svg>
                             </a>
-                            <input type="hidden" id="moto-id" value="@Model.IdMoto" />
+                            <p>ID_Moto: @Model.IdMoto</p>
+                            <input type="hidden" id="moto-id" name="IdMoto" value="@Model.IdMoto" />
                         </div>
                     }
                 </div>
@@ -163,57 +157,116 @@
 <script src="~/js/jquery.js"></script>
 <script src="~/js/bootstrap.bundle.min.js"></script>
 <script>
-        // Marcar Favorito
+                // Script principal para funcionalidade de favoritos e quantidade
     document.addEventListener("DOMContentLoaded", function () {
         const favoritoBtn = document.getElementById('favorito-btn');
         const icon = document.getElementById('favorito-icon');
-        const idMotoInput = document.getElementById('moto-id');
+        const idMotoInput = document.getElementById('moto-id'); // Específico para motos
+        const idPecaInput = document.getElementById('peca-id'); // Específico para peças
 
-        if (favoritoBtn && icon && idMotoInput) {
+        // Verificar se é um anúncio de moto ou peça
+        if (idMotoInput) {
+            console.log("ID_Moto capturado antes de enviar:", idMotoInput.value);
+        } else if (idPecaInput) {
+            console.log("ID_Peca capturado antes de enviar:", idPecaInput.value);
+        } else {
+            console.error("Nenhum ID de anúncio encontrado (moto ou peça).");
+            return; // Interrompe o script se nenhum ID for encontrado
+        }
+
+        const idAnuncio = idMotoInput ? parseInt(idMotoInput.value, 10) : parseInt(idPecaInput.value, 10);
+        const tipoAnuncio = idMotoInput ? 'motos' : 'pecas';
+
+        if (favoritoBtn && icon) {
+            // Verificar se o anúncio já está nos favoritos
+            fetch(`/Favoritos/Verificar?idAnuncio=${idAnuncio}&tipoAnuncio=${tipoAnuncio}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`Erro HTTP! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log("Resultado da verificação de favorito:", data);
+                    if (data.sucesso && data.isFavorito) {
+                        // Atualiza o ícone para o estado favoritado
+                        icon.classList.replace('bi-heart', 'bi-heart-fill');
+                        icon.style.color = "#7d0404"; // Define a cor vermelha
+                        favoritoBtn.title = "Remover dos Favoritos";
+                    } else {
+                        // Atualiza o ícone para o estado não favoritado
+                        icon.classList.replace('bi-heart-fill', 'bi-heart');
+                        icon.style.color = "black"; // Define a cor preta
+                        favoritoBtn.title = "Adicionar aos Favoritos";
+                    }
+                })
+                .catch(error => {
+                    console.error("Erro ao verificar favorito:", error);
+                });
+
+            // Lógica para adicionar ou remover dos favoritos
             favoritoBtn.addEventListener('click', function (e) {
                 e.preventDefault();
-
-                const idMoto = idMotoInput.value;
-                const tipoAnuncio = 'motos';
 
                 const isFavoritado = icon.classList.contains('bi-heart-fill');
 
                 if (!isFavoritado) {
-                    icon.classList.replace('bi-heart', 'bi-heart-fill');
-                    icon.style.color = "#7d0404";
-                    this.title = "Remover dos Favoritos";
+                    console.log("Tentando adicionar aos favoritos:", { Id_Anuncio: idAnuncio, tipoAnuncio: tipoAnuncio });
 
                     fetch('/Favoritos/Adicionar', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ anuncioId: idMoto, tipoAnuncio: tipoAnuncio })
-                    }).then(response => response.json())
+                        body: JSON.stringify({ Id_Anuncio: idAnuncio, tipoAnuncio: tipoAnuncio })
+                    })
+                        .then(response => {
+                            console.log("Resposta do servidor ao adicionar:", response);
+                            if (!response.ok) {
+                                throw new Error(`Erro HTTP! status: ${response.status}`);
+                            }
+                            return response.json();
+                        })
                         .then(data => {
-                            if (!data.sucesso) alert('Erro ao adicionar aos favoritos.');
+                            console.log("Dados retornados ao adicionar:", data);
+                            if (data.sucesso) {
+                                icon.classList.replace('bi-heart', 'bi-heart-fill');
+                                icon.style.color = "#7d0404";
+                                favoritoBtn.title = "Remover dos Favoritos";
+                            } else {
+                                console.error('Erro ao adicionar aos favoritos:', data.mensagem);
+                                alert(data.mensagem || 'Erro ao adicionar aos favoritos.');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Erro na requisição ao adicionar:', error);
+                            alert('Erro ao processar a requisição. Por favor, tente novamente.');
                         });
                 } else {
-                    icon.classList.replace('bi-heart-fill', 'bi-heart');
-                    icon.style.color = "black";
-                    this.title = "Adicionar aos Favoritos";
+                    console.log("Tentando remover dos favoritos:", { Id_Anuncio: idAnuncio, tipoAnuncio: tipoAnuncio });
 
                     fetch('/Favoritos/Remover', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ anuncioId: idMoto, tipoAnuncio: tipoAnuncio })
+                        body: JSON.stringify({ Id_Anuncio: idAnuncio, tipoAnuncio: tipoAnuncio })
                     })
                         .then(response => {
+                            console.log("Resposta do servidor ao remover:", response);
                             if (!response.ok) {
                                 throw new Error(`HTTP error! status: ${response.status}`);
                             }
                             return response.json();
                         })
                         .then(data => {
-                            if (!data.sucesso) {
+                            console.log("Dados retornados ao remover:", data);
+                            if (data.sucesso) {
+                                icon.classList.replace('bi-heart-fill', 'bi-heart');
+                                icon.style.color = "black";
+                                favoritoBtn.title = "Adicionar aos Favoritos";
+                            } else {
                                 console.error('Erro ao remover dos favoritos:', data.mensagem);
                             }
                         })
                         .catch(error => {
-                            console.error('Erro na requisição:', error);
+                            console.error('Erro na requisição ao remover:', error);
                         });
                 }
             });
@@ -229,9 +282,10 @@
         if (decreaseBtn && increaseBtn && quantityInput && totalPriceBadge) {
             // Função para atualizar a quantidade
             function updateQuantity(change) {
-                let quantidade = parseInt(quantityInput.value) + change;
-                if (quantidade < 1) return;
+                let quantidade = parseInt(quantityInput.value, 10) + change;
+                if (quantidade < 1) return; // Não permite quantidade menor que 1
 
+                // Atualiza o valor no campo de quantidade
                 quantityInput.value = quantidade;
 
                 // Atualizar preço total e exibir badge se quantidade for >= 2
@@ -246,11 +300,13 @@
             // Eventos de clique nos botões
             decreaseBtn.addEventListener("click", () => updateQuantity(-1));
             increaseBtn.addEventListener("click", () => updateQuantity(1));
+        } else {
+            console.error("Os elementos necessários para atualizar a quantidade não foram encontrados.");
         }
     });
 
     //Marcar intersse
-        $(function () {
+    $(function () {
         $("#btnInteresse").click(function (e) {
             e.preventDefault();
             var idMoto = $(this).data("id"); // Alterado para idMoto para consistência

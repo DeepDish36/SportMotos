@@ -334,15 +334,22 @@
                         }
                     </td>
                     <td>
-                        <span class="badge @(pedido.Status == "Pendente" ? "bg-warning" : "bg-success")">
+                        <span class="badge @(pedido.Status == "Pendente" ? "bg-warning" : pedido.Status == "Rejeitado" ? "bg-danger" : "bg-success")">
                             @pedido.Status
                         </span>
                     </td>
                     <td>
                         @if (pedido.TipoPedido == "motos")
                         {
-                            <button class="btn btn-success btn-sm btn-aprovar" data-id="@pedido.IdInteresse" data-cliente="@pedido.ClienteEmail">Aprovar</button>
-                            <button class="btn btn-danger btn-sm btn-rejeitar" data-id="@pedido.IdInteresse">Rejeitar</button>
+                            @if(pedido.Status == "Pendente")
+                            {
+                                <button class="btn btn-success btn-sm btn-aprovar" data-id="@pedido.IdInteresse" data-cliente="@pedido.ClienteEmail">Aprovar</button>
+                                <button class="btn btn-danger btn-sm btn-rejeitar" data-id="@pedido.IdInteresse">Rejeitar</button>
+                            }
+                            else
+                            {
+                                <a href="#" class="btn btn-info btn-sm">Ver</a>
+                            }
                         }
                         else
                         {
@@ -476,7 +483,7 @@
         });
 
         $(document).on("click", ".btn-rejeitar", function () {
-            const pedidoId = $(this).data("id");
+            const interesseId = $(this).data("id");
 
             if (confirm("Tem certeza de que deseja rejeitar este pedido?")) {
                 $.post("/Interesse/RejeitarPedido", { id: interesseId })

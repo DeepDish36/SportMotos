@@ -43,6 +43,16 @@ namespace SportMotos.Controllers
                 return Json(new { success = false, message = "Dados inválidos. Verifique os campos obrigatórios." });
             }
 
+            // Obter o tipo de utilizador logado
+            var tipoUsuario = User.FindFirstValue("Tipo_Utilizador");
+
+            // Verificar se o usuário é um admin
+            if (tipoUsuario == "Admin")
+            {
+                Console.WriteLine("Admins não podem fazer pedidos.");
+                return Json(new { success = false, message = "Admins não podem fazer pedidos." });
+            }
+
             // Obter o ID do cliente logado
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (string.IsNullOrEmpty(userId) || !int.TryParse(userId, out int idCliente))
@@ -145,29 +155,31 @@ namespace SportMotos.Controllers
 
             var subject = "Pedido Aprovado";
             var message = $@"
-                    Olá, {nomeCliente}!
-
-                    Temos o prazer de informar que o seu pedido para a moto da marca {marcaMoto} foi aprovado com sucesso. Entre em contato conosco para mais informações ou para agendar a retirada.
-
-                    **Horário de funcionamento:**
-                    - Seg. a Sex.: 9:00 às 18:00
-                    - Sáb.: 9:00 às 17:00
-                    - Dom.: Encerrados
-
-                    **Contactos:**
-                    - Tlm: 922333444
-                    - Tlf: 232876554
-                    - Email: sportmotos@gmail.com
-
-                    Estamos à sua disposição para quaisquer dúvidas ou suporte adicional.
-
-                    Atenciosamente,  
-                    SportMotos
-                ";
-
+                <html>
+                <body>
+                    <h2>Olá, {nomeCliente}!</h2>
+                    <p>Temos o prazer de informar que o seu pedido para a moto da marca <strong>{marcaMoto}</strong> foi aprovado com sucesso.</p>
+                    <p>Entre em contato conosco para mais informações ou para agendar a retirada.</p>
+                    <h3>Horário de funcionamento:</h3>
+                    <ul>
+                        <li><strong>Seg. a Sex.:</strong> 9:00 às 18:00</li>
+                        <li><strong>Sáb.:</strong> 9:00 às 17:00</li>
+                        <li><strong>Dom.:</strong> Encerrados</li>
+                    </ul>
+                    <h3>Contactos:</h3>
+                    <ul>
+                        <li><strong>Tlm:</strong> 922333444</li>
+                        <li><strong>Tlf:</strong> 232876554</li>
+                        <li><strong>Email:</strong> sportmotos@gmail.com</li>
+                    </ul>
+                    <p>Estamos à sua disposição para quaisquer dúvidas ou suporte adicional.</p>
+                    <p>Atenciosamente,</p>
+                    <p><strong>Equipe SportMotos</strong></p>
+                </body>
+                </html>
+            ";
             // Enviar o email
             await _emailService.SendEmailAsync(email, subject, message);
         }
-
     }
 }
