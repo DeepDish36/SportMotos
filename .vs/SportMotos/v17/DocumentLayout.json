@@ -60,22 +60,20 @@
             {
               "$type": "Document",
               "DocumentIndex": 4,
-              "Title": "dbo.Users [Dados]",
+              "Title": "dbo.Users.sql",
               "DocumentMoniker": "ViewDataWindow_MSSQL__/_LocalDB__MSSQLLocalDB/C__USERS_GOMES_DESKTOP_SPORTMOTOS_SPORTMOTOS_BIN_DEBUG_NET8.0_SPORTMOTOS.MDF/True/SqlTable/dbo.Users.sql",
-              "ToolTip": "dbo.Users [Dados]",
+              "ToolTip": "ViewDataWindow_MSSQL__/_LocalDB__MSSQLLocalDB/C__USERS_GOMES_DESKTOP_SPORTMOTOS_SPORTMOTOS_BIN_DEBUG_NET8.0_SPORTMOTOS.MDF/True/SqlTable/dbo.Users.sql",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
-              "WhenOpened": "2025-04-22T15:01:54.601Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-22T15:01:54.601Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "dbo.Cliente [Dados]",
+              "Title": "dbo.Cliente.sql",
               "DocumentMoniker": "ViewDataWindow_MSSQL__/_LocalDB__MSSQLLocalDB/C__USERS_GOMES_DESKTOP_SPORTMOTOS_SPORTMOTOS_BIN_DEBUG_NET8.0_SPORTMOTOS.MDF/True/SqlTable/dbo.Cliente.sql",
-              "ToolTip": "dbo.Cliente [Dados]",
+              "ToolTip": "ViewDataWindow_MSSQL__/_LocalDB__MSSQLLocalDB/C__USERS_GOMES_DESKTOP_SPORTMOTOS_SPORTMOTOS_BIN_DEBUG_NET8.0_SPORTMOTOS.MDF/True/SqlTable/dbo.Cliente.sql",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
-              "WhenOpened": "2025-04-22T14:54:23.903Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-22T14:54:23.903Z"
             },
             {
               "$type": "Document",
@@ -87,8 +85,7 @@
               "RelativeToolTip": "SportMotos\\Controllers\\CriarContaController.cs",
               "ViewState": "AgIAAA8AAAAAAAAAAADgvxYAAAAnAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-22T14:54:55.255Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-22T14:54:55.255Z"
             },
             {
               "$type": "Document",
@@ -100,8 +97,7 @@
               "RelativeToolTip": "SportMotos\\Controllers\\CriarAnuncioController.cs",
               "ViewState": "AgIAALkAAAAAAAAAAAAcwLoAAAAYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-22T14:42:03.91Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-22T14:42:03.91Z"
             },
             {
               "$type": "Document",
@@ -113,8 +109,7 @@
               "RelativeToolTip": "SportMotos\\Controllers\\DashBoardController.cs",
               "ViewState": "AgIAAIMAAAAAAAAAAAAwwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-22T14:40:44.42Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-22T14:40:44.42Z"
             },
             {
               "$type": "Document",
@@ -139,8 +134,7 @@
               "RelativeToolTip": "SportMotos\\Controllers\\InteresseController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-22T08:10:59.066Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-22T08:10:59.066Z"
             },
             {
               "$type": "Document",
@@ -152,8 +146,7 @@
               "RelativeToolTip": "SportMotos\\Controllers\\ForumController.cs",
               "ViewState": "AgIAACgBAAAAAAAAAAAQwBoBAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-22T08:06:37.53Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-22T08:06:37.53Z"
             },
             {
               "$type": "Document",
@@ -165,8 +158,7 @@
               "RelativeToolTip": "SportMotos\\Views\\Forum\\DetalhesForum.cshtml",
               "ViewState": "AgIAAFUAAAAAAAAAAAAqwJoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-04-22T08:02:43.24Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-22T08:02:43.24Z"
             },
             {
               "$type": "Document",
@@ -178,15 +170,14 @@
               "RelativeToolTip": "SportMotos\\Views\\Forum\\Forum.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-04-22T08:02:41.302Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-22T08:02:41.302Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 9,
-              "Title": "dbo.Resposta [Dados]",
+              "Title": "dbo.Resposta.sql",
               "DocumentMoniker": "ViewDataWindow_MSSQL__/_LocalDB__MSSQLLocalDB/C__USERS_GOMES_DESKTOP_SPORTMOTOS_SPORTMOTOS_BIN_DEBUG_NET8.0_SPORTMOTOS.MDF/True/SqlTable/dbo.Resposta.sql",
-              "ToolTip": "dbo.Resposta [Dados]",
+              "ToolTip": "ViewDataWindow_MSSQL__/_LocalDB__MSSQLLocalDB/C__USERS_GOMES_DESKTOP_SPORTMOTOS_SPORTMOTOS_BIN_DEBUG_NET8.0_SPORTMOTOS.MDF/True/SqlTable/dbo.Resposta.sql",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
               "WhenOpened": "2025-04-22T08:01:34.73Z"
             }
