@@ -54,7 +54,7 @@ namespace SportMotos.Controllers
             }
 
             // Obter o ID do cliente logado
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userId = User.FindFirstValue("IdCliente");
             if (string.IsNullOrEmpty(userId) || !int.TryParse(userId, out int idCliente))
             {
                 Console.WriteLine("Erro ao obter ID do cliente.");
