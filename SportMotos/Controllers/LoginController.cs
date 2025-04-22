@@ -26,8 +26,11 @@ namespace SportMotos.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(string Email, string password)
         {
+            Console.WriteLine("Método Login acionado!");
+
             if (string.IsNullOrWhiteSpace(Email) || string.IsNullOrWhiteSpace(password))
             {
+                Console.WriteLine("Erro: E-mail ou senha em branco.");
                 ViewBag.Mensagem = "E-mail e senha são obrigatórios!";
                 return View();
             }
@@ -42,6 +45,7 @@ namespace SportMotos.Controllers
 
             if (cliente == null && admin == null)
             {
+                Console.WriteLine("Erro: Nenhum cliente ou admin encontrado.");
                 ViewBag.Mensagem = "E-mail ou senha inválidos!";
                 return View();
             }
@@ -50,6 +54,7 @@ namespace SportMotos.Controllers
             var username = cliente?.Nome ?? admin?.Nome;
             if (string.IsNullOrEmpty(username))
             {
+                Console.WriteLine("Erro: Nome de utilizador não encontrado.");
                 ViewBag.Mensagem = "Erro ao identificar o utilizador!";
                 return View();
             }
@@ -58,6 +63,7 @@ namespace SportMotos.Controllers
             var user = _context.Users.FirstOrDefault(u => u.Username == username);
             if (user == null)
             {
+                Console.WriteLine("Erro: Usuário não encontrado na tabela Users.");
                 ViewBag.Mensagem = "E-mail ou senha inválidos!";
                 return View();
             }
@@ -77,30 +83,31 @@ namespace SportMotos.Controllers
 
             if (!senhaValida)
             {
+                Console.WriteLine("Erro: Senha inválida.");
                 ViewBag.Mensagem = "E-mail ou senha inválidos!";
                 return View();
             }
 
             // 🔥 Criar os Claims (dados da sessão)
             var claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.Name, user.Username), // Nome do utilizador
-                new Claim("Tipo_Utilizador", user.Tipo_Utilizador), // Tipo de utilizador (Cliente ou Admin)
-                new Claim(ClaimTypes.Email, emailNormalizado) // Email normalizado
-            };
+    {
+        new Claim(ClaimTypes.Name, user.Username), // Nome do utilizador
+        new Claim("Tipo_Utilizador", user.Tipo_Utilizador), // Tipo de utilizador (Cliente ou Admin)
+        new Claim(ClaimTypes.Email, emailNormalizado) // Email normalizado
+    };
 
             // Adiciona o IdCliente como claim se for Cliente
             if (cliente != null)
             {
-                claims.Add(new Claim(ClaimTypes.NameIdentifier, cliente.IdCliente.ToString())); // ID do cliente
-                Console.WriteLine($"Cliente autenticado: {cliente.Nome}, ID: {cliente.IdCliente}"); // Log para depuração
+                claims.Add(new Claim("IdCliente", cliente.IdCliente.ToString())); // ID do cliente com nome separado
+                Console.WriteLine($"Cliente autenticado: {cliente.Nome}, ID: {cliente.IdCliente}");
             }
 
             // Adiciona o IdAdmin como claim se for Admin
             if (admin != null)
             {
-                claims.Add(new Claim(ClaimTypes.NameIdentifier, admin.IdAdmin.ToString())); // ID do admin
-                Console.WriteLine($"Admin autenticado: {admin.Nome}, ID: {admin.IdAdmin}"); // Log para depuração
+                claims.Add(new Claim("IdAdmin", admin.IdAdmin.ToString())); // ID do admin com nome separado
+                Console.WriteLine($"Admin autenticado: {admin.Nome}, ID: {admin.IdAdmin}");
             }
 
             var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
@@ -120,10 +127,17 @@ namespace SportMotos.Controllers
 
             Console.WriteLine("Login realizado com sucesso!");
 
-            // Redireciona conforme o tipo de utilizador
-            return user.Tipo_Utilizador == "Cliente"
-                ? RedirectToAction("Index", "Home")
-                : RedirectToAction("Dashboard", "DashBoard");
+            // 🔄 Redireciona conforme o tipo de utilizador
+            if (cliente != null)
+            {
+                Console.WriteLine("Redirecionando Cliente para Home.");
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                Console.WriteLine("Redirecionando Admin para Dashboard.");
+                return RedirectToAction("Dashboard", "DashBoard");
+            }
         }
 
         [HttpGet]

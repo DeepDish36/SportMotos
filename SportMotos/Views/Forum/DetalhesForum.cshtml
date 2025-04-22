@@ -28,7 +28,23 @@
             foreach (var resposta in Model.Respostas)
             {
                 <div class="resposta p-3 mb-2 bg-light border rounded">
-                    <p><strong>@resposta.IdClienteNavigation?.Nome</strong> - @resposta.DataCriacao.ToString("dd/MM/yyyy HH:mm")</p>
+                    <p>
+                        <strong>
+                            @if (resposta.IdClienteNavigation != null)
+                            {
+                                @resposta.IdClienteNavigation.Nome
+                            }
+                            else if (resposta.IdAdminNavigation != null)
+                            {
+                                @resposta.IdAdminNavigation.Nome
+                            }
+                            else
+                            {
+                                <span class="text-muted">Usuário desconhecido</span>
+                            }
+                        </strong>
+                        - @resposta.DataCriacao.ToString("dd/MM/yyyy HH:mm")
+                    </p>
                     <p>@resposta.Conteudo</p>
                 </div>
             }

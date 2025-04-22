@@ -1193,3 +1193,8 @@ C:\Users\g0mes\Desktop\SportMotos\SportMotos\bin\Debug\net8.0\AngleSharp.dll
 C:\Users\g0mes\Desktop\SportMotos\SportMotos\bin\Debug\net8.0\AngleSharp.Css.dll
 C:\Users\g0mes\Desktop\SportMotos\SportMotos\bin\Debug\net8.0\HtmlSanitizer.dll
 C:\Users\g0mes\Desktop\SportMotos\SportMotos\bin\Debug\net8.0\System.Collections.Immutable.dll
+C:\Users\Gomes\Desktop\SportMotos\SportMotos\bin\Debug\net8.0\AngleSharp.dll
+C:\Users\Gomes\Desktop\SportMotos\SportMotos\bin\Debug\net8.0\AngleSharp.Css.dll
+C:\Users\Gomes\Desktop\SportMotos\SportMotos\bin\Debug\net8.0\HtmlSanitizer.dll
+C:\Users\Gomes\Desktop\SportMotos\SportMotos\bin\Debug\net8.0\Markdig.dll
+C:\Users\Gomes\Desktop\SportMotos\SportMotos\bin\Debug\net8.0\System.Collections.Immutable.dll

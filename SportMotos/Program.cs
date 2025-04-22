@@ -11,6 +11,8 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     {
         options.LoginPath = "/Login/Login"; // Página de login
         options.LogoutPath = "/Login/Logout"; // Página de logout
+        options.ExpireTimeSpan = TimeSpan.FromHours(1);
+        options.SlidingExpiration = true; // Atualiza a expiração a cada requisição
     });
 
 // Adicionando o DbContext e lendo a conexão do appsettings.json

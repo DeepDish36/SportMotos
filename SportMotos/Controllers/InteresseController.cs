@@ -174,7 +174,7 @@ namespace SportMotos.Controllers
                     </ul>
                     <p>Estamos à sua disposição para quaisquer dúvidas ou suporte adicional.</p>
                     <p>Atenciosamente,</p>
-                    <p><strong>Equipe SportMotos</strong></p>
+                    <p><strong>SportMotos</strong></p>
                 </body>
                 </html>
             ";

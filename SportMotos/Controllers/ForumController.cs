@@ -130,29 +130,59 @@ namespace SportMotos.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AdicionarResposta(int IdForum, string Conteudo)
         {
+            Console.WriteLine("Método AdicionarResposta acionado!");
+
+            // Verificar se o conteúdo é válido
             if (string.IsNullOrWhiteSpace(Conteudo))
             {
+                Console.WriteLine("Erro: Conteúdo da resposta está vazio.");
                 ModelState.AddModelError("", "A resposta não pode estar vazia.");
                 return RedirectToAction("DetalhesForum", "Forum", new { id = IdForum });
             }
 
+            // Capturar IDs do Cliente e do Admin
             var userIdClaim = User.FindFirst("IdCliente")?.Value;
             var adminIdClaim = User.FindFirst("IdAdmin")?.Value;
 
+            Console.WriteLine($"ID Cliente encontrado no Claim: {userIdClaim}");
+            Console.WriteLine($"ID Admin encontrado no Claim: {adminIdClaim}");
+
+            // Verificar autenticação
             if (string.IsNullOrEmpty(userIdClaim) && string.IsNullOrEmpty(adminIdClaim))
             {
+                Console.WriteLine("Erro: Utilizador não autenticado.");
                 ModelState.AddModelError("", "Utilizador não autenticado.");
                 return RedirectToAction("DetalhesForum", "Forum", new { id = IdForum });
             }
 
-            // Define os valores corretos para Cliente e Admin
+            // Definir ID correto para Cliente/Admin
             int? idCliente = !string.IsNullOrEmpty(userIdClaim) ? int.Parse(userIdClaim) : null;
             int? idAdmin = !string.IsNullOrEmpty(adminIdClaim) ? int.Parse(adminIdClaim) : null;
 
-            // 🔥 Inserção manual via SQL para evitar conflito com triggers
-            await _context.Database.ExecuteSqlRawAsync(
-                "INSERT INTO Resposta (ID_Forum, Conteudo, Data_Criacao, ID_Cliente, ID_Admin) VALUES (@p0, @p1, @p2, @p3, @p4)",
-                IdForum, Conteudo, DateTime.Now, idCliente, idAdmin);
+            Console.WriteLine($"ID Cliente processado: {idCliente}");
+            Console.WriteLine($"ID Admin processado: {idAdmin}");
+
+            try
+            {
+                // 🔥 Inserção manual via SQL para evitar conflitos com triggers
+                Console.WriteLine($"Tentando inserir resposta no Fórum: IDForum = {IdForum}, Conteúdo = {Conteudo}, Data = {DateTime.Now}, ID Cliente = {idCliente}, ID Admin = {idAdmin}");
+                await _context.Database.ExecuteSqlRawAsync(
+                     "INSERT INTO Resposta (ID_Forum, Conteudo, Data_Criacao, ID_Cliente, ID_Admin) VALUES (@p0, @p1, @p2, @p3, @p4)",
+                     IdForum,
+                     Conteudo,
+                     DateTime.Now,
+                     idCliente.HasValue ? idCliente.Value : null,
+                     idAdmin.HasValue ? idAdmin.Value : null
+                 );
+
+
+                Console.WriteLine("Resposta inserida com sucesso!");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erro ao inserir resposta: {ex.Message}");
+                ModelState.AddModelError("", "Erro ao inserir resposta no fórum.");
+            }
 
             return RedirectToAction("DetalhesForum", "Forum", new { id = IdForum });
         }
