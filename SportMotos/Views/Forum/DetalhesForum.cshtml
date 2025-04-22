@@ -1,4 +1,5 @@
 ﻿@model Forum
+@using Markdig
 
 @{
     ViewData["Title"] = @Model.Titulo;
@@ -16,7 +17,9 @@
 
     <div class="forum-descricao mt-3">
         <h4>Descrição</h4>
-        <p>@Model.Descricao</p>
+        <div class="markdown-content">
+            @Html.Raw(Markdown.ToHtml(Model.Descricao))
+        </div>
     </div>
 
     <hr />

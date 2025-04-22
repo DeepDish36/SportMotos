@@ -1,0 +1,40 @@
+﻿@{
+    ViewData["Title"] = "Os Meus Anúncios Favoritos";
+}
+@model IEnumerable<SportMotos.Models.Favoritos>
+
+<div class="container mt-5">
+    <h3 class="mb-4">Os meus Anúncios Favoritos</h3>
+
+    <ul class="list-group">
+        @foreach (var favorito in Model)
+        {
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <div>
+                    @if (favorito.AnuncioMoto != null)
+                    {
+                        <h5 class="mb-1">@favorito.AnuncioMoto.Titulo</h5>
+                        <p class="mb-1">@favorito.AnuncioMoto.Descricao</p>
+                        <small class="text-body-secondary">
+                            Publicado em: @favorito.AnuncioMoto.DataPublicacao.ToString("dd/MM/yyyy")
+                        </small>
+                        <a asp-controller="DetalhesAnuncio" asp-action="DetalheAnuncio" asp-route-id="@favorito.AnuncioMoto.IdAnuncioMoto" class="btn btn-sm btn-outline-secondary">
+                            Ver Detalhes
+                        </a>
+                    }
+                    else if (favorito.AnuncioPeca != null)
+                    {
+                        <h5 class="mb-1">@favorito.AnuncioPeca.Titulo</h5>
+                        <p class="mb-1">@favorito.AnuncioPeca.Descricao</p>
+                        <small class="text-body-secondary">
+                            Publicado em: @favorito.AnuncioPeca.DataPublicacao.ToString("dd/MM/yyyy")
+                        </small>
+                        <a asp-controller="AnuncioPeca" asp-action="Detalhes" asp-route-id="@favorito.AnuncioPeca.IdAnuncioPeca" class="btn btn-sm btn-outline-secondary">
+                            Ver Detalhes
+                        </a>
+                    }
+                </div>
+            </li>
+        }
+    </ul>
+</div>

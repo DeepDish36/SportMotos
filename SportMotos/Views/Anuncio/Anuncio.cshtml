@@ -96,141 +96,73 @@
     }
 </div>
 
-<div class="row row-cols-1 row-cols-md-4 g-4" id="anunciosContainer">
+<ul class="list-group">
     @foreach (var anuncio in Model.OrderByDescending(a => a.DataPublicacao))
     {
         var diasPublicacao = (DateTime.Now - (anuncio.DataPublicacao ?? DateTime.Now)).TotalDays;
 
-        <div class="col anuncio-card"
-             data-marca="@(ViewBag.TipoAnuncio == "motos" ? anuncio.IdMotoNavigation?.Marca : anuncio.IdPecaNavigation?.Marca)"
-             data-modelo="@(ViewBag.TipoAnuncio == "motos" ? anuncio.IdMotoNavigation?.Modelo : anuncio.IdPecaNavigation?.Modelo)"
-             data-preco="@anuncio.Preco"
-        @(ViewBag.TipoAnuncio == "motos" ? $"data-genero='{anuncio.IdMotoNavigation?.Genero}' data-cor='{anuncio.IdMotoNavigation?.Cor}'" : "")>
-
-            <div class="card shadow-sm card-fixed-height position-relative">
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center">
+                <!-- Exibir a imagem -->
                 @if (ViewBag.TipoAnuncio == "motos" && anuncio.IdMotoNavigation?.Imagens != null && anuncio.IdMotoNavigation.Imagens.Any())
                 {
                     var imagemMoto = anuncio.IdMotoNavigation.Imagens.FirstOrDefault();
                     var nomeArquivo = imagemMoto?.NomeArquivo;
-                    if (!string.IsNullOrEmpty(nomeArquivo))
-                    {
-                        var imagemPath = Url.Content($"~/images/motos/" + nomeArquivo + ".jpg");
-                        <img src="@imagemPath"
-                             alt="Imagem da Moto @anuncio.IdMotoNavigation.Matricula"
-                             class="img-fluid rounded card-img-top" />
-                    }
-                    else
-                    {
-                        // Se não houver imagem, mostrar o placeholder
-                        <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
-                             xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail"
-                             preserveAspectRatio="xMidYMid slice" focusable="false">
-                            <title>@anuncio.Titulo</title>
-                            <rect width="100%" height="100%" fill="#55595c"></rect>
-                            <text x="50%" y="50%" fill="#eceeef" dy=".3em">Sem Imagem!</text>
-                        </svg>
-                    }
+                    var imagemPath = string.IsNullOrEmpty(nomeArquivo)
+                    ? Url.Content("~/images/default-placeholder.jpg")
+                    : Url.Content($"~/images/motos/{nomeArquivo}.jpg");
+
+                    <img src="@imagemPath" alt="Imagem da Moto" class="rounded me-3" style="width: 80px; height: 80px;">
                 }
-                else if (ViewBag.TipoAnuncio == "pecas")
+                else if (ViewBag.TipoAnuncio == "pecas" && anuncio.IdPecaNavigation?.Imagens != null && anuncio.IdPecaNavigation.Imagens.Any())
                 {
-                    var imagensPeca = anuncio.IdPecaNavigation?.Imagens as List<SportMotos.Models.Imagem>;
-                    string imagemPecaPath = null;
+                    var nomeArquivo = anuncio.IdPecaNavigation.Imagens.FirstOrDefault()?.NomeArquivo;
+                    var imagemPecaPath = string.IsNullOrEmpty(nomeArquivo)
+                    ? Url.Content("~/images/default-placeholder.jpg")
+                    : Url.Content($"~/images/pecas/{nomeArquivo}.jpg");
 
-                    if (imagensPeca != null && imagensPeca.Any())
-                    {
-                        var nomeArquivo = imagensPeca.FirstOrDefault()?.NomeArquivo;
-                        imagemPecaPath = Url.Content($"~/images/pecas/{nomeArquivo}.jpg");
-                    }
-
-                    if (!string.IsNullOrEmpty(imagemPecaPath))
-                    {
-                        <img src="@imagemPecaPath"
-                             alt="Imagem da Peça"
-                             class="img-fluid rounded card-img-top" />
-                    }
-                    else
-                    {
-                        // Se não houver imagem, mostrar o placeholder
-                        <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
-                             xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail"
-                             preserveAspectRatio="xMidYMid slice" focusable="false">
-                            <title>@anuncio.Titulo</title>
-                            <rect width="100%" height="100%" fill="#55595c"></rect>
-                            <text x="50%" y="50%" fill="#eceeef" dy=".3em">Sem Imagem!</text>
-                        </svg>
-                    }
-                }
-                else
-                {
-                    // Caso não seja nem "motos" nem "pecas", usa o placeholder por padrão
-                    <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
-                         xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail"
-                         preserveAspectRatio="xMidYMid slice" focusable="false">
-                        <title>@anuncio.Titulo</title>
-                        <rect width="100%" height="100%" fill="#55595c"></rect>
-                        <text x="50%" y="50%" fill="#eceeef" dy=".3em">Sem Imagem!</text>
-                    </svg>
+                    <img src="@imagemPecaPath" alt="Imagem da Peça" class="rounded me-3" style="width: 80px; height: 80px;">
                 }
 
+                <!-- Informações principais do anúncio -->
+                <div>
+                    <h5 class="mb-1">@anuncio.Titulo</h5>
+                    <p class="text-muted mb-0">Preço: €@anuncio.Preco.ToString("F2")</p>
+                    <small class="text-body-secondary">
+                        Publicado em: @(anuncio.DataPublicacao?.ToString("dd/MM/yyyy") ?? "Data não disponível")
+                    </small>
+                </div>
+            </div>
+
+            <!-- Botão de ação e etiquetas -->
+            <div class="d-flex align-items-center">
                 @if (ViewBag.TipoAnuncio == "motos" && anuncio.Vendido)
                 {
-                    <span class="badge bg-danger position-absolute top-0 end-0 m-2">Vendida!</span>
+                    <span class="badge bg-danger me-3">Vendida!</span>
                 }
                 else if (anuncio.Visualizacoes > 110)
                 {
-                    <span class="badge bg-success position-absolute top-0 end-0 m-2">🔥 Popular entre os fãs!</span>
+                    <span class="badge bg-success me-3">🔥 Popular entre os fãs!</span>
                 }
                 else if (ViewBag.TipoAnuncio == "pecas" && anuncio.IdPecaNavigation?.Stock <= 10)
                 {
-                    <span class="badge bg-danger position-absolute top-0 end-0 m-2">A esgotar!</span>
+                    <span class="badge bg-danger me-3">A esgotar!</span>
                 }
-                else if (ViewBag.TipoAnuncio == "motos" && diasPublicacao <= 30)
+                else if (diasPublicacao <= 30)
                 {
-                    <span class="badge bg-success position-absolute top-0 end-0 m-2">Novo!</span>
+                    <span class="badge bg-success me-3">Novo!</span>
                 }
 
-                @*Verifica se está esgotado*@
-                @if (ViewBag.TipoAnuncio == "pecas" && anuncio.IdPecaNavigation?.Stock <= 0)
-                {
-                    <span class="badge bg-danger position-absolute top-0 start-0 m-2">Esgotado!</span>
-                }
-
-                @*Verifica se foi publicado há menos de 30 dias*@
-                @if (ViewBag.TipoAnuncio == "pecas" && diasPublicacao <= 30)
-                {
-                    <span class="badge bg-success position-absolute top-0 end-0 m-2">Novo!</span>
-                }
-
-                <div class="card-body card-body-fixed-height">
-                    <p class="card-text">@anuncio.Titulo</p>
-                    @if (ViewBag.TipoAnuncio == "motos" && anuncio.Vendido)
-                    {
-                        <p class="text-muted">Preço: Vendida!</p>
-                    }
-                    else
-                    {
-                        <p class="text-muted">Preço: €@anuncio.Preco.ToString("F2")</p>
-                    }
-
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div class="btn-group">
-                            <a asp-controller="DetalhesAnuncios" asp-action="DetalheAnuncio"
-                               asp-route-id="@(ViewBag.TipoAnuncio == "motos" ? anuncio.IdAnuncioMoto : anuncio.IdAnuncioPeca)"
-                               asp-route-tipo="@ViewBag.TipoAnuncio"
-                               class="btn btn-sm btn-outline-secondary">
-                                Ver
-                            </a>
-                        </div>
-                        <small class="text-body-secondary">
-                            Publicado: @(anuncio.DataPublicacao?.ToString("dd/MM/yyyy") ?? "Data não disponível")
-                        </small>
-                    </div>
-
-                </div>
+                <a asp-controller="DetalhesAnuncios" asp-action="DetalheAnuncio"
+                   asp-route-id="@(ViewBag.TipoAnuncio == "motos" ? anuncio.IdAnuncioMoto : anuncio.IdAnuncioPeca)"
+                   asp-route-tipo="@ViewBag.TipoAnuncio"
+                   class="btn btn-sm btn-outline-secondary">
+                    Ver
+                </a>
             </div>
-        </div>
+        </li>
     }
-</div>
+</ul>
 
 <!-- Paginação -->
 <nav aria-label="Paginação">

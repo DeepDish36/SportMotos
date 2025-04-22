@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SportMotos.Models;
 using System.Security.Claims;
@@ -225,6 +226,41 @@ namespace SportMotos.Controllers
                 .AnyAsync(f => f.Id_Cliente == idCliente && f.Id_Anuncio == idAnuncio && f.TipoAnuncio == tipoAnuncio);
 
             return Ok(new { sucesso = true, isFavorito = favoritoExistente });
+        }
+
+        [Authorize]
+        public async Task<IActionResult> MeusAnuncios()
+        {
+            // Verifica se o usuário é um cliente
+            var idClienteClaim = User.FindFirst("IdCliente")?.Value;
+            int? idCliente = null;
+            if (!string.IsNullOrEmpty(idClienteClaim) && int.TryParse(idClienteClaim, out var parsedIdCliente))
+            {
+                idCliente = parsedIdCliente;
+            }
+
+            // Verifica se o usuário é um admin
+            var idAdminClaim = User.FindFirst("IdAdmin")?.Value;
+            int? idAdmin = null;
+            if (!string.IsNullOrEmpty(idAdminClaim) && int.TryParse(idAdminClaim, out var parsedIdAdmin))
+            {
+                idAdmin = parsedIdAdmin;
+            }
+
+            // Se nenhum ID for encontrado, retorna não autorizado
+            if (idCliente == null && idAdmin == null)
+            {
+                return Unauthorized();
+            }
+
+            // Busca os favoritos com base no ID do cliente ou do admin
+            var favoritos = await _context.Favoritos
+                .Include(f => f.AnuncioMoto) // Carrega os dados de motos quando aplicável
+                .Include(f => f.AnuncioPeca) // Carrega os dados de peças quando aplicável
+                .Where(f => (idCliente != null && f.Id_Cliente == idCliente) || (idAdmin != null && f.Id_Cliente == idAdmin))
+                .ToListAsync();
+
+            return View(favoritos);
         }
     }
 
