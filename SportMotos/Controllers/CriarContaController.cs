@@ -45,8 +45,10 @@ namespace SportMotos.Controllers
                 return View(cliente);
             }
 
-            string passwordCrypt=BCrypt.Net.BCrypt.HashPassword(cliente.Password);
+            // Gera o hash da senha
+            string passwordCrypt = BCrypt.Net.BCrypt.HashPassword(cliente.Password);
 
+            // Cria o novo usuário
             var novoUser = new User
             {
                 Username = cliente.Nome,
@@ -64,6 +66,9 @@ namespace SportMotos.Controllers
 
             // Define o status como "Ativo"
             cliente.Status = "Ativo";
+
+            // Atualiza a senha do cliente com o hash
+            cliente.Password = passwordCrypt;
 
             // Garante que o campo ReceberNewsletter seja true se a checkbox foi marcada
             cliente.ReceberNewsletter = cliente.ReceberNewsletter ? true : false;

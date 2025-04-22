@@ -1,0 +1,72 @@
+﻿@model Forum
+@{
+    ViewData["Title"] = "Editar Fórum";
+
+    // Captura o ID do administrador logado
+    var idAdminLogado = User.FindFirst("IdAdmin")?.Value;
+}
+
+<div class="container mt-4">
+    <h2><i class="fas fa-edit"></i> Editar Fórum</h2>
+    <hr />
+
+    <form asp-action="EditarForum" method="post">
+        <input type="hidden" asp-for="IdForum" /> <!-- Mantém o ID do fórum -->
+
+        <div class="mb-3">
+            <label asp-for="Titulo" class="form-label">Título</label>
+            <input asp-for="Titulo" class="form-control" required>
+            <span asp-validation-for="Titulo" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Descricao" class="form-label">Descrição</label>
+            <textarea asp-for="Descricao" class="form-control markdown-editor" rows="5"></textarea>
+            <span asp-validation-for="Descricao" class="text-danger"></span>
+        </div>
+
+        <div class="form-check mb-3">
+            <input type="checkbox" id="markdownToggle" class="form-check-input">
+            <label for="markdownToggle" class="form-check-label">Habilitar Markdown</label>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Categoria" class="form-label">Categoria</label>
+            <select asp-for="Categoria" class="form-select" required>
+                <option value="Dúvidas">Dúvidas</option>
+                <option value="Sugestões">Sugestões</option>
+                <option value="Discussões">Discussões</option>
+                <option value="Outros">Outros</option>
+            </select>
+            <span asp-validation-for="Categoria" class="text-danger"></span>
+        </div>
+
+        <!-- Apenas o admin pode alterar o estado -->
+        @if (!string.IsNullOrEmpty(idAdminLogado))
+        {
+            <div class="mb-3">
+                <label asp-for="Estado" class="form-label">Estado do Fórum</label>
+                <select asp-for="Estado" class="form-select">
+                    <option value="Ativo">Ativo</option>
+                    <option value="Fechado">Fechado</option>
+                    <option value="Arquivado">Arquivado</option>
+                </select>
+                <span asp-validation-for="Estado" class="text-danger"></span>
+            </div>
+        }
+
+        <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Salvar Alterações</button>
+        <a asp-action="Index" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Cancelar</a>
+    </form>
+</div>
+
+<script>
+    document.getElementById("markdownToggle").addEventListener("change", function () {
+        const descricao = document.querySelector(".markdown-editor");
+        if (this.checked) {
+            descricao.placeholder = "Escreva com Markdown!";
+        } else {
+            descricao.placeholder = "Descreva o assunto";
+        }
+    });
+</script>

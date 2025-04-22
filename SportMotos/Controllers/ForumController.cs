@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SportMotos.Models;
 using System.Security.Claims;
@@ -185,6 +186,120 @@ namespace SportMotos.Controllers
             }
 
             return RedirectToAction("DetalhesForum", "Forum", new { id = IdForum });
+        }
+
+        [Authorize]
+        public async Task<IActionResult> EditarForum(int id)
+        {
+            var forum = await _context.Forums.FindAsync(id);
+            if (forum == null) return NotFound();
+
+            var idClienteLogado = User.FindFirst("IdCliente")?.Value;
+            var idAdminLogado = User.FindFirst("IdAdmin")?.Value;
+
+            // Permitir apenas ao autor ou ao administrador editar
+            if (forum.IdCliente.ToString() != idClienteLogado && idAdminLogado == null)
+            {
+                return Unauthorized();
+            }
+
+            return View(forum);
+        }
+
+        [HttpPost]
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditarForum(Forum forum)
+        {
+            if (!ModelState.IsValid) return View(forum);
+
+            var idClienteLogado = User.FindFirst("IdCliente")?.Value;
+            var idAdminLogado = User.FindFirst("IdAdmin")?.Value;
+
+            var forumExistente = await _context.Forums.FindAsync(forum.IdForum);
+            if (forumExistente == null) return NotFound();
+
+            // Verificar se o usuário tem permissão para editar
+            if (forumExistente.IdCliente.ToString() != idClienteLogado && idAdminLogado == null)
+            {
+                return Unauthorized();
+            }
+
+            forumExistente.Titulo = forum.Titulo;
+            forumExistente.Descricao = forum.Descricao;
+            forumExistente.Categoria = forum.Categoria;
+            forumExistente.DataEdicao = DateTime.Now;
+
+            // Apenas um ADMIN pode alterar o estado do fórum
+            if (!string.IsNullOrEmpty(idAdminLogado))
+            {
+                forumExistente.Estado = forum.Estado;
+            }
+
+            _context.Forums.Update(forumExistente);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("DetalhesForum", new { id = forum.IdForum });
+        }
+
+        [Authorize]
+        public async Task<IActionResult> ApagarForum(int id)
+        {
+            var forum = await _context.Forums.FindAsync(id);
+            if (forum == null) return NotFound();
+
+            var idClienteLogado = User.FindFirst("IdCliente")?.Value;
+            var idAdminLogado = User.FindFirst("IdAdmin")?.Value;
+
+            // Permitir exclusão apenas ao autor ou ao admin
+            if (forum.IdCliente.ToString() != idClienteLogado && idAdminLogado == null)
+            {
+                return Unauthorized();
+            }
+
+            _context.Forums.Remove(forum);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Forum");
+        }
+
+        [Authorize]
+        public async Task<IActionResult> EditarResposta(int id)
+        {
+            var resposta = await _context.Resposta.FindAsync(id);
+            if (resposta == null) return NotFound();
+
+            var idClienteLogado = User.FindFirst("IdCliente")?.Value;
+            var idAdminLogado = User.FindFirst("IdAdmin")?.Value;
+
+            // Permitir apenas ao criador ou ao admin editar
+            if (resposta.IdClienteNavigation?.IdCliente.ToString() != idClienteLogado && idAdminLogado == null)
+            {
+                return Unauthorized();
+            }
+
+            return View(resposta);
+        }
+
+        [Authorize]
+        public async Task<IActionResult> ApagarResposta(int id)
+        {
+            var resposta = await _context.Resposta.FindAsync(id);
+            if (resposta == null) return NotFound();
+
+            var idClienteLogado = User.FindFirst("IdCliente")?.Value;
+            var idAdminLogado = User.FindFirst("IdAdmin")?.Value;
+
+            // Permitir apenas ao criador ou ao admin excluir
+            if (resposta.IdClienteNavigation?.IdCliente.ToString() != idClienteLogado && idAdminLogado == null)
+            {
+                return Unauthorized();
+            }
+
+            _context.Resposta.Remove(resposta);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("DetalhesForum", new { id = resposta.IdForum });
         }
 
         // Método para processar Markdown (podes ativar/desativar)
