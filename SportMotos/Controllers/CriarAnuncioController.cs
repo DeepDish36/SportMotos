@@ -155,11 +155,28 @@ namespace SportMotos.Controllers
         {
             if (ModelState.IsValid)
             {
-                anuncio.DataEdicao = DateTime.Now;
-                _context.Update(anuncio);
+                var anuncioExistente = await _context.AnuncioMotos.FindAsync(anuncio.IdAnuncioMoto);
+                if (anuncioExistente == null)
+                {
+                    Console.WriteLine("❌ Erro: Anúncio não encontrado.");
+                    ViewBag.Error = new List<string> { "O anúncio não existe." };
+                    return View(anuncio);
+                }
+
+                // Atualiza apenas os campos editáveis
+                anuncioExistente.Titulo = anuncio.Titulo;
+                anuncioExistente.Descricao = anuncio.Descricao;
+                anuncioExistente.DataEdicao = DateTime.Now;
+
+                _context.AnuncioMotos.Update(anuncioExistente);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Index");
+
+                Console.WriteLine("✅ Anúncio atualizado com sucesso.");
+                ViewBag.Success = "Anúncio atualizado com sucesso!";
+                return RedirectToAction("Dashboard", "DashBoard");
             }
+
+            Console.WriteLine("❌ ModelState inválido: " + string.Join(", ", ModelState.Values.SelectMany(v => v.Errors.Select(e => e.ErrorMessage))));
             return View(anuncio);
         }
 

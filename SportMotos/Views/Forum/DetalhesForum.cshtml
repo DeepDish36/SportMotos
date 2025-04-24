@@ -20,7 +20,7 @@
         <p><strong>Publicado em:</strong> @Model.DataCriacao.ToString("dd/MM/yyyy HH:mm")</p>
     </div>
 
-    <!-- **Botões de editar/excluir (Somente autor ou admin podem ver)** -->
+    <!-- Botões de editar/excluir (Somente autor ou admin podem ver) -->
     @if (Model.IdCliente?.ToString() == idClienteLogado || !string.IsNullOrEmpty(idAdminLogado))
     {
         <div class="mt-3">
@@ -48,7 +48,7 @@
     <div class="forum-respostas">
         @if (Model.Respostas != null && Model.Respostas.Any())
         {
-            foreach (var resposta in Model.Respostas)
+            @foreach (var resposta in Model.Respostas)
             {
                 <div class="resposta p-3 mb-2 bg-light border rounded">
                     <p>
@@ -68,21 +68,28 @@
                         </strong>
                         - @resposta.DataCriacao.ToString("dd/MM/yyyy HH:mm")
                     </p>
-                    <p>@resposta.Conteudo</p>
+
+                    <!-- Texto da resposta -->
+                    <p id="textoResposta_@resposta.IdResposta">@resposta.Conteudo</p>
 
                     <!-- Exibir botões apenas para o autor da resposta ou um administrador -->
-                    @if (resposta.IdClienteNavigation?.IdCliente.ToString() == idClienteLogado ||
-                   resposta.IdAdminNavigation?.IdAdmin.ToString() == idAdminLogado)
+                    @if ((resposta.IdClienteNavigation?.IdCliente.ToString() == idClienteLogado) ||
+                   (resposta.IdAdminNavigation?.IdAdmin.ToString() == idAdminLogado))
                     {
                         <div class="mt-2">
-                            <a asp-action="EditarResposta" asp-route-id="@resposta.IdResposta" class="btn btn-warning btn-sm">
+                            <button type="button" class="btn btn-warning btn-sm" onclick="habilitarEdicao('@resposta.IdResposta')">
                                 <i class="fas fa-edit"></i> Editar
-                            </a>
-                            <a asp-action="ApagarResposta" asp-route-id="@resposta.IdResposta"
-                               class="btn btn-danger btn-sm"
-                               onclick="return confirm('Tem certeza que deseja excluir esta resposta?');">
+                            </button>
+                            <button class="btn btn-danger btn-sm" onclick="apagarResposta('@resposta.IdResposta')">
                                 <i class="fas fa-trash-alt"></i> Apagar
-                            </a>
+                            </button>
+                        </div>
+
+                        <!-- Formulário de edição embutido -->
+                        <div id="formEdicao_@resposta.IdResposta" class="mt-2" style="display: none;">
+                            <textarea class="form-control" id="campoEdicao_@resposta.IdResposta">@resposta.Conteudo</textarea>
+                            <button class="btn btn-primary btn-sm mt-2" onclick="salvarEdicao('@resposta.IdResposta')">Salvar</button>
+                            <button class="btn btn-secondary btn-sm mt-2" onclick="cancelarEdicao('@resposta.IdResposta')">Cancelar</button>
                         </div>
                     }
                 </div>
@@ -106,49 +113,67 @@
         </div>
         <button type="submit" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Enviar Resposta</button>
     </form>
-    <!-- Modal de Confirmação de Exclusão -->
-    <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar Exclusão</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
-                </div>
-                <div class="modal-body">
-                    <p id="deleteMessage"></p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <a id="confirmDeleteButton" class="btn btn-danger">Excluir</a>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
-<script>
-        function showDeleteModal(id, tipo) {
-        let mensagem = "";
-        let url = "";
 
-        // Define a mensagem e a URL com base no tipo
-        if (tipo === "forum") {
-            mensagem = "Tem certeza de que deseja excluir este fórum?";
-            url = `/Forum/ApagarForum/${id}`;
-        } else if (tipo === "resposta") {
-            mensagem = "Tem certeza de que deseja excluir esta resposta?";
-            url = `/Forum/ApagarResposta/${id}`;
+<script>
+    function habilitarEdicao(idResposta) {
+        console.log(`🔍 Ativando edição para resposta ID: ${idResposta}`);
+        document.getElementById(`textoResposta_${idResposta}`).style.display = "none";
+        document.getElementById(`formEdicao_${idResposta}`).style.display = "block";
+    }
+
+    function cancelarEdicao(idResposta) {
+        document.getElementById(`textoResposta_${idResposta}`).style.display = "block";
+        document.getElementById(`formEdicao_${idResposta}`).style.display = "none";
+    }
+
+    async function salvarEdicao(idResposta) {
+        const novoConteudo = document.getElementById(`campoEdicao_${idResposta}`).value;
+
+        console.log(`🔍 Tentando editar resposta ID: ${idResposta}`);
+
+        const response = await fetch(`/Forum/EditarResposta/${idResposta}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            credentials: "same-origin",
+            body: JSON.stringify({ IdResposta: idResposta, Conteudo: novoConteudo })
+        });
+
+        const result = await response.text();
+        console.log(`🔍 Resposta do servidor: ${response.status}, Detalhes: ${result}`);
+
+        if (response.ok) {
+            document.getElementById(`textoResposta_${idResposta}`).innerText = novoConteudo;
+            cancelarEdicao(idResposta);
         } else {
-            mensagem = "Tem certeza de que deseja excluir este item?";
-            url = "#";
+            alert(`Erro ao atualizar a resposta (${response.status}). Detalhes: ${result}`);
+        }
+    }
+
+        async function apagarResposta(idResposta) {
+        if (!confirm("Tem certeza que deseja excluir esta resposta?")) {
+            return;
         }
 
-        // Atualiza a modal com a mensagem correta
-        $("#deleteMessage").text(mensagem);
-        $("#confirmDeleteButton").attr("href", url);
+        console.log(`🔍 Apagando resposta ID: ${idResposta}`);
 
-        // Exibe a modal
-        var deleteModal = new bootstrap.Modal(document.getElementById("confirmDeleteModal"));
-        deleteModal.show();
+        const response = await fetch(`/Forum/ApagarResposta/${idResposta}`, {
+            method: "DELETE",
+            headers: { "Content-Type": "application/json" },
+            credentials: "same-origin"
+        });
+
+        const result = await response.text();
+        console.log(`🔍 Resposta do servidor: ${response.status}, Detalhes: ${result}`);
+
+        if (response.ok) {
+            // Recarrega a página após excluir a resposta
+            window.location.reload();
+        } else {
+            alert("Erro ao excluir a resposta. Tente novamente.");
+        }
     }
 </script>
 

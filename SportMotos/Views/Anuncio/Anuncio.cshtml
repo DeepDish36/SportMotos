@@ -1,40 +1,36 @@
 ﻿@{
-    @if (ViewBag.TipoAnuncio == "motos")
-    {
-        ViewData["Title"] = "Anúncio de motos";
-    }
-    else
-    {
-        ViewData["Title"] = "Anúncio de peças";
-    }
+    ViewData["Title"] = ViewBag.TipoAnuncio == "motos" ? "Anúncio de motos" : "Anúncio de peças";
 }
 
 @model IEnumerable<dynamic> // Dynamic porque muda entre motos e peças
 
 <div class="container mt-5">
-    <div>
-        <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item">
-                    <a style="color:black; text-decoration:none" asp-controller="Home" asp-action="Index">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-fill" viewBox="0 0 16 16">
-                            <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L8 2.207l6.646 6.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293z" />
-                            <path d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293z" />
-                        </svg> SportMotos
-                    </a>
-                </li>
-                <li class="breadcrumb-item active" aria-current="page">
-                    @(ViewBag.TipoAnuncio == "motos" ? "Motos" : "Peças")
-                </li>
-            </ol>
-        </nav>
-    </div>
+    <!-- Breadcrumb -->
+    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a style="color:black; text-decoration:none" asp-controller="Home" asp-action="Index">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-house-fill" viewBox="0 0 16 16">
+                        <path d="M8.707 1a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L8 2.207l6.646 6.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293z" />
+                        <path d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293z" />
+                    </svg> SportMotos
+                </a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">
+                @(ViewBag.TipoAnuncio == "motos" ? "Motos" : "Peças")
+            </li>
+        </ol>
+    </nav>
+
+    <!-- Títulos -->
     <h3 class="mb-4 font-weight-bold">
         Anúncios de <span>@(ViewBag.TipoAnuncio == "motos" ? "Motos" : "Peças")</span>
     </h3>
-    <h4 style="margin-bottom:2.5%">
+    <h4 class="mb-4">
         @(ViewBag.TipoAnuncio == "motos" ? "Encontre a moto dos seus sonhos!" : "Encontre as peças que precisa!")
     </h4>
+
+    <!-- Filtros (Somente para motos) -->
     @if (ViewBag.TipoAnuncio == "motos")
     {
         <div class="row mb-4">
@@ -45,7 +41,7 @@
                             <option value="">Marca</option>
                             @if (ViewBag.Marca != null)
                             {
-                                foreach (var marca in ViewBag.Marca)
+                                @foreach (var marca in ViewBag.Marca)
                                 {
                                     <option value="@marca">@marca</option>
                                 }
@@ -66,36 +62,13 @@
                             <option value="20000+">20000+</option>
                         </select>
                     </div>
-                    <div class="col">
-                        <select id="generoDropdown" class="form-select" onchange="filterAnuncios()">
-                            <option value="">Género</option>
-                            @if (ViewBag.Generos != null)
-                            {
-                                foreach (var genero in ViewBag.Generos)
-                                {
-                                    <option value="@genero">@genero</option>
-                                }
-                            }
-                        </select>
-                    </div>
-                    <div class="col">
-                        <select id="corDropdown" class="form-select" onchange="filterAnuncios()">
-                            <option value="">Cor</option>
-                            @if (ViewBag.Cores != null)
-                            {
-                                foreach (var cor in ViewBag.Cores)
-                                {
-                                    <option value="@cor">@cor</option>
-                                }
-                            }
-                        </select>
-                    </div>
                 </div>
             </div>
         </div>
     }
 </div>
 
+<!-- Lista de Anúncios -->
 <ul class="list-group">
     @foreach (var anuncio in Model.OrderByDescending(a => a.DataPublicacao))
     {
@@ -104,27 +77,30 @@
         <li class="list-group-item d-flex justify-content-between align-items-center">
             <div class="d-flex align-items-center">
                 <!-- Exibir a imagem -->
-                @if (ViewBag.TipoAnuncio == "motos" && anuncio.IdMotoNavigation?.Imagens != null && anuncio.IdMotoNavigation.Imagens.Any())
-                {
-                    var imagemMoto = anuncio.IdMotoNavigation.Imagens.FirstOrDefault();
-                    var nomeArquivo = imagemMoto?.NomeArquivo;
-                    var imagemPath = string.IsNullOrEmpty(nomeArquivo)
-                    ? Url.Content("~/images/default-placeholder.jpg")
-                    : Url.Content($"~/images/motos/{nomeArquivo}.jpg");
+                @{
+                    string imagemPath = Url.Content("~/images/default-placeholder.jpg");
 
-                    <img src="@imagemPath" alt="Imagem da Moto" class="rounded me-3" style="width: 80px; height: 80px;">
+                    if (ViewBag.TipoAnuncio == "motos")
+                    {
+                        var imagensMoto = anuncio.IdMotoNavigation?.Imagens?.ToList();
+                        if (imagensMoto != null && imagensMoto.Any())
+                        {
+                            imagemPath = Url.Content($"~/images/motos/{imagensMoto.First().NomeArquivo}.jpg");
+                        }
+                    }
+                    else if (ViewBag.TipoAnuncio == "pecas")
+                    {
+                        var imagensPeca = anuncio.IdPecaNavigation?.Imagens as List<SportMotos.Models.Imagem>;
+                        if (imagensPeca != null && imagensPeca.Any())
+                        {
+                            imagemPath = Url.Content($"~/images/pecas/{imagensPeca.First().NomeArquivo}.jpg");
+                        }
+                    }
                 }
-                else if (ViewBag.TipoAnuncio == "pecas" && anuncio.IdPecaNavigation?.Imagens != null && anuncio.IdPecaNavigation.Imagens.Any())
-                {
-                    var nomeArquivo = anuncio.IdPecaNavigation.Imagens.FirstOrDefault()?.NomeArquivo;
-                    var imagemPecaPath = string.IsNullOrEmpty(nomeArquivo)
-                    ? Url.Content("~/images/default-placeholder.jpg")
-                    : Url.Content($"~/images/pecas/{nomeArquivo}.jpg");
 
-                    <img src="@imagemPecaPath" alt="Imagem da Peça" class="rounded me-3" style="width: 80px; height: 80px;">
-                }
+                <img src="@imagemPath" alt="Imagem do Anúncio" class="rounded me-3" style="width: 80px; height: 80px;">
 
-                <!-- Informações principais do anúncio -->
+                <!-- Informações principais -->
                 <div>
                     <h5 class="mb-1">@anuncio.Titulo</h5>
                     <p class="text-muted mb-0">Preço: €@anuncio.Preco.ToString("F2")</p>
@@ -167,19 +143,6 @@
 <!-- Paginação -->
 <nav aria-label="Paginação">
     <ul class="pagination justify-content-center mt-4">
-        @if (ViewBag.CurrentPage > 1)
-        {
-            <li class="page-item">
-                <a class="page-link" asp-action="Anuncio"
-                   asp-route-tipo="@ViewBag.TipoAnuncio"
-                   asp-route-page="@(ViewBag.CurrentPage - 1)">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-left" viewBox="0 0 16 16">
-                        <path d="M10 12.796V3.204L4.519 8zm-.659.753-5.48-4.796a1 1 0 0 1 0-1.506l5.48-4.796A1 1 0 0 1 11 3.204v9.592a1 1 0 0 1-1.659.753" />
-                    </svg>
-                </a>
-            </li>
-        }
-
         @for (int i = 1; i <= ViewBag.TotalPages; i++)
         {
             <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")">
@@ -187,19 +150,6 @@
                    asp-route-tipo="@ViewBag.TipoAnuncio"
                    asp-route-page="@i">
                     @i
-                </a>
-            </li>
-        }
-
-        @if (ViewBag.CurrentPage < ViewBag.TotalPages)
-        {
-            <li class="page-item">
-                <a class="page-link" asp-action="Anuncio"
-                   asp-route-tipo="@ViewBag.TipoAnuncio"
-                   asp-route-page="@(ViewBag.CurrentPage + 1)">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right" viewBox="0 0 16 16">
-                        <path d="M6 12.796V3.204L11.481 8zm.659.753 5.48-4.796a1 1 0 0 0 0-1.506L6.66 2.451C6.011 1.885 5 2.345 5 3.204v9.592a1 1 0 0 0 1.659.753" />
-                    </svg>
                 </a>
             </li>
         }

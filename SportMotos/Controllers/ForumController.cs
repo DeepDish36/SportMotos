@@ -263,43 +263,93 @@ namespace SportMotos.Controllers
             return RedirectToAction("Forum");
         }
 
+        [HttpPost]
         [Authorize]
-        public async Task<IActionResult> EditarResposta(int id)
+        public async Task<IActionResult> EditarResposta(int id, [FromBody] Resposta respostaAtualizada)
         {
-            var resposta = await _context.Resposta.FindAsync(id);
-            if (resposta == null) return NotFound();
+            Console.WriteLine($"🔍 Editando resposta ID: {id}");
+
+            var resposta = await _context.Resposta
+                .Include(r => r.IdClienteNavigation) // ✅ Carrega o cliente associado
+                .FirstOrDefaultAsync(r => r.IdResposta == id);
+
+            if (resposta == null)
+            {
+                Console.WriteLine("❌ Resposta não encontrada.");
+                return NotFound("Resposta não encontrada.");
+            }
 
             var idClienteLogado = User.FindFirst("IdCliente")?.Value;
             var idAdminLogado = User.FindFirst("IdAdmin")?.Value;
 
-            // Permitir apenas ao criador ou ao admin editar
-            if (resposta.IdClienteNavigation?.IdCliente.ToString() != idClienteLogado && idAdminLogado == null)
+            Console.WriteLine($"🔍 Usuário logado: IdCliente={idClienteLogado}, IdAdmin={idAdminLogado}");
+            Console.WriteLine($"🔍 Autor da resposta: IdCliente={resposta.IdClienteNavigation?.IdCliente}");
+
+            if (resposta.IdClienteNavigation?.IdCliente.ToString() != idClienteLogado && string.IsNullOrEmpty(idAdminLogado))
             {
-                return Unauthorized();
+                Console.WriteLine("❌ Usuário sem permissão para editar.");
+                return Unauthorized("Você não tem permissão para editar esta resposta.");
             }
 
-            return View(resposta);
+            Console.WriteLine($"✅ Atualizando resposta: {respostaAtualizada.Conteudo}");
+
+            try
+            {
+                // ⚡ Atualização manual no banco, evitando problemas com triggers
+                await _context.Database.ExecuteSqlRawAsync(
+                    "UPDATE Resposta SET Conteudo = {0} WHERE ID_Resposta = {1}", respostaAtualizada.Conteudo, id);
+
+                Console.WriteLine("✅ Resposta editada com sucesso!");
+                return Ok("Resposta editada.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"❌ Erro ao salvar resposta: {ex.Message}");
+                return StatusCode(500, "Erro ao salvar resposta no banco.");
+            }
         }
 
+        [HttpDelete]
         [Authorize]
         public async Task<IActionResult> ApagarResposta(int id)
         {
-            var resposta = await _context.Resposta.FindAsync(id);
-            if (resposta == null) return NotFound();
+            Console.WriteLine($"🔍 Tentando apagar resposta ID: {id}");
+
+            var resposta = await _context.Resposta
+                .Include(r => r.IdClienteNavigation) // ✅ Carrega o cliente associado
+                .FirstOrDefaultAsync(r => r.IdResposta == id);
+
+            if (resposta == null)
+            {
+                Console.WriteLine("❌ Resposta não encontrada.");
+                return NotFound("Resposta não encontrada.");
+            }
 
             var idClienteLogado = User.FindFirst("IdCliente")?.Value;
             var idAdminLogado = User.FindFirst("IdAdmin")?.Value;
 
-            // Permitir apenas ao criador ou ao admin excluir
-            if (resposta.IdClienteNavigation?.IdCliente.ToString() != idClienteLogado && idAdminLogado == null)
+            Console.WriteLine($"🔍 Usuário logado: IdCliente={idClienteLogado}, IdAdmin={idAdminLogado}");
+            Console.WriteLine($"🔍 Autor da resposta: IdCliente={resposta.IdClienteNavigation?.IdCliente}");
+
+            if (resposta.IdClienteNavigation?.IdCliente.ToString() != idClienteLogado && string.IsNullOrEmpty(idAdminLogado))
             {
-                return Unauthorized();
+                Console.WriteLine("❌ Usuário sem permissão para apagar.");
+                return Unauthorized("Você não tem permissão para apagar esta resposta.");
             }
 
-            _context.Resposta.Remove(resposta);
-            await _context.SaveChangesAsync();
+            try
+            {
+                // ⚡ Apaga a resposta do banco
+                await _context.Database.ExecuteSqlRawAsync("DELETE FROM Resposta WHERE ID_Resposta = {0}", id);
 
-            return RedirectToAction("DetalhesForum", new { id = resposta.IdForum });
+                Console.WriteLine("✅ Resposta apagada com sucesso!");
+                return Ok("Resposta excluída.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"❌ Erro ao apagar resposta: {ex.Message}");
+                return StatusCode(500, "Erro ao apagar a resposta no banco.");
+            }
         }
 
         // Método para processar Markdown (podes ativar/desativar)
