@@ -1,12 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Dashboard";
 }
-<style>
-    .row-expired {
-        background-color: #f8d7da; /* Vermelho claro */
-        color: #ff0000; /* Texto vermelho escuro */
-    }
-</style>
+
 <link rel="stylesheet" href="~/datatable/datatables.css" />
 
 <h2 class="mb-4">Painel de Administração</h2>
@@ -206,7 +201,7 @@
     </table>
 </div>
 
-<!-- Anúncios de Motos -->
+<!-- Anúncios de motos -->
 <div id="anuncioMotos" class="dashboard-section" style="display: none;">
     <h3>🏍️ Anúncios de Motos</h3>
     <a asp-action="CriarAnuncioMoto" asp-controller="CriarAnuncio" class="btn btn-success btn-sm" style="margin-bottom:20px">Adicionar Anúncio de Moto</a>
@@ -234,20 +229,27 @@
             @foreach (var anuncio in ViewBag.UltimosAnunciosMoto)
             {
                 var isExpirado = anuncio.DataExpiracao <= DateTime.Now;
-                var rowClass = isExpirado ? "row-expired" : "";
 
-                <tr class="@rowClass">
+                <tr>
                     <td>@anuncio.Titulo</td>
                     <td>€@anuncio.Preco</td>
                     <td>@anuncio.DataPublicacao.ToString("dd/MM/yyyy")</td>
                     <td>
-                        <a asp-controller="DetalhesAnuncios" asp-action="DetalheAnuncio"
-                           asp-route-id="@anuncio.IdAnuncioMoto"
-                           asp-route-tipo="motos" class="btn btn-info btn-sm">Ver</a>
-                        <a asp-controller="CriarAnuncio" asp-action="EditarAnuncioMoto"
-                           asp-route-id="@anuncio.IdAnuncioMoto" class="btn btn-success btn-sm">Editar</a>
-                        <a href="#" class="btn btn-danger btn-sm" onclick="showDeleteModal('@anuncio.IdAnuncioMoto', 'anuncioMoto')">Excluir</a>
-                        <a asp-controller="Anuncio" asp-action="RenovarAnuncio" asp-route-id="@anuncio.IdAnuncioMoto" class="btn btn-primary btn-sm">Renovar</a>
+                        @if (isExpirado)
+                        {
+                            <!-- Somente exibe o botão Renovar -->
+                            <a asp-controller="Anuncio" asp-action="RenovarAnuncio" asp-route-id="@anuncio.IdAnuncioMoto" class="btn btn-primary btn-sm">Renovar</a>
+                        }
+                        else
+                        {
+                            <!-- Botões normais para anúncios ativos -->
+                            <a asp-controller="DetalhesAnuncios" asp-action="DetalheAnuncio"
+                               asp-route-id="@anuncio.IdAnuncioMoto"
+                               asp-route-tipo="motos" class="btn btn-info btn-sm">Ver</a>
+                            <a asp-controller="CriarAnuncio" asp-action="EditarAnuncioMoto"
+                               asp-route-id="@anuncio.IdAnuncioMoto" class="btn btn-success btn-sm">Editar</a>
+                            <a href="#" class="btn btn-danger btn-sm" onclick="showDeleteModal('@anuncio.IdAnuncioMoto', 'anuncioMoto')">Excluir</a>
+                        }
                     </td>
                 </tr>
             }

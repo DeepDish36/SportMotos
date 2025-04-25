@@ -5,14 +5,14 @@
 <style>
     .info-box {
         border: 1px solid #dee2e6; /* Cor da borda padrão do Bootstrap */
-        height: 100%; /* Garante que todas as caixas tenham a mesma altura */
+        height: 100%;
         display: flex;
         flex-direction: column;
-        justify-content: center; /* Alinha o conteúdo verticalmente */
+        justify-content: center;
     }
 
         .info-box h5 {
-            font-size: 1.25rem; /* Ajuste o tamanho da fonte conforme necessário */
+            font-size: 1.25rem;
             margin-bottom: 0.75rem;
         }
 
@@ -32,11 +32,11 @@
             border-color: #d3d9df;
         }
 </style>
+
 <div class="container mt-4">
     <div class="bg-white p-4" style="width: 100%; margin: 0 auto; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
         <h3 class="mb-3 text-left">Informações</h3>
         <div class="row text-center">
-
             <!-- Horário de Funcionamento -->
             <div class="col-md-3">
                 <div class="info-box p-3">
@@ -69,8 +69,47 @@
             <div class="col-md-3">
                 <div class="info-box p-3" style="background-color: #FF7A00; color: white;">
                     <h5>Precisa de um Orçamento?</h5>
-                    <a href="#" class="btn bg-white" style="color:#FF7A00"><b>Formulário</b></a>
+                    <!-- Alteração: Botão para abrir o Modal -->
+                    <button type="button" class="btn bg-white" style="color:#FF7A00" data-bs-toggle="modal" data-bs-target="#orcamentoModal"><b>Formulário</b></button>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal do formulário -->
+<div class="modal fade" id="orcamentoModal" tabindex="-1" aria-labelledby="orcamentoModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="orcamentoModalLabel">Formulário de Orçamento</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Formulário -->
+                <form method="post" action="/Orcamentos/Criar">
+                    <div class="mb-3">
+                        <label for="descricao" class="form-label">Descrição</label>
+                        <textarea class="form-control" id="descricao" name="Descricao" rows="3" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="valorTotal" class="form-label">Valor Total</label>
+                        <input type="number" class="form-control" id="valorTotal" name="ValorTotal" step="0.01" min="0" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="prazoResposta" class="form-label">Prazo para Resposta</label>
+                        <input type="date" class="form-control" id="prazoResposta" name="PrazoResposta">
+                    </div>
+                    <div class="mb-3">
+                        <label for="metodoPagamento" class="form-label">Método de Pagamento</label>
+                        <select class="form-select" id="metodoPagamento" name="MetodoPagamento">
+                            <option value="Dinheiro">Dinheiro</option>
+                            <option value="Cartão">Cartão</option>
+                            <option value="Transferência">Transferência</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Enviar</button>
+                </form>
             </div>
         </div>
     </div>

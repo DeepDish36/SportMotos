@@ -390,20 +390,53 @@ public partial class AppDbContext : DbContext
 
         modelBuilder.Entity<Orcamento>(entity =>
         {
-            entity.HasKey(e => e.IdForum).HasName("PK__Orcament__0503F9406E8490D9");
+            entity.HasKey(e => e.IdOrcamento).HasName("PK__Orcament__0503F9406E8490D9");
 
             entity.ToTable("Orcamento");
 
-            entity.Property(e => e.IdForum).HasColumnName("ID_Forum");
+            // Configurações de propriedades
+            entity.Property(e => e.IdOrcamento)
+                .HasColumnName("ID_Orcamento"); // Corrigido para o nome correto da coluna
+
+            entity.Property(e => e.IdCliente)
+                .HasColumnName("ID_Cliente");
+
+            entity.Property(e => e.Descricao)
+                .IsUnicode(false)
+                .HasColumnName("Descricao");
+
             entity.Property(e => e.DataCriacao)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime")
                 .HasColumnName("Data_Criacao");
-            entity.Property(e => e.Descricao).IsUnicode(false);
-            entity.Property(e => e.IdCliente).HasColumnName("ID_Cliente");
-            entity.Property(e => e.ValorTotal).HasColumnName("Valor_Total");
 
-            entity.HasOne(d => d.IdClienteNavigation).WithMany(p => p.Orcamentos)
+            entity.Property(e => e.ValorTotal)
+                .HasColumnName("Valor_Total");
+
+            entity.Property(e => e.Status)
+                .HasColumnName("Status")
+                .HasDefaultValue("Pendente"); // Define valor padrão
+
+            entity.Property(e => e.PrazoResposta)
+                .HasColumnName("Prazo_Resposta")
+                .HasColumnType("datetime");
+
+            entity.Property(e => e.NotasAdministrador)
+                .HasColumnName("Notas_Administrador")
+                .IsUnicode(false);
+
+            entity.Property(e => e.MetodoPagamento)
+                .HasColumnName("Metodo_Pagamento")
+                .IsUnicode(false);
+
+            entity.Property(e => e.UltimaAtualizacao)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime")
+                .HasColumnName("Ultima_Atualizacao");
+
+            // Configuração da chave estrangeira
+            entity.HasOne(d => d.IdClienteNavigation)
+                .WithMany(p => p.Orcamentos)
                 .HasForeignKey(d => d.IdCliente)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__Orcamento__ID_Cl__619B8048");

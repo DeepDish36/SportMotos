@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SportMotos.Models;
 
@@ -36,4 +37,7 @@ public partial class AnuncioPeca
     public int? Avaliacoes { get; set; }
 
     public virtual Peca? IdPecaNavigation { get; set; }
+
+    [NotMapped]
+    public string ImagemPath { get; set; }
 }

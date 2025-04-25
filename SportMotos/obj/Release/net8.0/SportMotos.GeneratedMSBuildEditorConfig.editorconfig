@@ -17,157 +17,157 @@ build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = SportMotos
 build_property.RootNamespace = SportMotos
-build_property.ProjectDir = C:\Users\Gomes\Desktop\SportMotos\SportMotos\
+build_property.ProjectDir = C:\Users\g0mes\Desktop\SportMotos\SportMotos\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\Gomes\Desktop\SportMotos\SportMotos
+build_property.MSBuildProjectDirectory = C:\Users\g0mes\Desktop\SportMotos\SportMotos
 build_property._RazorSourceGeneratorDebug = 
 build_property.EffectiveAnalysisLevelStyle = 8.0
 build_property.EnableCodeStyleSeverity = 
 
-[C:/Users/Gomes/Desktop/SportMotos/SportMotos/Views/Anuncio/Anuncio.cshtml]
+[C:/Users/g0mes/Desktop/SportMotos/SportMotos/Views/Anuncio/Anuncio.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQW51bmNpb1xBbnVuY2lvLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Gomes/Desktop/SportMotos/SportMotos/Views/Contactos/Contactos.cshtml]
+[C:/Users/g0mes/Desktop/SportMotos/SportMotos/Views/Contactos/Contactos.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29udGFjdG9zXENvbnRhY3Rvcy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Gomes/Desktop/SportMotos/SportMotos/Views/CriarAnuncio/CriarAnuncioMoto.cshtml]
+[C:/Users/g0mes/Desktop/SportMotos/SportMotos/Views/CriarAnuncio/CriarAnuncioMoto.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3JpYXJBbnVuY2lvXENyaWFyQW51bmNpb01vdG8uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Gomes/Desktop/SportMotos/SportMotos/Views/CriarAnuncio/CriarAnuncioPeca.cshtml]
+[C:/Users/g0mes/Desktop/SportMotos/SportMotos/Views/CriarAnuncio/CriarAnuncioPeca.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3JpYXJBbnVuY2lvXENyaWFyQW51bmNpb1BlY2EuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Gomes/Desktop/SportMotos/SportMotos/Views/CriarAnuncio/EditarAnuncioMoto.cshtml]
+[C:/Users/g0mes/Desktop/SportMotos/SportMotos/Views/CriarAnuncio/EditarAnuncioMoto.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3JpYXJBbnVuY2lvXEVkaXRhckFudW5jaW9Nb3RvLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Gomes/Desktop/SportMotos/SportMotos/Views/CriarConta/Register.cshtml]
+[C:/Users/g0mes/Desktop/SportMotos/SportMotos/Views/CriarConta/Register.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3JpYXJDb250YVxSZWdpc3Rlci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Gomes/Desktop/SportMotos/SportMotos/Views/DashBoard/DashBoard.cshtml]
+[C:/Users/g0mes/Desktop/SportMotos/SportMotos/Views/DashBoard/DashBoard.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGFzaEJvYXJkXERhc2hCb2FyZC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Gomes/Desktop/SportMotos/SportMotos/Views/DetalhesAnuncios/DetalheAnuncio.cshtml]
+[C:/Users/g0mes/Desktop/SportMotos/SportMotos/Views/DetalhesAnuncios/DetalheAnuncio.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGV0YWxoZXNBbnVuY2lvc1xEZXRhbGhlQW51bmNpby5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Gomes/Desktop/SportMotos/SportMotos/Views/Favoritos/MeusAnuncios.cshtml]
+[C:/Users/g0mes/Desktop/SportMotos/SportMotos/Views/Favoritos/MeusAnuncios.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmF2b3JpdG9zXE1ldXNBbnVuY2lvcy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Gomes/Desktop/SportMotos/SportMotos/Views/Forum/Create.cshtml]
+[C:/Users/g0mes/Desktop/SportMotos/SportMotos/Views/Forum/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRm9ydW1cQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Gomes/Desktop/SportMotos/SportMotos/Views/Forum/DetalhesForum.cshtml]
+[C:/Users/g0mes/Desktop/SportMotos/SportMotos/Views/Forum/DetalhesForum.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRm9ydW1cRGV0YWxoZXNGb3J1bS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Gomes/Desktop/SportMotos/SportMotos/Views/Forum/EditarForum.cshtml]
+[C:/Users/g0mes/Desktop/SportMotos/SportMotos/Views/Forum/EditarForum.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRm9ydW1cRWRpdGFyRm9ydW0uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Gomes/Desktop/SportMotos/SportMotos/Views/Forum/Forum.cshtml]
+[C:/Users/g0mes/Desktop/SportMotos/SportMotos/Views/Forum/Forum.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRm9ydW1cRm9ydW0uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Gomes/Desktop/SportMotos/SportMotos/Views/Home/Index.cshtml]
+[C:/Users/g0mes/Desktop/SportMotos/SportMotos/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Gomes/Desktop/SportMotos/SportMotos/Views/Home/Privacy.cshtml]
+[C:/Users/g0mes/Desktop/SportMotos/SportMotos/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Gomes/Desktop/SportMotos/SportMotos/Views/Interesse/_FormularioInteresse.cshtml]
+[C:/Users/g0mes/Desktop/SportMotos/SportMotos/Views/Interesse/_FormularioInteresse.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW50ZXJlc3NlXF9Gb3JtdWxhcmlvSW50ZXJlc3NlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Gomes/Desktop/SportMotos/SportMotos/Views/Login/Login.cshtml]
+[C:/Users/g0mes/Desktop/SportMotos/SportMotos/Views/Login/Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9naW5cTG9naW4uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Gomes/Desktop/SportMotos/SportMotos/Views/Moto/AdicionarMoto.cshtml]
+[C:/Users/g0mes/Desktop/SportMotos/SportMotos/Views/Moto/AdicionarMoto.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTW90b1xBZGljaW9uYXJNb3RvLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Gomes/Desktop/SportMotos/SportMotos/Views/Moto/EditarMoto.cshtml]
+[C:/Users/g0mes/Desktop/SportMotos/SportMotos/Views/Moto/EditarMoto.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTW90b1xFZGl0YXJNb3RvLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Gomes/Desktop/SportMotos/SportMotos/Views/Noticia/AdicionarNoticia.cshtml]
+[C:/Users/g0mes/Desktop/SportMotos/SportMotos/Views/Noticia/AdicionarNoticia.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTm90aWNpYVxBZGljaW9uYXJOb3RpY2lhLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Gomes/Desktop/SportMotos/SportMotos/Views/Noticia/DetalhesNoticia.cshtml]
+[C:/Users/g0mes/Desktop/SportMotos/SportMotos/Views/Noticia/DetalhesNoticia.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTm90aWNpYVxEZXRhbGhlc05vdGljaWEuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Gomes/Desktop/SportMotos/SportMotos/Views/Noticia/EditarNoticia.cshtml]
+[C:/Users/g0mes/Desktop/SportMotos/SportMotos/Views/Noticia/EditarNoticia.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTm90aWNpYVxFZGl0YXJOb3RpY2lhLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Gomes/Desktop/SportMotos/SportMotos/Views/Noticia/Noticias.cshtml]
+[C:/Users/g0mes/Desktop/SportMotos/SportMotos/Views/Noticia/Noticias.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTm90aWNpYVxOb3RpY2lhcy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Gomes/Desktop/SportMotos/SportMotos/Views/Peca/AdicionarPeca.cshtml]
+[C:/Users/g0mes/Desktop/SportMotos/SportMotos/Views/Peca/AdicionarPeca.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVjYVxBZGljaW9uYXJQZWNhLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Gomes/Desktop/SportMotos/SportMotos/Views/Peca/EditarPeca.cshtml]
+[C:/Users/g0mes/Desktop/SportMotos/SportMotos/Views/Peca/EditarPeca.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVjYVxFZGl0YXJQZWNhLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Gomes/Desktop/SportMotos/SportMotos/Views/Perfil/Perfil.cshtml]
+[C:/Users/g0mes/Desktop/SportMotos/SportMotos/Views/Perfil/Perfil.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVyZmlsXFBlcmZpbC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Gomes/Desktop/SportMotos/SportMotos/Views/Perfil/PerfilAdmin.cshtml]
+[C:/Users/g0mes/Desktop/SportMotos/SportMotos/Views/Perfil/PerfilAdmin.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVyZmlsXFBlcmZpbEFkbWluLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Gomes/Desktop/SportMotos/SportMotos/Views/Pesquisa/Pesquisa.cshtml]
+[C:/Users/g0mes/Desktop/SportMotos/SportMotos/Views/Pesquisa/Pesquisa.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVzcXVpc2FcUGVzcXVpc2EuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Gomes/Desktop/SportMotos/SportMotos/Views/RecuperarConta/RecuperarSenha.cshtml]
+[C:/Users/g0mes/Desktop/SportMotos/SportMotos/Views/RecuperarConta/RecuperarSenha.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVjdXBlcmFyQ29udGFcUmVjdXBlcmFyU2VuaGEuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Gomes/Desktop/SportMotos/SportMotos/Views/RecuperarConta/RecuperarSenhaConfirmacao.cshtml]
+[C:/Users/g0mes/Desktop/SportMotos/SportMotos/Views/RecuperarConta/RecuperarSenhaConfirmacao.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVjdXBlcmFyQ29udGFcUmVjdXBlcmFyU2VuaGFDb25maXJtYWNhby5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Gomes/Desktop/SportMotos/SportMotos/Views/RecuperarConta/RedefinirSenha.cshtml]
+[C:/Users/g0mes/Desktop/SportMotos/SportMotos/Views/RecuperarConta/RedefinirSenha.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVjdXBlcmFyQ29udGFcUmVkZWZpbmlyU2VuaGEuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Gomes/Desktop/SportMotos/SportMotos/Views/Shared/Error.cshtml]
+[C:/Users/g0mes/Desktop/SportMotos/SportMotos/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Gomes/Desktop/SportMotos/SportMotos/Views/Shared/_ValidationScriptsPartial.cshtml]
+[C:/Users/g0mes/Desktop/SportMotos/SportMotos/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Gomes/Desktop/SportMotos/SportMotos/Views/_ViewImports.cshtml]
+[C:/Users/g0mes/Desktop/SportMotos/SportMotos/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Gomes/Desktop/SportMotos/SportMotos/Views/_ViewStart.cshtml]
+[C:/Users/g0mes/Desktop/SportMotos/SportMotos/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Gomes/Desktop/SportMotos/SportMotos/Views/Shared/_Layout.cshtml]
+[C:/Users/g0mes/Desktop/SportMotos/SportMotos/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-2plz1kayvm

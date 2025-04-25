@@ -80,7 +80,7 @@
                             <button type="button" class="btn btn-warning btn-sm" onclick="habilitarEdicao('@resposta.IdResposta')">
                                 <i class="fas fa-edit"></i> Editar
                             </button>
-                            <button class="btn btn-danger btn-sm" onclick="apagarResposta('@resposta.IdResposta')">
+                            <button class="btn btn-danger btn-sm" onclick="showDeleteModal('@resposta.IdResposta', 'resposta')">
                                 <i class="fas fa-trash-alt"></i> Apagar
                             </button>
                         </div>
@@ -115,65 +115,47 @@
     </form>
 </div>
 
+<!-- Modal de Confirmação de Exclusão -->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar Exclusão</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+            </div>
+            <div class="modal-body">
+                <p id="deleteMessage"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <a id="confirmDeleteButton" class="btn btn-danger">Excluir</a>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
-    function habilitarEdicao(idResposta) {
-        console.log(`🔍 Ativando edição para resposta ID: ${idResposta}`);
-        document.getElementById(`textoResposta_${idResposta}`).style.display = "none";
-        document.getElementById(`formEdicao_${idResposta}`).style.display = "block";
-    }
+    function showDeleteModal(id, tipo) {
+        let mensagem = "";
+        let url = "";
 
-    function cancelarEdicao(idResposta) {
-        document.getElementById(`textoResposta_${idResposta}`).style.display = "block";
-        document.getElementById(`formEdicao_${idResposta}`).style.display = "none";
-    }
-
-    async function salvarEdicao(idResposta) {
-        const novoConteudo = document.getElementById(`campoEdicao_${idResposta}`).value;
-
-        console.log(`🔍 Tentando editar resposta ID: ${idResposta}`);
-
-        const response = await fetch(`/Forum/EditarResposta/${idResposta}`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            credentials: "same-origin",
-            body: JSON.stringify({ IdResposta: idResposta, Conteudo: novoConteudo })
-        });
-
-        const result = await response.text();
-        console.log(`🔍 Resposta do servidor: ${response.status}, Detalhes: ${result}`);
-
-        if (response.ok) {
-            document.getElementById(`textoResposta_${idResposta}`).innerText = novoConteudo;
-            cancelarEdicao(idResposta);
+        if (tipo === "forum") {
+            mensagem = "Tem certeza de que deseja excluir este fórum?";
+            url = `/Forum/ApagarForum/${id}`;
+        } else if (tipo === "resposta") {
+            mensagem = "Tem certeza de que deseja excluir esta resposta?";
+            url = `/Forum/ApagarResposta/${id}`;
         } else {
-            alert(`Erro ao atualizar a resposta (${response.status}). Detalhes: ${result}`);
-        }
-    }
-
-        async function apagarResposta(idResposta) {
-        if (!confirm("Tem certeza que deseja excluir esta resposta?")) {
-            return;
+            mensagem = "Tem certeza de que deseja excluir este item?";
+            url = "#";
         }
 
-        console.log(`🔍 Apagando resposta ID: ${idResposta}`);
+        // Atualiza a modal com a mensagem correta
+        document.getElementById("deleteMessage").textContent = mensagem;
+        document.getElementById("confirmDeleteButton").setAttribute("href", url);
 
-        const response = await fetch(`/Forum/ApagarResposta/${idResposta}`, {
-            method: "DELETE",
-            headers: { "Content-Type": "application/json" },
-            credentials: "same-origin"
-        });
-
-        const result = await response.text();
-        console.log(`🔍 Resposta do servidor: ${response.status}, Detalhes: ${result}`);
-
-        if (response.ok) {
-            // Recarrega a página após excluir a resposta
-            window.location.reload();
-        } else {
-            alert("Erro ao excluir a resposta. Tente novamente.");
-        }
+        // Exibe a modal
+        var deleteModal = new bootstrap.Modal(document.getElementById("confirmDeleteModal"));
+        deleteModal.show();
     }
 </script>
-

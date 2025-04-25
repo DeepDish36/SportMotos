@@ -8406,23 +8406,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Gomes\\.nuget\\packages\\": {},
+    "C:\\Users\\g0mes\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Gomes\\Desktop\\SportMotos\\SportMotos\\SportMotos.csproj",
+      "projectUniqueName": "C:\\Users\\g0mes\\Desktop\\SportMotos\\SportMotos\\SportMotos.csproj",
       "projectName": "SportMotos",
-      "projectPath": "C:\\Users\\Gomes\\Desktop\\SportMotos\\SportMotos\\SportMotos.csproj",
-      "packagesPath": "C:\\Users\\Gomes\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Gomes\\Desktop\\SportMotos\\SportMotos\\obj\\",
+      "projectPath": "C:\\Users\\g0mes\\Desktop\\SportMotos\\SportMotos\\SportMotos.csproj",
+      "packagesPath": "C:\\Users\\g0mes\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\g0mes\\Desktop\\SportMotos\\SportMotos\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\Gomes\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\g0mes\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
