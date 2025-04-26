@@ -38,7 +38,8 @@ namespace SportMotos.Controllers
                     ClienteEmail = o.IdClienteNavigation.Email,
                     o.DataCriacao,
                     o.Status,
-                    o.ValorTotal
+                    o.ValorTotal,
+                    o.DetalhesVisualizados
                 })
                 .ToList();
 

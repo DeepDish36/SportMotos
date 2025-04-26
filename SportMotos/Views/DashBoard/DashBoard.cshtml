@@ -50,6 +50,7 @@
     </button>
     <button class="btn btn-info btn-block" style="flex: 1;" onclick="showSection('pedidos')">📦 Pedidos</button>
     <button class="btn btn-secondary btn-block" style="flex: 1;" onclick="showSection('noticias')">📰 Notícias</button>
+    <button class="btn btn-info btn-block" style="flex: 1;" onclick="showSection('orcamentos')">📋 Orçamentos</button>
 </div>
 
 <!-- Estatísticas -->
@@ -122,6 +123,59 @@
                         <a asp-controller="Noticia" asp-action="DetalhesNoticia" asp-route-id="@noticia.IdNoticia" class="btn btn-info btn-sm">Ver</a>
                         <a asp-controller="Noticia" asp-action="EditarNoticia" asp-route-id="@noticia.IdNoticia" class="btn btn-success btn-sm">Editar</a>
                         <a href="#" class="btn btn-danger btn-sm" onclick="showDeleteModal('@noticia.IdNoticia', 'noticia')">Excluir</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<!-- Orçamentos -->
+<div id="orcamentos" class="dashboard-section" style="display: none;">
+    <h3>📋 Orçamentos</h3>
+    <table id="orcamentosTable" class="table table-striped">
+        <thead>
+            <tr>
+                <th>Cliente</th>
+                <th>Email</th>
+                <th>Data de Criação</th>
+                <th>Status</th>
+                <th>Valor Total</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var orcamento in ViewBag.Orcamentos)
+            {
+                <tr>
+                    <td>@orcamento.ClienteNome</td>
+                    <td>@orcamento.ClienteEmail</td>
+                    <td>@orcamento.DataCriacao.ToString("dd/MM/yyyy")</td>
+                    <td>
+                        @if (orcamento.Status == "Pendente")
+                        {
+                            <span class="badge bg-warning">@orcamento.Status</span>
+                        }
+                        else if (orcamento.Status == "Aprovado")
+                        {
+                            <span class="badge bg-success">@orcamento.Status</span>
+                        }
+                        else if (orcamento.Status == "Rejeitado")
+                        {
+                            <span class="badge bg-danger">@orcamento.Status</span>
+                        }
+                    </td>
+                    <td>€@String.Format("{0:n2}", orcamento.ValorTotal)</td>
+                    <td>
+                        <form method="post" asp-action="AceitarOrcamento" asp-controller="Contactos">
+                            <input type="hidden" name="id" value="@orcamento.IdOrcamento" />
+                            <button type="submit" class="btn btn-success btn-sm" @(orcamento.DetalhesVisualizados ? "" : "disabled")>Aceitar</button>
+                        </form>
+                        <a href="@Url.Action("DetalhesOrcamento", "Contactos", new { id = orcamento.IdOrcamento })" class="btn btn-info btn-sm">Detalhes</a>
+                        <form method="post" asp-action="RejeitarOrcamento" asp-controller="Contactos">
+                            <input type="hidden" name="id" value="@orcamento.IdOrcamento" />
+                            <button type="submit" class="btn btn-danger btn-sm" @(orcamento.DetalhesVisualizados ? "" : "disabled")>Rejeitar</button>
+                        </form>
                     </td>
                 </tr>
             }
@@ -343,7 +397,7 @@
                     <td>
                         @if (pedido.TipoPedido == "motos")
                         {
-                            @if(pedido.Status == "Pendente")
+                            @if (pedido.Status == "Pendente")
                             {
                                 <button class="btn btn-success btn-sm btn-aprovar" data-id="@pedido.IdInteresse" data-cliente="@pedido.ClienteEmail">Aprovar</button>
                                 <button class="btn btn-danger btn-sm btn-rejeitar" data-id="@pedido.IdInteresse">Rejeitar</button>
@@ -420,13 +474,21 @@
                     url: "/datatable/langconfig.json"
                 }
             });
+            $('#orcamentosTable').DataTable({
+                language: {
+                    url: "/datatable/langconfig.json"
+                }
+            });
         });
-             function toggleAnuncios(mostrarTodos) {
+
+        // Alternar exibição de anúncios (últimos 5 ou todos)
+        function toggleAnuncios(mostrarTodos) {
             const url = new URL(window.location.href);
             url.searchParams.set("mostrarTodos", mostrarTodos);
             window.location.href = url.toString();
         }
-        // Modal
+
+        // Modal de exclusão
         function showDeleteModal(id, tipo) {
             let mensagem = "";
             let url = "";
@@ -453,6 +515,10 @@
                     mensagem = "Tem certeza de que deseja excluir esta notícia?";
                     url = `/Noticia/ExcluirNoticia/${id}`;
                     break;
+                case "orcamentos":
+                    mensagem = "Tem certeza de que deseja excluir este orçamento?";
+                    url = `/Orcamento/ExcluirOrcamento/${id}`;
+                    break;
             }
 
             // Atualiza a modal com a mensagem correta
@@ -468,7 +534,40 @@
             deleteModal.show();
         }
 
-            $(document).on("click", ".btn-aprovar", function () {
+        // Aceitar Orçamento
+        $(document).on("click", ".btn-aprovar-orcamento", function () {
+            const orcamentoId = $(this).data("id");
+
+            if (confirm("Tem certeza de que deseja aceitar este orçamento?")) {
+                $.post("/Contactos/AceitarOrcamento", { id: orcamentoId })
+                    .done(function () {
+                        alert("Orçamento aceito com sucesso!");
+                        location.reload(); // Recarrega a página para atualizar o status
+                    })
+                    .fail(function () {
+                        alert("Erro ao aceitar o orçamento.");
+                    });
+            }
+        });
+
+        // Rejeitar Orçamento
+        $(document).on("click", ".btn-rejeitar-orcamento", function () {
+            const orcamentoId = $(this).data("id");
+
+            if (confirm("Tem certeza de que deseja rejeitar este orçamento?")) {
+                $.post("/Contactos/RejeitarOrcamento", { id: orcamentoId })
+                    .done(function () {
+                        alert("Orçamento rejeitado com sucesso!");
+                        location.reload(); // Recarrega a página para atualizar o status
+                    })
+                    .fail(function () {
+                        alert("Erro ao rejeitar o orçamento.");
+                    });
+            }
+        });
+
+        // Aprovar Pedido
+        $(document).on("click", ".btn-aprovar", function () {
             const interesseId = $(this).data("id");
             const clienteEmail = $(this).data("cliente");
 
@@ -484,6 +583,7 @@
             }
         });
 
+        // Rejeitar Pedido
         $(document).on("click", ".btn-rejeitar", function () {
             const interesseId = $(this).data("id");
 
@@ -524,7 +624,7 @@
             });
         }
 
-        // Mostrar Secções
+        // Mostrar Seções
         function showSection(sectionId) {
             var sections = document.querySelectorAll(".dashboard-section");
             sections.forEach(section => {
@@ -533,6 +633,7 @@
             document.getElementById(sectionId).style.display = "block";
         }
 
+        // Gráfico de Vendas
         var ctxVendas = document.getElementById("vendasChart").getContext("2d");
         var vendasChart = new Chart(ctxVendas, {
             type: "line",

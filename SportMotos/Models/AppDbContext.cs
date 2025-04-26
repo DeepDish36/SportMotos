@@ -48,6 +48,8 @@ public partial class AppDbContext : DbContext
 
     public DbSet<CarrinhoCompras> CarrinhoCompras { get; set; }
 
+    public DbSet<OrcamentoPeca> OrcamentoPeca { get; set; } // Adicionando a DbSet para OrcamentoPeca
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Admin>(entity =>
@@ -643,6 +645,33 @@ public partial class AppDbContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__Resposta__ID_Admin");
         });
+
+        Console.WriteLine("Configurando entidade OrcamentoPeca...");
+        modelBuilder.Entity<OrcamentoPeca>(entity =>
+        {
+            entity.HasKey(e => e.IdOrcamentoPeca).HasName("PK__OrcamentoPeca");
+
+            entity.ToTable("OrcamentoPeca");
+
+            entity.Property(e => e.IdOrcamentoPeca).HasColumnName("ID_OrcamentoPeca");
+            entity.Property(e => e.IdOrcamento).HasColumnName("ID_Orcamento");
+            entity.Property(e => e.IdPeca).HasColumnName("ID_Peca");
+            entity.Property(e => e.Quantidade).HasColumnName("Quantidade");
+
+            entity.HasOne(e => e.Orcamento)
+                .WithMany(o => o.OrcamentoPecas)
+                .HasForeignKey(e => e.IdOrcamento)
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("FK_OrcamentoPeca_Orcamento");
+
+            entity.HasOne(e => e.Peca)
+                .WithMany()
+                .HasForeignKey(e => e.IdPeca)
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("FK_OrcamentoPeca_Peca");
+        });
+
+        Console.WriteLine("Configuração de OrcamentoPeca concluída.");
 
         modelBuilder.Entity<VendaPeca>()
             .HasOne(v => v.AnuncioPeca)

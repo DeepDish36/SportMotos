@@ -25,6 +25,11 @@ public partial class Orcamento
 
     public DateTime UltimaAtualizacao { get; set; } // Última atualização do orçamento
 
+    // Novo campo
+    public bool DetalhesVisualizados { get; set; } = false; // Valor padrão: ainda não visualizado
+
     // Relacionamento com Cliente
     public virtual Cliente IdClienteNavigation { get; set; } = null!;
+
+    public ICollection<OrcamentoPeca> OrcamentoPecas { get; set; } = new List<OrcamentoPeca>();
 }
