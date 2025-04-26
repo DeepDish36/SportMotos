@@ -31,7 +31,64 @@
             background-color: #dae0e5;
             border-color: #d3d9df;
         }
+
+    .form-container {
+        background: rgba(255, 255, 255, 0.9);
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        width: 100%;
+        margin: 0 auto;
+    }
+
+        .form-container h2 {
+            color: #FF7A00;
+            text-align: center;
+        }
+
+        .form-container p {
+            text-align: center;
+            color: #6c757d;
+            margin-bottom: 20px;
+        }
+
+        .form-container input,
+        .form-container select,
+        .form-container textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .form-container button {
+            width: 100%;
+            background-color: #FF7A00;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+            .form-container button:hover {
+                background-color: #e36700;
+            }
 </style>
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="alert alert-danger">
+        <ul>
+            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+            {
+                <li>@error.ErrorMessage</li>
+            }
+        </ul>
+    </div>
+}
 
 <div class="container mt-4">
     <div class="bg-white p-4" style="width: 100%; margin: 0 auto; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
@@ -86,30 +143,43 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <!-- Formulário -->
-                <form method="post" action="/Orcamentos/Criar">
-                    <div class="mb-3">
-                        <label for="descricao" class="form-label">Descrição</label>
-                        <textarea class="form-control" id="descricao" name="Descricao" rows="3" required></textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label for="valorTotal" class="form-label">Valor Total</label>
-                        <input type="number" class="form-control" id="valorTotal" name="ValorTotal" step="0.01" min="0" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="prazoResposta" class="form-label">Prazo para Resposta</label>
-                        <input type="date" class="form-control" id="prazoResposta" name="PrazoResposta">
-                    </div>
-                    <div class="mb-3">
-                        <label for="metodoPagamento" class="form-label">Método de Pagamento</label>
-                        <select class="form-select" id="metodoPagamento" name="MetodoPagamento">
-                            <option value="Dinheiro">Dinheiro</option>
-                            <option value="Cartão">Cartão</option>
-                            <option value="Transferência">Transferência</option>
-                        </select>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Enviar</button>
-                </form>
+                <!-- Formulário ajustado -->
+                <div class="form-container">
+                    <p>Preencha o formulário</p>
+                    <form method="post" asp-controller="Contactos" asp-action="Criar">
+                        <div>
+                            <input type="hidden" name="IdCliente" value="@ViewBag.IdCliente" />
+                            <label class="form-label" for="nome">Nome</label>
+                            <input type="text" id="nome" name="Nome" placeholder="Digite seu nome" required>
+                        </div>
+                        <div>
+                            <label class="form-label" for="sobrenome">Sobrenome</label>
+                            <input type="text" id="sobrenome" name="Sobrenome" placeholder="Digite seu sobrenome" required>
+                        </div>
+                        <div>
+                            <label class="form-label" for="email">Email</label>
+                            <input type="email" id="email" name="Email" placeholder="Digite seu email" required>
+                        </div>
+                        <div>
+                            <label class="form-label" for="telefone">Telefone</label>
+                            <input type="tel" id="telefone" name="Telefone" placeholder="Digite seu telefone" required>
+                        </div>
+                        <div>
+                            <label class="form-label" for="servico">Selecione o serviço</label>
+                            <select id="servico" name="Servico" required>
+                                <option value="">Selecione o serviço</option>
+                                <option value="Manutenção">Manutenção</option>
+                                <option value="Reparo">Reparo</option>
+                                <option value="Peças">Peças</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="form-label" for="descricao">Descrição</label>
+                            <textarea id="descricao" name="Descricao" rows="4" placeholder="Descreva o que você precisa" required></textarea>
+                        </div>
+                        <button type="submit">Enviar</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

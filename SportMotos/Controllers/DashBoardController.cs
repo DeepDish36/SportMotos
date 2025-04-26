@@ -25,21 +25,26 @@ namespace SportMotos.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            var anuncioMotos = _context.AnuncioMotos
-                .Where(a => a.DataExpiracao.HasValue)
+            // Buscar orçamentos
+            var orcamentosQuery = _context.Orcamentos
+                .Include(o => o.IdClienteNavigation) // Inclui informações do cliente
+                .OrderByDescending(o => o.DataCriacao);
+
+            var orcamentos = orcamentosQuery
+                .Select(o => new
+                {
+                    o.IdOrcamento,
+                    ClienteNome = o.IdClienteNavigation.Nome,
+                    ClienteEmail = o.IdClienteNavigation.Email,
+                    o.DataCriacao,
+                    o.Status,
+                    o.ValorTotal
+                })
                 .ToList();
 
-            ViewBag.AnuncioMotosExpirados = anuncioMotos.Count(a => (DateTime.Now - a.DataExpiracao.Value).TotalDays >= 50);
+            ViewBag.Orcamentos = orcamentos;
 
-            var anuncioPecas = _context.AnuncioPecas
-                .Where(a => a.DataExpiracao.HasValue)
-                .ToList();
-
-            ViewBag.AnuncioPecasExpirados = anuncioPecas.Count(a => (DateTime.Now - a.DataExpiracao.Value).TotalDays >= 50);
-
-            ViewBag.AnunciosProximosDeExpirar = _context.AnuncioPecas
-                .Count(a => a.DataExpiracao > DateTime.Now && a.DataExpiracao <= DateTime.Now.AddDays(5));
-
+            // Dados existentes no método
             ViewBag.TotalClientes = _context.Clientes.Count();
             ViewBag.TotalUsuarios = _context.Users.Count();
             ViewBag.TotalAnunciosMoto = _context.AnuncioMotos.Count();
@@ -123,6 +128,7 @@ namespace SportMotos.Controllers
 
             return View();
         }
+
 
         [HttpGet]
         public async Task<IActionResult> GetEstatisticas(int mes)
