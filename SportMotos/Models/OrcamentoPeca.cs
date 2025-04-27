@@ -1,18 +1,29 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SportMotos.Models
 {
     public class OrcamentoPeca
     {
+        [Key]
+        [Column("ID_OrcamentoPeca")]
         public int IdOrcamentoPeca { get; set; } // Chave primária
 
-        public int IdOrcamento { get; set; } // Chave estrangeira para Orcamento
-        public int IdPeca { get; set; } // Chave estrangeira para Peca
+        [Column("ID_Orcamento")]
+        public int IdOrcamento { get; set; } // FK para Orcamento
 
-        public int Quantidade { get; set; } // Quantidade da peça no orçamento
+        [Column("ID_Peca")]
+        public int IdPeca { get; set; } // FK para Peca
+
+        [Column("Quantidade")]
+        public int Quantidade { get; set; }
 
         // Relacionamentos
-        public virtual Orcamento Orcamento { get; set; } // Relacionamento com Orcamento
-        public virtual Peca Peca { get; set; } // Relacionamento com Peca
+
+        [ForeignKey(nameof(IdOrcamento))]
+        public virtual Orcamento Orcamento { get; set; }
+
+        [ForeignKey(nameof(IdPeca))]
+        public virtual Peca Peca { get; set; }
     }
 }

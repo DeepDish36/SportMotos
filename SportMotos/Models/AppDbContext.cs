@@ -50,6 +50,17 @@ public partial class AppDbContext : DbContext
 
     public DbSet<OrcamentoPeca> OrcamentoPeca { get; set; } // Adicionando a DbSet para OrcamentoPeca
 
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        if (!optionsBuilder.IsConfigured)
+        {
+            optionsBuilder
+                .UseSqlServer(@"Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|SportMotos.mdf;Integrated Security=True;Connect Timeout=30") // Substitua pela sua string de conexão
+                .LogTo(Console.WriteLine, LogLevel.Information) // Habilita o log no console
+                .EnableSensitiveDataLogging(); // Opcional: Apenas para debug, nunca em produção
+        }
+    }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Admin>(entity =>
