@@ -18,12 +18,10 @@ namespace SportMotos.Models
         [Column("Quantidade")]
         public int Quantidade { get; set; }
 
-        // Relacionamentos
-
-        [ForeignKey(nameof(IdOrcamento))]
+        // Relacionamentos - sem [ForeignKey]
         public virtual Orcamento Orcamento { get; set; }
 
-        [ForeignKey(nameof(IdPeca))]
+        [ForeignKey("IdPeca")] // 🔥 Força o mapeamento da FK corretamente!
         public virtual Peca Peca { get; set; }
     }
 }

@@ -34,5 +34,5 @@ public partial class Peca
     public virtual List<Imagem> Imagens { get; set; } = new List<Imagem>(); 
 
     public virtual ICollection<AnuncioPeca> AnuncioPecas { get; set; } = new List<AnuncioPeca>();
-    public ICollection<OrcamentoPeca> OrcamentoPecas { get; set; } = new List<OrcamentoPeca>();
+    public virtual ICollection<OrcamentoPeca> OrcamentoPecas { get; set; } = new List<OrcamentoPeca>();
 }

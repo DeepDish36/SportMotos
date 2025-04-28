@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SportMotos.Models;
+using SportMotos.Services;
 using System.Security.Claims;
 
 namespace SportMotos.Controllers
@@ -8,10 +9,12 @@ namespace SportMotos.Controllers
     public class ContactosController : Controller
     {
         private readonly AppDbContext _context;
+        private readonly IEmailService _emailService;
 
-        public ContactosController(AppDbContext context)
+        public ContactosController(AppDbContext context, IEmailService emailService)
         {
             _context = context;
+            _emailService= emailService;
         }
 
         [HttpGet]
@@ -64,10 +67,15 @@ namespace SportMotos.Controllers
 
             return RedirectToAction("OrcamentoEnviado"); // Redireciona para uma página de sucesso
         }
+
         [HttpPost]
         public IActionResult AceitarOrcamento(int id)
         {
-            var orcamento = _context.Orcamentos.FirstOrDefault(o => o.IdOrcamento == id);
+            var orcamento = _context.Orcamentos
+                .Include(o => o.IdClienteNavigation)
+                .Include(o => o.OrcamentoPecas)
+                .ThenInclude(op => op.Peca)
+                .FirstOrDefault(o => o.IdOrcamento == id);
 
             if (orcamento == null)
             {
@@ -79,14 +87,40 @@ namespace SportMotos.Controllers
                 return BadRequest("Você deve visualizar os detalhes do orçamento antes de aceitá-lo.");
             }
 
+            // Calcular preço total
+            double totalPreco = orcamento.OrcamentoPecas.Sum(op => op.Peca.Preco * op.Quantidade);
+
+            // Montar a lista de peças utilizadas
+            string listaPecasHtml = "<ul>";
+            foreach (var op in orcamento.OrcamentoPecas)
+            {
+                listaPecasHtml += $"<li>{op.Peca.Nome} - {op.Quantidade} unidades - €{op.Peca.Preco * op.Quantidade}</li>";
+            }
+            listaPecasHtml += "</ul>";
+
+            // Construir email
+            string mensagemHtml = $@"
+            <h2>Orçamento Aprovado</h2>
+            <p>Prezado {orcamento.IdClienteNavigation.Nome},</p>
+            <p>Seu orçamento foi aprovado. Veja os detalhes abaixo:</p>
+            <h3>Descrição do problema:</h3>
+            <p>{orcamento.Descricao}</p>
+            <h3>Peças utilizadas:</h3>
+            {listaPecasHtml}
+            <p><strong>Preço total:</strong> €{totalPreco}</p>
+            <p>Se tiver dúvidas, entre em contato.</p>
+        ";
+
+            // Enviar email usando o serviço de email injetado
+            _emailService.SendEmailAsync(orcamento.IdClienteNavigation.Email, "Orçamento Aprovado", mensagemHtml).Wait();
+
+            // Atualizar status
             orcamento.Status = "Aprovado";
             orcamento.UltimaAtualizacao = DateTime.Now;
-
             _context.SaveChanges();
 
-            return RedirectToAction("Dashboard");
+            return RedirectToAction("Dashboard","DashBoard");
         }
-
 
         [HttpPost]
         public IActionResult RejeitarOrcamento(int id)

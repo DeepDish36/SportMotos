@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using AngleSharp.Dom;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace SportMotos.Models;
 
@@ -55,9 +57,10 @@ public partial class AppDbContext : DbContext
         if (!optionsBuilder.IsConfigured)
         {
             optionsBuilder
-                .UseSqlServer(@"Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|SportMotos.mdf;Integrated Security=True;Connect Timeout=30") // Substitua pela sua string de conexão
-                .LogTo(Console.WriteLine, LogLevel.Information) // Habilita o log no console
-                .EnableSensitiveDataLogging(); // Opcional: Apenas para debug, nunca em produção
+                .UseSqlServer(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|SportMotos.mdf;Integrated Security=True;Connect Timeout=30")
+                .LogTo(Console.WriteLine, LogLevel.Information,
+                       DbContextLoggerOptions.UtcTime | DbContextLoggerOptions.Category | DbContextLoggerOptions.SingleLine) // Melhor formato de log
+                .EnableSensitiveDataLogging(); // Mostra parâmetros na query (usar com cuidado em produção)
         }
     }
 
@@ -633,7 +636,7 @@ public partial class AppDbContext : DbContext
             entity.Property(e => e.IdResposta).HasColumnName("ID_Resposta");
             entity.Property(e => e.IdForum).HasColumnName("ID_Forum");
             entity.Property(e => e.IdCliente).HasColumnName("ID_Cliente").IsRequired(false);
-            entity.Property(e=>e.IdAdmin).HasColumnName("ID_Admin").IsRequired(false); // Novo campo para admins
+            entity.Property(e => e.IdAdmin).HasColumnName("ID_Admin").IsRequired(false); // Novo campo para admins
             entity.Property(e => e.Conteudo).IsUnicode(false);
             entity.Property(e => e.DataCriacao)
                 .HasColumnType("datetime")
@@ -649,7 +652,7 @@ public partial class AppDbContext : DbContext
                 .HasForeignKey(d => d.IdCliente)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__Resposta__ID_Cliente");
-            
+
             entity.HasOne(d => d.IdAdminNavigation)
                 .WithMany()
                 .HasForeignKey(d => d.IdAdmin)
@@ -660,25 +663,22 @@ public partial class AppDbContext : DbContext
         Console.WriteLine("Configurando entidade OrcamentoPeca...");
         modelBuilder.Entity<OrcamentoPeca>(entity =>
         {
-            entity.HasKey(e => e.IdOrcamentoPeca).HasName("PK__OrcamentoPeca");
-
-            entity.ToTable("OrcamentoPeca");
+            entity.HasKey(e => e.IdOrcamentoPeca).HasName("PK_OrcamentoPeca");
 
             entity.Property(e => e.IdOrcamentoPeca).HasColumnName("ID_OrcamentoPeca");
             entity.Property(e => e.IdOrcamento).HasColumnName("ID_Orcamento");
             entity.Property(e => e.IdPeca).HasColumnName("ID_Peca");
             entity.Property(e => e.Quantidade).HasColumnName("Quantidade");
 
-            entity.HasOne(e => e.Orcamento)
-                .WithMany(o => o.OrcamentoPecas)
-                .HasForeignKey(e => e.IdOrcamento)
-                .OnDelete(DeleteBehavior.Cascade)
-                .HasConstraintName("FK_OrcamentoPeca_Orcamento");
+            entity.HasOne(e => e.Peca)
+                .WithMany()
+                .HasForeignKey(e => e.IdPeca) // Certifique-se de que esta configuração está correta
+                .HasConstraintName("FK_OrcamentoPeca_Peca");
+
 
             entity.HasOne(e => e.Peca)
                 .WithMany()
-                .HasForeignKey(e => e.IdPeca)
-                .OnDelete(DeleteBehavior.Cascade)
+                .HasForeignKey(e => e.IdPeca) // 🔥 Garante que a FK correta seja usada
                 .HasConstraintName("FK_OrcamentoPeca_Peca");
         });
 
