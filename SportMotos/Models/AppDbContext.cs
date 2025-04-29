@@ -670,16 +670,17 @@ public partial class AppDbContext : DbContext
             entity.Property(e => e.IdPeca).HasColumnName("ID_Peca");
             entity.Property(e => e.Quantidade).HasColumnName("Quantidade");
 
-            entity.HasOne(e => e.Peca)
-                .WithMany()
-                .HasForeignKey(e => e.IdPeca) // Certifique-se de que esta configuração está correta
-                .HasConstraintName("FK_OrcamentoPeca_Peca");
+            // 🔥 Mapeamento correto para a FK de Orçamento
+            entity.HasOne(op => op.IdOrcamentoNavigation)
+                    .WithMany(o => o.OrcamentoPecas) // Um orçamento pode conter várias peças
+                    .HasForeignKey(op => op.IdOrcamento)
+                    .HasConstraintName("FK_OrcamentoPeca_Orcamento");
 
-
-            entity.HasOne(e => e.Peca)
-                .WithMany()
-                .HasForeignKey(e => e.IdPeca) // 🔥 Garante que a FK correta seja usada
-                .HasConstraintName("FK_OrcamentoPeca_Peca");
+            // 🔥 Mapeamento correto para a FK de Peça (corrigido para não duplicar)
+            entity.HasOne(op => op.IdPecaNavigation)
+                    .WithMany(p => p.OrcamentoPecas) // Uma peça pode estar em vários orçamentos
+                    .HasForeignKey(op => op.IdPeca)
+                    .HasConstraintName("FK_OrcamentoPeca_Peca");
         });
 
         Console.WriteLine("Configuração de OrcamentoPeca concluída.");

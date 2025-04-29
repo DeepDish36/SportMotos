@@ -74,7 +74,7 @@ namespace SportMotos.Controllers
             var orcamento = _context.Orcamentos
                 .Include(o => o.IdClienteNavigation)
                 .Include(o => o.OrcamentoPecas)
-                .ThenInclude(op => op.Peca)
+                .ThenInclude(op => op.IdPecaNavigation)
                 .FirstOrDefault(o => o.IdOrcamento == id);
 
             if (orcamento == null)
@@ -88,13 +88,13 @@ namespace SportMotos.Controllers
             }
 
             // Calcular preço total
-            double totalPreco = orcamento.OrcamentoPecas.Sum(op => op.Peca.Preco * op.Quantidade);
+            double totalPreco = orcamento.OrcamentoPecas.Sum(op => op.IdPecaNavigation.Preco * op.Quantidade);
 
             // Montar a lista de peças utilizadas
             string listaPecasHtml = "<ul>";
             foreach (var op in orcamento.OrcamentoPecas)
             {
-                listaPecasHtml += $"<li>{op.Peca.Nome} - {op.Quantidade} unidades - €{op.Peca.Preco * op.Quantidade}</li>";
+                listaPecasHtml += $"<li>{op.IdPecaNavigation.Nome} - {op.Quantidade} unidades - €{op.IdPecaNavigation.Preco * op.Quantidade}</li>";
             }
             listaPecasHtml += "</ul>";
 
@@ -102,14 +102,23 @@ namespace SportMotos.Controllers
             string mensagemHtml = $@"
             <h2>Orçamento Aprovado</h2>
             <p>Prezado {orcamento.IdClienteNavigation.Nome},</p>
-            <p>Seu orçamento foi aprovado. Veja os detalhes abaixo:</p>
+            <p>O seu orçamento foi aprovado! Veja os detalhes abaixo:</p>
+    
             <h3>Descrição do problema:</h3>
             <p>{orcamento.Descricao}</p>
+    
             <h3>Peças utilizadas:</h3>
             {listaPecasHtml}
+    
             <p><strong>Preço total:</strong> €{totalPreco}</p>
-            <p>Se tiver dúvidas, entre em contato.</p>
+    
+            <hr>
+            <p>Se tiver dúvidas, entre em contato:</p>
+            <p><strong>Tlm:</strong> 922333444</p>
+            <p><strong>Tlf:</strong> 232876554</p>
+            <p><strong>Email:</strong> sportmotos@gmail.com</p>
         ";
+
 
             // Enviar email usando o serviço de email injetado
             _emailService.SendEmailAsync(orcamento.IdClienteNavigation.Email, "Orçamento Aprovado", mensagemHtml).Wait();

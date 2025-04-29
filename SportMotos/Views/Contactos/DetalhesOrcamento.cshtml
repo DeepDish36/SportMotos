@@ -43,9 +43,16 @@
         <tbody>
             @foreach (var peca in Model.PecasDisponiveis)
             {
+                // Procurar se a peça foi incluída no orçamento
+                var pecaSelecionada = Model.Orcamento.OrcamentoPecas.FirstOrDefault(op => op.IdPeca == peca.IdPeca);
+                bool estaSelecionada = pecaSelecionada != null;
+                int quantidadeSelecionada = estaSelecionada ? pecaSelecionada.Quantidade : 0;
+
                 <tr data-id="@peca.IdPeca" data-preco="@peca.Preco">
                     <td>
-                        <input type="checkbox" name="PecasSelecionadas" value="@peca.IdPeca" />
+                        <input type="checkbox" name="PecasSelecionadas" value="@peca.IdPeca"
+                        @(estaSelecionada ? "checked" : "")
+                        @(Model.Orcamento.Status == "Aprovado" ? "disabled" : "") />
                     </td>
                     <td>@peca.Nome</td>
                     <td>@peca.Marca</td>
@@ -53,7 +60,11 @@
                     <td>@peca.Stock</td>
                     <td>@peca.Preco</td>
                     <td>
-                        <input type="number" name="Quantidades[@peca.IdPeca]" class="form-control" min="1" max="@peca.Stock" />
+                        <input type="number" name="Quantidades[@peca.IdPeca]" class="form-control"
+                               min="1" max="@peca.Stock"
+                               value="@quantidadeSelecionada"
+                        @(estaSelecionada ? "" : "disabled")
+                        @(Model.Orcamento.Status == "Aprovado" ? "readonly" : "") />
                     </td>
                 </tr>
             }
@@ -63,7 +74,7 @@
     <p id="valorTotal" class="mt-3"><strong>Total:</strong> €0.00</p>
 
     <div class="d-flex justify-content-between mt-3">
-        <button type="submit" class="btn btn-primary">Salvar Seleção</button>
+        <button type="submit" class="btn btn-primary" @(Model.Orcamento.Status == "Aprovado" ? "disabled" : "")>Salvar Seleção</button>
         <a href="@Url.Action("Dashboard", "DashBoard")" class="btn btn-secondary">Voltar ao Dashboard</a>
     </div>
 </form>
@@ -90,19 +101,22 @@
             });
         });
 
-        $(document).ready(function () {
-            $('#pecasTable').DataTable({
-                language: {
-                    url: "/datatable/langconfig.json" // Arquivo de tradução para DataTables
-                },
-                paging: true, // Habilita paginação
-                searching: true, // Habilita busca
-                ordering: true, // Habilita ordenação
-                columnDefs: [
-                    { orderable: false, targets: [0, 5] } // Desabilita ordenação para as colunas "Selecionar" e "Quantidade Necessária"
-                ]
-            });
+                $(document).ready(function () {
+            if ('@Model.Orcamento.Status' === "Pendente") { // Só ativa se ainda estiver pendente
+                $('#pecasTable').DataTable({
+                    language: {
+                        url: "/datatable/langconfig.json"
+                    },
+                    paging: true,
+                    searching: true,
+                    ordering: true,
+                    columnDefs: [
+                        { orderable: false, targets: [0, 5] }
+                    ]
+                });
+            }
         });
+
 
             $(document).on("change", "input[name^='Quantidades'], input[name='PecasSelecionadas']", function () {
             let total = 0;
