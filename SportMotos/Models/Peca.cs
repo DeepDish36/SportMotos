@@ -35,4 +35,6 @@ public partial class Peca
 
     public virtual ICollection<AnuncioPeca> AnuncioPecas { get; set; } = new List<AnuncioPeca>();
     public virtual ICollection<OrcamentoPeca> OrcamentoPecas { get; set; } = new List<OrcamentoPeca>();
+    public virtual ICollection<CarrinhoCompras> CarrinhoCompras { get; set; } = new List<CarrinhoCompras>();
+
 }

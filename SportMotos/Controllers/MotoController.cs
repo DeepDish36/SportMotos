@@ -47,38 +47,51 @@ namespace SportMotos.Controllers
                 return View(moto);
             }
 
+            // 🔥 Verificar se a moto já existe para evitar duplicações
+            var motoExistente = await _context.Motos.FirstOrDefaultAsync(m => m.Matricula == moto.Matricula);
+            if (motoExistente != null)
+            {
+                ModelState.AddModelError("Matricula", "Já existe uma moto com essa matrícula.");
+                return View(moto); // Retorna sem duplicar
+            }
+
             _context.Motos.Add(moto);
             await _context.SaveChangesAsync(); // Primeiro salva a moto para gerar o ID
 
-            // Processa cada imagem
+            // 🔥 Criar o diretório baseado no formato ID-(id da moto)_(matrícula)
+            string pastaMoto = Path.Combine(Directory.GetCurrentDirectory(), $"wwwroot/images/motos/ID-{moto.IdMoto}_{moto.Matricula}");
+
+            if (!Directory.Exists(pastaMoto))
+            {
+                Directory.CreateDirectory(pastaMoto); // Criar pasta se não existir
+            }
+
+            // 🔥 Processar cada imagem
             if (Imagens != null && Imagens.Count > 0)
             {
-                string uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/motos");
-
-                if (!Directory.Exists(uploadPath))
-                {
-                    Directory.CreateDirectory(uploadPath);
-                }
-
                 foreach (var imagem in Imagens)
                 {
+                    // 🔥 Gerar nome no formato "MATRÍCULA_GUID.extensão"
                     string fileName = $"{moto.Matricula}_{Guid.NewGuid()}{Path.GetExtension(imagem.FileName)}";
-                    string filePath = Path.Combine(uploadPath, fileName);
+                    string filePath = Path.Combine(pastaMoto, fileName);
 
                     using (var stream = new FileStream(filePath, FileMode.Create))
                     {
                         await imagem.CopyToAsync(stream);
                     }
 
-                    // Adiciona a imagem à lista de imagens da moto
-                    _context.Imagens.Add(new Imagem
+                    var novaImagem = new Imagem
                     {
                         NomeArquivo = fileName,
+                        Caminho = $"/images/motos/ID-{moto.IdMoto}_{moto.Matricula}/{fileName}", // 🔥 Caminho atualizado
                         MotoId = moto.IdMoto
-                    });
+                    };
+
+                    _context.Imagens.Add(novaImagem);
+                    Console.WriteLine($"Imagem adicionada: {novaImagem.Caminho}"); // 🔍 Log para debug
                 }
 
-                await _context.SaveChangesAsync(); // Salva as imagens no banco
+                await _context.SaveChangesAsync(); // Salvar imagens no banco
             }
 
             ViewBag.Sucesso = "Moto adicionada com sucesso!";

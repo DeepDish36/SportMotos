@@ -39,5 +39,5 @@ public partial class AnuncioMoto
     public virtual Moto? IdMotoNavigation { get; set; }
 
     [NotMapped]
-    public string ImagemPath { get; set; }
+    public string? ImagemPath { get; set; }
 }

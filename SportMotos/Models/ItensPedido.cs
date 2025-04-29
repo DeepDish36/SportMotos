@@ -13,6 +13,6 @@ namespace SportMotos.Models
 
         // Relacionamento com Pedido
         public virtual Pedidos Pedido { get; set; } = null!;
+        public virtual Peca Peca { get; set; } = null!;
     }
-
 }

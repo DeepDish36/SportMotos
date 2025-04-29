@@ -85,7 +85,7 @@
                         var imagensMoto = anuncio.IdMotoNavigation?.Imagens?.ToList();
                         if (imagensMoto != null && imagensMoto.Any())
                         {
-                            imagemPath = Url.Content($"~/images/motos/{imagensMoto.First().NomeArquivo}.jpg");
+                            imagemPath = Url.Content($"~/images/motos/ID-{anuncio.IdMotoNavigation.IdMoto}_{anuncio.IdMotoNavigation.Matricula}/{imagensMoto.First().NomeArquivo}");
                         }
                     }
                     else if (ViewBag.TipoAnuncio == "pecas")
@@ -93,7 +93,7 @@
                         var imagensPeca = anuncio.IdPecaNavigation?.Imagens as List<SportMotos.Models.Imagem>;
                         if (imagensPeca != null && imagensPeca.Any())
                         {
-                            imagemPath = Url.Content($"~/images/pecas/{imagensPeca.First().NomeArquivo}.jpg");
+                            imagemPath = Url.Content($"~/images/pecas/{imagensPeca.First().NomeArquivo}");
                         }
                     }
                 }

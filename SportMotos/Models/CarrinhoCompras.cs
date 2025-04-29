@@ -14,11 +14,8 @@ namespace SportMotos.Models
         public int IdCliente { get; set; }
 
         [Required]
-        public int IdProduto { get; set; }
-
-        [Required]
-        [Column(TypeName = "VARCHAR(10)")]
-        public string TipoProduto { get; set; } = null!;
+        [ForeignKey("Peca")]
+        public int IdPeca { get; set; } // 🔥 Agora referencia diretamente a peça!
 
         [Required]
         [Range(1, int.MaxValue)]
@@ -26,7 +23,8 @@ namespace SportMotos.Models
 
         public DateTime? DataAdicionado { get; set; } = DateTime.Now;
 
-        // Propriedade de Navegação
+        // 🔥 Propriedades de Navegação
         public virtual Cliente Cliente { get; set; } = null!;
+        public virtual Peca Peca { get; set; } = null!; // Referência correta à tabela Peca
     }
 }

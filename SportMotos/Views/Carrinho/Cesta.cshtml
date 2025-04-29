@@ -1,0 +1,15 @@
+﻿<ul class="list-group">
+    @foreach (var item in Model)
+    {
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center">
+                <img src="@Url.Content("~/images/pecas/" + item.IdPeca + ".jpg")" class="rounded me-3" style="width: 80px; height: 80px;">
+                <div>
+                    <h5>Peça ID: @item.IdPeca</h5>
+                    <p class="text-muted">Quantidade: @item.Quantidade</p>
+                </div>
+            </div>
+            <button class="btn btn-danger btn-sm">Remover</button>
+        </li>
+    }
+</ul>

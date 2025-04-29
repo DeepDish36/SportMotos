@@ -9,61 +9,22 @@
 
     <div class="card shadow-sm p-4 mb-4">
         <div class="row g-4 align-items-center">
-            <!-- Coluna da Imagem -->
             <div class="col-md-5">
-                @if (ViewBag.TipoAnuncio == "motos")
+                @if (ViewBag.TipoAnuncio == "motos" && Model.IdMotoNavigation?.Imagens != null && Model.IdMotoNavigation.Imagens.Count > 0)
                 {
-                    @if (Model.IdMotoNavigation != null && Model.IdMotoNavigation.Imagens != null && Model.IdMotoNavigation.Imagens.Count > 0)
-                    {
-                        @foreach (var imagem in Model.IdMotoNavigation.Imagens)
-                        {
-                            Console.WriteLine("Nome imagem:" + imagem);
-                            <img src="@Url.Content("~/images/motos/" + imagem.NomeArquivo + ".jpg")"
-                                 alt="Imagem da Moto @Model.IdMotoNavigation.Matricula"
-                                 class="img-fluid rounded">
-                        }
-                    }
-                    else
-                    {
-                        <p>Sem imagem disponível</p>
-                    }
-                }
-                else if (ViewBag.TipoAnuncio == "pecas" && Model.IdPecaNavigation?.Imagens != null && Model.IdPecaNavigation.Imagens.Count > 0)
-                {
-                    var nomeArquivo = Model.IdPecaNavigation.Imagens.FirstOrDefault()?.NomeArquivo;
-
-                    if (!string.IsNullOrEmpty(nomeArquivo))
-                    {
-                        // Verificar diferentes extensões
-                        var extensoes = new[] { ".jpg", ".png", ".jpeg" };
-                        string imagemPecaPath = null;
-
-                        foreach (var extensao in extensoes)
-                        {
-                            var caminhoCompleto = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/pecas", nomeArquivo + extensao);
-
-                            if (System.IO.File.Exists(caminhoCompleto))
+                    <div id="motoCarousel" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            @for (int i = 0; i < Model.IdMotoNavigation.Imagens.Count; i++)
                             {
-                                imagemPecaPath = Url.Content($"~/images/pecas/{nomeArquivo}{extensao}");
-                                break;
+                                var imagem = Model.IdMotoNavigation.Imagens[i];
+                                <div class="carousel-item @(i == 0 ? "active" : "")">
+                                    <img src="@Url.Content("~/images/motos/ID-" + Model.IdMotoNavigation.IdMoto + "_" + Model.IdMotoNavigation.Matricula + "/" + imagem.NomeArquivo)"
+                                         alt="Imagem da Moto @Model.IdMotoNavigation.Matricula"
+                                         class="d-block w-100 img-fluid rounded">
+                                </div>
                             }
-                        }
-
-                        if (!string.IsNullOrEmpty(imagemPecaPath))
-                        {
-                            <img src="@imagemPecaPath"
-                                 alt="Imagem da Peça @Model.IdPecaNavigation.Nome"
-                                 class="img-fluid rounded" />
-                        }
-                        else
-                        {
-                            <p>Sem imagem disponível</p>
-                        }
-                    }
-                    else
-                    {
-                        <p>Sem imagem disponível</p>
-                    }
+                        </div>
+                    </div>
                 }
                 else
                 {
@@ -74,8 +35,19 @@
             <!-- Coluna dos Detalhes -->
             <div class="col-md-7">
                 <div class="card-body">
-                    <h3>@Model.Titulo</h3>
+                    <div class="d-flex align-items-center">
+                        <h3 class="me-3">@Model.Titulo</h3>
+
+                        <!-- Botão de Favorito (Agora aparece para motos e peças) -->
+                        <a href="#" id="favorito-btn" class="btn btn-danger">
+                            <svg id="favorito-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" class="bi bi-heart" viewBox="0 0 16 16">
+                                <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15" />
+                            </svg>
+                        </a>
+                    </div>
+
                     <p><strong>Preço:</strong> €@Model.Preco.ToString("F2")</p>
+
                     @if (ViewBag.TipoAnuncio == "motos" && Model.IdMotoNavigation != null)
                     {
                         <p><strong>Marca:</strong> @Model.IdMotoNavigation.Marca</p>
@@ -90,8 +62,8 @@
                         <p><strong>Stock:</strong> @Model.IdPecaNavigation.Stock.ToString()</p>
                     }
 
-                    <!-- Botão de Ver outros detalhes -->
-                    <button class="btn dropdown-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#outrosDetalhes" aria-expanded="false">
+                    <!-- Botão para ver mais detalhes -->
+                    <button class="btn dropdown-toggle mt-3" type="button" data-bs-toggle="collapse" data-bs-target="#outrosDetalhes" aria-expanded="false">
                         Ver outros detalhes
                     </button>
 
@@ -119,40 +91,25 @@
                         </div>
                     </div>
 
+                    <!-- 🔥 Botão Adicionar ao Carrinho (somente para peças) -->
                     @if (ViewBag.TipoAnuncio == "pecas")
                     {
                         <div class="mt-3">
-                            <div class="d-flex align-items-center">
-                                <button type="button" class="btn btn-danger me-2" id="decrease">-</button>
-                                <input type="text" id="quantity" class="form-control text-center" value="1" disabled style="width: 50px;">
-                                <button type="button" class="btn btn-success ms-2" id="increase">+</button>
-                            </div>
-                            <span id="totalPrice" class="badge bg-primary mt-2" style="display: none;"></span>
+                            <a href="@Url.Action("AdicionarAoCarrinho", "Carrinho", new { idPeca = Model.IdPecaNavigation.IdPeca })" class="btn btn-success">
+                                Adicionar ao Carrinho
+                            </a>
                         </div>
                     }
 
-                    <!-- Botão Voltar (sempre abaixo da dropdown) -->
+                    <!-- Botão Voltar -->
                     <div class="mt-3">
                         <a href="@Url.Action("Anuncio", "Anuncio", new { tipo = ViewBag.TipoAnuncio })" class="btn btn-secondary">Voltar</a>
                     </div>
-                    @if (ViewBag.TipoAnuncio == "motos")
-                    {
-                        <div class="mt-3">
-                            <a href="#" class="btn btn-primary" id="btnInteresse" data-id="@Model.IdMoto">Estou interessado</a>
-                            <a href="#" id="favorito-btn" class="btn btn-danger">
-                                <svg id="favorito-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" class="bi bi-heart" viewBox="0 0 16 16">
-                                    <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15" />
-                                </svg>
-                            </a>
-                            <input type="hidden" id="moto-id" name="IdMoto" value="@Model.IdMoto" />
-                        </div>
-                    }
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 <script src="~/js/jquery.js"></script>
 <script src="~/js/bootstrap.bundle.min.js"></script>
 <script>

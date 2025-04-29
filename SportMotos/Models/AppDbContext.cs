@@ -42,15 +42,15 @@ public partial class AppDbContext : DbContext
 
     public virtual DbSet<PasswordResets> PasswordResets { get; set; }
 
-    public DbSet<Pedidos> Pedidos { get; set; }
+    public virtual DbSet<Pedidos> Pedidos { get; set; }
 
-    public DbSet<Resposta> Resposta { get; set; }
+    public virtual DbSet<Resposta> Resposta { get; set; }
 
-    public DbSet<InteresseMotos> InteresseMotos { get; set; }
+    public virtual DbSet<InteresseMotos> InteresseMotos { get; set; }
 
-    public DbSet<CarrinhoCompras> CarrinhoCompras { get; set; }
+    public virtual DbSet<CarrinhoCompras> CarrinhoCompras { get; set; }
 
-    public DbSet<OrcamentoPeca> OrcamentoPeca { get; set; } // Adicionando a DbSet para OrcamentoPeca
+    public virtual DbSet<OrcamentoPeca> OrcamentoPeca { get; set; } // Adicionando a DbSet para OrcamentoPeca
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -607,11 +607,7 @@ public partial class AppDbContext : DbContext
 
             entity.Property(e => e.IdCarrinho).HasColumnName("ID_Carrinho");
             entity.Property(e => e.IdCliente).IsRequired();
-            entity.Property(e => e.IdProduto).IsRequired();
-            entity.Property(e => e.TipoProduto)
-                .HasMaxLength(10)
-                .IsUnicode(false)
-                .IsRequired();
+            entity.Property(e => e.IdPeca).IsRequired();
             entity.Property(e => e.Quantidade)
                 .IsRequired()
                 .HasDefaultValue(1);
@@ -625,6 +621,12 @@ public partial class AppDbContext : DbContext
                 .HasForeignKey(d => d.IdCliente)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__CarrinhoCompras__ID_Cliente");
+
+            entity.HasOne(d => d.Peca) // 🔥 Agora referência corretamente a tabela de peças!
+                .WithMany(p => p.CarrinhoCompras)
+                .HasForeignKey(d => d.IdPeca)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__CarrinhoCompras__ID_Peca");
         });
 
         modelBuilder.Entity<Resposta>(entity =>
@@ -658,6 +660,37 @@ public partial class AppDbContext : DbContext
                 .HasForeignKey(d => d.IdAdmin)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__Resposta__ID_Admin");
+        });
+
+        modelBuilder.Entity<ItensPedido>(entity =>
+        {
+            entity.HasKey(e => e.IdItemPedido).HasName("PK_ItensPedido");
+
+            entity.ToTable("ItensPedido");
+
+            entity.Property(e => e.IdItemPedido).HasColumnName("ID_ItemPedido");
+            entity.Property(e => e.IdPedido).IsRequired();
+            entity.Property(e => e.IdPeca).IsRequired();
+            entity.Property(e => e.Quantidade)
+                .IsRequired()
+                .HasDefaultValue(1);
+            entity.Property(e => e.PrecoUnitario)
+                .IsRequired()
+                .HasColumnType("decimal(10,2)");
+
+            // 🔥 Relação com Pedidos
+            entity.HasOne(d => d.Pedido)
+                .WithMany(p => p.ItensPedido)
+                .HasForeignKey(d => d.IdPedido)
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("FK_ItensPedido_Pedidos");
+
+            // 🔥 Relação com Peças
+            entity.HasOne(d => d.Peca)
+                .WithMany(p => p.ItensPedido)
+                .HasForeignKey(d => d.IdPeca)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_ItensPedido_Peca");
         });
 
         Console.WriteLine("Configurando entidade OrcamentoPeca...");
