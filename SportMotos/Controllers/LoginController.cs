@@ -140,6 +140,18 @@ namespace SportMotos.Controllers
             }
         }
 
+        public JsonResult ObterClienteLogado()
+        {
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (string.IsNullOrEmpty(userIdClaim))
+            {
+                return Json(new { clienteId = (int?)null, mensagem = "Utilizador não autenticado." });
+            }
+
+            return Json(new { clienteId = int.Parse(userIdClaim) });
+        }
+
         [HttpGet]
         public async Task<IActionResult> Logout()
         {

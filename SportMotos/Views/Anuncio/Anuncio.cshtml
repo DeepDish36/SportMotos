@@ -85,7 +85,7 @@
                         var imagensMoto = anuncio.IdMotoNavigation?.Imagens?.ToList();
                         if (imagensMoto != null && imagensMoto.Any())
                         {
-                            imagemPath = Url.Content($"~/images/motos/ID-{anuncio.IdMotoNavigation.IdMoto}_{anuncio.IdMotoNavigation.Matricula}/{imagensMoto.First().NomeArquivo}");
+                            imagemPath = Url.Content($"~/images/motos/ID-{anuncio.IdMotoNavigation.IdMoto}_{anuncio.IdMotoNavigation.Matricula}/{imagensMoto.First().NomeArquivo}.jpg");
                         }
                     }
                     else if (ViewBag.TipoAnuncio == "pecas")

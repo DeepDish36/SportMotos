@@ -12,18 +12,37 @@
             <div class="col-md-5">
                 @if (ViewBag.TipoAnuncio == "motos" && Model.IdMotoNavigation?.Imagens != null && Model.IdMotoNavigation.Imagens.Count > 0)
                 {
-                    <div id="motoCarousel" class="carousel slide" data-bs-ride="carousel">
+                    <div id="motoCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
+                        <!-- Indicadores -->
+                        <div class="carousel-indicators">
+                            @for (int i = 0; i < Model.IdMotoNavigation.Imagens.Count; i++)
+                            {
+                                <button type="button" data-bs-target="#motoCarousel" data-bs-slide-to="@i" class="@(i == 0 ? "active" : "")" aria-current="@(i == 0 ? "true" : "false")" aria-label="Slide @(i + 1)"></button>
+                            }
+                        </div>
+
+                        <!-- Imagens -->
                         <div class="carousel-inner">
                             @for (int i = 0; i < Model.IdMotoNavigation.Imagens.Count; i++)
                             {
                                 var imagem = Model.IdMotoNavigation.Imagens[i];
                                 <div class="carousel-item @(i == 0 ? "active" : "")">
-                                    <img src="@Url.Content("~/images/motos/ID-" + Model.IdMotoNavigation.IdMoto + "_" + Model.IdMotoNavigation.Matricula + "/" + imagem.NomeArquivo)"
+                                    <img src="@Url.Content("~/images/motos/ID-" + Model.IdMotoNavigation.IdMoto + "_" + Model.IdMotoNavigation.Matricula + "/" + imagem.NomeArquivo + ".jpg")"
                                          alt="Imagem da Moto @Model.IdMotoNavigation.Matricula"
                                          class="d-block w-100 img-fluid rounded">
                                 </div>
                             }
                         </div>
+
+                        <!-- Controles -->
+                        <button class="carousel-control-prev" type="button" data-bs-target="#motoCarousel" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Anterior</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#motoCarousel" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Próximo</span>
+                        </button>
                     </div>
                 }
                 else
@@ -91,6 +110,16 @@
                         </div>
                     </div>
 
+                    @if (ViewBag.TipoAnuncio == "motos" && Model.IdMotoNavigation != null)
+                    {
+                        <div class="mt-3">
+                            <a href="#" class="btn btn-primary" id="btnInteresse" data-id="@Model.IdMoto">
+                                Estou interessado
+                            </a>
+                            <input type="hidden" id="moto-id" name="IdMoto" value="@Model.IdMoto" />
+                        </div>
+                    }
+
                     <!-- 🔥 Botão Adicionar ao Carrinho (somente para peças) -->
                     @if (ViewBag.TipoAnuncio == "pecas")
                     {
@@ -110,6 +139,9 @@
         </div>
     </div>
 </div>
+
+@await Html.PartialAsync("_FormularioInteresse")
+
 <script src="~/js/jquery.js"></script>
 <script src="~/js/bootstrap.bundle.min.js"></script>
 <script>

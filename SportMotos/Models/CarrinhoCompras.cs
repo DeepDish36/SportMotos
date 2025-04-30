@@ -9,22 +9,22 @@ namespace SportMotos.Models
         [Column("ID_Carrinho")]
         public int IdCarrinho { get; set; }
 
-        [Required]
         [ForeignKey("Cliente")]
+        [Column("ID_Cliente")]
         public int IdCliente { get; set; }
 
-        [Required]
         [ForeignKey("Peca")]
-        public int IdPeca { get; set; } // 🔥 Agora referencia diretamente a peça!
+        [Column("ID_Peca")]
+        public int IdPeca { get; set; } // 🔥 Agora referencia corretamente a peça!
 
         [Required]
-        [Range(1, int.MaxValue)]
         public int Quantidade { get; set; } = 1;
 
+        [Column("DataAdicionado")]
         public DateTime? DataAdicionado { get; set; } = DateTime.Now;
 
         // 🔥 Propriedades de Navegação
         public virtual Cliente Cliente { get; set; } = null!;
-        public virtual Peca Peca { get; set; } = null!; // Referência correta à tabela Peca
+        public virtual Peca Peca { get; set; } = null!;
     }
 }

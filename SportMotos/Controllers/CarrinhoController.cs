@@ -13,39 +13,59 @@ namespace SportMotos.Controllers
             _context = context;
         }
 
-        public IActionResult AdicionarAoCarrinho(int idPeca)
+        public IActionResult AdicionarAoCarrinho(int idPeca, int idCliente)
         {
             // 🔥 Buscar a peça no banco de dados
             var peca = _context.Pecas.FirstOrDefault(p => p.IdPeca == idPeca);
             if (peca == null) return NotFound();
 
-            // 🔥 Recuperar carrinho atual ou criar um novo
-            var carrinho = HttpContext.Session.GetObjectFromJson<List<CarrinhoCompras>>("Carrinho") ?? new List<CarrinhoCompras>();
+            // 🔥 Verificar se a peça já está no carrinho do usuário
+            var itemExistente = _context.CarrinhoCompras.FirstOrDefault(i => i.IdCliente == idCliente && i.IdPeca == idPeca);
 
-            // 🔥 Adicionar peça ao carrinho
-            var itemExistente = carrinho.FirstOrDefault(i => i.IdPeca == idPeca);
             if (itemExistente != null)
             {
+                // 🔥 Se já existe, aumentar a quantidade
                 itemExistente.Quantidade++;
             }
             else
             {
-                carrinho.Add(new CarrinhoCompras
+                // 🔥 Se não existe, criar um novo item no banco
+                var novoItem = new CarrinhoCompras
                 {
+                    IdCliente = idCliente,
                     IdPeca = peca.IdPeca,
-                    Quantidade = 1
-                });
+                    Quantidade = 1,
+                    DataAdicionado = DateTime.Now
+                };
+                _context.CarrinhoCompras.Add(novoItem);
             }
 
-            // 🔥 Salvar carrinho atualizado na sessão
-            HttpContext.Session.SetObjectAsJson("Carrinho", carrinho);
+            _context.SaveChanges();
 
-            return RedirectToAction("Cesta");
+            return RedirectToAction("Cesta", new { idCliente });
         }
 
-        public IActionResult Cesta()
+        public JsonResult ObterCarrinho(int idCliente)
         {
-            var carrinho = HttpContext.Session.GetObjectFromJson<List<CarrinhoCompras>>("Carrinho") ?? new List<CarrinhoCompras>();
+            var carrinho = _context.CarrinhoCompras
+                .Where(i => i.IdCliente == idCliente) // 🔥 Ajustado para refletir o banco de dados
+                .Select(i => new
+                {
+                    id = i.IdPeca, // 🔥 Corrigido para usar o nome exato do BD
+                    name = i.Peca.Nome,
+                    brand = i.Peca.Marca,
+                    price = i.Peca.Preco,
+                    quantity = i.Quantidade,
+                    image = "/images/pecas/" + i.IdPeca + ".jpg"
+                })
+                .ToList();
+
+            return Json(carrinho);
+        }
+
+        public IActionResult Cesta(int idCliente)
+        {
+            var carrinho = _context.CarrinhoCompras.Where(i => i.IdCliente == idCliente).ToList();
             return View(carrinho);
         }
 
@@ -59,7 +79,7 @@ namespace SportMotos.Controllers
             {
                 IdCliente = idCliente,
                 DataCompra = DateTime.Now,
-                Total = carrinho.Sum(item => item.Quantidade * _context.Pecas.Find(item.IdPeca).Preco),
+                Total = (decimal)carrinho.Sum(item => item.Quantidade * (double)_context.Pecas.Find(item.IdPeca).Preco),
                 Status = "Pendente"
             };
 
@@ -76,7 +96,7 @@ namespace SportMotos.Controllers
                     IdPedido = novoPedido.IdPedido,
                     IdPeca = item.IdPeca,
                     Quantidade = item.Quantidade,
-                    PrecoUnitario = peca.Preco
+                    PrecoUnitario = (decimal)peca.Preco
                 });
             }
 
@@ -86,17 +106,6 @@ namespace SportMotos.Controllers
             HttpContext.Session.Remove("Carrinho");
 
             return RedirectToAction("ResumoPedido", new { idPedido = novoPedido.IdPedido });
-        }
-
-        public IActionResult TesteSessao()
-        {
-            // 🔥 Teste: armazenar um valor na sessão
-            HttpContext.Session.SetString("Teste", "Sessão funcionando!");
-
-            // 🔥 Recuperar o valor da sessão
-            var valor = HttpContext.Session.GetString("Teste");
-
-            return Content($"Valor salvo na sessão: {valor}");
         }
     }
 }

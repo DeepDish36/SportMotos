@@ -5,13 +5,27 @@ namespace SportMotos.Models
 {
     public class ItensPedido
     {
+        [Key]
+        [Column("ID_ItemPedido")]
         public int IdItemPedido { get; set; }
-        public int IdPedido { get; set; }  // FK para Pedido
-        public int IdProduto { get; set; } // Pode ser Moto ou Peça
+
+        [Required]
+        [ForeignKey("Pedido")]
+        public int IdPedido { get; set; } // FK para Pedido
+
+        [Required]
+        [ForeignKey("Peca")]
+        public int IdPeca { get; set; } // FK para Peça
+
+        [Required]
+        [Range(1, int.MaxValue)]
         public int Quantidade { get; set; }
+
+        [Required]
+        [Column(TypeName = "decimal(10,2)")]
         public decimal PrecoUnitario { get; set; }
 
-        // Relacionamento com Pedido
+        // 🔥 Propriedades de navegação
         public virtual Pedidos Pedido { get; set; } = null!;
         public virtual Peca Peca { get; set; } = null!;
     }

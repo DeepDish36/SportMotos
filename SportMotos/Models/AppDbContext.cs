@@ -52,6 +52,8 @@ public partial class AppDbContext : DbContext
 
     public virtual DbSet<OrcamentoPeca> OrcamentoPeca { get; set; } // Adicionando a DbSet para OrcamentoPeca
 
+    public virtual DbSet<ItensPedido> ItensPedido { get; set; } // Adicionando a DbSet para ItensPedido
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         if (!optionsBuilder.IsConfigured)
@@ -680,14 +682,14 @@ public partial class AppDbContext : DbContext
 
             // 🔥 Relação com Pedidos
             entity.HasOne(d => d.Pedido)
-                .WithMany(p => p.ItensPedido)
+                .WithMany(p => p.Itens)
                 .HasForeignKey(d => d.IdPedido)
                 .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_ItensPedido_Pedidos");
 
             // 🔥 Relação com Peças
             entity.HasOne(d => d.Peca)
-                .WithMany(p => p.ItensPedido)
+                .WithMany(p => p.Itens)
                 .HasForeignKey(d => d.IdPeca)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_ItensPedido_Peca");

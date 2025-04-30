@@ -25,45 +25,40 @@
     })
 })()
 
+// Variável global do carrinho
 let cart = [];
 
-function toggleCart() {
-    let cartDropdown = document.getElementById("cartDropdown");
-    // Alterna a exibição do carrinho
-    if (cartDropdown.style.display === "block") {
-        cartDropdown.style.display = "none";
-    } else {
-        cartDropdown.style.display = "block";
-    }
+// 🔥 Função para obter o ID do cliente (simulando login)
+function getClienteId() {
+    // Obtém o ID do cliente logado a partir de um endpoint de autenticação
+    return fetch('/Login/ObterClienteLogado')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Erro ao obter o cliente logado');
+            }
+            return response.json();
+        })
+        .then(data => data.clienteId)
+        .catch(error => {
+            console.error("Erro ao obter o ID do cliente logado:", error);
+            return null; // Retorna null se houver erro
+        });
 }
 
-// Fecha o carrinho ao clicar fora
-document.addEventListener("click", function (event) {
-    let cartDropdown = document.getElementById("cartDropdown");
-    let cartButton = document.getElementById("cartButton");
+// 🔥 Função para carregar o carrinho do BD via API
+function loadCartFromServer() {
+    const clienteId = getClienteId();
 
-    if (cartDropdown && cartButton && !cartDropdown.contains(event.target) && !cartButton.contains(event.target)) {
-        cartDropdown.style.display = "none";
-    }
-});
-
-// Função para remover um item do carrinho
-function removeFromCart(productId) {
-    cart = cart.filter(item => item.id !== productId);
-    updateCartUI();
+    fetch(`/Carrinho/ObterCarrinho?idCliente=${clienteId}`)
+        .then(response => response.json())
+        .then(data => {
+            cart = data; // Atualiza o carrinho com os itens da BD
+            updateCartUI(); // Atualiza a interface
+        })
+        .catch(error => console.error("Erro ao carregar carrinho:", error));
 }
 
-
-function addToCart(product) {
-    let existingProduct = cart.find(item => item.id === product.id);
-    if (existingProduct) {
-        existingProduct.quantity++;
-    } else {
-        cart.push({ ...product, quantity: 1 });
-    }
-    updateCartUI();
-}
-
+// 🔥 Função para atualizar a interface do carrinho lateral
 function updateCartUI() {
     let cartContainer = document.getElementById("cartItems");
     cartContainer.innerHTML = "";
@@ -101,9 +96,35 @@ function updateCartUI() {
     document.getElementById("totalPrice").textContent = `€${totalPrice.toFixed(2)}`;
 }
 
+// 🔥 Função para remover item do carrinho
+function removeFromCart(productId) {
+    cart = cart.filter(item => item.id !== productId);
 
-// Simulação de produtos (remova depois de testar)
-setTimeout(() => {
-    addToCart({ id: 1, name: "Capacete Moto", brand: "AGV", price: 99.99, image: "https://via.placeholder.com/50" });
-    addToCart({ id: 2, name: "Luvas Racing", brand: "Alpinestars", price: 39.99, image: "https://via.placeholder.com/50" });
-}, 2000);
+    // 🔥 Remover do BD
+    fetch(`/Carrinho/RemoverItem?idCliente=${getClienteId()}&idPeca=${productId}`, {
+        method: "DELETE"
+    }).then(() => updateCartUI())
+        .catch(error => console.error("Erro ao remover item:", error));
+}
+
+// 🔥 Função para alternar a exibição do carrinho
+function toggleCart() {
+    let cartDropdown = document.getElementById("cartDropdown");
+
+    if (cartDropdown.style.display === "block") {
+        cartDropdown.style.display = "none";
+    } else {
+        cartDropdown.style.display = "block";
+        loadCartFromServer(); // 🔥 Carregar os itens reais
+    }
+}
+
+// 🔥 Fecha o carrinho ao clicar fora
+document.addEventListener("click", function (event) {
+    let cartDropdown = document.getElementById("cartDropdown");
+    let cartButton = document.getElementById("cartButton");
+
+    if (cartDropdown && cartButton && !cartDropdown.contains(event.target) && !cartButton.contains(event.target)) {
+        cartDropdown.style.display = "none";
+    }
+});
