@@ -25,10 +25,20 @@
     })
 })()
 
-// Variável global do carrinho
+// Passar o ID do cliente pela URL para aceder à sua cesta
+document.addEventListener("DOMContentLoaded", function () {
+    const cestaButton = document.getElementById("cestaButton");
+
+    if (cestaButton) {
+        const clienteId = getClienteId();
+        cestaButton.href = `/Carrinho/Cesta?idCliente=${clienteId}`;
+    }
+});
+
+// Lista para armazenar os produtos (guarda os itens para mostrar na UI)
 let cart = [];
 
-// 🔥 Função para obter o ID do cliente (simulando login)
+// Função para obter o ID do cliente
 function getClienteId() {
     // Obtém o ID do cliente logado a partir de um endpoint de autenticação
     return fetch('/Login/ObterClienteLogado')
@@ -45,20 +55,21 @@ function getClienteId() {
         });
 }
 
-// 🔥 Função para carregar o carrinho do BD via API
+// Carregar os dados do carrinho na BD via Fetch API
 function loadCartFromServer() {
-    const clienteId = getClienteId();
+    const clienteId = getClienteId(); // Obtém o ID do cliente logado
 
-    fetch(`/Carrinho/ObterCarrinho?idCliente=${clienteId}`)
+    fetch(`/Carrinho/ObterCarrinho?idCliente=${parseInt(clienteId)}`)
         .then(response => response.json())
         .then(data => {
-            cart = data; // Atualiza o carrinho com os itens da BD
+            cart = data; // Atualiza a variável global do carrinho
             updateCartUI(); // Atualiza a interface
         })
         .catch(error => console.error("Erro ao carregar carrinho:", error));
 }
 
-// 🔥 Função para atualizar a interface do carrinho lateral
+
+// Função para atualizar a UI do carrinho 
 function updateCartUI() {
     let cartContainer = document.getElementById("cartItems");
     cartContainer.innerHTML = "";
@@ -96,11 +107,11 @@ function updateCartUI() {
     document.getElementById("totalPrice").textContent = `€${totalPrice.toFixed(2)}`;
 }
 
-// 🔥 Função para remover item do carrinho
+// Remover item do carrinho
 function removeFromCart(productId) {
     cart = cart.filter(item => item.id !== productId);
 
-    // 🔥 Remover do BD
+    // Remover do carrinho
     fetch(`/Carrinho/RemoverItem?idCliente=${getClienteId()}&idPeca=${productId}`, {
         method: "DELETE"
     }).then(() => updateCartUI())
@@ -115,7 +126,7 @@ function toggleCart() {
         cartDropdown.style.display = "none";
     } else {
         cartDropdown.style.display = "block";
-        loadCartFromServer(); // 🔥 Carregar os itens reais
+        loadCartFromServer(); 
     }
 }
 

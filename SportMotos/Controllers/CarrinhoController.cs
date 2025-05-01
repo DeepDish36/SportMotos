@@ -13,10 +13,17 @@ namespace SportMotos.Controllers
             _context = context;
         }
 
-        public IActionResult AdicionarAoCarrinho(int idPeca, int idCliente)
+        public IActionResult AdicionarAoCarrinho(int idPeca)
         {
+            // 🔥 Buscar o ID do cliente a partir das claims
+            var idClienteClaim = User.Claims.FirstOrDefault(c => c.Type == "IdCliente");
+            if (idClienteClaim == null) return Unauthorized(); // Verifica se a claim existe
+
+            int idCliente = int.Parse(idClienteClaim.Value); // Converte o valor da claim para int
+
             // 🔥 Buscar a peça no banco de dados
             var peca = _context.Pecas.FirstOrDefault(p => p.IdPeca == idPeca);
+
             if (peca == null) return NotFound();
 
             // 🔥 Verificar se a peça já está no carrinho do usuário

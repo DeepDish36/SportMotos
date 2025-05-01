@@ -608,14 +608,14 @@ public partial class AppDbContext : DbContext
             entity.ToTable("CarrinhoCompras");
 
             entity.Property(e => e.IdCarrinho).HasColumnName("ID_Carrinho");
-            entity.Property(e => e.IdCliente).IsRequired();
-            entity.Property(e => e.IdPeca).IsRequired();
-            entity.Property(e => e.Quantidade)
+            entity.Property(e => e.IdCliente).HasColumnName("ID_Cliente").IsRequired();
+            entity.Property(e => e.IdPeca).HasColumnName("ID_Peca").IsRequired();
+            entity.Property(e => e.Quantidade).HasColumnName("Quantidade")
                 .IsRequired()
                 .HasDefaultValue(1);
             entity.Property(e => e.DataAdicionado)
                 .HasColumnType("datetime")
-                .HasColumnName("Data_Adicionado")
+                .HasColumnName("DataAdicionado")
                 .HasDefaultValueSql("(getdate())");
 
             entity.HasOne(d => d.Cliente)

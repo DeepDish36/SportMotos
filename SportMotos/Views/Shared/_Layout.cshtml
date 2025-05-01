@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using System.Security.Claims
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -117,7 +118,9 @@
                             <span id="totalPrice">€0.00</span>
                         </div>
                         <div class="cart-footer">
-                            <a asp-action="Cesta" asp-controller="Carrinho" class="btn btn-primary w-100">Ir para a cesta</a>
+                            <a id="cestaButton" href="#" class="btn btn-primary w-100">
+                                Ir para a cesta
+                            </a>
                         </div>
                     </div>
 

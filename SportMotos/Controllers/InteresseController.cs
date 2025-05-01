@@ -152,13 +152,14 @@ namespace SportMotos.Controllers
 
             var nomeCliente = interesseCompleto.Cliente.Nome;
             var marcaMoto = interesseCompleto.Moto.Marca;
+            var modeloMoto = interesseCompleto.Moto.Modelo;
 
             var subject = "Pedido Aprovado";
             var message = $@"
                 <html>
                 <body>
                     <h2>Olá, {nomeCliente}!</h2>
-                    <p>Temos o prazer de informar que o seu pedido para a moto da marca <strong>{marcaMoto}</strong> foi aprovado com sucesso.</p>
+                    <p>Temos o prazer de informar que o seu pedido para a moto <strong>{marcaMoto} {modeloMoto}</strong> foi aprovado com sucesso.</p>
                     <p>Entre em contato conosco para mais informações ou para agendar a retirada.</p>
                     <h3>Horário de funcionamento:</h3>
                     <ul>

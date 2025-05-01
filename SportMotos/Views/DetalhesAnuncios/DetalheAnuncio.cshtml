@@ -140,7 +140,6 @@
     </div>
 </div>
 
-@await Html.PartialAsync("_FormularioInteresse")
 
 <script src="~/js/jquery.js"></script>
 <script src="~/js/bootstrap.bundle.min.js"></script>
@@ -294,27 +293,44 @@
     });
 
     //Marcar intersse
-    $(function () {
+            $(function () {
+        // Evento de clique no botão "Estou interessado"
         $("#btnInteresse").click(function (e) {
             e.preventDefault();
-            var idMoto = $(this).data("id"); // Alterado para idMoto para consistência
 
+            // Captura o ID do anúncio (moto)
+            var idMoto = $(this).data("id");
+
+            // Faz uma requisição AJAX para carregar o conteúdo da modal
             $.get("/Interesse/Criar", { idMoto: idMoto }, function (data) {
-                $("body").append(data);
+                let modalContainer = $("#modalContainer");
+
+                // Se o container da modal não existir, cria um novo
+                if (modalContainer.length === 0) {
+                    modalContainer = $("<div id='modalContainer'></div>");
+                    $("body").append(modalContainer);
+                }
+
+                // Insere o conteúdo retornado no container e exibe a modal
+                modalContainer.html(data);
                 $("#modalInteresse").modal("show");
             }).fail(function (jqXHR, textStatus, errorThrown) {
                 console.error("Erro ao carregar a modal: " + textStatus, errorThrown);
             });
         });
 
+        // Evento de submissão do formulário dentro da modal
         $(document).on("submit", "#formInteresse", function (e) {
             e.preventDefault();
+
+            // Captura os dados do formulário
             var formData = {
-                IdMoto: $("#IdAnuncio").val(), // Alterado para IdMoto para corresponder ao modelo
+                IdMoto: $("#IdAnuncio").val(),
                 NomeCliente: $("#NomeCliente").val(),
                 EmailCliente: $("#EmailCliente").val()
             };
 
+            // Faz uma requisição AJAX para salvar o interesse
             $.post("/Interesse/SalvarInteresse", formData, function (response) {
                 if (response.success) {
                     alert("Interesse enviado com sucesso!");

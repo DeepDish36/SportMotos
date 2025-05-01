@@ -15,7 +15,7 @@ namespace SportMotos.Models
 
         [ForeignKey("Peca")]
         [Column("ID_Peca")]
-        public int IdPeca { get; set; } // 🔥 Agora referencia corretamente a peça!
+        public int IdPeca { get; set; }
 
         [Required]
         public int Quantidade { get; set; } = 1;
@@ -23,7 +23,7 @@ namespace SportMotos.Models
         [Column("DataAdicionado")]
         public DateTime? DataAdicionado { get; set; } = DateTime.Now;
 
-        // 🔥 Propriedades de Navegação
+        // Propriedades de Navegação
         public virtual Cliente Cliente { get; set; } = null!;
         public virtual Peca Peca { get; set; } = null!;
     }
