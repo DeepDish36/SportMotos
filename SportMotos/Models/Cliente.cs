@@ -72,4 +72,6 @@ public partial class Cliente
 
     // Propriedade de navegação para os interesses
     public virtual ICollection<InteresseMotos> Interesses { get; set; } = new List<InteresseMotos>();
+
+    public virtual ICollection<EnderecosEnvio> EnderecosEnvio { get; set; } = new List<EnderecosEnvio>();
 }

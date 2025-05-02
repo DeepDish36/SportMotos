@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SportMotos.Models;
 using SportMotos.Helpers;
+using System.Security.Claims;
+using Microsoft.EntityFrameworkCore;
 
 namespace SportMotos.Controllers
 {
@@ -55,10 +57,10 @@ namespace SportMotos.Controllers
         public JsonResult ObterCarrinho(int idCliente)
         {
             var carrinho = _context.CarrinhoCompras
-                .Where(i => i.IdCliente == idCliente) // 🔥 Ajustado para refletir o banco de dados
+                .Where(i => i.IdCliente == idCliente)
                 .Select(i => new
                 {
-                    id = i.IdPeca, // 🔥 Corrigido para usar o nome exato do BD
+                    id = i.IdPeca,
                     name = i.Peca.Nome,
                     brand = i.Peca.Marca,
                     price = i.Peca.Preco,
@@ -67,19 +69,167 @@ namespace SportMotos.Controllers
                 })
                 .ToList();
 
-            return Json(carrinho);
+            var quantidadeTotal = carrinho.Sum(i => i.quantity); // Calcula a quantidade total
+
+            return Json(new { carrinho, quantidadeTotal });
         }
 
-        public IActionResult Cesta(int idCliente)
+        public IActionResult Cesta()
         {
-            var carrinho = _context.CarrinhoCompras.Where(i => i.IdCliente == idCliente).ToList();
+            // 🔥 Obter o ID do cliente das Claims
+            var userIdClaim = User.FindFirst("IdCliente")?.Value;
+
+            if (string.IsNullOrEmpty(userIdClaim))
+            {
+                return RedirectToAction("Login", "Login");
+            }
+
+            int idCliente = int.Parse(userIdClaim);
+
+            // 🔥 Buscar os itens do carrinho no banco de dados
+            var carrinho = _context.CarrinhoCompras
+                .Include(c => c.Peca)
+                .Where(i => i.IdCliente == idCliente)
+                .ToList();
+
             return View(carrinho);
+        }
+
+        [HttpDelete]
+        public JsonResult RemoverItem(int idPeca)
+        {
+            var userIdClaim = User.FindFirst("IdCliente")?.Value;
+
+            if (string.IsNullOrEmpty(userIdClaim))
+            {
+                return Json(new { sucesso = false, mensagem = "Utilizador não autenticado." });
+            }
+
+            int idCliente = int.Parse(userIdClaim);
+
+            var item = _context.CarrinhoCompras.FirstOrDefault(i => i.IdCliente == idCliente && i.IdPeca == idPeca);
+
+            if (item == null)
+            {
+                return Json(new { sucesso = false, mensagem = "Item não encontrado no carrinho." });
+            }
+
+            _context.CarrinhoCompras.Remove(item);
+            _context.SaveChanges();
+
+            return Json(new { sucesso = true });
+        }
+
+        [HttpPost]
+        public JsonResult AtualizarQuantidade([FromBody] AtualizarQuantidadeViewModel model)
+        {
+            var userIdClaim = User.FindFirst("IdCliente")?.Value;
+
+            if (string.IsNullOrEmpty(userIdClaim))
+            {
+                return Json(new { sucesso = false, mensagem = "Utilizador não autenticado." });
+            }
+
+            int idCliente = int.Parse(userIdClaim);
+
+            var item = _context.CarrinhoCompras.FirstOrDefault(i => i.IdCliente == idCliente && i.IdPeca == model.IdPeca);
+
+            if (item == null)
+            {
+                return Json(new { sucesso = false, mensagem = "Item não encontrado no carrinho." });
+            }
+
+            if (model.Acao == "Aumentar")
+            {
+                item.Quantidade += 1;
+            }
+            else if (model.Acao == "Diminuir" && item.Quantidade > 1)
+            {
+                item.Quantidade -= 1;
+            }
+
+            _context.SaveChanges();
+
+            return Json(new { sucesso = true, novaQuantidade = item.Quantidade });
+        }
+
+        public IActionResult Checkout()
+        {
+            var userIdClaim = User.FindFirst("IdCliente")?.Value;
+
+            if (string.IsNullOrEmpty(userIdClaim))
+            {
+                return RedirectToAction("Login", "Login");
+            }
+
+            int idCliente = int.Parse(userIdClaim);
+
+            var carrinho = _context.CarrinhoCompras
+                .Include(c => c.Peca)
+                .Where(i => i.IdCliente == idCliente)
+                .ToList();
+
+            if (!carrinho.Any()) return RedirectToAction("Cesta");
+
+            ViewBag.Carrinho = carrinho;
+            ViewBag.TotalCompra = carrinho.Sum(item => item.Quantidade * item.Peca.Preco);
+
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult ProcessarCheckout(EnderecosEnvio model)
+        {
+            if (!ModelState.IsValid)
+            {
+                TempData["Erro"] = "Preencha todos os campos corretamente!";
+                return RedirectToAction("Checkout");
+            }
+
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (string.IsNullOrEmpty(userIdClaim))
+            {
+                return RedirectToAction("Login", "Conta");
+            }
+
+            int idCliente = int.Parse(userIdClaim);
+
+            // 🔥 Salvar endereço na base de dados
+            model.IdCliente = idCliente;
+            _context.EnderecosEnvios.Add(model);
+            _context.SaveChanges();
+
+            TempData["Sucesso"] = "Pedido concluído com sucesso!";
+            return RedirectToAction("ResumoPedido");
+        }
+
+        public IActionResult ResumoPedido(int idPedido)
+        {
+            var pedido = _context.Pedidos
+                .Include(p => p.Itens)
+                .ThenInclude(i => i.Peca)
+                .FirstOrDefault(p => p.IdPedido == idPedido);
+
+            if (pedido == null) return NotFound();
+
+            return View(pedido);
         }
 
         public IActionResult FinalizarCompra(int idCliente)
         {
             var carrinho = HttpContext.Session.GetObjectFromJson<List<CarrinhoCompras>>("Carrinho") ?? new List<CarrinhoCompras>();
             if (!carrinho.Any()) return RedirectToAction("Cesta");
+
+            // 🔥 Validar se há estoque suficiente
+            foreach (var item in carrinho)
+            {
+                var peca = _context.Pecas.Find(item.IdPeca);
+                if (peca == null || item.Quantidade > peca.Stock) // 🔥 Altera "peca.Quantidade" para "peca.Stock"
+                {
+                    TempData["Erro"] = $"A peça {peca?.Nome ?? "desconhecida"} não tem estoque suficiente!";
+                    return RedirectToAction("Cesta");
+                }
+            }
 
             // 🔥 Criar o pedido na tabela `Pedidos`
             var novoPedido = new Pedidos
@@ -93,7 +243,7 @@ namespace SportMotos.Controllers
             _context.Pedidos.Add(novoPedido);
             _context.SaveChanges();
 
-            // 🔥 Adicionar itens do carrinho na tabela `ItensPedido`
+            // 🔥 Adicionar itens na tabela `ItensPedido` e atualizar estoque
             foreach (var item in carrinho)
             {
                 var peca = _context.Pecas.Find(item.IdPeca);
@@ -105,6 +255,27 @@ namespace SportMotos.Controllers
                     Quantidade = item.Quantidade,
                     PrecoUnitario = (decimal)peca.Preco
                 });
+
+                // 🔥 Buscar anúncio associado à peça
+                var anuncio = _context.AnuncioPecas.FirstOrDefault(a => a.IdAnuncioPeca == peca.IdPeca);
+
+                // 🔥 Registrar venda na tabela `VendaPeca`
+                _context.VendaPeca.Add(new VendaPeca
+                {
+                    IdAnuncio = anuncio?.IdAnuncioPeca ?? 0, // 🔥 Corrige o acesso ao ID do anúncio
+                    Quantidade = item.Quantidade,
+                    PrecoUnitario = (decimal)peca.Preco,
+                    DataVenda = DateTime.Now
+                });
+
+                // 🔥 Atualizar estoque
+                peca.Stock -= item.Quantidade;
+
+                // 🔥 Se esgotar, marcar peça como vendida no anúncio
+                if (peca.Stock <= 0 && anuncio != null)
+                {
+                    anuncio.Vendido = true;
+                }
             }
 
             _context.SaveChanges();

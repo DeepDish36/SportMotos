@@ -25008,17 +25008,17 @@
       <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-nT7Ht\u002B6bfihf9rX/ez5O/Wr3wxFzchqQUSUWRcCaLYI="}]]]></EndpointProperties>
       <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"153247"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022nT7Ht\u002B6bfihf9rX/ez5O/Wr3wxFzchqQUSUWRcCaLYI=\u0022"},{"Name":"Last-Modified","Value":"Wed, 30 Apr 2025 15:50:15 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
-    <StaticWebAssetEndpoint Include="_content/SportMotos/js/site.4p3aj2uofc.js">
-      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\site.js'))</AssetFile>
-      <Selectors><![CDATA[[]]]></Selectors>
-      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"4p3aj2uofc"},{"Name":"integrity","Value":"sha256-yLODH6uPdwDB1NSmXT7Gp/JWoRFX\u002BFG7d2IYBfamyho="},{"Name":"label","Value":"_content/SportMotos/js/site.js"}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"5575"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022yLODH6uPdwDB1NSmXT7Gp/JWoRFX\u002BFG7d2IYBfamyho=\u0022"},{"Name":"Last-Modified","Value":"Thu, 01 May 2025 17:49:52 GMT"}]]]></ResponseHeaders>
-    </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/SportMotos/js/site.js">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\site.js'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
-      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-yLODH6uPdwDB1NSmXT7Gp/JWoRFX\u002BFG7d2IYBfamyho="}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"5575"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022yLODH6uPdwDB1NSmXT7Gp/JWoRFX\u002BFG7d2IYBfamyho=\u0022"},{"Name":"Last-Modified","Value":"Thu, 01 May 2025 17:49:52 GMT"}]]]></ResponseHeaders>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-q\u002Bu\u002BAWrB8YoKVeizDy4oNoZ2Z6PaemCyqINMiURgfjw="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"4762"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022q\u002Bu\u002BAWrB8YoKVeizDy4oNoZ2Z6PaemCyqINMiURgfjw=\u0022"},{"Name":"Last-Modified","Value":"Fri, 02 May 2025 14:30:12 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/SportMotos/js/site.vffemglpea.js">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\site.js'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"vffemglpea"},{"Name":"integrity","Value":"sha256-q\u002Bu\u002BAWrB8YoKVeizDy4oNoZ2Z6PaemCyqINMiURgfjw="},{"Name":"label","Value":"_content/SportMotos/js/site.js"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"4762"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022q\u002Bu\u002BAWrB8YoKVeizDy4oNoZ2Z6PaemCyqINMiURgfjw=\u0022"},{"Name":"Last-Modified","Value":"Fri, 02 May 2025 14:30:12 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/SportMotos/lib/bootstrap/dist/css/bootstrap-grid.css">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\lib\bootstrap\dist\css\bootstrap-grid.css'))</AssetFile>

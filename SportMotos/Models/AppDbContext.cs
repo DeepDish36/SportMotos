@@ -54,6 +54,10 @@ public partial class AppDbContext : DbContext
 
     public virtual DbSet<ItensPedido> ItensPedido { get; set; } // Adicionando a DbSet para ItensPedido
 
+    public virtual DbSet<EnderecosEnvio> EnderecosEnvios { get; set; } // Adicionando a DbSet para EnderecosEnvio
+
+    public virtual DbSet<VendaPeca> VendaPeca { get; set; } // Adicionando a DbSet para VendaPeca
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         if (!optionsBuilder.IsConfigured)
@@ -719,6 +723,26 @@ public partial class AppDbContext : DbContext
         });
 
         Console.WriteLine("Configuração de OrcamentoPeca concluída.");
+
+        modelBuilder.Entity<EnderecosEnvio>(entity =>
+        {
+            entity.ToTable("EnderecosEnvio");
+
+            entity.HasKey(e => e.IdEnvio);
+
+            entity.Property(e => e.Nome).HasMaxLength(100).IsRequired();
+            entity.Property(e => e.Apelido).HasMaxLength(100).IsRequired();
+            entity.Property(e => e.Telefone).HasMaxLength(20).IsRequired();
+            entity.Property(e => e.Localidade).HasMaxLength(100).IsRequired();
+            entity.Property(e => e.Cidade).HasMaxLength(100).IsRequired();
+            entity.Property(e => e.CodigoPostal).HasMaxLength(10).IsRequired();
+            entity.Property(e => e.RetiradaNaLoja).HasDefaultValue(false);
+
+            entity.HasOne(e => e.Cliente)
+                  .WithMany(c => c.EnderecosEnvio)
+                  .HasForeignKey(e => e.IdCliente)
+                  .OnDelete(DeleteBehavior.Cascade);
+        });
 
         modelBuilder.Entity<VendaPeca>()
             .HasOne(v => v.AnuncioPeca)

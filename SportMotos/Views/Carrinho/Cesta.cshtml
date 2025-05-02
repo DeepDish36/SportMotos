@@ -1,15 +1,114 @@
-﻿<ul class="list-group">
+﻿@{
+    ViewData["Title"] = "A sua cesta";
+}
+<div>
+    <h2>A sua cesta</h2>
+    <div class="mt-3 text-end">
+        <h4>Total: <span id="cartTotal">€0.00</span></h4>
+    </div>
+</div>
+<ul class="list-group">
     @foreach (var item in Model)
     {
-        <li class="list-group-item d-flex justify-content-between align-items-center">
-            <div class="d-flex align-items-center">
-                <img src="@Url.Content("~/images/pecas/" + item.IdPeca + ".jpg")" class="rounded me-3" style="width: 80px; height: 80px;">
-                <div>
-                    <h5>Peça ID: @item.IdPeca</h5>
-                    <p class="text-muted">Quantidade: @item.Quantidade</p>
+        @if (item != null)
+        {
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <div class="d-flex align-items-center">
+                    <img src="@Url.Content("~/images/pecas/" + item.IdPeca + ".jpg")" class="rounded me-3" style="width: 80px; height: 80px;">
+                    <div>
+                        <h5>@(item.Peca != null ? item.Peca.Nome + " " + item.Peca.Marca + " " + item.Peca.Modelo : "Peça sem nome")</h5>
+                        <p class="text-muted">Quantidade: @item.Quantidade</p>
+                    </div>
                 </div>
-            </div>
-            <button class="btn btn-danger btn-sm">Remover</button>
-        </li>
+                <div class="d-flex align-items-center">
+                    <button class="btn btn-outline-secondary btn-sm decrease-quantity" data-id="@item.IdPeca">-</button>
+                    <input type="text" class="form-control text-center mx-2" value="@item.Quantidade" readonly style="width: 50px;">
+                    <button class="btn btn-outline-secondary btn-sm increase-quantity" data-id="@item.IdPeca">+</button>
+                </div>
+                <button class="btn btn-danger btn-sm remove-item" data-id="@item.IdPeca">Remover</button>
+            </li>
+        }
+        else
+        {
+            <p>Nenhum item disponível</p>
+        }
     }
 </ul>
+<div class="mt-3 text-end">
+    <a href="@Url.Action("Checkout", "Carrinho")" class="btn btn-success">Finalizar Compra</a>
+</div>
+<script>
+                document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll(".decrease-quantity, .increase-quantity").forEach(button => {
+            button.addEventListener("click", function () {
+                const itemId = this.dataset.id;
+                const action = this.classList.contains("increase-quantity") ? "Aumentar" : "Diminuir";
+
+                fetch(`/Carrinho/AtualizarQuantidade`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ idPeca: itemId, acao: action })
+                })
+                    .then(response => {
+                        if (!response.ok) throw new Error(`Erro HTTP ${response.status}`);
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.sucesso) {
+                            const quantityInput = this.parentElement.querySelector("input");
+                            const quantityText = this.closest("li").querySelector(".text-muted"); // 🔥 Seleciona o parágrafo da quantidade
+
+                            quantityInput.value = data.novaQuantidade;
+                            quantityText.textContent = `Quantidade: ${data.novaQuantidade}`; // 🔥 Atualiza o texto na interface
+
+                            updateCartTotal(); // 🔥 Atualiza o total
+                        } else {
+                            alert("Erro ao atualizar a quantidade.");
+                        }
+                    })
+                    .catch(error => console.error("Erro ao atualizar quantidade:", error));
+            });
+        });
+    });
+
+            document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll(".remove-item").forEach(button => {
+            button.addEventListener("click", function () {
+                const itemId = this.dataset.id;
+
+                fetch(`/Carrinho/RemoverItem?idPeca=${itemId}`, { method: "DELETE" })
+                    .then(response => {
+                        if (!response.ok) throw new Error(`Erro HTTP ${response.status}`);
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.sucesso) {
+                            this.closest("li").remove(); // 🔥 Remove o item da interface
+                            updateCartTotal(); // 🔥 Atualiza o total
+                        } else {
+                            alert("Erro ao remover o item.");
+                        }
+                    })
+                    .catch(error => console.error("Erro ao remover item:", error));
+            });
+        });
+    });
+
+        function updateCartTotal() {
+        fetch('/Carrinho/ObterCarrinho')
+            .then(response => response.json())
+            .then(data => {
+                const totalSpan = document.getElementById("cartTotal");
+
+                if (totalSpan) {
+                    const total = data.carrinho.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                    totalSpan.textContent = `€${total.toFixed(2)}`;
+                }
+            })
+            .catch(error => console.error("Erro ao obter total do carrinho:", error));
+    }
+
+    // 🔥 Atualizar total ao carregar a página
+    document.addEventListener("DOMContentLoaded", updateCartTotal);
+
+</script>

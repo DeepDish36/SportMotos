@@ -1,0 +1,32 @@
+﻿@model Pedidos
+
+@{
+    ViewData["Title"] = "Resumo do Pedido";
+}
+
+<h2>Resumo da Compra</h2>
+<p>Pedido nº: @Model.IdPedido</p>
+<p>Data da Compra: @Model.DataCompra.ToString("dd/MM/yyyy HH:mm")</p>
+<p>Status: @Model.Status</p>
+<hr>
+
+<h3>Itens Comprados</h3>
+<ul class="list-group">
+    @foreach (var item in Model.Itens)
+    {
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center">
+                <img src="@Url.Content("~/images/pecas/" + item.IdPeca + ".jpg")" class="rounded me-3" style="width: 80px; height: 80px;">
+                <div>
+                    <h5>@item.Peca.Nome</h5>
+                    <p class="text-muted">Quantidade: @item.Quantidade</p>
+                    <p class="text-muted">Preço Unitário: €@item.PrecoUnitario.ToString("0.00")</p>
+                </div>
+            </div>
+        </li>
+    }
+</ul>
+
+<hr>
+<h4>Total Pago: <strong>€@Model.Total.ToString("0.00")</strong></h4>
+<a href="/" class="btn btn-primary mt-3">Voltar para a Loja</a>

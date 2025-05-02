@@ -30,36 +30,16 @@ document.addEventListener("DOMContentLoaded", function () {
     const cestaButton = document.getElementById("cestaButton");
 
     if (cestaButton) {
-        const clienteId = getClienteId();
-        cestaButton.href = `/Carrinho/Cesta?idCliente=${clienteId}`;
+        cestaButton.href = "/Carrinho/Cesta";
     }
 });
+
 
 // Lista para armazenar os produtos (guarda os itens para mostrar na UI)
 let cart = [];
 
-// Função para obter o ID do cliente
-function getClienteId() {
-    // Obtém o ID do cliente logado a partir de um endpoint de autenticação
-    return fetch('/Login/ObterClienteLogado')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Erro ao obter o cliente logado');
-            }
-            return response.json();
-        })
-        .then(data => data.clienteId)
-        .catch(error => {
-            console.error("Erro ao obter o ID do cliente logado:", error);
-            return null; // Retorna null se houver erro
-        });
-}
-
-// Carregar os dados do carrinho na BD via Fetch API
 function loadCartFromServer() {
-    const clienteId = getClienteId(); // Obtém o ID do cliente logado
-
-    fetch(`/Carrinho/ObterCarrinho?idCliente=${parseInt(clienteId)}`)
+    fetch(`/Carrinho/ObterCarrinho`)
         .then(response => response.json())
         .then(data => {
             cart = data; // Atualiza a variável global do carrinho
@@ -129,6 +109,20 @@ function toggleCart() {
         loadCartFromServer(); 
     }
 }
+
+function updateCartCount() {
+    fetch('/Carrinho/ObterCarrinho')
+        .then(response => response.json())
+        .then(data => {
+            const cartCountSpan = document.getElementById("cartItemCount");
+
+            if (cartCountSpan) {
+                cartCountSpan.textContent = data.quantidadeTotal > 0 ? data.quantidadeTotal : "0"; // Atualiza o número de itens
+            }
+        })
+        .catch(error => console.error("Erro ao obter a quantidade do carrinho:", error));
+}
+
 
 // 🔥 Fecha o carrinho ao clicar fora
 document.addEventListener("click", function (event) {
