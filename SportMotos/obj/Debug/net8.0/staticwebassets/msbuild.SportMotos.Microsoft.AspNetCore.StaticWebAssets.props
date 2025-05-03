@@ -37470,8 +37470,8 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>7iag2hqrxi</Fingerprint>
-      <Integrity>Lx/FbHPv6GZ8pvaxSZXo5Lsx42xa36Ii4oxWFKzHKyo=</Integrity>
+      <Fingerprint>fdxnn63ryp</Fingerprint>
+      <Integrity>TbhttYa9Z6Gxe2JkYTXN+2DVtFqoIUnhZxPwEde8rWA=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\editaranunciomotojs.js'))</OriginalItemSpec>

@@ -10,6 +10,10 @@
     <input type="hidden" asp-for="IdAnuncioMoto" /> <!-- ✅ Campo oculto para o ID do anúncio -->
 
     <div class="form-group">
+        <select hidden asp-for="IdMoto" class="form-control" asp-items="ViewBag.MotosDisponiveis" id="IdMoto"></select>
+    </div>
+
+    <div class="form-group">
         <label>Título</label>
         <input asp-for="Titulo" class="form-control" required />
     </div>

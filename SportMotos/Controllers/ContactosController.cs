@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SportMotos.Models;
 using SportMotos.Services;
@@ -22,14 +23,9 @@ namespace SportMotos.Controllers
         {
             // Obter o ID do cliente logado através do Claim "IdCliente"
             var userId = User.FindFirstValue("IdCliente");
-            if (string.IsNullOrEmpty(userId) || !int.TryParse(userId, out int idCliente))
-            {
-                Console.WriteLine("Erro ao obter ID do cliente logado.");
-                return Json(new { success = false, message = "Erro ao identificar o cliente logado." });
-            }
-            Console.WriteLine($"ID do Cliente Logado: {idCliente}");
+            Console.WriteLine($"ID do Cliente Logado: {userId}");
             // O ID pode agora ser usado para qualquer operação.
-            ViewBag.IdCliente = idCliente; // Passa para a View
+            ViewBag.IdCliente = userId; // Passa para a View
 
             return View();
         }

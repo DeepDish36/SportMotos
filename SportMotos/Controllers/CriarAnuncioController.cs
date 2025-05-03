@@ -45,9 +45,9 @@ namespace SportMotos.Controllers
         [HttpGet]
         public IActionResult CriarAnuncioMoto()
         {
-            var tipoUsuario = User.FindFirstValue("Tipo_Utilizador");
+            var tipoUser = User.FindFirstValue("Tipo_Utilizador");
 
-            if (tipoUsuario != "Admin")
+            if (tipoUser != "Admin")
             {
                 return RedirectToAction("Index", "Home");
             }

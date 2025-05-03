@@ -27,16 +27,18 @@ namespace SportMotos.Controllers
             return View(forums);
         }
 
+        [Authorize]
         [HttpGet]
         public IActionResult Create()
         {
             return View();
         }
 
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Forum forum)
-        {
+        { 
             try
             {
                 if (!ModelState.IsValid)

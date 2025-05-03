@@ -9,8 +9,6 @@ namespace SportMotos.Models
         [Column("ID_Envio")]
         public int IdEnvio { get; set; }
 
-        [ForeignKey("Cliente")]
-        [Column("ID_Cliente")]
         public int IdCliente { get; set; }
 
         [Required]

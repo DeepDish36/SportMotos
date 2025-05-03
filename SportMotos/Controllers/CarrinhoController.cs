@@ -3,6 +3,7 @@ using SportMotos.Models;
 using SportMotos.Helpers;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SportMotos.Controllers
 {
@@ -15,6 +16,7 @@ namespace SportMotos.Controllers
             _context = context;
         }
 
+        [Authorize]
         public IActionResult AdicionarAoCarrinho(int idPeca)
         {
             // 🔥 Buscar o ID do cliente a partir das claims
@@ -28,17 +30,16 @@ namespace SportMotos.Controllers
 
             if (peca == null) return NotFound();
 
-            // 🔥 Verificar se a peça já está no carrinho do usuário
             var itemExistente = _context.CarrinhoCompras.FirstOrDefault(i => i.IdCliente == idCliente && i.IdPeca == idPeca);
 
             if (itemExistente != null)
             {
-                // 🔥 Se já existe, aumentar a quantidade
+                // Aumentar a quantidade
                 itemExistente.Quantidade++;
             }
             else
             {
-                // 🔥 Se não existe, criar um novo item no banco
+                // Criar um novo registo na BD
                 var novoItem = new CarrinhoCompras
                 {
                     IdCliente = idCliente,
@@ -156,13 +157,16 @@ namespace SportMotos.Controllers
         public IActionResult Checkout()
         {
             var userIdClaim = User.FindFirst("IdCliente")?.Value;
-
             if (string.IsNullOrEmpty(userIdClaim))
             {
                 return RedirectToAction("Login", "Login");
             }
 
             int idCliente = int.Parse(userIdClaim);
+
+            Console.WriteLine($"ID do cliente: {userIdClaim}");
+
+            ViewBag.IdCliente = idCliente;
 
             var carrinho = _context.CarrinhoCompras
                 .Include(c => c.Peca)
@@ -180,28 +184,36 @@ namespace SportMotos.Controllers
         [HttpPost]
         public IActionResult ProcessarCheckout(EnderecosEnvio model)
         {
+            // 🔥 Obter o ID do cliente das claims
+            var userIdClaim = User.FindFirst("IdCliente")?.Value;
+            if (string.IsNullOrEmpty(userIdClaim))
+            {
+                return RedirectToAction("Login", "Login");
+            }
+
+            // 🔥 Atribuir o ID do cliente ao modelo antes da validação
+            model.IdCliente = int.Parse(userIdClaim);
+
+            // 🔍 Validar o modelo após a atribuição
             if (!ModelState.IsValid)
             {
+                foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
+                {
+                    Console.WriteLine($"❌ Erro na validação: {error.ErrorMessage}");
+                }
+
                 TempData["Erro"] = "Preencha todos os campos corretamente!";
                 return RedirectToAction("Checkout");
             }
 
-            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            if (string.IsNullOrEmpty(userIdClaim))
-            {
-                return RedirectToAction("Login", "Conta");
-            }
-
-            int idCliente = int.Parse(userIdClaim);
-
-            // 🔥 Salvar endereço na base de dados
-            model.IdCliente = idCliente;
+            // 🔥 Salvar o endereço no banco de dados
             _context.EnderecosEnvios.Add(model);
             _context.SaveChanges();
 
             TempData["Sucesso"] = "Pedido concluído com sucesso!";
             return RedirectToAction("ResumoPedido");
         }
+
 
         public IActionResult ResumoPedido(int idPedido)
         {

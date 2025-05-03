@@ -88,13 +88,13 @@ namespace SportMotos.Controllers
                 return View();
             }
 
-            // 🔥 Criar os Claims (dados da sessão)
+            // Criar os dados da sessão
             var claims = new List<Claim>
-    {
-        new Claim(ClaimTypes.Name, user.Username), // Nome do utilizador
-        new Claim("Tipo_Utilizador", user.Tipo_Utilizador), // Tipo de utilizador (Cliente ou Admin)
-        new Claim(ClaimTypes.Email, emailNormalizado) // Email normalizado
-    };
+            {
+                new Claim(ClaimTypes.Name, user.Username), // Nome do utilizador
+                new Claim("Tipo_Utilizador", user.Tipo_Utilizador), // Tipo de utilizador (Cliente ou Admin)
+                new Claim(ClaimTypes.Email, emailNormalizado) // Email normalizado
+            };
 
             // Adiciona o IdCliente como claim se for Cliente
             if (cliente != null)

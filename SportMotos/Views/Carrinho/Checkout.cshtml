@@ -3,12 +3,23 @@
 @{
     ViewData["Title"] = "Finalizar Compra";
 }
-
+@if (TempData["Erro"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["Erro"]
+    </div>
+}
+@if (TempData["Sucesso"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        @TempData["Sucesso"]
+    </div>
+}
 <h2>Finalizar Compra</h2>
 
 <form method="post" asp-action="ProcessarCheckout">
     <div class="row">
-        <!-- 🔥 Formulário de envio -->
+        <input type="hidden" name="IdCliente" value="@ViewBag.IdCliente">
         <div class="col-md-6">
             <h3>Informações de Envio</h3>
 
@@ -22,21 +33,25 @@
                 <div class="col-md-6 mb-3">
                     <label class="form-label">Nome</label>
                     <input type="text" asp-for="Nome" class="form-control" required>
+                    <span asp-validation-for="Nome" class="text-danger"></span>
                 </div>
                 <div class="col-md-6 mb-3">
                     <label class="form-label">Apelido</label>
                     <input type="text" asp-for="Apelido" class="form-control" required>
+                    <span asp-validation-for="Apelido" class="text-danger"></span>
                 </div>
             </div>
 
             <div class="mb-3">
                 <label class="form-label">Telefone</label>
                 <input type="text" asp-for="Telefone" class="form-control" required>
+                <span asp-validation-for="Telefone" class="text-danger"></span>
             </div>
 
             <div class="mb-3">
                 <label class="form-label">Localidade</label>
                 <input type="text" asp-for="Localidade" class="form-control" required>
+                <span asp-validation-for="Localidade" class="text-danger"></span>
             </div>
 
             <!-- Cidade e Código Postal lado a lado -->
@@ -44,21 +59,23 @@
                 <div class="col-md-6 mb-3">
                     <label class="form-label">Cidade</label>
                     <input type="text" asp-for="Cidade" class="form-control" required>
+                    <span asp-validation-for="Cidade" class="text-danger"></span>
                 </div>
                 <div class="col-md-6 mb-3">
                     <label class="form-label">Código Postal</label>
                     <input type="text" asp-for="CodigoPostal" class="form-control" required>
+                    <span asp-validation-for="CodigoPostal" class="text-danger"></span>
                 </div>
             </div>
 
             <div class="mb-3 form-check">
-                <input type="checkbox" asp-for="RetiradaNaLoja" class="form-check-input">
+                <input type="checkbox" id="pickupCheckbox" asp-for="RetiradaNaLoja" class="form-check-input">
                 <label class="form-check-label">Levantar na loja</label>
             </div>
 
             <div class="mb-3">
                 <h3>Método de pagamento</h3>
-                <select id="paymentMethod" class="form-select">
+                <select id="paymentMethod" name="MetodoPagamento" class="form-select">
                     <option value="">Selecione...</option>
                     <option value="visa">Visa/Mastercard</option>
                     <option value="paypal">PayPal</option>
@@ -66,18 +83,17 @@
                 </select>
             </div>
 
-            <!-- 🔥 Campos dinâmicos para os detalhes do pagamento -->
             <div id="paymentDetails" style="display: none;">
                 <div id="visaFields" style="display: none;">
                     <label class="form-label">Número do Cartão</label>
-                    <input type="text" class="form-control" placeholder="XXXX XXXX XXXX XXXX">
+                    <input type="text" name="NumeroCartao" id="NumeroCartao" class="form-control" placeholder="XXXX XXXX XXXX XXXX">
                     <label class="form-label">
                         CVV
                         <span data-bs-toggle="tooltip" title="Os 3 dígitos atrás do cartão">❓</span>
                     </label>
-                    <input type="text" class="form-control" placeholder="XXX">
+                    <input type="text" name="CVV" class="form-control" placeholder="XXX">
                     <label class="form-label">Válido até</label>
-                    <input type="text" id="validUntil" class="form-control" placeholder="MM/AA" required>
+                    <input type="text" name="DataExpiracao" id="validUntil" class="form-control" placeholder="MM/AA" required>
 
                     <script>
                         document.getElementById("validUntil").addEventListener("input", function () {
@@ -96,12 +112,13 @@
 
                 <div id="paypalFields" style="display: none;">
                     <label class="form-label">Email do PayPal</label>
-                    <input type="email" class="form-control" placeholder="seuemail@email.com">
+                    <input type="email" class="form-control" placeholder="email@exemplo.com">
                 </div>
 
                 <div id="mbwayFields" style="display: none;">
                     <label class="form-label">Número de Telefone MB WAY</label>
                     <input type="text" class="form-control" placeholder="XXXXXXXXX">
+                    <span id="mbwayPin" class="text-success"></span>
                 </div>
             </div>
         </div>
@@ -140,43 +157,90 @@
 </form>
 <script>
             document.addEventListener("DOMContentLoaded", function () {
-        const paymentMethod = document.querySelector("#paymentMethod");
-        const paymentDetails = document.querySelector("#paymentDetails");
-        const visaFields = document.querySelector("#visaFields");
-        const paypalFields = document.querySelector("#paypalFields");
-        const mbwayFields = document.querySelector("#mbwayFields");
+        // 🔥 Captura elementos da página
+        const numeroCartao = document.getElementById("NumeroCartao");
+        const paymentMethod = document.getElementById("paymentMethod");
+        const paymentDetails = document.getElementById("paymentDetails");
+        const visaFields = document.getElementById("visaFields");
+        const paypalFields = document.getElementById("paypalFields");
+        const mbwayFields = document.getElementById("mbwayFields");
+        const pickupCheckbox = document.getElementById("pickupCheckbox");
+        const extraFee = document.getElementById("extraFee");
+        const mbwayPin = document.getElementById("mbwayPin");
 
-        const pickupCheckbox = document.querySelector("#pickupCheckbox");
-        const extraFee = document.querySelector("#extraFee");
+        // 🔥 Validação do cartão de crédito (Algoritmo de Luhn)
+        function validarCartao(numeroCartao) {
+            let soma = 0;
+            let alternar = false;
 
-        // Verifica se os elementos existem antes de adicionar o evento
-        if (pickupCheckbox && extraFee) {
-            pickupCheckbox.addEventListener("change", function () {
-                if (this.checked) {
-                    extraFee.style.display = "none"; // Esconde o "+ €5"
-                } else {
-                    extraFee.style.display = "inline"; // Mostra o "+ €5"
+            numeroCartao = numeroCartao.replace(/\D/g, ""); // 🔥 Remove caracteres não numéricos
+
+            for (let i = numeroCartao.length - 1; i >= 0; i--) {
+                let n = parseInt(numeroCartao[i]);
+                if (alternar) {
+                    n *= 2;
+                    if (n > 9) n -= 9;
                 }
-            });
+                soma += n;
+                alternar = !alternar;
+            }
+
+            return soma % 10 === 0; // 🔥 Retorna true se o número do cartão for válido
         }
 
-        // 🔥 Verifica se os elementos existem antes de adicionar evento
+        if (numeroCartao) {
+            numeroCartao.addEventListener("input", function () {
+                const valido = validarCartao(this.value);
+                this.style.borderColor = valido ? "green" : "red"; // 🔥 Indica validade do cartão
+            });
+        } else {
+            console.error("Erro: O campo Número do Cartão não foi encontrado!");
+        }
+
+        // 🔥 Transição suave ao escolher método de pagamento
         if (paymentMethod && paymentDetails) {
-            paymentMethod.addEventListener("change", function () {
-                const selectedPayment = this.value;
+        paymentMethod.addEventListener("change", function () {
+            const selectedPayment = this.value;
 
-                // 🔥 Oculta todos os campos primeiro
-                paymentDetails.style.display = "none";
-                visaFields.style.display = "none";
-                paypalFields.style.display = "none";
-                mbwayFields.style.display = "none";
+            paymentDetails.style.display = "none"; // 🔥 Esconde a seção geral de detalhes
+            visaFields.style.display = "none";
+            paypalFields.style.display = "none";
+            mbwayFields.style.display = "none";
 
-                // 🔥 Se um método foi selecionado, exibe os campos correspondentes
-                if (selectedPayment) {
-                    paymentDetails.style.display = "block";
-                    document.querySelector(`#${selectedPayment}Fields`).style.display = "block";
+            if (selectedPayment) {
+                paymentDetails.style.display = "block"; // 🔥 Exibe o container
+                document.getElementById(selectedPayment + "Fields").style.display = "block"; // 🔥 Exibe os campos específicos
+            }
+        });
+    } else {
+        console.error("Erro: Elementos do pagamento não encontrados!");
+    }
+
+        let pinMBWay = null;
+
+        function gerarPIN() {
+            return Math.floor(100000 + Math.random() * 900000); // Gera um PIN de 6 dígitos
+        }
+
+        if (mbwayFields && mbwayPin) {
+            mbwayFields.addEventListener("focusin", function () {
+                if (!pinMBWay) { // Gera apenas se ainda for null
+                    pinMBWay = gerarPIN();
+                    mbwayPin.textContent = `PIN: ${pinMBWay} (expira em 5 min)`;
+                    mbwayPin.style.display = "block";
                 }
             });
+        } else {
+            console.error("Erro: Elementos do MB WAY não encontrados!");
+        }
+
+        // 🔥 Ocultar ou mostrar taxa de entrega de €5 dependendo da escolha "Levantar na loja"
+        if (pickupCheckbox && extraFee) {
+            pickupCheckbox.addEventListener("change", function () {
+                extraFee.style.display = this.checked ? "none" : "inline";
+            });
+        } else {
+            console.error("Erro: Elementos não encontrados para cálculo de taxas!");
         }
     });
 </script>
