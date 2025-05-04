@@ -1,2 +1,0 @@
-C:\Users\g0mes\Desktop\SportMotos\SportMotos\wwwroot\css\flatpickr.min.css
-C:\Users\g0mes\Desktop\SportMotos\SportMotos\wwwroot\js\flatpickr.min.js

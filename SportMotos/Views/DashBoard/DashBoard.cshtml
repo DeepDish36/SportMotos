@@ -339,20 +339,28 @@
         <tbody>
             @foreach (var anuncio in ViewBag.UltimosAnunciosPeca)
             {
-                var isExpirado = (DateTime.Now - anuncio.DataExpiracao).TotalDays >= 50;
-                var rowClass = isExpirado ? "row-expired" : "";
+                var isExpirado = anuncio.DataExpiracao <= DateTime.Now;
 
-                <tr class="@rowClass">
+                <tr>
                     <td>@anuncio.Titulo</td>
                     <td>€@anuncio.Preco</td>
                     <td>@anuncio.DataPublicacao.ToString("dd/MM/yyyy")</td>
                     <td>
-                        <a asp-controller="DetalhesAnuncios" asp-action="DetalheAnuncio"
-                           asp-route-id="@anuncio.IdAnuncioPeca"
-                           asp-route-tipo="pecas" class="btn btn-info btn-sm">Ver</a>
-                        <a href="#" class="btn btn-success btn-sm">Editar</a>
-                        <a href="#" class="btn btn-danger btn-sm">Excluir</a>
-                        <a asp-controller="Anuncio" asp-action="RenovarAnuncio" asp-route-id="@anuncio.IdAnuncioPeca" class="btn btn-primary btn-sm">Renovar</a>
+                        @if (isExpirado)
+                        {
+                            <a asp-controller="Anuncio" asp-action="RenovarAnuncio" asp-route-id="@anuncio.IdAnuncioPeca" class="btn btn-primary btn-sm">Renovar</a>
+                        }
+                        else
+                        {
+                            <a asp-controller="DetalhesAnuncios" asp-action="DetalheAnuncio"
+                               asp-route-id="@anuncio.IdAnuncioPeca"
+                               asp-route-tipo="pecas" class="btn btn-info btn-sm">Ver</a>
+
+                            <a asp-controller="CriarAnuncio" asp-action="EditarAnuncioPeca"
+                               asp-route-id="@anuncio.IdAnuncioPeca" class="btn btn-success btn-sm">Editar</a>
+
+                            <a href="#" class="btn btn-danger btn-sm" onclick="showDeleteModal('@anuncio.IdAnuncioPeca', 'anuncioPeca')">Excluir</a>
+                        }
                     </td>
                 </tr>
             }
@@ -511,7 +519,7 @@
                     mensagem = "Tem certeza de que deseja excluir este anúncio de peça?";
                     url = `/CriarAnuncio/DeletarAnuncioPeca/${id}`;
                     break;
-                case "noticias":
+                case "noticia":
                     mensagem = "Tem certeza de que deseja excluir esta notícia?";
                     url = `/Noticia/ExcluirNoticia/${id}`;
                     break;

@@ -166,8 +166,6 @@ namespace SportMotos.Controllers
 
             Console.WriteLine($"ID do cliente: {userIdClaim}");
 
-            ViewBag.IdCliente = idCliente;
-
             var carrinho = _context.CarrinhoCompras
                 .Include(c => c.Peca)
                 .Where(i => i.IdCliente == idCliente)
@@ -175,45 +173,41 @@ namespace SportMotos.Controllers
 
             if (!carrinho.Any()) return RedirectToAction("Cesta");
 
+            var model = new EnderecosEnvio { IdCliente = idCliente }; // 🔥 Passando ID no modelo
+
             ViewBag.Carrinho = carrinho;
             ViewBag.TotalCompra = carrinho.Sum(item => item.Quantidade * item.Peca.Preco);
 
-            return View();
+            return View(model);
         }
 
         [HttpPost]
         public IActionResult ProcessarCheckout(EnderecosEnvio model)
         {
-            // 🔥 Obter o ID do cliente das claims
             var userIdClaim = User.FindFirst("IdCliente")?.Value;
+
             if (string.IsNullOrEmpty(userIdClaim))
             {
-                return RedirectToAction("Login", "Login");
+                return RedirectToAction("Login", "Login"); // 🔥 Redireciona para login se não estiver autenticado
             }
 
-            // 🔥 Atribuir o ID do cliente ao modelo antes da validação
-            model.IdCliente = int.Parse(userIdClaim);
+            model.IdCliente = int.Parse(userIdClaim); // 🔥 Atribui corretamente o ID do cliente!
 
-            // 🔍 Validar o modelo após a atribuição
             if (!ModelState.IsValid)
             {
-                foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
-                {
-                    Console.WriteLine($"❌ Erro na validação: {error.ErrorMessage}");
-                }
+                var erros = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage);
+                Console.WriteLine($"❌ Erros de validação: {string.Join(", ", erros)}"); // 🔥 Exibe os erros no log
 
                 TempData["Erro"] = "Preencha todos os campos corretamente!";
                 return RedirectToAction("Checkout");
             }
 
-            // 🔥 Salvar o endereço no banco de dados
             _context.EnderecosEnvios.Add(model);
             _context.SaveChanges();
 
             TempData["Sucesso"] = "Pedido concluído com sucesso!";
             return RedirectToAction("ResumoPedido");
         }
-
 
         public IActionResult ResumoPedido(int idPedido)
         {
@@ -236,7 +230,7 @@ namespace SportMotos.Controllers
             foreach (var item in carrinho)
             {
                 var peca = _context.Pecas.Find(item.IdPeca);
-                if (peca == null || item.Quantidade > peca.Stock) // 🔥 Altera "peca.Quantidade" para "peca.Stock"
+                if (peca == null || item.Quantidade > peca.Stock)
                 {
                     TempData["Erro"] = $"A peça {peca?.Nome ?? "desconhecida"} não tem estoque suficiente!";
                     return RedirectToAction("Cesta");

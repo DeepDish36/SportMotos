@@ -40,6 +40,6 @@
             }
         });
     } else {
-        console.log("✅ O script de dropdown foi ignorado porque não existe dropdown na página!");
+        console.log("O script de dropdown foi ignorado porque não existe dropdown na página!");
     }
 });

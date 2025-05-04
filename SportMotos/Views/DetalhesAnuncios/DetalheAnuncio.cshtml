@@ -103,7 +103,7 @@
                             {
                                 <p><strong>Marca:</strong> @Model.IdPecaNavigation.Marca</p>
                                 <p><strong>Modelo:</strong> @(Model.IdPecaNavigation.Modelo ?? "-")</p>
-                                <p><strong>Peso:</strong> @Model.IdPecaNavigation.Peso KG</p>
+                                <p><strong>Peso:</strong> @(Model.IdPecaNavigation.Peso != null ? $"{Model.IdPecaNavigation.Peso} KG" : "Peso não definido")</p>
                                 <p><strong>Garantia:</strong> @Model.IdPecaNavigation.Garantia meses</p>
                                 <p><strong>Última edição:</strong> @(Model.DataEdicao?.ToString("dd/MM/yyyy") ?? "Nunca editado")</p>
                             }

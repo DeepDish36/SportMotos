@@ -39,5 +39,5 @@ public partial class AnuncioPeca
     public virtual Peca? IdPecaNavigation { get; set; }
 
     [NotMapped]
-    public string ImagemPath { get; set; }
+    public string? ImagemPath { get; set; }
 }

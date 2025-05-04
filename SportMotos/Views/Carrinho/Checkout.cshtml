@@ -18,8 +18,8 @@
 <h2>Finalizar Compra</h2>
 
 <form method="post" asp-action="ProcessarCheckout">
+    <input type="hidden" asp-for="IdCliente" />
     <div class="row">
-        <input type="hidden" name="IdCliente" value="@ViewBag.IdCliente">
         <div class="col-md-6">
             <h3>Informações de Envio</h3>
 
@@ -156,7 +156,7 @@
     </div>
 </form>
 <script>
-            document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", function () {
         // 🔥 Captura elementos da página
         const numeroCartao = document.getElementById("NumeroCartao");
         const paymentMethod = document.getElementById("paymentMethod");
@@ -167,6 +167,9 @@
         const pickupCheckbox = document.getElementById("pickupCheckbox");
         const extraFee = document.getElementById("extraFee");
         const mbwayPin = document.getElementById("mbwayPin");
+        const validUntil = document.getElementById("validUntil");
+        const checkoutForm = document.querySelector("form"); // 🔥 Captura o formulário de checkout
+        const idClienteInput = document.querySelector("input[name='IdCliente']"); // 🔥 Captura o ID do cliente
 
         // 🔥 Validação do cartão de crédito (Algoritmo de Luhn)
         function validarCartao(numeroCartao) {
@@ -191,31 +194,39 @@
         if (numeroCartao) {
             numeroCartao.addEventListener("input", function () {
                 const valido = validarCartao(this.value);
-                this.style.borderColor = valido ? "green" : "red"; // 🔥 Indica validade do cartão
+                this.style.borderColor = valido ? "green" : "red"; // Indica validade do cartão
             });
         } else {
             console.error("Erro: O campo Número do Cartão não foi encontrado!");
         }
 
-        // 🔥 Transição suave ao escolher método de pagamento
+        // Transição suave ao escolher método de pagamento
         if (paymentMethod && paymentDetails) {
-        paymentMethod.addEventListener("change", function () {
-            const selectedPayment = this.value;
+            paymentMethod.addEventListener("change", function () {
+                const selectedPayment = this.value;
 
-            paymentDetails.style.display = "none"; // 🔥 Esconde a seção geral de detalhes
-            visaFields.style.display = "none";
-            paypalFields.style.display = "none";
-            mbwayFields.style.display = "none";
+                paymentDetails.style.display = "none";
+                visaFields.style.display = "none";
+                paypalFields.style.display = "none";
+                mbwayFields.style.display = "none";
 
-            if (selectedPayment) {
-                paymentDetails.style.display = "block"; // 🔥 Exibe o container
-                document.getElementById(selectedPayment + "Fields").style.display = "block"; // 🔥 Exibe os campos específicos
-            }
-        });
-    } else {
-        console.error("Erro: Elementos do pagamento não encontrados!");
-    }
+                if (selectedPayment) {
+                    paymentDetails.style.display = "block"; 
+                    document.getElementById(selectedPayment + "Fields").style.display = "block";
+                }
 
+                // Remover `required` de `DataExpiracao` caso PayPal/MB WAY seja selecionado
+                if (selectedPayment === "visa") {
+                    validUntil.setAttribute("required", "true");
+                } else {
+                    validUntil.removeAttribute("required");
+                }
+            });
+        } else {
+            console.error("Erro: Elementos do pagamento não encontrados!");
+        }
+
+        // Gerar PIN para MB WAY automaticamente
         let pinMBWay = null;
 
         function gerarPIN() {
@@ -224,7 +235,7 @@
 
         if (mbwayFields && mbwayPin) {
             mbwayFields.addEventListener("focusin", function () {
-                if (!pinMBWay) { // Gera apenas se ainda for null
+                if (!pinMBWay) { // 🔥 Gera apenas se ainda for null
                     pinMBWay = gerarPIN();
                     mbwayPin.textContent = `PIN: ${pinMBWay} (expira em 5 min)`;
                     mbwayPin.style.display = "block";
@@ -242,5 +253,16 @@
         } else {
             console.error("Erro: Elementos não encontrados para cálculo de taxas!");
         }
+
+        // 🔥 Verificação do ID do Cliente antes do envio do formulário
+        checkoutForm.addEventListener("submit", function (event) {
+            if (!idClienteInput || !idClienteInput.value) {
+                event.preventDefault(); // 🔥 Impede envio se o ID estiver ausente
+                console.error("Erro: ID do cliente não foi encontrado no formulário!");
+                alert("Erro: ID do cliente não encontrado! Por favor, recarregue a página.");
+            } else {
+                console.log(`ID do cliente encontrado: ${idClienteInput.value}`);
+            }
+        });
     });
 </script>

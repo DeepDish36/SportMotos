@@ -180,6 +180,54 @@ namespace SportMotos.Controllers
             return View(anuncio);
         }
 
+        [HttpGet]
+        public IActionResult EditarAnuncioPeca(int id)
+        {
+            var anuncioPeca = _context.AnuncioPecas
+                .Include(a => a.IdPecaNavigation)
+                .FirstOrDefault(a => a.IdAnuncioPeca == id);
+
+            if (anuncioPeca == null)
+            {
+                return NotFound();
+            }
+
+            ViewBag.PecasDisponiveis = new SelectList(_context.Pecas, "IdPeca", "Nome", anuncioPeca.IdPeca);
+
+            return View(anuncioPeca);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditarAnuncioPeca(AnuncioPeca model)
+        {
+            if (!ModelState.IsValid)
+            {
+                Console.WriteLine("❌ ModelState inválido: " + string.Join(", ", ModelState.Values.SelectMany(v => v.Errors.Select(e => e.ErrorMessage))));
+                ViewBag.PecasDisponiveis = new SelectList(_context.Pecas, "IdPeca", "Nome", model.IdPeca);
+                return View(model);
+            }
+
+            var anuncioExistente = await _context.AnuncioPecas.FindAsync(model.IdAnuncioPeca);
+            if (anuncioExistente == null)
+            {
+                Console.WriteLine("Erro: Anúncio não encontrado.");
+                ViewBag.Error = new List<string> { "O anúncio não existe." };
+                return View(model);
+            }
+
+            anuncioExistente.Titulo = model.Titulo;
+            anuncioExistente.Descricao = model.Descricao;
+            anuncioExistente.DataEdicao = DateTime.Now;
+
+            _context.AnuncioPecas.Update(anuncioExistente);
+            await _context.SaveChangesAsync();
+
+            Console.WriteLine("Anúncio atualizado com sucesso.");
+            TempData["Sucesso"] = "Anúncio atualizado com sucesso!";
+
+            return RedirectToAction("Dashboard", "DashBoard");
+        }
+
         // Marcar como vendido
         public async Task<IActionResult> MarcarComoVendido(int id, string tipo)
         {
@@ -304,6 +352,26 @@ namespace SportMotos.Controllers
 
             return Json(anuncioDetails);
         }
+
+        public JsonResult GetAnuncioPecaDetails(int id)
+        {
+            var peca = _context.Pecas.FirstOrDefault(p => p.IdPeca == id);
+
+            if (peca == null)
+            {
+                return Json(new { erro = "Peça não encontrada!" });
+            }
+
+            return Json(new
+            {
+                marca = peca.Marca,
+                modelo = peca.Modelo,
+                categoria = peca.Categoria,
+                preco = peca.Preco,
+                condicao = peca.Estado
+            });
+        }
+
         // *-----------------------------------------------------* //
     }
 }
