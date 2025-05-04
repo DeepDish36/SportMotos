@@ -9,6 +9,7 @@ namespace SportMotos.Models
         [Column("ID_Envio")]
         public int IdEnvio { get; set; }
 
+        [Column("ID_Cliente")]
         public int IdCliente { get; set; }
 
         [Required(ErrorMessage = "Nome é obrigatório")]
