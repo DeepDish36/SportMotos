@@ -11,10 +11,12 @@ namespace SportMotos.Models
 
         [Required]
         [ForeignKey("Pedido")]
+        [Column("ID_Pedido")]
         public int IdPedido { get; set; } // FK para Pedido
 
         [Required]
         [ForeignKey("Peca")]
+        [Column("ID_Peca")]
         public int IdPeca { get; set; } // FK para Peça
 
         [Required]

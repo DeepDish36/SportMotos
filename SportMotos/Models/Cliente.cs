@@ -63,6 +63,7 @@ public partial class Cliente
     public virtual ICollection<CarrinhoCompras> CarrinhoCompras { get; set; } = new List<CarrinhoCompras>();
 
     // Relação 1:N - Cliente pode ter vários pedidos
+    [InverseProperty("Cliente")]
     public virtual ICollection<Pedidos> Pedidos { get; set; } = new List<Pedidos>();
 
     //Cliente tem vários favoritos

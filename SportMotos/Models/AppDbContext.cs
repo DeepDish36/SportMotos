@@ -598,11 +598,15 @@ public partial class AppDbContext : DbContext
                 .HasColumnName("Status")
                 .HasDefaultValue("Pendente");
 
+            entity.Property(e => e.IdCliente)
+                .HasColumnName("ID_Cliente")
+                .IsRequired(); // 🔥 Garantia que usa o nome correto na BD
+
             entity.HasOne(d => d.Cliente)
                 .WithMany(p => p.Pedidos)
                 .HasForeignKey(d => d.IdCliente)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__Pedidos__ID_Cliente");
+                .HasConstraintName("FK__Pedidos__Cliente");
         });
 
         modelBuilder.Entity<CarrinhoCompras>(entity =>
@@ -737,6 +741,9 @@ public partial class AppDbContext : DbContext
             entity.Property(e => e.Cidade).HasMaxLength(100).IsRequired();
             entity.Property(e => e.CodigoPostal).HasMaxLength(10).IsRequired();
             entity.Property(e => e.RetiradaNaLoja).HasDefaultValue(false);
+
+            entity.Property(e => e.IdCliente)
+                  .HasColumnName("ID_Cliente");
 
             entity.HasOne(e => e.Cliente)
                   .WithMany(c => c.EnderecosEnvio)

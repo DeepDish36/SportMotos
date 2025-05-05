@@ -6,20 +6,20 @@ using System.ComponentModel.DataAnnotations.Schema;
 public class Pedidos
 {
     [Key]
+    [Column("ID_Pedido")]
     public int IdPedido { get; set; }
 
-    [ForeignKey("Cliente")]
-    [Column("Id_Cliente")]
-    public int IdCliente { get; set; }  // Chave estrangeira para Cliente
+    [Column("ID_Cliente")] // 🔥 Garante que corresponde ao nome correto no BD
+    [ForeignKey(nameof(Cliente))]
+    public int IdCliente { get; set; }
 
     [Column("DataCompra")]
     public DateTime DataCompra { get; set; }
     public decimal Total { get; set; }
     public string Status { get; set; } = "Pendente";
 
-    // Relacionamento com Cliente (Muitos para Um)
+    // Relacionamento com ItensPedido (Um Pedido tem vários Itens)
     public virtual Cliente Cliente { get; set; } = null!;
 
-    // Relacionamento com ItensPedido (Um Pedido tem vários Itens)
     public virtual ICollection<ItensPedido> Itens { get; set; } = new List<ItensPedido>();
 }
