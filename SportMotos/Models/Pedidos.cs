@@ -10,7 +10,6 @@ public class Pedidos
     public int IdPedido { get; set; }
 
     [Column("ID_Cliente")] // 🔥 Garante que corresponde ao nome correto no BD
-    [ForeignKey(nameof(Cliente))]
     public int IdCliente { get; set; }
 
     [Column("DataCompra")]
@@ -19,6 +18,7 @@ public class Pedidos
     public string Status { get; set; } = "Pendente";
 
     // Relacionamento com ItensPedido (Um Pedido tem vários Itens)
+    [ForeignKey("IdCliente")]
     public virtual Cliente Cliente { get; set; } = null!;
 
     public virtual ICollection<ItensPedido> Itens { get; set; } = new List<ItensPedido>();

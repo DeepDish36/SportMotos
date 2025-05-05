@@ -27,6 +27,8 @@
 
 // Passar o ID do cliente pela URL para aceder à sua cesta
 document.addEventListener("DOMContentLoaded", function () {
+    loadCartFromServer();
+    updateCartCount();
     const cestaButton = document.getElementById("cestaButton");
 
     if (cestaButton) {
@@ -38,16 +40,39 @@ document.addEventListener("DOMContentLoaded", function () {
 // Lista para armazenar os produtos (guarda os itens para mostrar na UI)
 let cart = [];
 
-function loadCartFromServer() {
-    fetch(`/Carrinho/ObterCarrinho`)
+function getClienteId() {
+    return fetch('/Carrinho/ObterIdCliente')
         .then(response => response.json())
         .then(data => {
-            cart = data; // Atualiza a variável global do carrinho
-            updateCartUI(); // Atualiza a interface
+            if (data.sucesso) {
+                return data.idCliente;
+            } else {
+                console.error("Erro ao obter ID do cliente:", data.mensagem);
+                return null;
+            }
+        })
+        .catch(error => {
+            console.error("Erro ao obter ID do cliente:", error);
+            return null;
+        });
+}
+
+async function loadCartFromServer() {
+    const idCliente = await getClienteId();
+    if (!idCliente) {
+        console.error("ID do cliente não encontrado.");
+        return;
+    }
+
+    fetch(`/Carrinho/ObterCarrinho?idCliente=${idCliente}`)
+        .then(response => response.json())
+        .then(data => {
+            console.log("Dados carregados para o carrinho:", data);
+            cart = data.carrinho || [];
+            updateCartUI();
         })
         .catch(error => console.error("Erro ao carregar carrinho:", error));
 }
-
 
 // Função para atualizar a UI do carrinho 
 function updateCartUI() {

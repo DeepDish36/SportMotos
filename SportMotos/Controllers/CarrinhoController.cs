@@ -55,6 +55,19 @@ namespace SportMotos.Controllers
             return RedirectToAction("Cesta", new { idCliente });
         }
 
+        [HttpGet]
+        public JsonResult ObterIdCliente()
+        {
+            var idClienteClaim = User.Claims.FirstOrDefault(c => c.Type == "IdCliente");
+            if (idClienteClaim == null)
+            {
+                return Json(new { sucesso = false, mensagem = "Utilizador não autenticado." });
+            }
+
+            int idCliente = int.Parse(idClienteClaim.Value);
+            return Json(new { sucesso = true, idCliente });
+        }
+
         public JsonResult ObterCarrinho(int idCliente)
         {
             var carrinho = _context.CarrinhoCompras
