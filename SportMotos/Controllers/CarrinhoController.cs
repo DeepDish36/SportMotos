@@ -70,6 +70,9 @@ namespace SportMotos.Controllers
 
         public JsonResult ObterCarrinho(int idCliente)
         {
+            var total= _context.CarrinhoCompras
+                .Where(i => i.IdCliente == idCliente)
+                .Sum(i => i.Quantidade * i.Peca.Preco); // Calcula o total do carrinho
             var carrinho = _context.CarrinhoCompras
                 .Where(i => i.IdCliente == idCliente)
                 .Select(i => new
@@ -79,7 +82,8 @@ namespace SportMotos.Controllers
                     brand = i.Peca.Marca,
                     price = i.Peca.Preco,
                     quantity = i.Quantidade,
-                    image = "/images/pecas/" + i.IdPeca + ".jpg"
+                    image = "/images/pecas/" + i.IdPeca + ".jpg",
+                    total
                 })
                 .ToList();
 
