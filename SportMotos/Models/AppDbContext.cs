@@ -598,15 +598,15 @@ public partial class AppDbContext : DbContext
                 .HasColumnName("Status")
                 .HasDefaultValue("Pendente");
 
-            //entity.Property(e => e.IdCliente)
-            //    .HasColumnName("ID_Cliente")
-            //    .IsRequired();
+            entity.Property(e => e.IdCliente)
+                .HasColumnName("ID_Cliente")
+                .IsRequired();
 
-            //entity.HasOne(d => d.Cliente)
-            //    .WithMany(p => p.Pedidos)
-            //    .HasForeignKey(d => d.IdCliente)
-            //    .OnDelete(DeleteBehavior.ClientSetNull)
-            //    .HasConstraintName("FK__Pedidos__Cliente");
+            entity.HasOne(d => d.Cliente)
+                .WithMany(p => p.Pedidos)
+                .HasForeignKey(d => d.IdCliente)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__Pedidos__Cliente");
         });
 
         modelBuilder.Entity<CarrinhoCompras>(entity =>

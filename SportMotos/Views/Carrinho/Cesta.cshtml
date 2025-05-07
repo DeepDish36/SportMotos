@@ -114,7 +114,6 @@ else
 
                 // 🔥 Corrigir a lógica para exibir ou esconder o botão "Finalizar Compra"
                 if (!data.carrinho || data.carrinho.length === 0) {
-                    checkoutButton.style.display = "none";
                     if (cartMessage) cartMessage.textContent = "Cesta vazia!";
                 } else {
                     checkoutButton.style.display = "inline-block";
