@@ -205,25 +205,72 @@ namespace SportMotos.Controllers
 
             if (string.IsNullOrEmpty(userIdClaim))
             {
-                return RedirectToAction("Login", "Login"); // 🔥 Redireciona para login se não estiver autenticado
+                return RedirectToAction("Login", "Login"); // Redireciona para login se não estiver autenticado
             }
 
-            model.IdCliente = int.Parse(userIdClaim); // 🔥 Atribui corretamente o ID do cliente!
+            model.IdCliente = int.Parse(userIdClaim); // Atribui corretamente o ID do cliente
 
             if (!ModelState.IsValid)
             {
                 var erros = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage);
-                Console.WriteLine($"❌ Erros de validação: {string.Join(", ", erros)}"); // 🔥 Exibe os erros no log
+                Console.WriteLine($"❌ Erros de validação: {string.Join(", ", erros)}");
 
                 TempData["Erro"] = "Preencha todos os campos corretamente!";
                 return RedirectToAction("Checkout");
             }
 
+            // Passo 1: Guardar o endereço de envio
             _context.EnderecosEnvios.Add(model);
             _context.SaveChanges();
 
+            // Passo 2: Criar o pedido e associar ao cliente
+            var pedido = new Pedidos
+            {
+                IdCliente = model.IdCliente,
+                DataCompra = DateTime.Now,
+                Status = "Pendente",
+                Total = 0 // Será atualizado depois de calcular os itens
+            };
+
+            _context.Pedidos.Add(pedido);
+            _context.SaveChanges(); // Salva o pedido antes de adicionar itens
+
+            // Passo 3: Adicionar itens ao pedido
+            var carrinho = _context.CarrinhoCompras
+                .Include(c => c.Peca)
+                .Where(c => c.IdCliente == model.IdCliente)
+                .ToList();
+
+            if (carrinho.Any())
+            {
+                decimal totalPedido = 0;
+
+                foreach (var item in carrinho)
+                {
+                    var itemPedido = new ItensPedido
+                    {
+                        IdPedido = pedido.IdPedido,
+                        IdPeca = item.IdPeca,
+                        Quantidade = item.Quantidade,
+                        PrecoUnitario = (decimal)item.Peca.Preco,
+                    };
+
+                    _context.ItensPedido.Add(itemPedido);
+                    totalPedido += itemPedido.Quantidade * itemPedido.PrecoUnitario;
+                }
+
+                // Passo 4: Atualizar o total do pedido
+                pedido.Total = Math.Round(totalPedido, 2);
+                _context.Pedidos.Update(pedido);
+                _context.SaveChanges();
+
+                // Passo 5: Limpar o carrinho após finalização da compra
+                _context.CarrinhoCompras.RemoveRange(carrinho);
+                _context.SaveChanges();
+            }
+
             TempData["Sucesso"] = "Pedido concluído com sucesso!";
-            return RedirectToAction("ResumoPedido");
+            return RedirectToAction("ResumoPedido", new { idPedido = pedido.IdPedido });
         }
 
         public IActionResult ResumoPedido(int idPedido)
