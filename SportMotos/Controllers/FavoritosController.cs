@@ -38,7 +38,7 @@ namespace SportMotos.Controllers
                 return BadRequest(new { sucesso = false, mensagem = "ID do anúncio deve ser maior que 0." });
             }
 
-            var idClienteClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var idClienteClaim = User.FindFirst("IdCliente")?.Value;
             if (string.IsNullOrEmpty(idClienteClaim) || !int.TryParse(idClienteClaim, out var idCliente))
             {
                 Console.WriteLine("Adicionar: Utilizador não autenticado ou IdCliente inválido.");
@@ -143,7 +143,7 @@ namespace SportMotos.Controllers
             }
 
             // Recuperar IdCliente dos claims
-            var idClienteClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var idClienteClaim = User.FindFirst("IdCliente")?.Value;
             if (string.IsNullOrEmpty(idClienteClaim) || !int.TryParse(idClienteClaim, out var idCliente))
             {
                 Console.WriteLine("Remover: Utilizador não autenticado ou IdCliente inválido.");

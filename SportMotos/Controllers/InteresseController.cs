@@ -19,6 +19,24 @@ namespace SportMotos.Controllers
             _emailService = emailService; // Inicializa o serviço de email
         }
 
+        public async Task<IActionResult> MotosInteressadas()
+        {
+            var userIdClaim = User.FindFirst("IdCliente")?.Value;
+            if (string.IsNullOrEmpty(userIdClaim))
+            {
+                return RedirectToAction("Login", "Login");
+            }
+
+            int idCliente = int.Parse(userIdClaim);
+
+            var motosInteressadas = await _context.InteresseMotos
+                .Where(i => i.IdCliente == idCliente)
+                .Select(i => i.Moto)
+                .ToListAsync();
+
+            return View(motosInteressadas);
+        }
+
         [Authorize] // Garante que só usuários logados acessem
         public IActionResult Criar(int idMoto)
         {

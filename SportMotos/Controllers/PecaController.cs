@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SportMotos.Models;
+using System.Security.Claims;
 
 namespace SportMotos.Controllers
 {
@@ -22,7 +23,7 @@ namespace SportMotos.Controllers
         }
 
         //Detalhes da peça
-        public async Task<IActionResult> DetalhesMoto(int id)
+        public async Task<IActionResult> DetalhesPeca(int id)
         {
             var pecas = await _context.Pecas.FindAsync(id);
             if (pecas == null) return NotFound();
@@ -33,6 +34,12 @@ namespace SportMotos.Controllers
         [HttpGet]
         public IActionResult AdicionarPeca()
         {
+            var tipoUser = User.FindFirstValue("Tipo_Utilizador");
+
+            if (tipoUser != "Admin")
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
 
@@ -41,6 +48,12 @@ namespace SportMotos.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AdicionarPeca(Peca peca, List<IFormFile> Imagens)
         {
+            var tipoUser = User.FindFirstValue("Tipo_Utilizador");
+
+            if (tipoUser != "Admin")
+            {
+                return RedirectToAction("Index", "Home");
+            }
             if (!ModelState.IsValid)
             {
                 return View(peca);
@@ -92,6 +105,12 @@ namespace SportMotos.Controllers
         [HttpGet]
         public async Task<IActionResult> EditarPeca(int id)
         {
+            var tipoUser = User.FindFirstValue("Tipo_Utilizador");
+
+            if (tipoUser != "Admin")
+            {
+                return RedirectToAction("Index", "Home");
+            }
             var peca = await _context.Pecas.FindAsync(id);
             if (peca == null) return NotFound();
             return View(peca);
@@ -102,6 +121,12 @@ namespace SportMotos.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditarPeca(Peca pecas)
         {
+            var tipoUser = User.FindFirstValue("Tipo_Utilizador");
+
+            if (tipoUser != "Admin")
+            {
+                return RedirectToAction("Index", "Home");
+            }
             if (!ModelState.IsValid)
             {
                 return View(pecas);
@@ -132,7 +157,13 @@ namespace SportMotos.Controllers
         }
 
         public async Task<IActionResult> ExcluirPeca(int id)
-        { 
+        {
+            var tipoUser = User.FindFirstValue("Tipo_Utilizador");
+
+            if (tipoUser != "Admin")
+            {
+                return RedirectToAction("Index", "Home");
+            }
             var peca = await _context.Pecas
                 .Include(m => m.AnuncioPecas) // Garante que os anúncios associados são carregados
                 .FirstOrDefaultAsync(m => m.IdPeca == id);

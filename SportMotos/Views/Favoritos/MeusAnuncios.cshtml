@@ -18,7 +18,7 @@
                         <small class="text-body-secondary">
                             Publicado em: @favorito.AnuncioMoto.DataPublicacao.ToString("dd/MM/yyyy")
                         </small>
-                        <a asp-controller="DetalhesAnuncio" asp-action="DetalheAnuncio" asp-route-id="@favorito.AnuncioMoto.IdAnuncioMoto" class="btn btn-sm btn-outline-secondary">
+                        <a asp-controller="DetalhesAnuncio" asp-action="DetalheAnuncio" asp-route-id="@favorito.AnuncioMoto.IdAnuncioMoto" asp-route-tipo="motos" class="btn btn-sm btn-outline-secondary">
                             Ver Detalhes
                         </a>
                     }

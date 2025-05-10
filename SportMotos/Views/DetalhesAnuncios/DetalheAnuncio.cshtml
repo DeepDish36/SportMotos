@@ -23,14 +23,29 @@
 
                         <!-- Imagens -->
                         <div class="carousel-inner">
-                            @for (int i = 0; i < Model.IdMotoNavigation.Imagens.Count; i++)
+                            @if (ViewBag.TipoAnuncio == "motos" && Model.IdMotoNavigation.Imagens != null)
                             {
-                                var imagem = Model.IdMotoNavigation.Imagens[i];
-                                <div class="carousel-item @(i == 0 ? "active" : "")">
-                                    <img src="@Url.Content("~/images/motos/ID-" + Model.IdMotoNavigation.IdMoto + "_" + Model.IdMotoNavigation.Matricula + "/" + imagem.NomeArquivo + ".jpg")"
-                                         alt="Imagem da Moto @Model.IdMotoNavigation.Matricula"
-                                         class="d-block w-100 img-fluid rounded">
-                                </div>
+                                @for (int i = 0; i < Model.IdMotoNavigation.Imagens.Count; i++)
+                                {
+                                    var imagem = Model.IdMotoNavigation.Imagens[i];
+                                    <div class="carousel-item @(i == 0 ? "active" : "")">
+                                        <img src="@Url.Content("~/images/motos/ID-" + Model.IdMotoNavigation.IdMoto + "_" + Model.IdMotoNavigation.Matricula + "/" + imagem.NomeArquivo + ".jpg")"
+                                        alt="Imagem da Moto @Model.IdMotoNavigation.Matricula"
+                                        class="d-block w-100 img-fluid rounded">
+                                    </div>
+                                }
+                            }
+                            else
+                            {
+                                @for (int i = 0; i < Model.IdPecaNavigation.Imagens.Count; i++)
+                                {
+                                    var imagem = Model.IdPecaNavigation.Imagens[i];
+                                    <div class="carousel-item @(i == 0 ? "active" : "")">
+                                        <img src="@Url.Content("~/images/pecas/" + Model.IdPecaNavigation.IdPeca + "_1" + ".jpg")"
+                                             alt="Imagem da Peça @Model.IdPecaNavigation.Marca"
+                                             class="d-block w-100 img-fluid rounded">
+                                    </div>
+                                }
                             }
                         </div>
 

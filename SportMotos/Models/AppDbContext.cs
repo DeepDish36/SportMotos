@@ -630,7 +630,7 @@ public partial class AppDbContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__CarrinhoCompras__ID_Cliente");
 
-            entity.HasOne(d => d.Peca) // 🔥 Agora referência corretamente a tabela de peças!
+            entity.HasOne(d => d.Peca)
                 .WithMany(p => p.CarrinhoCompras)
                 .HasForeignKey(d => d.IdPeca)
                 .OnDelete(DeleteBehavior.ClientSetNull)

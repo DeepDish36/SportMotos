@@ -34,6 +34,13 @@ namespace SportMotos.Controllers
         //Formulário de adição da moto ao sistema
         public IActionResult AdicionarMoto()
         {
+            var tipoUser = User.FindFirstValue("Tipo_Utilizador");
+
+            if (tipoUser != "Admin")
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             return View();
         }
 
@@ -42,6 +49,13 @@ namespace SportMotos.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AdicionarMoto(Moto moto, List<IFormFile> Imagens)
         {
+            var tipoUser = User.FindFirstValue("Tipo_Utilizador");
+
+            if (tipoUser != "Admin")
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             if (!ModelState.IsValid)
             {
                 return View(moto);
@@ -102,6 +116,13 @@ namespace SportMotos.Controllers
         [HttpGet]
         public async Task<IActionResult> EditarMoto(int id)
         {
+            var tipoUser = User.FindFirstValue("Tipo_Utilizador");
+
+            if (tipoUser != "Admin")
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             var moto = await _context.Motos.FindAsync(id);
             if (moto == null) return NotFound();
             return View(moto);
@@ -112,6 +133,13 @@ namespace SportMotos.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditarMoto(Moto moto)
         {
+            var tipoUser = User.FindFirstValue("Tipo_Utilizador");
+
+            if (tipoUser != "Admin")
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             if (!ModelState.IsValid)
             {
                 return View(moto);
@@ -146,6 +174,13 @@ namespace SportMotos.Controllers
 
         public async Task<IActionResult> ExcluirMoto(int id)
         {
+            var tipoUser = User.FindFirstValue("Tipo_Utilizador");
+
+            if (tipoUser != "Admin")
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             // Busca a moto e verifica se pertence ao utilizador
             var moto = await _context.Motos
                 .Include(m => m.AnuncioMotos) // Garante que os anúncios associados são carregados

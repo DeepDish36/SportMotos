@@ -68,6 +68,13 @@ namespace SportMotos.Controllers
         [HttpPost]
         public async Task<IActionResult> CriarAnuncioMoto(AnuncioMoto anuncio)
         {
+            var tipoUser = User.FindFirstValue("Tipo_Utilizador");
+
+            if (tipoUser != "Admin")
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             if (!ModelState.IsValid)
             {
                 // Captura os erros do ModelState e exibe na ViewBag
@@ -119,6 +126,13 @@ namespace SportMotos.Controllers
         [HttpPost]
         public async Task<IActionResult> CriarAnuncioPeca(AnuncioPeca anuncio)
         {
+            var tipoUser = User.FindFirstValue("Tipo_Utilizador");
+
+            if (tipoUser != "Admin")
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             if (!ModelState.IsValid)
             {
                 // Captura os erros do ModelState e exibe na ViewBag
@@ -145,6 +159,13 @@ namespace SportMotos.Controllers
         // Editar anúncio
         public async Task<IActionResult> EditarAnuncioMoto(int id)
         {
+            var tipoUser = User.FindFirstValue("Tipo_Utilizador");
+
+            if (tipoUser != "Admin")
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             var anuncio = await _context.AnuncioMotos.FindAsync(id);
             if (anuncio == null) return NotFound();
             return View(anuncio);
@@ -153,6 +174,13 @@ namespace SportMotos.Controllers
         [HttpPost]
         public async Task<IActionResult> EditarAnuncioMoto(AnuncioMoto anuncio)
         {
+            var tipoUser = User.FindFirstValue("Tipo_Utilizador");
+
+            if (tipoUser != "Admin")
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             if (ModelState.IsValid)
             {
                 var anuncioExistente = await _context.AnuncioMotos.FindAsync(anuncio.IdAnuncioMoto);
@@ -183,6 +211,13 @@ namespace SportMotos.Controllers
         [HttpGet]
         public IActionResult EditarAnuncioPeca(int id)
         {
+            var tipoUser = User.FindFirstValue("Tipo_Utilizador");
+
+            if (tipoUser != "Admin")
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             var anuncioPeca = _context.AnuncioPecas
                 .Include(a => a.IdPecaNavigation)
                 .FirstOrDefault(a => a.IdAnuncioPeca == id);
@@ -200,6 +235,13 @@ namespace SportMotos.Controllers
         [HttpPost]
         public async Task<IActionResult> EditarAnuncioPeca(AnuncioPeca model)
         {
+            var tipoUser = User.FindFirstValue("Tipo_Utilizador");
+
+            if (tipoUser != "Admin")
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             if (!ModelState.IsValid)
             {
                 Console.WriteLine("❌ ModelState inválido: " + string.Join(", ", ModelState.Values.SelectMany(v => v.Errors.Select(e => e.ErrorMessage))));
@@ -231,6 +273,13 @@ namespace SportMotos.Controllers
         // Marcar como vendido
         public async Task<IActionResult> MarcarComoVendido(int id, string tipo)
         {
+            var tipoUser = User.FindFirstValue("Tipo_Utilizador");
+
+            if (tipoUser != "Admin")
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             if (tipo == "Moto")
             {
                 var anuncio = await _context.AnuncioMotos.FindAsync(id);
@@ -255,6 +304,13 @@ namespace SportMotos.Controllers
         // Deletar anúncio
         public async Task<IActionResult> DeletarAnuncioMoto(int id)
         {
+            var tipoUser = User.FindFirstValue("Tipo_Utilizador");
+
+            if (tipoUser != "Admin")
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             // Buscar o anúncio com a moto associada
             var anuncio = await _context.AnuncioMotos
                 .Include(a => a.IdMotoNavigation) // Inclui a moto, mas não a remove
@@ -274,6 +330,13 @@ namespace SportMotos.Controllers
 
         public async Task<IActionResult> DeletarAnuncioPeca(int id)
         {
+            var tipoUser = User.FindFirstValue("Tipo_Utilizador");
+
+            if (tipoUser != "Admin")
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             var anuncio = await _context.AnuncioPecas
                 .Include(a => a.IdPecaNavigation)
                 .FirstOrDefaultAsync(a=>a.IdAnuncioPeca == id);

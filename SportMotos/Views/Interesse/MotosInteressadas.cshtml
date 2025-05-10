@@ -1,0 +1,34 @@
+﻿@{
+    ViewData["Title"] = "As Minhas Motos de Interesse";
+}
+@model IEnumerable<SportMotos.Models.Moto>
+
+<div class="container mt-5">
+    <h3 class="mb-4">As Motos que Marquei com Interesse</h3>
+
+    @if (Model == null || !Model.Any())
+    {
+        <div class="alert alert-warning" role="alert">
+            Ainda não marcaste nenhuma moto com interesse.
+        </div>
+    }
+    else
+    {
+        <ul class="list-group">
+            @foreach (var moto in Model)
+            {
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <div>
+                        <h5 class="mb-1">@moto.Marca @moto.Modelo</h5>
+                        <p class="mb-1">Ano: @moto.Ano</p>
+                        <p class="mb-1">Preço: €@moto.Preco</p>
+                    </div>
+                    <a asp-controller="Moto" asp-action="DetalhesAnuncio" asp-route-id="@moto.IdMoto" asp-route-tipo="motos" class="btn btn-sm btn-outline-secondary">
+                        Ver
+                    </a>
+                </li>
+            }
+        </ul>
+    }
+</div>
+

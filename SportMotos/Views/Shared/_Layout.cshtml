@@ -136,6 +136,7 @@
                                     <li><a class="dropdown-item" asp-controller="Perfil" asp-action="ShowPerfil">Perfil</a></li>
                                     <li><a class="dropdown-item" asp-controller="RecuperarConta" asp-action="RecuperarSenha">Alterar Senha</a></li>
                                     <li><a class="dropdown-item" asp-controller="Favoritos" asp-action="MeusAnuncios">Os meus Favoritos</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Interesse" asp-action="MotosInteressadas">Os meus Interesses</a></li>
                                     @{
                                         var tipoUtilizador = User.Claims.FirstOrDefault(c => c.Type == "Tipo_Utilizador")?.Value;
                                     }

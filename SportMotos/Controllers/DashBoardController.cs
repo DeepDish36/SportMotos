@@ -145,6 +145,5 @@ namespace SportMotos.Controllers
 
             return Json(new { mes, clientes, anunciosMotoVendidos, anuncioPecasVendidos });
         }
-
     }
 }

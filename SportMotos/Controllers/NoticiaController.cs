@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using SportMotos.Models;
 using System.Threading.Tasks;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace SportMotos.Controllers
 {
@@ -15,53 +17,60 @@ namespace SportMotos.Controllers
             _context = context;
         }
 
-        // Exibir TODAS as notícias
+        // Exibir TODAS as notícias (Acesso para todos)
         public async Task<IActionResult> Noticias()
         {
-            var noticias = await _context.Noticia.ToListAsync(); // Buscar todas as notícias
+            var noticias = await _context.Noticia.ToListAsync();
 
-            if (!noticias.Any()) // Se não houver notícias
+            if (!noticias.Any())
             {
                 return NotFound("Nenhuma notícia encontrada.");
             }
 
-            return View(noticias); // Passa a lista de notícias para a View
+            return View(noticias);
         }
 
         public async Task<IActionResult> DetalhesNoticia(int id)
         {
-            var noticia = await _context.Noticia.FindAsync(id); // Buscar a notícia pelo ID
-            if (noticia == null) // Se não encontrar a notícia
+            var noticia = await _context.Noticia.FindAsync(id);
+            if (noticia == null)
             {
                 return NotFound("Notícia não encontrada.");
             }
-            return View(noticia); // Passa a notícia para a View
+            return View(noticia);
         }
 
         [HttpGet]
         public IActionResult AdicionarNoticia()
         {
-            return View(); // Retorna a View para adicionar uma nova notícia
+            var tipoUser = User.FindFirstValue("Tipo_Utilizador");
+
+            if (tipoUser != "Admin")
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AdicionarNoticia(Noticium noticia)
         {
+            var tipoUser = User.FindFirstValue("Tipo_Utilizador");
+
+            if (tipoUser != "Admin")
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             if (ModelState.IsValid)
             {
-                // Instanciar o HtmlSanitizer
                 var sanitizer = new Ganss.Xss.HtmlSanitizer();
-
-                // Sanitizar o campo Descricao
                 noticia.Descricao = sanitizer.Sanitize(noticia.Descricao);
+                noticia.DataPublicacao = DateTime.Now;
+                noticia.DataEdicao = null;
+                noticia.ApagadoEm = null;
 
-                // Inicializar campos de data
-                noticia.DataPublicacao = DateTime.Now; // Sempre inicializado
-                noticia.DataEdicao = null; // Pode ser nulo
-                noticia.ApagadoEm = null; // Pode ser nulo
-
-                // Salvar no banco de dados
                 _context.Add(noticia);
                 await _context.SaveChangesAsync();
 
@@ -70,9 +79,15 @@ namespace SportMotos.Controllers
             return View(noticia);
         }
 
-        // Editar notícia
         public async Task<IActionResult> EditarNoticia(int id)
         {
+            var tipoUser = User.FindFirstValue("Tipo_Utilizador");
+
+            if (tipoUser != "Admin")
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             var noticia = await _context.Noticia.FindAsync(id);
             if (noticia == null)
             {
@@ -85,6 +100,13 @@ namespace SportMotos.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditarNoticia(int id, Noticium noticia)
         {
+            var tipoUser = User.FindFirstValue("Tipo_Utilizador");
+
+            if (tipoUser != "Admin")
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             if (id != noticia.IdNoticia)
             {
                 return NotFound();
@@ -94,23 +116,19 @@ namespace SportMotos.Controllers
             {
                 try
                 {
-                    // Buscar a notícia original para manter a Data_Publicacao
                     var noticiaOriginal = await _context.Noticia.AsNoTracking().FirstOrDefaultAsync(n => n.IdNoticia == id);
                     if (noticiaOriginal == null)
                     {
                         return NotFound();
                     }
 
-                    // Mantém a data original de publicação
                     noticia.DataPublicacao = noticiaOriginal.DataPublicacao;
 
-                    // Sanitizar a Descrição
                     var sanitizer = new Ganss.Xss.HtmlSanitizer();
                     noticia.Descricao = string.IsNullOrWhiteSpace(noticia.Descricao)
                         ? noticiaOriginal.Descricao
                         : sanitizer.Sanitize(noticia.Descricao);
 
-                    // Atualizar a data de edição
                     noticia.DataEdicao = DateTime.Now;
 
                     _context.Update(noticia);
@@ -134,15 +152,19 @@ namespace SportMotos.Controllers
 
         public async Task<IActionResult> ExcluirNoticia(int id)
         {
-            // Busca a notícia pelo ID
-            var noticia = await _context.Noticia.FindAsync(id);
+            var tipoUser = User.FindFirstValue("Tipo_Utilizador");
 
+            if (tipoUser != "Admin")
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            var noticia = await _context.Noticia.FindAsync(id);
             if (noticia == null)
             {
                 return NotFound("Notícia não encontrada.");
             }
 
-            // Remove a notícia
             _context.Noticia.Remove(noticia);
             await _context.SaveChangesAsync();
 
