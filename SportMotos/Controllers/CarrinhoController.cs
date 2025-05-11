@@ -203,94 +203,94 @@ namespace SportMotos.Controllers
         {
             var userIdClaim = User.FindFirst("IdCliente")?.Value;
 
-            if (string.IsNullOrEmpty(userIdClaim))
+            if (string.IsNullOrEmpty(userIdClaim) || !int.TryParse(userIdClaim, out int idCliente))
             {
                 return RedirectToAction("Login", "Login"); // Redireciona para login se não estiver autenticado
             }
 
-            model.IdCliente = int.Parse(userIdClaim); // Atribui corretamente o ID do cliente
+            // Verifica se há itens no carrinho antes de criar o pedido
+            var carrinho = _context.CarrinhoCompras
+                .Include(c => c.Peca)
+                .Where(c => c.IdCliente == idCliente)
+                .ToList();
 
-            if (!ModelState.IsValid)
+            if (!carrinho.Any())
             {
-                var erros = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage);
-                Console.WriteLine($"❌ Erros de validação: {string.Join(", ", erros)}");
-
-                TempData["Erro"] = "Preencha todos os campos corretamente!";
+                TempData["Erro"] = "O carrinho está vazio! Adicione itens antes de finalizar a compra.";
                 return RedirectToAction("Checkout");
             }
 
-            // Passo 1: Guardar o endereço de envio
-            _context.EnderecosEnvios.Add(model);
-            _context.SaveChanges();
+            // Usar SQL Raw para inserir (com EF não funciona)
+            string sqlInsertPedido = @"
+    INSERT INTO Pedidos (ID_Cliente, DataCompra, Status, Total)
+    OUTPUT INSERTED.ID_Pedido
+    VALUES (@p0, @p1, @p2, @p3)";
 
-            // Passo 2: Criar o pedido e associar ao cliente
-            var pedido = new Pedidos
+            int idPedido = _context.Database.ExecuteSqlRaw(sqlInsertPedido,
+                idCliente, DateTime.Now, "Pendente", 0);
+
+            //Adiciona itens
+            decimal totalPedido = 0;
+
+            foreach (var item in carrinho)
             {
-                IdCliente = model.IdCliente,
-                DataCompra = DateTime.Now,
-                Status = "Pendente",
-                Total = 0 // Será atualizado depois de calcular os itens
-            };
+                string sqlInsertItem = @"
+        INSERT INTO ItensPedido (ID_Pedido, ID_Peca, Quantidade, PrecoUnitario)
+        VALUES (@p0, @p1, @p2, @p3)";
 
-            _context.Pedidos.Add(pedido);
-            _context.SaveChanges(); // Salva o pedido antes de adicionar itens
+                _context.Database.ExecuteSqlRaw(sqlInsertItem,
+                    idPedido, item.IdPeca, item.Quantidade, (decimal)item.Peca.Preco);
 
-            // Passo 3: Adicionar itens ao pedido
-            var carrinho = _context.CarrinhoCompras
-                .Include(c => c.Peca)
-                .Where(c => c.IdCliente == model.IdCliente)
-                .ToList();
-
-            if (carrinho.Any())
-            {
-                decimal totalPedido = 0;
-
-                foreach (var item in carrinho)
-                {
-                    var itemPedido = new ItensPedido
-                    {
-                        IdPedido = pedido.IdPedido,
-                        IdPeca = item.IdPeca,
-                        Quantidade = item.Quantidade,
-                        PrecoUnitario = (decimal)item.Peca.Preco,
-                    };
-
-                    _context.ItensPedido.Add(itemPedido);
-                    totalPedido += itemPedido.Quantidade * itemPedido.PrecoUnitario;
-                }
-
-                // Passo 4: Atualizar o total do pedido
-                pedido.Total = Math.Round(totalPedido, 2);
-                _context.Pedidos.Update(pedido);
-                _context.SaveChanges();
-
-                // Passo 5: Limpar o carrinho após finalização da compra
-                _context.CarrinhoCompras.RemoveRange(carrinho);
-                _context.SaveChanges();
+                totalPedido += item.Quantidade * (decimal)item.Peca.Preco;
             }
 
+            //Atualizar total do pedido após inserir
+            string sqlUpdatePedido = @"
+    UPDATE Pedidos SET Total = @p0 WHERE ID_Pedido = @p1";
+
+            _context.Database.ExecuteSqlRaw(sqlUpdatePedido, Math.Round(totalPedido, 2), idPedido);
+
+            //Limpar carrinho
+            string sqlDeleteCarrinho = @"
+    DELETE FROM CarrinhoCompras WHERE ID_Cliente = @p0";
+
+            _context.Database.ExecuteSqlRaw(sqlDeleteCarrinho, idCliente);
+
             TempData["Sucesso"] = "Pedido concluído com sucesso!";
-            return RedirectToAction("ResumoPedido", new { idPedido = pedido.IdPedido });
+            return RedirectToAction("ResumoPedido", new { idPedido = idPedido });
         }
 
         public IActionResult ResumoPedido(int idPedido)
         {
-            var pedido = _context.Pedidos
-                .Include(p => p.Itens)
-                .ThenInclude(i => i.Peca)
-                .FirstOrDefault(p => p.IdPedido == idPedido);
+            string sqlGetPedido = @"SELECT * FROM Pedidos WHERE ID_Pedido = @p0";
+
+            var pedido = _context.Pedidos.FromSqlRaw(sqlGetPedido, idPedido).FirstOrDefault();
 
             if (pedido == null) return NotFound();
 
+            string sqlGetItens = @"SELECT * FROM ItensPedido WHERE ID_Pedido = @p0";
+
+            var itensPedido = _context.ItensPedido.FromSqlRaw(sqlGetItens, idPedido).ToList();
+
+            foreach (var item in itensPedido)
+            {
+                string sqlGetPeca = @"SELECT * FROM Peca WHERE ID_Peca = @p0";
+
+                item.Peca = _context.Pecas.FromSqlRaw(sqlGetPeca, item.IdPeca).FirstOrDefault();
+            }
+
+            // ✅ Associar os itens ao pedido manualmente
+            pedido.Itens = itensPedido;
+
             return View(pedido);
         }
+
 
         public IActionResult FinalizarCompra(int idCliente)
         {
             var carrinho = HttpContext.Session.GetObjectFromJson<List<CarrinhoCompras>>("Carrinho") ?? new List<CarrinhoCompras>();
             if (!carrinho.Any()) return RedirectToAction("Cesta");
 
-            // 🔥 Validar se há estoque suficiente
             foreach (var item in carrinho)
             {
                 var peca = _context.Pecas.Find(item.IdPeca);
@@ -301,7 +301,6 @@ namespace SportMotos.Controllers
                 }
             }
 
-            // 🔥 Criar o pedido na tabela `Pedidos`
             var novoPedido = new Pedidos
             {
                 IdCliente = idCliente,
@@ -313,7 +312,6 @@ namespace SportMotos.Controllers
             _context.Pedidos.Add(novoPedido);
             _context.SaveChanges();
 
-            // 🔥 Adicionar itens na tabela `ItensPedido` e atualizar estoque
             foreach (var item in carrinho)
             {
                 var peca = _context.Pecas.Find(item.IdPeca);
@@ -326,22 +324,17 @@ namespace SportMotos.Controllers
                     PrecoUnitario = (decimal)peca.Preco
                 });
 
-                // 🔥 Buscar anúncio associado à peça
                 var anuncio = _context.AnuncioPecas.FirstOrDefault(a => a.IdAnuncioPeca == peca.IdPeca);
 
-                // 🔥 Registrar venda na tabela `VendaPeca`
                 _context.VendaPeca.Add(new VendaPeca
                 {
-                    IdAnuncio = anuncio?.IdAnuncioPeca ?? 0, // 🔥 Corrige o acesso ao ID do anúncio
+                    IdAnuncio = anuncio?.IdAnuncioPeca ?? 0,
                     Quantidade = item.Quantidade,
                     PrecoUnitario = (decimal)peca.Preco,
                     DataVenda = DateTime.Now
                 });
 
-                // 🔥 Atualizar estoque
                 peca.Stock -= item.Quantidade;
-
-                // 🔥 Se esgotar, marcar peça como vendida no anúncio
                 if (peca.Stock <= 0 && anuncio != null)
                 {
                     anuncio.Vendido = true;
@@ -350,7 +343,6 @@ namespace SportMotos.Controllers
 
             _context.SaveChanges();
 
-            // 🔥 Limpar o carrinho após finalizar compra
             HttpContext.Session.Remove("Carrinho");
 
             return RedirectToAction("ResumoPedido", new { idPedido = novoPedido.IdPedido });

@@ -18,9 +18,9 @@ namespace SportMotos.Controllers
 
         public IActionResult Dashboard(bool mostrarTodos = false)
         {
-            var tipoUsuario = User.FindFirstValue("Tipo_Utilizador");
+            var tipoUser = User.FindFirstValue("Tipo_Utilizador");
 
-            if (tipoUsuario != "Admin")
+            if (tipoUser != "Admin")
             {
                 return RedirectToAction("Index", "Home");
             }
@@ -66,18 +66,35 @@ namespace SportMotos.Controllers
             ViewBag.UltimoCliente = ultimoCliente ?? "Nenhum Cliente";
 
             var ultimosPedidos = _context.InteresseMotos
+                .Include(i => i.Cliente) // ✅ Inclui informações do cliente
                 .Select(i => new
                 {
-                    IdInteresse = i.IdInteresse,
-                    ClienteNome = i.Cliente.Nome,
-                    ClienteEmail = i.Cliente.Email,
-                    DataCompra = i.DataInteresse,
+                    IdPedido = i.IdInteresse,
+                    ClienteNome = i.Cliente.Nome, // ✅ Agora pega o nome correto
+                    DataCompra = (DateTime?)i.DataInteresse,
+                    Total = (decimal?)null,
                     Status = i.Status,
-                    TipoPedido = "motos" // Adiciona o tipo de pedido
+                    TipoPedido = "motos"
                 })
                 .ToList();
 
-            ViewBag.UltimosPedidos = ultimosPedidos;
+            var ultimosPedidosPeca = _context.Pedidos
+                .Include(p => p.Cliente) // ✅ Inclui informações do cliente
+                .Select(p => new
+                {
+                    IdPedido = p.IdPedido,
+                    ClienteNome = p.Cliente.Nome, // ✅ Agora pega o nome correto
+                    DataCompra = (DateTime?)p.DataCompra,
+                    Total = (decimal?)p.Total,
+                    Status = p.Status,
+                    TipoPedido = "pecas"
+                })
+                .ToList();
+
+            // ✅ Agora podemos concatenar porque ambos têm a mesma estrutura
+            ViewBag.UltimosPedidos = ultimosPedidos.Concat(ultimosPedidosPeca)
+                .OrderByDescending(p => p.DataCompra)
+                .ToList();
 
             // 🔹 Buscar anúncios de motos (5 ou todos)
             var anunciosMotoQuery = _context.AnuncioMotos
@@ -129,7 +146,6 @@ namespace SportMotos.Controllers
 
             return View();
         }
-
 
         [HttpGet]
         public async Task<IActionResult> GetEstatisticas(int mes)

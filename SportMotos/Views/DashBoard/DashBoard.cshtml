@@ -167,15 +167,22 @@
                     </td>
                     <td>€@String.Format("{0:n2}", orcamento.ValorTotal)</td>
                     <td>
-                        <form method="post" asp-action="AceitarOrcamento" asp-controller="Contactos">
-                            <input type="hidden" name="id" value="@orcamento.IdOrcamento" />
-                            <button type="submit" class="btn btn-success btn-sm" @(orcamento.DetalhesVisualizados ? "" : "disabled")>Aceitar</button>
-                        </form>
+                        <!-- Botão de detalhes (sempre visível) -->
                         <a href="@Url.Action("DetalhesOrcamento", "Contactos", new { id = orcamento.IdOrcamento })" class="btn btn-info btn-sm">Detalhes</a>
-                        <form method="post" asp-action="RejeitarOrcamento" asp-controller="Contactos">
-                            <input type="hidden" name="id" value="@orcamento.IdOrcamento" />
-                            <button type="submit" class="btn btn-danger btn-sm" @(orcamento.DetalhesVisualizados ? "" : "disabled")>Rejeitar</button>
-                        </form>
+
+                        @if (orcamento.DetalhesVisualizados && orcamento.Status == "Pendente")
+                        {
+                            <!-- Botões de Aceitar e Rejeitar (aparecem depois de ver detalhes) -->
+                            <form method="post" asp-action="AceitarOrcamento" asp-controller="Contactos" style="display:inline;">
+                                <input type="hidden" name="id" value="@orcamento.IdOrcamento" />
+                                <button type="submit" class="btn btn-success btn-sm">Aceitar</button>
+                            </form>
+
+                            <form method="post" asp-action="RejeitarOrcamento" asp-controller="Contactos" style="display:inline;">
+                                <input type="hidden" name="id" value="@orcamento.IdOrcamento" />
+                                <button type="submit" class="btn btn-danger btn-sm">Rejeitar</button>
+                            </form>
+                        }
                     </td>
                 </tr>
             }
@@ -371,6 +378,16 @@
 <!-- Pedidos -->
 <div id="pedidos" class="dashboard-section" style="display: none;">
     <h3>📦 Pedidos Recentes</h3>
+
+    <!-- Radio buttons para selecionar o tipo de pedido -->
+    <div class="mb-3">
+        <label class="form-label">Filtrar por tipo de pedido:</label>
+        <div>
+            <input type="radio" name="tipoPedido" value="motos" checked onclick="filtrarPedidos('motos')"> Motos
+            <input type="radio" name="tipoPedido" value="pecas" onclick="filtrarPedidos('pecas')"> Peças
+        </div>
+    </div>
+
     <table id="pedidosTable" class="table table-striped">
         <thead>
             <tr>
@@ -384,18 +401,13 @@
         <tbody>
             @foreach (var pedido in ViewBag.UltimosPedidos)
             {
-                <tr>
+                <tr class="pedido-row" data-tipo="@pedido.TipoPedido">
                     <td>@pedido.ClienteNome</td>
                     <td>@pedido.DataCompra.ToString("dd/MM/yyyy HH:mm")</td>
                     <td>
-                        @if (pedido.TipoPedido == "motos")
-                        {
-                            <span class="badge bg-primary">Motos</span>
-                        }
-                        else if (pedido.TipoPedido == "pecas")
-                        {
-                            <span class="badge bg-secondary">Peças</span>
-                        }
+                        <span class="badge @(pedido.TipoPedido == "motos" ? "bg-primary" : "bg-secondary")">
+                            @pedido.TipoPedido
+                        </span>
                     </td>
                     <td>
                         <span class="badge @(pedido.Status == "Pendente" ? "bg-warning" : pedido.Status == "Rejeitado" ? "bg-danger" : "bg-success")">
@@ -415,7 +427,7 @@
                                 <a href="#" class="btn btn-info btn-sm">Ver</a>
                             }
                         }
-                        else
+                        else if (pedido.TipoPedido == "pecas")
                         {
                             <a href="#" class="btn btn-info btn-sm">Ver</a>
                         }
@@ -425,7 +437,6 @@
         </tbody>
     </table>
 </div>
-
 
 <!-- Modal de Confirmação de Exclusão -->
 <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
@@ -656,5 +667,16 @@
                 }]
             }
         });
+
+            function filtrarPedidos(tipo) {
+            var rows = document.querySelectorAll(".pedido-row");
+            rows.forEach(row => {
+                if (row.getAttribute("data-tipo") === tipo) {
+                    row.style.display = "";
+                } else {
+                    row.style.display = "none";
+                }
+            });
+        }
     </script>
 }
