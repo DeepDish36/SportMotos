@@ -1,0 +1,35 @@
+﻿@model List<SportMotos.Models.Pedidos>
+@{
+    ViewData["Title"] = "Os meus pedidos";
+}
+<div class="container mt-5">
+    <h3>Os seus Pedidos</h3>
+
+    @if (Model.Any())
+    {
+        <ul class="list-group">
+            @foreach (var pedido in Model)
+            {
+                <li class="list-group-item">
+                    <h5>Pedido #@pedido.IdPedido</h5>
+                    <p><strong>Data:</strong> @pedido.DataCompra.ToString("dd/MM/yyyy HH:mm")</p>
+                    <p><strong>Status:</strong> <span class="badge @(pedido.Status == "Pendente" ? "bg-warning" : pedido.Status == "Rejeitado" ? "bg-danger" : "bg-success")">@pedido.Status</span></p>
+
+                    <h6>Itens Comprados:</h6>
+                    <ul>
+                        @foreach (var item in pedido.Itens)
+                        {
+                            <li>@item.Peca.Nome - @item.Quantidade x €@item.PrecoUnitario</li>
+                        }
+                    </ul>
+                </li>
+            }
+        </ul>
+    }
+    else
+    {
+        <div class="alert alert-warning">Nenhum pedido encontrado.</div>
+    }
+
+    <a href="@Url.Action("Index", "Home")" class="btn btn-secondary mt-3">Voltar</a>
+</div>

@@ -564,16 +564,6 @@ public partial class AppDbContext : DbContext
                 .HasConstraintName("FK__InteresseMotos__ID_Moto");
         });
 
-        modelBuilder.Entity<ItensPedido>(entity =>
-        {
-            entity.HasKey(e => e.IdItemPedido);
-
-            entity.HasOne(e => e.Pedido)
-                .WithMany(p => p.Itens)
-                .HasForeignKey(e => e.IdPedido)
-                .OnDelete(DeleteBehavior.Cascade);
-        });
-
         modelBuilder.Entity<Pedidos>(entity =>
         {
             entity.HasKey(e => e.IdPedido).HasName("PK__Pedidos__ID_Pedido");
@@ -594,13 +584,10 @@ public partial class AppDbContext : DbContext
                 .HasColumnName("Status")
                 .HasDefaultValue("Pendente");
 
-            entity.Property(e => e.IdCliente)
-                .HasColumnName("ID_Cliente");
-
-            entity.HasOne(d => d.Cliente)
-                .WithMany(p => p.Pedidos)
-                .HasForeignKey(d => d.IdCliente)
-                .OnDelete(DeleteBehavior.ClientSetNull);
+            entity.HasOne(p => p.Cliente)
+                .WithMany(c => c.Pedidos)
+                .HasForeignKey(p => p.IdCliente)
+                .HasPrincipalKey(c => c.IdCliente);
         });
 
         modelBuilder.Entity<CarrinhoCompras>(entity =>
@@ -707,13 +694,13 @@ public partial class AppDbContext : DbContext
             entity.Property(e => e.IdPeca).HasColumnName("ID_Peca");
             entity.Property(e => e.Quantidade).HasColumnName("Quantidade");
 
-            // 🔥 Mapeamento correto para a FK de Orçamento
+            // Mapeamento correto para a FK de Orçamento
             entity.HasOne(op => op.IdOrcamentoNavigation)
                     .WithMany(o => o.OrcamentoPecas) // Um orçamento pode conter várias peças
                     .HasForeignKey(op => op.IdOrcamento)
                     .HasConstraintName("FK_OrcamentoPeca_Orcamento");
 
-            // 🔥 Mapeamento correto para a FK de Peça (corrigido para não duplicar)
+            // Mapeamento correto para a FK de Peça (corrigido para não duplicar)
             entity.HasOne(op => op.IdPecaNavigation)
                     .WithMany(p => p.OrcamentoPecas) // Uma peça pode estar em vários orçamentos
                     .HasForeignKey(op => op.IdPeca)

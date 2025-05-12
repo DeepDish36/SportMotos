@@ -1,5 +1,7 @@
 ﻿@model List<SportMotos.Models.ItensPedido>
-
+@{
+    ViewData["Title"] = "Os meus pedidos";
+}
 <div class="container mt-5">
     <h3>Detalhes do Pedido #@Model.First().Pedido.IdPedido</h3>
     <p><strong>Cliente:</strong> @Model.First().Pedido.Cliente.Nome</p>

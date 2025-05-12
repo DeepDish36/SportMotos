@@ -4,16 +4,20 @@ using SportMotos.Helpers;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using SportMotos.Services;
+using System.Text;
 
 namespace SportMotos.Controllers
 {
     public class CarrinhoController : Controller
     {
         private readonly AppDbContext _context;
-
-        public CarrinhoController(AppDbContext context)
+        private readonly IEmailService _emailService;
+        public CarrinhoController(AppDbContext context, IEmailService emailService)
         {
             _context = context;
+            _emailService = emailService;
         }
 
         [Authorize]
@@ -236,67 +240,141 @@ namespace SportMotos.Controllers
 
             // Usar SQL Raw para inserir (com EF não funciona)
             string sqlInsertPedido = @"
-    INSERT INTO Pedidos (ID_Cliente, DataCompra, Status, Total)
-    OUTPUT INSERTED.ID_Pedido
-    VALUES (@p0, @p1, @p2, @p3)";
+INSERT INTO Pedidos (ID_Cliente, DataCompra, Status, Total)
+OUTPUT INSERTED.ID_Pedido
+VALUES (@p0, @p1, @p2, @p3)";
 
             int idPedido = _context.Database.ExecuteSqlRaw(sqlInsertPedido,
                 idCliente, DateTime.Now, "Pendente", 0);
 
-            //Adiciona itens
+            // Adiciona itens
             decimal totalPedido = 0;
 
             foreach (var item in carrinho)
             {
                 string sqlInsertItem = @"
-        INSERT INTO ItensPedido (ID_Pedido, ID_Peca, Quantidade, PrecoUnitario)
-        VALUES (@p0, @p1, @p2, @p3)";
+    INSERT INTO ItensPedido (ID_Pedido, ID_Peca, Quantidade, PrecoUnitario)
+    VALUES (@p0, @p1, @p2, @p3)";
 
                 _context.Database.ExecuteSqlRaw(sqlInsertItem,
                     idPedido, item.IdPeca, item.Quantidade, (decimal)item.Peca.Preco);
 
                 totalPedido += item.Quantidade * (decimal)item.Peca.Preco;
+
+                // ✅ Decrementar a quantidade da peça no estoque
+                string sqlUpdatePeca = @"
+    UPDATE Peca SET Stock = Stock - @p0 WHERE ID_Peca = @p1";
+
+                _context.Database.ExecuteSqlRaw(sqlUpdatePeca, item.Quantidade, item.IdPeca);
             }
 
-            //Atualizar total do pedido após inserir
+
+            // Atualizar total do pedido após inserir
             string sqlUpdatePedido = @"
-    UPDATE Pedidos SET Total = @p0 WHERE ID_Pedido = @p1";
+UPDATE Pedidos SET Total = @p0 WHERE ID_Pedido = @p1";
 
             _context.Database.ExecuteSqlRaw(sqlUpdatePedido, Math.Round(totalPedido, 2), idPedido);
 
-            //Limpar carrinho
+            // Limpar carrinho
             string sqlDeleteCarrinho = @"
-    DELETE FROM CarrinhoCompras WHERE ID_Cliente = @p0";
+DELETE FROM CarrinhoCompras WHERE ID_Cliente = @p0";
 
             _context.Database.ExecuteSqlRaw(sqlDeleteCarrinho, idCliente);
+
+            // Enviar e-mail com a fatura
+            var cliente = _context.Clientes.FirstOrDefault(c => c.IdCliente == idCliente);
+            if (cliente != null)
+            {
+                var email = cliente.Email;
+                var assunto = "Fatura da sua compra - SportMotos";
+                var mensagem = GerarFaturaEmail(carrinho, totalPedido, idPedido);
+
+                _emailService.SendEmailAsync(email, assunto, mensagem).Wait();
+            }
 
             TempData["Sucesso"] = "Pedido concluído com sucesso!";
             return RedirectToAction("ResumoPedido", new { idPedido = idPedido });
         }
 
-        public IActionResult ResumoPedido(int idPedido)
+        // Método auxiliar para gerar o conteúdo da fatura
+        private string GerarFaturaEmail(List<CarrinhoCompras> carrinho, decimal totalPedido, int idPedido)
         {
-            string sqlGetPedido = @"SELECT * FROM Pedidos WHERE ID_Pedido = @p0";
+            string mensagemHtml = $@"
+    <html>
+    <body style='font-family: Arial, sans-serif;'>
+        <h2 style='color: #007bff;'>Fatura - Pedido #{idPedido}</h2>
+        <p>Obrigado por comprar na <strong>SportMotos</strong>! Aqui estão os detalhes da sua compra:</p>
 
-            var pedido = _context.Pedidos.FromSqlRaw(sqlGetPedido, idPedido).FirstOrDefault();
+        <table style='width: 100%; border-collapse: collapse; border: 1px solid #ddd;'>
+            <thead>
+                <tr style='background-color: #f8f9fa;'>
+                    <th style='padding: 10px; border: 1px solid #ddd;'>Peça</th>
+                    <th style='padding: 10px; border: 1px solid #ddd;'>Marca</th>
+                    <th style='padding: 10px; border: 1px solid #ddd;'>Modelo</th>
+                    <th style='padding: 10px; border: 1px solid #ddd;'>Quantidade</th>
+                    <th style='padding: 10px; border: 1px solid #ddd;'>Preço Unitário</th>
+                    <th style='padding: 10px; border: 1px solid #ddd;'>Total</th>
+                </tr>
+            </thead>
+            <tbody>";
 
-            if (pedido == null) return NotFound();
-
-            string sqlGetItens = @"SELECT * FROM ItensPedido WHERE ID_Pedido = @p0";
-
-            var itensPedido = _context.ItensPedido.FromSqlRaw(sqlGetItens, idPedido).ToList();
-
-            foreach (var item in itensPedido)
+            foreach (var item in carrinho)
             {
-                string sqlGetPeca = @"SELECT * FROM Peca WHERE ID_Peca = @p0";
-
-                item.Peca = _context.Pecas.FromSqlRaw(sqlGetPeca, item.IdPeca).FirstOrDefault();
+                mensagemHtml += $@"
+                <tr>
+                    <td style='padding: 10px; border: 1px solid #ddd;'>{item.Peca.Nome}</td>
+                    <td style='padding: 10px; border: 1px solid #ddd;'>{item.Peca.Marca}</td>
+                    <td style='padding: 10px; border: 1px solid #ddd;'>{item.Peca.Modelo}</td>
+                    <td style='padding: 10px; border: 1px solid #ddd;'>{item.Quantidade}</td>
+                    <td style='padding: 10px; border: 1px solid #ddd;'>€{item.Peca.Preco:F2}</td>
+                    <td style='padding: 10px; border: 1px solid #ddd;'>€{(item.Quantidade * item.Peca.Preco):F2}</td>
+                </tr>";
             }
 
-            // ✅ Associar os itens ao pedido manualmente
-            pedido.Itens = itensPedido;
+            mensagemHtml += $@"
+            </tbody>
+        </table>
+
+        <h3 style='color: #28a745;'>Total: €{totalPedido:F2}</h3>
+        <p>Se tiver dúvidas, entre em contato:</p>
+        <p><strong>Tlm:</strong> 922333444</p>
+        <p><strong>Tlf:</strong> 232876554</p>
+        <p><strong>Email:</strong> <a href='mailto:sportmotos@gmail.com'>sportmotos@gmail.com</a></p>
+    </body>
+    </html>";
+
+            return mensagemHtml;
+        }
+
+        public IActionResult ResumoPedido(int idPedido)
+        {
+            var pedido = _context.Pedidos
+                .Include(p => p.Cliente)
+                .Include(p => p.Itens)
+                    .ThenInclude(i => i.Peca)
+                .FirstOrDefault(p => p.IdPedido == idPedido);
+
+            if (pedido == null)
+            {
+                TempData["MensagemErro"] = "Pedido não encontrado.";
+                return RedirectToAction("Index", "Home");
+            }
 
             return View(pedido);
+        }
+
+        public IActionResult PedidosCliente(int idCliente)
+        {
+            var pedidos = _context.Pedidos
+                .Include(p => p.Itens)
+                    .ThenInclude(i => i.Peca)
+                .Where(p => p.IdCliente == idCliente)
+                .OrderByDescending(p => p.DataCompra)
+                .ToList();
+
+            if (!pedidos.Any()) TempData["MensagemErro"] = "Nenhum pedido encontrado.";
+
+            return View(pedidos);
         }
 
         public IActionResult FinalizarCompra(int idCliente)
