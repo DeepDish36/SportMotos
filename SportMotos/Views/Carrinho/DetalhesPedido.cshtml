@@ -1,0 +1,33 @@
+﻿@model List<SportMotos.Models.ItensPedido>
+
+<div class="container mt-5">
+    <h3>Detalhes do Pedido #@Model.First().Pedido.IdPedido</h3>
+    <p><strong>Cliente:</strong> @Model.First().Pedido.Cliente.Nome</p>
+    <p><strong>Data:</strong> @Model.First().Pedido.DataCompra.ToString("dd/MM/yyyy HH:mm")</p>
+    <p><strong>Status:</strong> <span class="badge @(Model.First().Pedido.Status == "Pendente" ? "bg-warning" : Model.First().Pedido.Status == "Rejeitado" ? "bg-danger" : "bg-success")">@Model.First().Pedido.Status</span></p>
+
+    <h4>Itens do Pedido</h4>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Peça</th>
+                <th>Quantidade</th>
+                <th>Preço Unitário</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Peca.Nome</td>
+                    <td>@item.Quantidade</td>
+                    <td>€@item.PrecoUnitario</td>
+                    <td>€@(item.PrecoUnitario * item.Quantidade)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <a href="@Url.Action("Dashboard", "Pedidos")" class="btn btn-secondary">Voltar</a>
+</div>

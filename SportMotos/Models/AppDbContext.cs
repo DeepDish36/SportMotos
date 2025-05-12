@@ -60,14 +60,10 @@ public partial class AppDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        if (!optionsBuilder.IsConfigured)
-        {
-            optionsBuilder
-                .UseSqlServer(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|SportMotos.mdf;Integrated Security=True;Connect Timeout=30")
-                .LogTo(Console.WriteLine, LogLevel.Information,
-                       DbContextLoggerOptions.UtcTime | DbContextLoggerOptions.Category | DbContextLoggerOptions.SingleLine) // Melhor formato de log
-                .EnableSensitiveDataLogging(); // Mostra parâmetros na query (usar com cuidado em produção)
-        }
+        optionsBuilder
+        .UseSqlServer(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|SportMotos.mdf;Integrated Security=True;Connect Timeout=30")
+        .EnableSensitiveDataLogging()
+        .LogTo(Console.WriteLine, LogLevel.Information);
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

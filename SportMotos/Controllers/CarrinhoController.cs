@@ -68,6 +68,20 @@ namespace SportMotos.Controllers
             return Json(new { sucesso = true, idCliente });
         }
 
+        public IActionResult DetalhesPedido(int id)
+        {
+            var itensPedido = _context.ItensPedido
+                .Include(i => i.Peca) // ✅ Inclui informações das peças
+                .Include(i => i.Pedido)
+                    .ThenInclude(p => p.Cliente) // ✅ Inclui informações do cliente
+                .Where(i => i.IdPedido == id)
+                .ToList();
+
+            if (!itensPedido.Any()) return NotFound();
+
+            return View(itensPedido);
+        }
+
         public JsonResult ObterCarrinho(int idCliente)
         {
             var total= _context.CarrinhoCompras
@@ -284,7 +298,6 @@ namespace SportMotos.Controllers
 
             return View(pedido);
         }
-
 
         public IActionResult FinalizarCompra(int idCliente)
         {

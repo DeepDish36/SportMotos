@@ -1197,3 +1197,4 @@ C:\Users\Gomes\Desktop\SportMotos\SportMotos\obj\Debug\net8.0\refint\SportMotos.
 C:\Users\Gomes\Desktop\SportMotos\SportMotos\obj\Debug\net8.0\SportMotos.pdb
 C:\Users\Gomes\Desktop\SportMotos\SportMotos\obj\Debug\net8.0\SportMotos.genruntimeconfig.cache
 C:\Users\Gomes\Desktop\SportMotos\SportMotos\obj\Debug\net8.0\ref\SportMotos.dll
+C:\Users\Gomes\Desktop\SportMotos\SportMotos\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt

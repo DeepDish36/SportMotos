@@ -65,8 +65,10 @@ namespace SportMotos.Controllers
                 .FirstOrDefault();
             ViewBag.UltimoCliente = ultimoCliente ?? "Nenhum Cliente";
 
+            /*Definimos a mesma estrutura para interessemotos e pedidos para 
+             poder aproveitar a mesma section na view*/
             var ultimosPedidos = _context.InteresseMotos
-                .Include(i => i.Cliente) // ✅ Inclui informações do cliente
+                .Include(i => i.Cliente)
                 .Select(i => new
                 {
                     IdPedido = i.IdInteresse,
@@ -79,19 +81,18 @@ namespace SportMotos.Controllers
                 .ToList();
 
             var ultimosPedidosPeca = _context.Pedidos
-                .Include(p => p.Cliente) // ✅ Inclui informações do cliente
+                .Include(p => p.Cliente)
                 .Select(p => new
                 {
                     IdPedido = p.IdPedido,
-                    ClienteNome = p.Cliente.Nome, // ✅ Agora pega o nome correto
+                    ClienteNome = p.Cliente.Nome,
                     DataCompra = (DateTime?)p.DataCompra,
                     Total = (decimal?)p.Total,
                     Status = p.Status,
                     TipoPedido = "pecas"
                 })
                 .ToList();
-
-            // ✅ Agora podemos concatenar porque ambos têm a mesma estrutura
+        
             ViewBag.UltimosPedidos = ultimosPedidos.Concat(ultimosPedidosPeca)
                 .OrderByDescending(p => p.DataCompra)
                 .ToList();

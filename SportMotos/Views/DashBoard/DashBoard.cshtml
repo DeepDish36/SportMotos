@@ -424,12 +424,12 @@
                             }
                             else
                             {
-                                <a href="#" class="btn btn-info btn-sm">Ver</a>
+                                <a asp-controller="Pedidos" asp-action="DetalhesPedido" asp-route-id="@pedido.IdPedido" class="btn btn-info btn-sm">Ver</a>
                             }
                         }
                         else if (pedido.TipoPedido == "pecas")
                         {
-                            <a href="#" class="btn btn-info btn-sm">Ver</a>
+                            <a asp-controller="Carrinho" asp-action="DetalhesPedido" asp-route-id="@pedido.IdPedido" class="btn btn-info btn-sm">Ver</a>
                         }
                     </td>
                 </tr>
