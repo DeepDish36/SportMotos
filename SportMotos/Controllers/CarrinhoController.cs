@@ -220,6 +220,7 @@ namespace SportMotos.Controllers
         public IActionResult ProcessarCheckout(EnderecosEnvio model)
         {
             var userIdClaim = User.FindFirst("IdCliente")?.Value;
+            Console.WriteLine($"IdCliente: {userIdClaim}");
 
             if (string.IsNullOrEmpty(userIdClaim) || !int.TryParse(userIdClaim, out int idCliente))
             {
@@ -238,62 +239,70 @@ namespace SportMotos.Controllers
                 return RedirectToAction("Checkout");
             }
 
-            // Usar SQL Raw para inserir (com EF não funciona)
-            string sqlInsertPedido = @"
-INSERT INTO Pedidos (ID_Cliente, DataCompra, Status, Total)
-OUTPUT INSERTED.ID_Pedido
-VALUES (@p0, @p1, @p2, @p3)";
+            // ✅ Criar o pedido corretamente com LINQ
+            var pedido = new Pedidos
+            {
+                IdCliente = idCliente,
+                DataCompra = DateTime.Now,
+                Status = "Pendente",
+                Total = 0 // Inicializamos com 0 e atualizamos depois
+            };
 
-            int idPedido = _context.Database.ExecuteSqlRaw(sqlInsertPedido,
-                idCliente, DateTime.Now, "Pendente", 0);
+            _context.Pedidos.Add(pedido);
+            _context.SaveChanges(); // ✅ Agora `pedido.IdPedido` já está disponível
 
-            // Adiciona itens
+            // ✅ Adicionar itens ao pedido com ID correto
             decimal totalPedido = 0;
 
             foreach (var item in carrinho)
             {
-                string sqlInsertItem = @"
-    INSERT INTO ItensPedido (ID_Pedido, ID_Peca, Quantidade, PrecoUnitario)
-    VALUES (@p0, @p1, @p2, @p3)";
+                var itemPedido = new ItensPedido
+                {
+                    IdPedido = pedido.IdPedido,
+                    IdPeca = item.IdPeca,
+                    Quantidade = item.Quantidade,
+                    PrecoUnitario = (decimal)item.Peca.Preco
+                };
 
-                _context.Database.ExecuteSqlRaw(sqlInsertItem,
-                    idPedido, item.IdPeca, item.Quantidade, (decimal)item.Peca.Preco);
-
+                _context.ItensPedido.Add(itemPedido);
                 totalPedido += item.Quantidade * (decimal)item.Peca.Preco;
 
-                // ✅ Decrementar a quantidade da peça no estoque
-                string sqlUpdatePeca = @"
-    UPDATE Peca SET Stock = Stock - @p0 WHERE ID_Peca = @p1";
-
-                _context.Database.ExecuteSqlRaw(sqlUpdatePeca, item.Quantidade, item.IdPeca);
+                // ✅ Decrementar estoque corretamente
+                var peca = _context.Pecas.FirstOrDefault(p => p.IdPeca == item.IdPeca);
+                if (peca != null)
+                {
+                    peca.Stock -= item.Quantidade;
+                }
             }
 
+            _context.SaveChanges(); // ✅ Salvar os itens e a atualização do estoque
 
-            // Atualizar total do pedido após inserir
-            string sqlUpdatePedido = @"
-UPDATE Pedidos SET Total = @p0 WHERE ID_Pedido = @p1";
+            // ✅ Atualizar total do pedido corretamente
+            pedido.Total = Math.Round(totalPedido, 2);
+            _context.SaveChanges();
 
-            _context.Database.ExecuteSqlRaw(sqlUpdatePedido, Math.Round(totalPedido, 2), idPedido);
+            // ✅ Limpar carrinho corretamente
+            var carrinhoCliente = _context.CarrinhoCompras.Where(c => c.IdCliente == idCliente);
+            _context.CarrinhoCompras.RemoveRange(carrinhoCliente);
+            if (carrinhoCliente.Any()) // ✅ Só executa se houver itens no carrinho
+            {
+                _context.CarrinhoCompras.RemoveRange(carrinhoCliente);
+                _context.SaveChanges();
+            }
 
-            // Limpar carrinho
-            string sqlDeleteCarrinho = @"
-DELETE FROM CarrinhoCompras WHERE ID_Cliente = @p0";
-
-            _context.Database.ExecuteSqlRaw(sqlDeleteCarrinho, idCliente);
-
-            // Enviar e-mail com a fatura
+            // ✅ Enviar e-mail com a fatura
             var cliente = _context.Clientes.FirstOrDefault(c => c.IdCliente == idCliente);
             if (cliente != null)
             {
                 var email = cliente.Email;
                 var assunto = "Fatura da sua compra - SportMotos";
-                var mensagem = GerarFaturaEmail(carrinho, totalPedido, idPedido);
+                var mensagem = GerarFaturaEmail(carrinho, totalPedido, pedido.IdPedido);
 
                 _emailService.SendEmailAsync(email, assunto, mensagem).Wait();
             }
 
             TempData["Sucesso"] = "Pedido concluído com sucesso!";
-            return RedirectToAction("ResumoPedido", new { idPedido = idPedido });
+            return RedirectToAction("ResumoPedido", new { idPedido = pedido.IdPedido });
         }
 
         // Método auxiliar para gerar o conteúdo da fatura
