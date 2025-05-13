@@ -22,10 +22,10 @@
         </nav>
     </div>
 
-    <!-- 🔥 Título e botão alinhados corretamente -->
+    <!-- Título e botão alinhados corretamente -->
     <div class="d-flex justify-content-between align-items-center mt-4 mb-3">
         <h3 style="font-weight:bold; margin-bottom:0">Ajude os outros respondendo às suas perguntas!</h3>
-        <a href="@Url.Action("Create", "Forum")" class="btn btn-success text-end">➕ Criar Novo Fórum</a>
+        <a href="@Url.Action("Create", "Forum")" class="btn btn-success text-end">Criar Novo Fórum</a>
     </div>
 
     <!-- Seção de Tópicos Recentes -->
@@ -67,7 +67,7 @@
                             Criado em @forum.DataCriacao.ToString("dd/MM/yyyy HH:mm")
                         </small>
                     </div>
-                    <p class="mb-1 text-muted">@forum.Descricao</p>
+                    <p class="mb-1 text-muted">@Html.Raw(forum.Descricao)</p>
                     <div class="d-flex justify-content-between">
                         <small>
                             Por <strong>

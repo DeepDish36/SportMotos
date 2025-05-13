@@ -629,9 +629,11 @@
             }
         });
 
-        // Gráfico de Estatísticas
+        let vendasChart = null;
+
         document.getElementById("mes").addEventListener("change", function () {
             let mesSelecionado = this.value;
+
             fetch(`/Dashboard/GetEstatisticas?mes=${mesSelecionado}`)
                 .then(response => response.json())
                 .then(data => {
@@ -641,14 +643,19 @@
 
         function atualizarGrafico(data) {
             let ctx = document.getElementById("vendasChart").getContext("2d");
-            new Chart(ctx, {
-                type: "bar", // ou "line"
+
+            if (vendasChart) {
+                vendasChart.destroy();
+            }
+
+            vendasChart = new Chart(ctx, {
+                type: "bar",
                 data: {
-                    labels: ["Clientes", "Anúncios Vendidos"],
+                    labels: ["Clientes", "Anúncios Vendidos", "Faturamento (€)"],
                     datasets: [{
                         label: `Dados de ${data.mes}`,
-                        data: [data.clientes, data.anunciosVendidos],
-                        backgroundColor: ["blue", "green"]
+                        data: [data.clientes, data.anunciosVendidos, data.faturamentoMes],
+                        backgroundColor: ["blue", "green", "red"]
                     }]
                 }
             });
@@ -664,19 +671,22 @@
         }
 
         // Gráfico de Vendas
-        var ctxVendas = document.getElementById("vendasChart").getContext("2d");
-        var vendasChart = new Chart(ctxVendas, {
-            type: "line",
-            data: {
-                labels: @Html.Raw(Json.Serialize(ViewBag.VendasUltimosMesesLabels)),
-                datasets: [{
-                    label: "Vendas (€)",
-                    data: @Html.Raw(Json.Serialize(ViewBag.VendasUltimosMesesData)),
-                    borderColor: "#007bff",
-                    backgroundColor: "rgba(0, 123, 255, 0.2)",
-                    fill: true
-                }]
-            }
+                document.addEventListener("DOMContentLoaded", function () {
+            let ctxVendas = document.getElementById("vendasChart").getContext("2d");
+
+            vendasChart = new Chart(ctxVendas, {
+                type: "line",
+                data: {
+                    labels: @Html.Raw(Json.Serialize(ViewBag.VendasUltimosMesesLabels)),
+                    datasets: [{
+                        label: "Vendas (€)",
+                        data: @Html.Raw(Json.Serialize(ViewBag.VendasUltimosMesesData)),
+                        borderColor: "#007bff",
+                        backgroundColor: "rgba(0, 123, 255, 0.2)",
+                        fill: true
+                    }]
+                }
+            });
         });
 
             function filtrarPedidos(tipo) {

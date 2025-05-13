@@ -39,29 +39,36 @@ namespace SportMotos.Controllers
         [HttpPost]
         public async Task<IActionResult> Criar(OrcamentoViewModel model)
         {
+            var userIdClaim = User.FindFirstValue("IdCliente");
+
+            // Verifica se o utilizador está autenticado
+            if (string.IsNullOrEmpty(userIdClaim))
+            {
+                return RedirectToAction("Login", "Login");
+            }
+
+            model.IdCliente = int.Parse(userIdClaim);
+
             if (!ModelState.IsValid)
             {
-                // Retorna para a View Contactos e exibe os erros de validação
                 return View("Contactos", model);
             }
 
-            // Mapear os dados do ViewModel para a entidade Orcamento
             var orcamento = new Orcamento
             {
-                IdCliente = model.IdCliente, // Associe a um cliente específico, se aplicável
+                IdCliente = model.IdCliente,
                 Descricao = model.Descricao,
                 DataCriacao = DateTime.Now,
-                ValorTotal = 0.0, // Valor definido posteriormente pelo administrador
+                ValorTotal = 0.0,
                 PrazoResposta = model.PrazoResposta,
                 MetodoPagamento = model.MetodoPagamento,
                 Status = "Pendente",
             };
 
-            // Salvar no banco de dados
             _context.Orcamentos.Add(orcamento);
             await _context.SaveChangesAsync();
 
-            return RedirectToAction("OrcamentoEnviado"); // Redireciona para uma página de sucesso
+            return RedirectToAction("OrcamentoEnviado");
         }
 
         [HttpPost]

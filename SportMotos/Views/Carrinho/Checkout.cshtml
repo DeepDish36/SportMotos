@@ -32,38 +32,37 @@
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label class="form-label">Nome</label>
-                    <input type="text" asp-for="Nome" class="form-control" required>
+                    <input type="text" asp-for="Nome" class="form-control" required pattern="[A-Za-zÀ-ú\s]{1,50}" title="Apenas letras são permitidas">
                     <span asp-validation-for="Nome" class="text-danger"></span>
                 </div>
                 <div class="col-md-6 mb-3">
                     <label class="form-label">Apelido</label>
-                    <input type="text" asp-for="Apelido" class="form-control" required>
+                    <input type="text" asp-for="Apelido" class="form-control" required pattern="[A-Za-zÀ-ú\s]{1,50}" title="Apenas letras são permitidas">
                     <span asp-validation-for="Apelido" class="text-danger"></span>
                 </div>
             </div>
 
             <div class="mb-3">
                 <label class="form-label">Telefone</label>
-                <input type="text" asp-for="Telefone" class="form-control" required>
+                <input type="text" asp-for="Telefone" class="form-control" required pattern="\+?[0-9\s]{9,15}" title="Digite apenas números (com ou sem espaço), opcionalmente começando com +">
                 <span asp-validation-for="Telefone" class="text-danger"></span>
             </div>
 
             <div class="mb-3">
                 <label class="form-label">Localidade</label>
-                <input type="text" asp-for="Localidade" class="form-control" required>
+                <input type="text" asp-for="Localidade" class="form-control" required pattern="[A-Za-zÀ-ú\s0-9]{1,100}" title="Sem caracteres especiais">
                 <span asp-validation-for="Localidade" class="text-danger"></span>
             </div>
 
-            <!-- Cidade e Código Postal lado a lado -->
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label class="form-label">Cidade</label>
-                    <input type="text" asp-for="Cidade" class="form-control" required>
+                    <input type="text" asp-for="Cidade" class="form-control" required pattern="[A-Za-zÀ-ú\s]{1,50}" title="Apenas letras são permitidas">
                     <span asp-validation-for="Cidade" class="text-danger"></span>
                 </div>
                 <div class="col-md-6 mb-3">
                     <label class="form-label">Código Postal</label>
-                    <input type="text" asp-for="CodigoPostal" class="form-control" required>
+                    <input type="text" asp-for="CodigoPostal" class="form-control" required pattern="\d{4}-\d{3}" title="Formato: 0000-000">
                     <span asp-validation-for="CodigoPostal" class="text-danger"></span>
                 </div>
             </div>
@@ -97,14 +96,14 @@
 
                     <script>
                         document.getElementById("validUntil").addEventListener("input", function () {
-                            this.value = this.value.replace(/[^0-9/]/g, ""); // 🔥 Permite apenas números e "/"
+                            this.value = this.value.replace(/[^0-9/]/g, ""); // Permite apenas números e "/"
 
                             if (this.value.length === 2 && !this.value.includes("/")) {
-                                this.value += "/"; // 🔥 Adiciona "/" automaticamente após o mês
+                                this.value += "/"; // Adiciona "/" automaticamente após o mês
                             }
 
                             if (this.value.length > 5) {
-                                this.value = this.value.slice(0, 5); // 🔥 Limita o campo a "MM/AA"
+                                this.value = this.value.slice(0, 5); // Limita o campo a "MM/AA"
                             }
                         });
                     </script>

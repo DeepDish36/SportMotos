@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using SportMotos.Services;
 using System.Text;
+using System.Net;
 
 namespace SportMotos.Controllers
 {
@@ -86,12 +87,19 @@ namespace SportMotos.Controllers
             return View(itensPedido);
         }
 
-        public JsonResult ObterCarrinho(int idCliente)
+        public JsonResult ObterCarrinho()
         {
-            var total= _context.CarrinhoCompras
-                .Where(i => i.IdCliente == idCliente)
-                .Sum(i => i.Quantidade * i.Peca.Preco); // Calcula o total do carrinho
+            var userIdClaim = User.FindFirst("IdCliente")?.Value;
+
+            if (string.IsNullOrEmpty(userIdClaim))
+            {
+                return Json(new { carrinho = new List<object>(), quantidadeTotal = 0 });
+            }
+
+            int idCliente = int.Parse(userIdClaim);
+
             var carrinho = _context.CarrinhoCompras
+                .Include(i => i.Peca)
                 .Where(i => i.IdCliente == idCliente)
                 .Select(i => new
                 {
@@ -100,19 +108,18 @@ namespace SportMotos.Controllers
                     brand = i.Peca.Marca,
                     price = i.Peca.Preco,
                     quantity = i.Quantidade,
-                    image = "/images/pecas/" + i.IdPeca + ".jpg",
-                    total
+                    image = "/images/pecas/" + i.IdPeca + ".jpg"
                 })
                 .ToList();
 
-            var quantidadeTotal = carrinho.Sum(i => i.quantity); // Calcula a quantidade total
+            var quantidadeTotal = carrinho.Sum(i => i.quantity);
 
             return Json(new { carrinho, quantidadeTotal });
         }
 
         public IActionResult Cesta()
         {
-            // 🔥 Obter o ID do cliente das Claims
+            //  Obter o ID do cliente das Claims
             var userIdClaim = User.FindFirst("IdCliente")?.Value;
 
             if (string.IsNullOrEmpty(userIdClaim))
@@ -122,7 +129,6 @@ namespace SportMotos.Controllers
 
             int idCliente = int.Parse(userIdClaim);
 
-            // 🔥 Buscar os itens do carrinho no banco de dados
             var carrinho = _context.CarrinhoCompras
                 .Include(c => c.Peca)
                 .Where(i => i.IdCliente == idCliente)
@@ -169,15 +175,23 @@ namespace SportMotos.Controllers
             int idCliente = int.Parse(userIdClaim);
 
             var item = _context.CarrinhoCompras.FirstOrDefault(i => i.IdCliente == idCliente && i.IdPeca == model.IdPeca);
+            var peca = _context.Pecas.FirstOrDefault(p => p.IdPeca == model.IdPeca); // ✅ Buscar informações da peça
 
-            if (item == null)
+            if (item == null || peca == null)
             {
                 return Json(new { sucesso = false, mensagem = "Item não encontrado no carrinho." });
             }
 
             if (model.Acao == "Aumentar")
             {
-                item.Quantidade += 1;
+                if (item.Quantidade < peca.Stock) // ✅ Verificar se há estoque disponível antes de aumentar
+                {
+                    item.Quantidade += 1;
+                }
+                else
+                {
+                    return Json(new { sucesso = false, mensagem = "Quantidade indisponível em estoque!" });
+                }
             }
             else if (model.Acao == "Diminuir" && item.Quantidade > 1)
             {
@@ -226,6 +240,14 @@ namespace SportMotos.Controllers
             {
                 return RedirectToAction("Login", "Login"); // Redireciona para login se não estiver autenticado
             }
+
+            // ✅ Sanitizar os campos para impedir ataques XSS
+            model.Nome = WebUtility.HtmlEncode(model.Nome);
+            model.Apelido = WebUtility.HtmlEncode(model.Apelido);
+            model.Telefone = WebUtility.HtmlEncode(model.Telefone);
+            model.Localidade = WebUtility.HtmlEncode(model.Localidade);
+            model.Cidade = WebUtility.HtmlEncode(model.Cidade);
+            model.CodigoPostal = WebUtility.HtmlEncode(model.CodigoPostal);
 
             // Verifica se há itens no carrinho antes de criar o pedido
             var carrinho = _context.CarrinhoCompras
@@ -283,7 +305,6 @@ namespace SportMotos.Controllers
 
             // ✅ Limpar carrinho corretamente
             var carrinhoCliente = _context.CarrinhoCompras.Where(c => c.IdCliente == idCliente);
-            _context.CarrinhoCompras.RemoveRange(carrinhoCliente);
             if (carrinhoCliente.Any()) // ✅ Só executa se houver itens no carrinho
             {
                 _context.CarrinhoCompras.RemoveRange(carrinhoCliente);
@@ -318,17 +339,43 @@ namespace SportMotos.Controllers
                 return RedirectToAction("Dashboard");
             }
 
-            // ✅ Buscar endereço do cliente na tabela `EnderecosEnvio`
             var enderecoEnvio = _context.EnderecosEnvios
-                .FirstOrDefault(e => e.IdCliente == pedido.IdCliente); // ✅ Busca o endereço do cliente
+                .FirstOrDefault(e => e.IdCliente == pedido.IdCliente);
 
-            // ✅ Verificar se o cliente escolheu levantar na loja
-            bool levantarNaLoja = enderecoEnvio == null || string.IsNullOrEmpty(enderecoEnvio.CodigoPostal);
+            // Verificar se o cliente escolheu levantar na loja
+            bool levantarNaLoja = enderecoEnvio.RetiradaNaLoja;
 
-            // ✅ Gerar a mensagem correta para o e-mail
             string mensagem = levantarNaLoja
-                ? "O seu pedido de peças está a ser processado! Pode levantar a encomenda na loja a qualquer momento."
-                : "O seu pedido de peças está a ser processado! A encomenda pode demorar entre **1 a 2 semanas** a chegar.";
+                ? $@"<html>
+                <body style='font-family: Arial, sans-serif;'>
+                    <h2 style='color: #007bff;'>Pedido de Peças em Processamento</h2>
+                    <p>Caro <strong>{enderecoEnvio.Nome} {enderecoEnvio.Apelido}</strong>,</p>
+                    <p>O seu pedido de peças foi processado e está pronto para levantamento na loja.</p>
+                    <p><strong>Pode levantar a encomenda a qualquer momento.</strong></p>
+                    <hr>
+                    <p>Se tiver dúvidas, entre em contacto:</p>
+                    <p><strong>Tlm:</strong> 922333444</p>
+                    <p><strong>Tlf:</strong> 232876554</p>
+                    <p><strong>Email:</strong> <a href='mailto:sportmotos@gmail.com'>sportmotos@gmail.com</a></p>
+                    <hr>
+                    <p>Obrigado por escolher a <strong>SportMotos</strong>!</p>
+                </body>
+            </html>"
+                : $@"<html>
+                <body style='font-family: Arial, sans-serif;'>
+                    <h2 style='color: #007bff;'>Pedido de Peças em Processamento</h2>
+                    <p>Caro <strong>{enderecoEnvio.Nome} {enderecoEnvio.Apelido}</strong>,</p>
+                    <p>O seu pedido de peças foi processado e será enviado em breve.</p>
+                    <p><strong>A encomenda pode demorar entre 1 a 2 semanas a chegar.</strong></p>
+                    <hr>
+                    <p>Se tiver dúvidas, entre em contacto:</p>
+                    <p><strong>Tlm:</strong> 922333444</p>
+                    <p><strong>Tlf:</strong> 232876554</p>
+                    <p><strong>Email:</strong> <a href='mailto:sportmotos@gmail.com'>sportmotos@gmail.com</a></p>
+                    <hr>
+                    <p>Obrigado por escolher a <strong>SportMotos</strong>!</p>
+                </body>
+            </html>";
 
             _emailService.SendEmailAsync(
                 pedido.Cliente.Email,
@@ -336,13 +383,14 @@ namespace SportMotos.Controllers
                 mensagem
             ).Wait();
 
-            // ✅ Atualizar status do pedido
+            // Atualizar status do pedido
             pedido.Status = "Processando";
             _context.SaveChanges();
 
             TempData["MensagemSucesso"] = "Pedido aceito com sucesso! O cliente foi notificado.";
             return RedirectToAction("Dashboard", "DashBoard");
         }
+
 
         // Método auxiliar para gerar o conteúdo da fatura
         private string GerarFaturaEmail(List<CarrinhoCompras> carrinho, decimal totalPedido, int idPedido)

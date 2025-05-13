@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SportMotos.Models;
 using System.Security.Claims;
+using Markdig;
 
 namespace SportMotos.Controllers
 {
@@ -23,6 +24,11 @@ namespace SportMotos.Controllers
                 .Include(f => f.IdAdminNavigation)
                 .OrderByDescending(f => f.DataCriacao)
                 .ToListAsync();
+
+            foreach (var forum in forums)
+            {
+                forum.Descricao = Markdown.ToHtml(forum.Descricao);
+            }
 
             return View(forums);
         }
@@ -87,8 +93,8 @@ namespace SportMotos.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Tipo de usuário inválido.");
-                    Console.WriteLine("Erro: Tipo de usuário inválido.");
+                    ModelState.AddModelError("", "Tipo de utilizador inválido.");
+                    Console.WriteLine("Erro: Tipo de utilizador inválido.");
                     return View(forum);
                 }
 

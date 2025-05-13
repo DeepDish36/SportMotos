@@ -50,9 +50,9 @@ namespace SportMotos.Controllers
             ViewBag.TotalUsuarios = _context.Users.Count();
             ViewBag.TotalAnunciosMoto = _context.AnuncioMotos.Count();
             ViewBag.TotalAnunciosPeca = _context.AnuncioPecas.Count();
-            ViewBag.TotalVendasMes = _context.Pedidos
-                .Where(p => p.DataCompra.Month == DateTime.Now.Month &&
-                            p.DataCompra.Year == DateTime.Now.Year)
+            ViewBag.FaturamentoTotal = _context.Pedidos.Sum(p => (decimal?)p.Total) ?? 0;
+            ViewBag.FaturamentoAnual = _context.Pedidos
+                .Where(p => p.DataCompra.Year == DateTime.Now.Year)
                 .Sum(p => (decimal?)p.Total) ?? 0;
             ViewBag.PedidosPendentes = _context.Pedidos.Count(p => p.Status == "Pendente");
 
@@ -72,7 +72,7 @@ namespace SportMotos.Controllers
                 .Select(i => new
                 {
                     IdPedido = i.IdInteresse,
-                    ClienteNome = i.Cliente.Nome, // ✅ Agora pega o nome correto
+                    ClienteNome = i.Cliente.Nome,
                     DataCompra = (DateTime?)i.DataInteresse,
                     Total = (decimal?)null,
                     Status = i.Status,
@@ -153,14 +153,18 @@ namespace SportMotos.Controllers
         {
             int clientes = await _context.Users.Where(u => u.Data_Criacao.Month == mes).CountAsync();
             int anunciosMotoVendidos = await _context.AnuncioMotos
-            .Where(a => a.DataVenda.HasValue && a.DataVenda.Value.Month == mes)
-            .CountAsync();
+                .Where(a => a.DataVenda.HasValue && a.DataVenda.Value.Month == mes)
+                .CountAsync();
 
             int anuncioPecasVendidos = await _context.AnuncioPecas
-            .Where(p => p.DataVenda.HasValue && p.DataVenda.Value.Month == mes)
-            .CountAsync();
+                .Where(p => p.DataVenda.HasValue && p.DataVenda.Value.Month == mes)
+                .CountAsync();
 
-            return Json(new { mes, clientes, anunciosMotoVendidos, anuncioPecasVendidos });
+            decimal faturamentoMes = await _context.Pedidos
+                .Where(p => p.DataCompra.Month == mes && p.DataCompra.Year == DateTime.Now.Year)
+                .SumAsync(p => (decimal?)p.Total) ?? 0;
+
+            return Json(new { mes, clientes, anunciosMotoVendidos, anuncioPecasVendidos, faturamentoMes });
         }
     }
 }

@@ -8,7 +8,7 @@
     <h2>A sua cesta</h2>
     <hr />
     <div class="mt-3 text-end">
-        <h4>Total: <span id="cartTotal">€0.00</span></h4>
+        <h4>Total: <span id="cartTotal">€@(Model.Sum(item => item.Peca != null ? item.Peca.Preco * item.Quantidade : 0).ToString("0.00"))</span></h4>
     </div>
 </div>
 
@@ -27,6 +27,7 @@ else
                     <div>
                         <h5>@(item.Peca != null ? item.Peca.Nome + " " + item.Peca.Marca + " " + item.Peca.Modelo : "Peça sem nome")</h5>
                         <p class="text-muted">Quantidade: @item.Quantidade</p>
+                        <p class="aviso-stock text-danger" style="display: none; font-size: 14px;"></p>
                     </div>
                 </div>
                 <div class="d-flex align-items-center">
@@ -43,38 +44,36 @@ else
     </div>
 }
  <script>
-                document.addEventListener("DOMContentLoaded", function () {
-        document.querySelectorAll(".decrease-quantity, .increase-quantity").forEach(button => {
-            button.addEventListener("click", function () {
-                const itemId = this.dataset.id;
-                const action = this.classList.contains("increase-quantity") ? "Aumentar" : "Diminuir";
+            document.addEventListener("DOMContentLoaded", function () {
+            document.querySelectorAll(".decrease-quantity, .increase-quantity").forEach(button => {
+                button.addEventListener("click", function () {
+                    const itemId = this.dataset.id;
+                    const action = this.classList.contains("increase-quantity") ? "Aumentar" : "Diminuir";
 
-                fetch(`/Carrinho/AtualizarQuantidade`, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ idPeca: itemId, acao: action })
-                })
-                    .then(response => {
-                        if (!response.ok) throw new Error(`Erro HTTP ${response.status}`);
-                        return response.json();
+                    fetch(`/Carrinho/AtualizarQuantidade`, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ idPeca: itemId, acao: action })
                     })
+                    .then(response => response.json())
                     .then(data => {
                         if (data.sucesso) {
                             const quantityInput = this.parentElement.querySelector("input");
-                            const quantityText = this.closest("li").querySelector(".text-muted"); // 🔥 Seleciona o parágrafo da quantidade
+                            const quantityText = this.closest("li").querySelector(".text-muted");
+                            const precoTotal = this.closest("li").querySelector(".preco-total");
 
                             quantityInput.value = data.novaQuantidade;
-                            quantityText.textContent = `Quantidade: ${data.novaQuantidade}`; // 🔥 Atualiza o texto na interface
+                            quantityText.textContent = `Quantidade: ${data.novaQuantidade}`;
 
-                            updateCartTotal(); // 🔥 Atualiza o total
-                        } else {
-                            alert("Erro ao atualizar a quantidade.");
+                            precoTotal.textContent = `Total: €${(data.novaQuantidade * data.precoUnitario).toFixed(2)}`; // ✅ Recalcular o preço do item
+
+                            updateCartTotal(); // ✅ Atualiza o total geral da cesta
                         }
                     })
                     .catch(error => console.error("Erro ao atualizar quantidade:", error));
+                });
             });
         });
-    });
 
         document.addEventListener("DOMContentLoaded", function () {
         document.querySelectorAll(".remove-item").forEach(button => {
@@ -88,8 +87,8 @@ else
                     })
                     .then(data => {
                         if (data.sucesso) {
-                            this.closest("li").remove(); // 🔥 Remove o item da interface
-                            updateCartTotal(); // 🔥 Atualiza o total e verifica se a cesta está vazia
+                            this.closest("li").remove(); // Remove o item da página
+                            updateCartTotal(); // Atualiza o total e verifica se a cesta está vazia
                         } else {
                             alert("Erro ao remover o item.");
                         }
@@ -99,31 +98,31 @@ else
         });
     });
 
-            function updateCartTotal() {
+                    function updateCartTotal() {
         fetch('/Carrinho/ObterCarrinho')
             .then(response => response.json())
             .then(data => {
                 const totalSpan = document.getElementById("cartTotal");
                 const checkoutButton = document.querySelector(".btn-success");
-                const cartMessage = document.getElementById("cartMessage");
 
-                if (totalSpan) {
-                    const total = data.carrinho.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                if (totalSpan && data.carrinho && data.carrinho.length > 0) {
+                    const total = data.carrinho.reduce((sum, item) => {
+                        
+                        const precoItem = item.price ?? item.Peca?.Preco ?? 0;
+                        const quantidadeItem = item.quantity ?? item.Quantidade ?? 0;
+                        return sum + (precoItem * quantidadeItem);
+                    }, 0);
+
                     totalSpan.textContent = `€${total.toFixed(2)}`;
-                }
-
-                // 🔥 Corrigir a lógica para exibir ou esconder o botão "Finalizar Compra"
-                if (!data.carrinho || data.carrinho.length === 0) {
-                    if (cartMessage) cartMessage.textContent = "Cesta vazia!";
+                    checkoutButton.style.display = "inline-block"; 
                 } else {
-                    checkoutButton.style.display = "inline-block";
-                    if (cartMessage) cartMessage.textContent = ""; // Remove a mensagem de vazio se houver itens
+                    totalSpan.textContent = "€0.00"; 
+                    checkoutButton.style.display = "none"; 
                 }
             })
             .catch(error => console.error("Erro ao obter total do carrinho:", error));
     }
 
-    // 🔥 Atualizar total ao carregar a página
+    // Atualizar total ao carregar a página
     document.addEventListener("DOMContentLoaded", updateCartTotal);
-
 </script>
