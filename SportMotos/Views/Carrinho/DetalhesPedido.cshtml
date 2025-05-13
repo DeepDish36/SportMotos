@@ -13,6 +13,8 @@
         <thead>
             <tr>
                 <th>Peça</th>
+                <th>Marca</th>
+                <th>Modelo</th>
                 <th>Quantidade</th>
                 <th>Preço Unitário</th>
                 <th>Total</th>
@@ -23,6 +25,8 @@
             {
                 <tr>
                     <td>@item.Peca.Nome</td>
+                    <td>@item.Peca.Marca</td>
+                    <td>@item.Peca.Modelo</td>
                     <td>@item.Quantidade</td>
                     <td>€@item.PrecoUnitario</td>
                     <td>€@(item.PrecoUnitario * item.Quantidade)</td>

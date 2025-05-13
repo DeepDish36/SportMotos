@@ -305,6 +305,45 @@ namespace SportMotos.Controllers
             return RedirectToAction("ResumoPedido", new { idPedido = pedido.IdPedido });
         }
 
+        [HttpPost]
+        public IActionResult AceitarPedidoPecas(int idPedido)
+        {
+            var pedido = _context.Pedidos
+                .Include(p => p.Cliente)
+                .FirstOrDefault(p => p.IdPedido == idPedido);
+
+            if (pedido == null)
+            {
+                TempData["MensagemErro"] = "Pedido não encontrado.";
+                return RedirectToAction("Dashboard");
+            }
+
+            // ✅ Buscar endereço do cliente na tabela `EnderecosEnvio`
+            var enderecoEnvio = _context.EnderecosEnvios
+                .FirstOrDefault(e => e.IdCliente == pedido.IdCliente); // ✅ Busca o endereço do cliente
+
+            // ✅ Verificar se o cliente escolheu levantar na loja
+            bool levantarNaLoja = enderecoEnvio == null || string.IsNullOrEmpty(enderecoEnvio.CodigoPostal);
+
+            // ✅ Gerar a mensagem correta para o e-mail
+            string mensagem = levantarNaLoja
+                ? "O seu pedido de peças está a ser processado! Pode levantar a encomenda na loja a qualquer momento."
+                : "O seu pedido de peças está a ser processado! A encomenda pode demorar entre **1 a 2 semanas** a chegar.";
+
+            _emailService.SendEmailAsync(
+                pedido.Cliente.Email,
+                "O seu pedido de peças está a ser processado!",
+                mensagem
+            ).Wait();
+
+            // ✅ Atualizar status do pedido
+            pedido.Status = "Processando";
+            _context.SaveChanges();
+
+            TempData["MensagemSucesso"] = "Pedido aceito com sucesso! O cliente foi notificado.";
+            return RedirectToAction("Dashboard", "DashBoard");
+        }
+
         // Método auxiliar para gerar o conteúdo da fatura
         private string GerarFaturaEmail(List<CarrinhoCompras> carrinho, decimal totalPedido, int idPedido)
         {

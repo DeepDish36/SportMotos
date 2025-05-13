@@ -429,7 +429,18 @@
                         }
                         else if (pedido.TipoPedido == "pecas")
                         {
-                            <a asp-controller="Carrinho" asp-action="DetalhesPedido" asp-route-id="@pedido.IdPedido" class="btn btn-info btn-sm">Ver</a>
+                            @if (pedido.Status == "Pendente")
+                            {
+                                <form asp-action="AceitarPedidoPecas" asp-controller="Carrinho" method="post">
+                                    <input type="hidden" name="idPedido" value="@pedido.IdPedido" />
+                                    <button type="submit" class="btn btn-success btn-sm">Aceitar</button>
+                                </form>
+                                <a asp-controller="Carrinho" asp-action="DetalhesPedido" asp-route-id="@pedido.IdPedido" class="btn btn-info btn-sm">Ver</a>
+                            }
+                            else
+                            {
+                                <a asp-controller="Carrinho" asp-action="DetalhesPedido" asp-route-id="@pedido.IdPedido" class="btn btn-info btn-sm">Ver</a>
+                            }
                         }
                     </td>
                 </tr>
