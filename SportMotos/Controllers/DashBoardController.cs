@@ -73,6 +73,7 @@ namespace SportMotos.Controllers
                 {
                     IdPedido = i.IdInteresse,
                     ClienteNome = i.Cliente.Nome,
+                    ClienteEmail = i.Cliente.Email,
                     DataCompra = (DateTime?)i.DataInteresse,
                     Total = (decimal?)null,
                     Status = i.Status,
@@ -86,6 +87,7 @@ namespace SportMotos.Controllers
                 {
                     IdPedido = p.IdPedido,
                     ClienteNome = p.Cliente.Nome,
+                    ClienteEmail = p.Cliente.Email,
                     DataCompra = (DateTime?)p.DataCompra,
                     Total = (decimal?)p.Total,
                     Status = p.Status,

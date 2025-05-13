@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SportMotos")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b900f5747aba0fa57dff75c7f2d034e3f0421cc6")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+71596a3c628f4962bd6794953c4653dbf16172b1")]
 [assembly: System.Reflection.AssemblyProductAttribute("SportMotos")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SportMotos")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
