@@ -15,7 +15,6 @@ Este site será desenvolvido para um stand de motos, combinando design intuitivo
 **Funcionalidades (Atuais)**
 + Catálogo de motos
 + Catálogo de peças
-+ Sistema de envio de newsletter
 + Pedido de orçamentos
 + Notícias
 + Fóruns
