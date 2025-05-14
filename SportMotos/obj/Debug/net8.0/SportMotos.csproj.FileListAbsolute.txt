@@ -882,12 +882,6 @@ C:\Users\Gomes\Desktop\SportMotos\SportMotos\obj\Debug\net8.0\scopedcss\projectb
 C:\Users\Gomes\Desktop\SportMotos\SportMotos\obj\Debug\net8.0\staticwebassets.build.json
 C:\Users\Gomes\Desktop\SportMotos\SportMotos\obj\Debug\net8.0\staticwebassets.development.json
 C:\Users\Gomes\Desktop\SportMotos\SportMotos\obj\Debug\net8.0\staticwebassets.build.endpoints.json
-C:\Users\Gomes\Desktop\SportMotos\SportMotos\obj\Debug\net8.0\staticwebassets\msbuild.SportMotos.Microsoft.AspNetCore.StaticWebAssets.props
-C:\Users\Gomes\Desktop\SportMotos\SportMotos\obj\Debug\net8.0\staticwebassets\msbuild.SportMotos.Microsoft.AspNetCore.StaticWebAssetEndpoints.props
-C:\Users\Gomes\Desktop\SportMotos\SportMotos\obj\Debug\net8.0\staticwebassets\msbuild.build.SportMotos.props
-C:\Users\Gomes\Desktop\SportMotos\SportMotos\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.SportMotos.props
-C:\Users\Gomes\Desktop\SportMotos\SportMotos\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.SportMotos.props
-C:\Users\Gomes\Desktop\SportMotos\SportMotos\obj\Debug\net8.0\staticwebassets.pack.json
 C:\Users\Gomes\Desktop\SportMotos\SportMotos\obj\Debug\net8.0\SportMotos.csproj.Up2Date
 C:\Users\Gomes\Desktop\SportMotos\SportMotos\obj\Debug\net8.0\SportMotos.dll
 C:\Users\Gomes\Desktop\SportMotos\SportMotos\obj\Debug\net8.0\refint\SportMotos.dll
@@ -1193,3 +1187,4 @@ C:\users\g0mes\desktop\sportmotos\sportmotos\obj\Debug\net8.0\SportMotos.genrunt
 C:\users\g0mes\desktop\sportmotos\sportmotos\obj\Debug\net8.0\ref\SportMotos.dll
 C:\Users\g0mes\Desktop\SportMotos\SportMotos\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
 C:\Users\g0mes\Desktop\SportMotos\SportMotos\obj\Debug\net8.0\staticwebassets.build.json.cache
+C:\Users\Gomes\Desktop\SportMotos\SportMotos\obj\Debug\net8.0\staticwebassets.build.json.cache

@@ -137,7 +137,7 @@ public partial class AppDbContext : DbContext
 
             entity.HasOne(d => d.IdMotoNavigation).WithMany(p => p.AnuncioMotos)
                 .HasForeignKey(d => d.IdMoto)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK__Anuncio_M__ID_Mo__66603565");
         });
 
@@ -172,7 +172,7 @@ public partial class AppDbContext : DbContext
 
             entity.HasOne(d => d.IdPecaNavigation).WithMany(p => p.AnuncioPecas)
                 .HasForeignKey(d => d.IdPeca)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK__Anuncio_P__ID_Pe__6E01572D");
         });
 

@@ -254,7 +254,7 @@
                     <td>€@anuncio.Preco</td>
                     <td>
                         <a asp-controller="Peca" asp-action="EditarPeca" asp-route-id="@anuncio.IdPeca" class="btn btn-success btn-sm">Editar</a>
-                        <a href="#" class="btn btn-danger btn-sm">Excluir</a>
+                        <a href="#" class="btn btn-danger btn-sm" onclick="showDeleteModal('@anuncio.IdPeca', 'peca')">Excluir</a>
                     </td>
                 </tr>
             }

@@ -24,9 +24,9 @@ namespace SportMotos.Controllers
         [HttpGet]
         public async Task<IActionResult> ShowAnuncios()
         {
-            var tipoUsuario = User.FindFirstValue("Tipo_Utilizador");
+            var tipoUtilizador= User.FindFirstValue("Tipo_Utilizador");
 
-            if (tipoUsuario != "Admin")
+            if (tipoUtilizador != "Admin")
             {
                 return RedirectToAction("Index", "Home");
             }
@@ -102,9 +102,9 @@ namespace SportMotos.Controllers
         [HttpGet]
         public IActionResult CriarAnuncioPeca()
         {
-            var tipoUsuario = User.FindFirstValue("Tipo_Utilizador");
+            var tipoUtilizador = User.FindFirstValue("Tipo_Utilizador");
 
-            if (tipoUsuario != "Admin")
+            if (tipoUtilizador != "Admin")
             {
                 return RedirectToAction("Index", "Home");
             }

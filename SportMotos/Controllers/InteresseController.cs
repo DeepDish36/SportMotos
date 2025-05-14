@@ -62,10 +62,10 @@ namespace SportMotos.Controllers
             }
 
             // Obter o tipo de utilizador logado
-            var tipoUsuario = User.FindFirstValue("Tipo_Utilizador");
+            var tipoUtilizador = User.FindFirstValue("Tipo_Utilizador");
 
             // Verificar se o usuário é um admin
-            if (tipoUsuario == "Admin")
+            if (tipoUtilizador == "Admin")
             {
                 Console.WriteLine("Admins não podem fazer pedidos.");
                 return Json(new { success = false, message = "Admins não podem fazer pedidos." });
@@ -113,9 +113,9 @@ namespace SportMotos.Controllers
         [Authorize]
         public async Task<IActionResult> AprovarPedido(int id, string email)
         {
-            var tipoUsuario = User.FindFirstValue("Tipo_Utilizador");
+            var tipoUtilizador = User.FindFirstValue("Tipo_Utilizador");
 
-            if (tipoUsuario != "Admin")
+            if (tipoUtilizador != "Admin")
             {
                 return RedirectToAction("Index", "Home");
             }
